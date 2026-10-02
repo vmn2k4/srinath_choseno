@@ -72,12 +72,12 @@ type CtaCopy = {
 
 const COPY: Record<MissionCtaVariant, CtaCopy> = {
   home: {
-    eyebrow: "Google Reviews, for politicians",
-    headline: "Stop being a spectator.",
-    pitch: "Frustrated watching decisions get made about you, not by you? Rate every official anonymously — no username, no toxic replies, just your opinion.",
-    sidebarHeadline: "Done watching from the sidelines?",
-    sidebarBody: "Rate your officials anonymously — just your opinion.",
-    cta: "Rate Anonymously",
+    eyebrow: "Democracy works when we show up",
+    headline: "Come be part of the democracy.",
+    pitch: "Decisions get made about your community every day. Join Choseno to rate every official, back the candidates you believe in, and make your voice count — anonymously, with no username and no toxic replies.",
+    sidebarHeadline: "Be part of the democracy",
+    sidebarBody: "Rate officials and back candidates — anonymously.",
+    cta: "Join the Democracy",
   },
   news: {
     eyebrow: "Beyond the headline",
