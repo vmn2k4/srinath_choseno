@@ -27,13 +27,11 @@ const BASE_URL = SITE_URL;
 // non-draft elections, non-admin visitors) gets the real caching win.
 export const revalidate = 86400; // daily; /api/revalidate/elections refreshes sooner when the roster changes
 
-// Without this export Next renders a dynamic-segment route on every request
-// and ignores `revalidate`. An empty list prerenders nothing at build time
-// but lets each URL be generated once on first visit, then served from the
-// cache (ISR) until `revalidate` expires.
-export function generateStaticParams() {
-  return [];
-}
+// No generateStaticParams here on purpose: this page reads `searchParams`
+// (?candidate=), which needs the live request, and a route that has
+// generateStaticParams is rendered as cached ISR -- where reading
+// searchParams throws DYNAMIC_SERVER_USAGE and every cold request 500s
+// (it did, 2026-10-04). Rendering per request is the safe behavior here.
 
 interface SeatPageProps {
   params: Promise<{ seatId: string }>;
