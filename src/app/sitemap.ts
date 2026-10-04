@@ -17,8 +17,23 @@ const baseUrl = SITE_URL;
 // under crawler load. A failed regeneration keeps serving the last good copy.
 export const revalidate = 21600;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes: MetadataRoute.Sitemap = [
+
+// Anon queries have a 3s statement_timeout, and a cold DB connection pays its
+// first-plan cost inside that budget, so a query that normally takes ~1s can
+// time out once. Retry those; anything else fails fast.
+async function withRetry<T extends { error?: unknown }>(fn: () => PromiseLike<T>, attempts = 5): Promise<T> {
+  let res = await fn();
+  for (let i = 1; i < attempts; i++) {
+    const msg = String((res.error as { message?: string } | null | undefined)?.message ?? "");
+    if (!res.error || !/timeout|schema cache/i.test(msg)) break;
+    await new Promise((r) => setTimeout(r, 1000 * i));
+    res = await fn();
+  }
+  return res;
+}
+
+function getStaticRoutes(): MetadataRoute.Sitemap {
+  return [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1.0 },
     { url: `${baseUrl}/elections`, lastModified: new Date(), changeFrequency: "hourly", priority: 1.0 },
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
@@ -40,12 +55,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.4,
     })),
   ];
+}
+
+// Throwing on a failed query is deliberate at runtime: Next keeps serving the
+// last good sitemap instead of publishing one with no seat/candidate pages.
+// During `next build` there is no last good copy, and one DB blip must not
+// fail the whole deploy (it did, 2026-10-04) -- so only there, fall back to the
+// static routes; the next revalidation (6h) restores the full list.
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  try {
+    return await buildSitemap();
+  } catch (err) {
+    if (process.env.NEXT_PHASE !== "phase-production-build") throw err;
+    console.warn("sitemap: build-time fallback to static routes:", (err as Error).message);
+    return getStaticRoutes();
+  }
+}
+
+async function buildSitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticRoutes = getStaticRoutes();
 
   const supabase = createPublicClient();
 
   const [{ data: articles }, { data: seats, error: seatsError }] = await Promise.all([
-    getPublishedNewsArticles(supabase, { limit: 500 }),
-    fetchAllPages((from, to) => getActiveSeats(supabase, { limit: to - from + 1, offset: from, skipStatusSync: true }), 300),
+    withRetry(() => getPublishedNewsArticles(supabase, { limit: 500 })),
+    withRetry(() => fetchAllPages((from, to) => getActiveSeats(supabase, { limit: to - from + 1, offset: from, skipStatusSync: true }), 300)),
   ]);
 
   // News is secondary to elections/races, and an old article matters less
@@ -116,27 +150,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       electionsById.set(s.elections.id, { id: s.elections.id, name: s.elections.name || "election" });
     }
   });
-  const electionPartyRoutes: MetadataRoute.Sitemap = (
-    await Promise.all(
-      Array.from(electionsById.values()).map(async (e) => {
-        const { data: rows, error: rowsError } = await getElectionCandidatesWithParty(supabase, e.id);
-        if (rowsError) throw new Error(`sitemap: failed to load candidates for ${e.name}: ${(rowsError as { message?: string }).message}`);
-        // Hub is indexable whenever the election has candidates (matches the
-        // hub page's own noindex rule), even if none have a party listed.
-        if (!rows || rows.length === 0) return [];
-        const parties = summarizeParties(toRosterCandidates(rows));
-        return [
-          { url: `${baseUrl}${hubPath(e)}`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
-          ...parties.map((p) => ({
-            url: `${baseUrl}${partyPath(e, p)}`,
-            lastModified: new Date(),
-            changeFrequency: "daily" as const,
-            priority: 0.85,
-          })),
-        ];
-      })
-    )
-  ).flat();
+  const electionPartyRoutes: MetadataRoute.Sitemap = [];
+  // One election at a time: each is a 1-2K-row join, and running them together
+  // on cold connections is what tipped past the anon 3s statement_timeout.
+  for (const e of Array.from(electionsById.values())) {
+    const { data: rows, error: rowsError } = await withRetry(() => getElectionCandidatesWithParty(supabase, e.id));
+    if (rowsError) throw new Error(`sitemap: failed to load candidates for ${e.name}: ${(rowsError as { message?: string }).message}`);
+    // Hub is indexable whenever the election has candidates (matches the
+    // hub page's own noindex rule), even if none have a party listed.
+    if (!rows || rows.length === 0) continue;
+    const parties = summarizeParties(toRosterCandidates(rows));
+    electionPartyRoutes.push(
+      { url: `${baseUrl}${hubPath(e)}`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
+      ...parties.map((p) => ({
+        url: `${baseUrl}${partyPath(e, p)}`,
+        lastModified: new Date(),
+        changeFrequency: "daily" as const,
+        priority: 0.85,
+      }))
+    );
+  }
 
   let candidateRoutes: MetadataRoute.Sitemap = [];
   let wallRoutes: MetadataRoute.Sitemap = [];
@@ -147,14 +180,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // chunk's result must stay under PostgREST's 1000-row response cap.
     const seatIds = allSeatRows.map((s) => s.id);
     // Few at a time: firing every chunk at once saturated the DB.
-    const chunkCount = Math.ceil(seatIds.length / 50);
+    const SEATS_PER_CHUNK = 25;
+    const chunkCount = Math.ceil(seatIds.length / SEATS_PER_CHUNK);
     const CHUNK_CONCURRENCY = 4;
     const candidateChunks: Awaited<ReturnType<typeof getCandidatesBySeatIds>>["data"][] = [];
     for (let start = 0; start < chunkCount; start += CHUNK_CONCURRENCY) {
       const batch = await Promise.all(
         Array.from({ length: Math.min(CHUNK_CONCURRENCY, chunkCount - start) }, (_, k) => {
           const i = start + k;
-          return getCandidatesBySeatIds(supabase, seatIds.slice(i * 50, i * 50 + 50)).then((r) => {
+          return withRetry(() => getCandidatesBySeatIds(supabase, seatIds.slice(i * SEATS_PER_CHUNK, (i + 1) * SEATS_PER_CHUNK))).then((r) => {
             if (r.error) throw new Error(`sitemap: failed to load candidates: ${r.error.message}`);
             return r.data || [];
           });
