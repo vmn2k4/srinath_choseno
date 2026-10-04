@@ -45,10 +45,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/og-elections.jpg`,
+        url: `${BASE_URL}/og-elections-v2.jpg`,
         width: 1200,
         height: 630,
-        alt: shareTitle,
+        alt: "Know who's on your ballot. Find who's running in your area, compare the candidates and rate who's running. Choseno",
       },
     ],
   },
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: shareTitle,
     description: pageDescription,
-    images: [`${BASE_URL}/og-elections.jpg`],
+    images: [`${BASE_URL}/og-elections-v2.jpg`],
   },
 };
 
