@@ -84,13 +84,16 @@ PARTY_MAP = {
     "CentreBC": "CentreBC",
     "Libertarian Party of BC": "Libertarian",
     # The tracker spells this label two ways; both are the one party we already have.
+    "CanWest Party": "CanWest Party",
     "Christian Heritage Party of BC": "Christian Heritage Party",
     "Christian Heritage Party of B.C.": "Christian Heritage Party",
 }
 # Real parties BCPoliTracker names that don't exist in political_parties yet
 # -- created on first use rather than silently dropped to Independent.
 UNSEEDED_PARTIES = {"OneBC", "Communist Party of BC", "Freedom Party of BC"}
-NO_PARTY_LABELS = {"Independent", "No affiliation", ""}
+NO_PARTY_LABELS = {"Independent", "No affiliation", "Unaffiliated", ""}
+# (name, riding) pairs (lowercased) to skip -- known-bad tracker entries; set from --exclude.
+EXCLUDE: set = set()
 
 
 def log(msg):
@@ -253,6 +256,8 @@ def same_person_variant(name, have):
     Reah/Rohini): same surname + same first initial. Conservative -- skips rather than duplicates."""
     t = _fold(name)
     def same(h):
+        if h and t and set(h) == set(t):
+            return True  # same words in a different order ("Parm Bhandol" vs "Bhandol Parm")
         if not (h and t and h[-1] == t[-1]):
             return False
         # same surname + same first initial, OR one name's words are all inside the other's
@@ -274,6 +279,8 @@ def build_plan(db_url):
 
     plan = {"to_add": [], "already_present": [], "unmatched_riding": [], "new_parties_needed": set(), "link_to_incumbent": []}
     for c in candidates:
+        if (c["name"].lower(), c["riding"].lower()) in EXCLUDE:
+            continue
         shape_id = ridings.get(normalize_riding(c["riding"]))
         if shape_id is None:
             plan["unmatched_riding"].append(c)
@@ -392,6 +399,7 @@ def do_apply(args):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--db-url", default=os.environ.get("DATABASE_URL"))
+    ap.add_argument("--exclude", default="", help='Skip tracker entries: "Name|Riding;Name|Riding" (e.g. a stale/duplicate listing)')
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("fetch", help="Pull the latest feed from BCPoliTracker, cache it, show what changed")
@@ -402,6 +410,7 @@ def main():
     p_apply.add_argument("--yes", action="store_true", help="Skip the interactive confirmation prompt")
 
     args = ap.parse_args()
+    EXCLUDE.update(tuple(x.strip().lower() for x in e.split("|", 1)) for e in args.exclude.split(";") if "|" in e)
     if args.cmd != "fetch" and not args.db_url:
         sys.exit("DATABASE_URL required (env var or --db-url) for this command.")
 

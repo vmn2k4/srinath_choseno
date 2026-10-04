@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-10-03T17:46:03Z",
+ "fetched_at": "2026-10-04T17:02:56Z",
  "candidates": [
   {
    "riding": "Abbotsford South",
@@ -21,6 +21,12 @@
   },
   {
    "riding": "Abbotsford West",
+   "party": "CentreBC",
+   "name": "Gurpreet Chahal",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Abbotsford West",
    "party": "BC NDP",
    "name": "Jules C\u00f4t\u00e9",
    "ts": "2026-10-01T20:10:34.717Z"
@@ -39,7 +45,7 @@
   },
   {
    "riding": "Abbotsford-Mission",
-   "party": "Libertarian Party of BC",
+   "party": "Libertarian",
    "name": "Jeff Monds",
    "ts": "2026-09-25T18:05:24.000Z"
   },
@@ -56,10 +62,22 @@
    "ts": "2026-09-23T23:46:38.123Z"
   },
   {
+   "riding": "Abbotsford-Mission",
+   "party": "OneBC",
+   "name": "Virender Dass",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
    "riding": "Boundary-Similkameen",
    "party": "Conservative",
    "name": "Donegal Wilson",
    "ts": "2026-09-23T22:30:21.620Z"
+  },
+  {
+   "riding": "Boundary-Similkameen",
+   "party": "OneBC",
+   "name": "Keith Pomeroy",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Boundary-Similkameen",
@@ -111,6 +129,12 @@
   },
   {
    "riding": "Burnaby East",
+   "party": "OneBC",
+   "name": "De Ding",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Burnaby East",
    "party": "BC Green",
    "name": "Javad Shushtarian",
    "ts": "2026-09-30T22:00:34.673Z"
@@ -124,7 +148,7 @@
   {
    "riding": "Burnaby East",
    "party": "BC NDP",
-   "name": "Rohini Arora",
+   "name": "Rohini Reah Arora",
    "ts": "2026-09-24T04:00:50.295Z"
   },
   {
@@ -135,9 +159,9 @@
   },
   {
    "riding": "Burnaby North",
-   "party": "OneBC",
-   "name": "Jenny Yamagata",
-   "ts": "2026-09-30T20:30:34.570Z"
+   "party": "BC Green",
+   "name": "Maddy Kennedy-Parrott",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Burnaby North",
@@ -171,6 +195,12 @@
   },
   {
    "riding": "Burnaby-New Westminster",
+   "party": "BC Green",
+   "name": "Greg DePaco",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Burnaby-New Westminster",
    "party": "Conservative",
    "name": "Joe Latam",
    "ts": "2026-10-01T20:10:34.717Z"
@@ -180,6 +210,12 @@
    "party": "BC NDP",
    "name": "Raj Chouhan",
    "ts": "2026-09-24T04:00:50.295Z"
+  },
+  {
+   "riding": "Cariboo-Chilcotin",
+   "party": "BC Green",
+   "name": "Douglas Gook",
+   "ts": "2026-10-03T19:00:37.421Z"
   },
   {
    "riding": "Cariboo-Chilcotin",
@@ -231,6 +267,12 @@
   },
   {
    "riding": "Columbia River-Revelstoke",
+   "party": "BC Green",
+   "name": "Rana Nelson",
+   "ts": "2026-10-03T18:00:36.997Z"
+  },
+  {
+   "riding": "Columbia River-Revelstoke",
    "party": "Conservative",
    "name": "Scott McInnis",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -243,15 +285,21 @@
   },
   {
    "riding": "Coquitlam-Burke Mountain",
-   "party": "OneBC",
-   "name": "Matt Cole",
-   "ts": "2026-09-28T04:48:52.032Z"
+   "party": "CentreBC",
+   "name": "Kaden Mann",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Coquitlam-Burke Mountain",
    "party": "Conservative",
    "name": "Ryan Peterson",
    "ts": "2026-09-28T18:30:33.433Z"
+  },
+  {
+   "riding": "Coquitlam-Burke Mountain",
+   "party": "BC Green",
+   "name": "Valerie Morrison",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Coquitlam-Maillardville",
@@ -264,6 +312,12 @@
    "party": "Conservative",
    "name": "Matt Liang",
    "ts": "2026-10-01T20:10:34.717Z"
+  },
+  {
+   "riding": "Coquitlam-Maillardville",
+   "party": "BC Green",
+   "name": "Nicola Spurling",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Courtenay-Comox",
@@ -350,6 +404,12 @@
    "ts": "2026-09-20T20:15:00.000Z"
   },
   {
+   "riding": "Delta South",
+   "party": "BC Green",
+   "name": "Skadi Green",
+   "ts": "2026-10-03T18:00:36.997Z"
+  },
+  {
    "riding": "Esquimalt-Colwood",
    "party": "BC NDP",
    "name": "Darlene Rotchford",
@@ -405,9 +465,27 @@
   },
   {
    "riding": "Juan de Fuca-Malahat",
+   "party": "Christian Heritage Party of BC",
+   "name": "Jeff Brown",
+   "ts": "2026-10-04T01:00:35.296Z"
+  },
+  {
+   "riding": "Juan de Fuca-Malahat",
    "party": "Conservative",
    "name": "Mike Hicks",
    "ts": "2026-09-30T02:00:13.578Z"
+  },
+  {
+   "riding": "Juan de Fuca-Malahat",
+   "party": "OneBC",
+   "name": "Shane Friesen",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Kamloops Centre",
+   "party": "BC Green",
+   "name": "Annelise Beach",
+   "ts": "2026-10-03T18:00:36.997Z"
   },
   {
    "riding": "Kamloops Centre",
@@ -423,6 +501,12 @@
   },
   {
    "riding": "Kamloops Centre",
+   "party": "OneBC",
+   "name": "Rocky McAfee",
+   "ts": "2026-10-03T21:00:35.107Z"
+  },
+  {
+   "riding": "Kamloops Centre",
    "party": "Independent",
    "name": "Thaelo Proctor",
    "ts": "2026-09-30T00:00:13.170Z"
@@ -432,12 +516,6 @@
    "party": "OneBC",
    "name": "Deborah Friesen",
    "ts": "2026-10-03T16:00:40.015Z"
-  },
-  {
-   "riding": "Kamloops-North Thompson",
-   "party": "BC Green",
-   "name": "John Kidder",
-   "ts": "2026-10-03T00:00:35.254Z"
   },
   {
    "riding": "Kamloops-North Thompson",
@@ -453,6 +531,12 @@
   },
   {
    "riding": "Kelowna Centre",
+   "party": "OneBC",
+   "name": "Bill Desrosiers",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Kelowna Centre",
    "party": "Conservative",
    "name": "Kristina Loewen",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -462,6 +546,12 @@
    "party": "BC NDP",
    "name": "Loyal Wooldridge",
    "ts": "2026-09-27T20:00:34.905Z"
+  },
+  {
+   "riding": "Kelowna Centre",
+   "party": "Independent",
+   "name": "Thaelo Proctor",
+   "ts": "2026-10-04T01:00:35.296Z"
   },
   {
    "riding": "Kelowna-Lake Country-Coldstream",
@@ -489,6 +579,12 @@
   },
   {
    "riding": "Kelowna-Mission",
+   "party": "OneBC",
+   "name": "Abraham Nordine",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Kelowna-Mission",
    "party": "Conservative",
    "name": "Gavin Dew",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -498,6 +594,12 @@
    "party": "BC NDP",
    "name": "Miriam Rycroft",
    "ts": "2026-10-02T21:00:35.114Z"
+  },
+  {
+   "riding": "Kelowna-Mission",
+   "party": "BC Green",
+   "name": "Saoirse MacKinnon",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Kootenay Central",
@@ -531,6 +633,12 @@
   },
   {
    "riding": "Kootenay-Monashee",
+   "party": "OneBC",
+   "name": "Stephen Hill",
+   "ts": "2026-10-04T00:00:35.032Z"
+  },
+  {
+   "riding": "Kootenay-Monashee",
    "party": "BC NDP",
    "name": "Steve Morissette",
    "ts": "2026-09-23T23:18:10.000Z"
@@ -561,15 +669,21 @@
   },
   {
    "riding": "Kootenay-Rockies",
+   "party": "CentreBC",
+   "name": "Paul Heywood",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Kootenay-Rockies",
    "party": "Conservative",
    "name": "Pete Davis",
    "ts": "2026-09-23T22:30:21.620Z"
   },
   {
    "riding": "Ladysmith-Oceanside",
-   "party": "CentreBC",
-   "name": "Kim Lockhart",
-   "ts": "2026-09-26T20:30:39.087Z"
+   "party": "BC Green",
+   "name": "Charlene Smylie",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Ladysmith-Oceanside",
@@ -585,7 +699,13 @@
   },
   {
    "riding": "Langford-Highlands",
-   "party": "Christian Heritage Party of B.C.",
+   "party": "Independent",
+   "name": "Alex Thurlborn",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Langford-Highlands",
+   "party": "Christian Heritage Party of BC",
    "name": "Christian McCay",
    "ts": "2026-10-01T19:23:54.492Z"
   },
@@ -651,6 +771,12 @@
   },
   {
    "riding": "Langley-Walnut Grove",
+   "party": "CentreBC",
+   "name": "Kyle Stevenson",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Langley-Walnut Grove",
    "party": "Conservative",
    "name": "Misty Van Popta",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -678,6 +804,12 @@
    "party": "OneBC",
    "name": "Shubham Joshi",
    "ts": "2026-09-29T00:00:33.231Z"
+  },
+  {
+   "riding": "Maple Ridge East",
+   "party": "Independent",
+   "name": "Chris Hatchwell",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Maple Ridge East",
@@ -776,8 +908,14 @@
    "ts": "2026-10-03T00:00:35.254Z"
   },
   {
+   "riding": "Nanaimo-Lantzville",
+   "party": "BC Green",
+   "name": "Sharleen Weatherley",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
    "riding": "Nechako Lakes",
-   "party": "No affiliation",
+   "party": "Unaffiliated",
    "name": "Clint Lambert",
    "ts": "2026-09-30T20:00:35.360Z"
   },
@@ -792,6 +930,12 @@
    "party": "BC NDP",
    "name": "Jesse Gervais",
    "ts": "2026-09-27T06:00:34.270Z"
+  },
+  {
+   "riding": "New Westminster-Coquitlam",
+   "party": "Unaffiliated",
+   "name": "Gerry Lenoski",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "New Westminster-Coquitlam",
@@ -861,9 +1005,9 @@
   },
   {
    "riding": "North Vancouver-Lonsdale",
-   "party": "CentreBC",
-   "name": "Karen Fraser",
-   "ts": "2026-10-02T02:00:35.243Z"
+   "party": "BC Green",
+   "name": "Joshua A Singer Johnson",
+   "ts": "2026-10-03T19:00:37.421Z"
   },
   {
    "riding": "North Vancouver-Lonsdale",
@@ -876,6 +1020,18 @@
    "party": "BC Green",
    "name": "Ben Holt",
    "ts": "2026-10-03T03:00:35.087Z"
+  },
+  {
+   "riding": "North Vancouver-Seymour",
+   "party": "OneBC",
+   "name": "Frederick Thiele",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "North Vancouver-Seymour",
+   "party": "CentreBC",
+   "name": "Lori Climenhaga",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "North Vancouver-Seymour",
@@ -927,9 +1083,21 @@
   },
   {
    "riding": "Peace River South",
+   "party": "Unaffiliated",
+   "name": "Helen Scott",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Peace River South",
    "party": "Conservative",
    "name": "Larry Neufeld",
    "ts": "2026-09-23T22:30:21.620Z"
+  },
+  {
+   "riding": "Peace River South",
+   "party": "BC NDP",
+   "name": "Marsha Rose Dufresne",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Penticton-Summerland",
@@ -963,8 +1131,14 @@
   },
   {
    "riding": "Port Coquitlam",
+   "party": "Unaffiliated",
+   "name": "Lee-Ann Bates",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Port Coquitlam",
    "party": "Libertarian",
-   "name": "Lewis Dahlby",
+   "name": "Lewis C. Dahlby",
    "ts": "2026-09-28T20:30:33.458Z"
   },
   {
@@ -998,6 +1172,18 @@
    "ts": "2026-09-24T21:00:29.642Z"
   },
   {
+   "riding": "Port Moody-Burquitlam",
+   "party": "BC Green",
+   "name": "Wei Chou",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Powell River-Sunshine Coast",
+   "party": "BC Green",
+   "name": "Griffin Leonard Lea",
+   "ts": "2026-10-03T19:00:37.421Z"
+  },
+  {
    "riding": "Powell River-Sunshine Coast",
    "party": "Conservative",
    "name": "John Henderson",
@@ -1011,6 +1197,12 @@
   },
   {
    "riding": "Prince George-Mackenzie",
+   "party": "BC NDP",
+   "name": "Ian McMahon",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Prince George-Mackenzie",
    "party": "Conservative",
    "name": "Kiel Giddens",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -1020,6 +1212,18 @@
    "party": "BC Green",
    "name": "Teri Young",
    "ts": "2026-10-03T03:00:35.087Z"
+  },
+  {
+   "riding": "Prince George-North Cariboo",
+   "party": "BC NDP",
+   "name": "Denice Bardua",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Prince George-North Cariboo",
+   "party": "BC Green",
+   "name": "Randy Thompson",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Prince George-North Cariboo",
@@ -1053,13 +1257,19 @@
   },
   {
    "riding": "Richmond Centre",
+   "party": "BC Green",
+   "name": "Calvin Dang",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Richmond Centre",
    "party": "BC NDP",
    "name": "Henry Yao",
    "ts": "2026-09-26T01:31:19.927Z"
   },
   {
    "riding": "Richmond Centre",
-   "party": "CWP",
+   "party": "CanWest Party",
    "name": "Lawrence Chen",
    "ts": "2026-09-28T23:30:33.296Z"
   },
@@ -1089,6 +1299,12 @@
   },
   {
    "riding": "Richmond-Queensborough",
+   "party": "BC Green",
+   "name": "Luc Burns",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Richmond-Queensborough",
    "party": "Conservative",
    "name": "Steve Kooner",
    "ts": "2026-09-23T22:30:21.620Z"
@@ -1110,6 +1326,18 @@
    "party": "Conservative",
    "name": "Gordon Zhang",
    "ts": "2026-09-27T17:30:33.530Z"
+  },
+  {
+   "riding": "Richmond-Steveston",
+   "party": "CanWest Party",
+   "name": "Keenan Yang",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Richmond-Steveston",
+   "party": "Independent",
+   "name": "Robert Evans",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Saanich North and the Islands",
@@ -1167,6 +1395,12 @@
   },
   {
    "riding": "Salmon Arm-Shuswap",
+   "party": "CentreBC",
+   "name": "Denise Reimer",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Salmon Arm-Shuswap",
    "party": "BC NDP",
    "name": "Gloria Morgan",
    "ts": "2026-10-02T22:00:34.826Z"
@@ -1182,6 +1416,12 @@
    "party": "Conservative",
    "name": "Claire Ratt\u00e9e",
    "ts": "2026-09-23T22:30:21.620Z"
+  },
+  {
+   "riding": "Skeena",
+   "party": "OneBC",
+   "name": "Larry Eugene Taylor",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Skeena",
@@ -1203,6 +1443,12 @@
   },
   {
    "riding": "Surrey City Centre",
+   "party": "OneBC",
+   "name": "Oliver Wildfong",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Surrey City Centre",
    "party": "CentreBC",
    "name": "Raman Sharma",
    "ts": "2026-09-28T19:30:33.621Z"
@@ -1215,15 +1461,21 @@
   },
   {
    "riding": "Surrey North",
-   "party": "CentreBC",
-   "name": "Bhandol Parm",
-   "ts": "2026-10-01T19:23:54.492Z"
+   "party": "Unaffiliated",
+   "name": "Jag Bhandari",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Surrey North",
    "party": "Conservative",
    "name": "Mandeep Singh Dhaliwal",
    "ts": "2026-09-23T22:30:21.620Z"
+  },
+  {
+   "riding": "Surrey North",
+   "party": "CentreBC",
+   "name": "Parm Bhandol",
+   "ts": "2026-10-01T19:23:54.492Z"
   },
   {
    "riding": "Surrey North",
@@ -1251,8 +1503,8 @@
   },
   {
    "riding": "Surrey South",
-   "party": "OneBC",
-   "name": "Brent Chapman",
+   "party": "Unaffiliated",
+   "name": "Denis R Hurtubise",
    "ts": "2026-09-23T23:18:10.000Z"
   },
   {
@@ -1284,6 +1536,12 @@
    "party": "BC Green",
    "name": "Pat McCutcheon",
    "ts": "2026-10-01T22:10:34.819Z"
+  },
+  {
+   "riding": "Surrey-Cloverdale",
+   "party": "CentreBC",
+   "name": "Sargy Chima",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Surrey-Cloverdale",
@@ -1322,6 +1580,12 @@
    "ts": "2026-09-24T17:00:29.074Z"
   },
   {
+   "riding": "Surrey-Fleetwood",
+   "party": "BC Green",
+   "name": "Tim Binnema",
+   "ts": "2026-10-03T19:00:37.421Z"
+  },
+  {
    "riding": "Surrey-Guildford",
    "party": "BC NDP",
    "name": "Garry Begg",
@@ -1335,6 +1599,12 @@
   },
   {
    "riding": "Surrey-Guildford",
+   "party": "Unaffiliated",
+   "name": "James Yaroshuk",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Surrey-Guildford",
    "party": "BC Green",
    "name": "Jodi Murphy",
    "ts": "2026-10-01T17:00:35.407Z"
@@ -1344,6 +1614,12 @@
    "party": "Conservative",
    "name": "Harj Dhaliwal",
    "ts": "2026-09-29T23:30:13.030Z"
+  },
+  {
+   "riding": "Surrey-Newton",
+   "party": "CentreBC",
+   "name": "Harman Preet Singh",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Surrey-Newton",
@@ -1365,6 +1641,12 @@
   },
   {
    "riding": "Surrey-Panorama",
+   "party": "CentreBC",
+   "name": "Manav Manro",
+   "ts": "2026-10-04T00:00:35.032Z"
+  },
+  {
+   "riding": "Surrey-Panorama",
    "party": "BC Green",
    "name": "Nolen Scott",
    "ts": "2026-10-01T17:00:35.407Z"
@@ -1380,6 +1662,12 @@
    "party": "Conservative",
    "name": "Jessy Sahota",
    "ts": "2026-09-29T23:30:13.030Z"
+  },
+  {
+   "riding": "Surrey-Serpentine River",
+   "party": "CentreBC",
+   "name": "Judy Higginbotham",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Surrey-Serpentine River",
@@ -1422,6 +1710,12 @@
    "party": "Conservative",
    "name": "Trevor Halford",
    "ts": "2026-09-23T22:30:21.620Z"
+  },
+  {
+   "riding": "Surrey-White Rock",
+   "party": "CentreBC",
+   "name": "Waqas Rana",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Vancouver-Fraserview",
@@ -1467,9 +1761,21 @@
   },
   {
    "riding": "Vancouver-Hastings",
+   "party": "Libertarian",
+   "name": "Phil Webb",
+   "ts": "2026-09-28T04:48:52.032Z"
+  },
+  {
+   "riding": "Vancouver-Hastings",
    "party": "Conservative",
    "name": "Phyllis Tang",
    "ts": "2026-10-03T17:04:26.596Z"
+  },
+  {
+   "riding": "Vancouver-Kensington",
+   "party": "BC Green",
+   "name": "Adam Hawk",
+   "ts": "2026-10-03T19:00:37.421Z"
   },
   {
    "riding": "Vancouver-Kensington",
@@ -1482,6 +1788,12 @@
    "party": "BC NDP",
    "name": "Mable Elmore",
    "ts": "2026-09-26T20:30:39.087Z"
+  },
+  {
+   "riding": "Vancouver-Langara",
+   "party": "CentreBC",
+   "name": "Alan Beesley",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Vancouver-Langara",
@@ -1514,10 +1826,22 @@
    "ts": "2026-09-23T23:18:10.000Z"
   },
   {
+   "riding": "Vancouver-Little Mountain",
+   "party": "BC Green",
+   "name": "Sarah MacLeod",
+   "ts": "2026-10-03T18:00:36.997Z"
+  },
+  {
    "riding": "Vancouver-Point Grey",
    "party": "Conservative",
    "name": "Alex McMillan",
    "ts": "2026-09-28T04:39:34.893Z"
+  },
+  {
+   "riding": "Vancouver-Point Grey",
+   "party": "BC Green",
+   "name": "Beatrice Sharpe",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "Vancouver-Point Grey",
@@ -1606,7 +1930,7 @@
   {
    "riding": "Vancouver-South Granville",
    "party": "BC Green",
-   "name": "Maria J. Cruz",
+   "name": "Maria J Cruz",
    "ts": "2026-09-29T20:30:12.832Z"
   },
   {
@@ -1624,7 +1948,7 @@
   {
    "riding": "Vancouver-Strathcona",
    "party": "Conservative",
-   "name": "Jordan McIntosh",
+   "name": "Jordan Zheng McIntosh",
    "ts": "2026-10-02T07:00:35.074Z"
   },
   {
@@ -1682,6 +2006,18 @@
    "ts": "2026-09-24T21:00:29.642Z"
   },
   {
+   "riding": "Vancouver-Yaletown",
+   "party": "Unaffiliated",
+   "name": "Timothy Webster",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "Vernon-Lumby",
+   "party": "BC Green",
+   "name": "Blair Visscher",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
    "riding": "Vernon-Lumby",
    "party": "OneBC",
    "name": "Chantel Gibbs",
@@ -1737,6 +2073,12 @@
   },
   {
    "riding": "West Kelowna-Peachland",
+   "party": "BC Green",
+   "name": "Adam Frank",
+   "ts": "2026-10-04T03:30:37.648Z"
+  },
+  {
+   "riding": "West Kelowna-Peachland",
    "party": "BC NDP",
    "name": "George Morgan",
    "ts": "2026-10-01T17:00:35.407Z"
@@ -1764,6 +2106,12 @@
    "party": "BC NDP",
    "name": "Honieh Barzegari",
    "ts": "2026-10-02T02:00:35.243Z"
+  },
+  {
+   "riding": "West Vancouver-Capilano",
+   "party": "OneBC",
+   "name": "Naomi Chocyk",
+   "ts": "2026-10-04T03:30:37.648Z"
   },
   {
    "riding": "West Vancouver-Sea to Sky",
