@@ -26,6 +26,8 @@ import {
 } from "@/components/primitives";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import MissionRegisterCTA from "./MissionRegisterCTA";
+import ElectionDirectoryCards from "./ElectionDirectoryCards";
+import type { ElectionCardData } from "@/lib/utils/electionsIndexSeo";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildElectionSlug } from "@/lib/utils/slugs";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
@@ -33,7 +35,6 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   getActiveSeatsByShapeIds,
-  getActiveSeats,
   getCandidatesBySeatIds,
 } from "@/lib/services/elections";
 import { getProfileRole, getUserBoundaryMemberships } from "@/lib/services/profile";
@@ -59,12 +60,15 @@ export interface MatchedBoundary {
 }
 
 interface ElectionsPageClientProps {
-  initialSeats: SeatWithCandidates[];
+  /** Live elections for the logged-out view (cards linking to each hub). */
+  elections?: ElectionCardData[];
+  initialSeats?: SeatWithCandidates[];
   initialRole?: string | null;
   initialBoundaries?: MatchedBoundary[];
 }
 
 export default function ElectionsPageClient({
+  elections = [],
   initialSeats = [],
   initialRole = null,
   initialBoundaries = [],
@@ -123,14 +127,13 @@ export default function ElectionsPageClient({
         const shapeIds = boundariesToFetch.map((b) => b.id);
         let resSeats: SeatWithCandidates[] = [];
 
+        // No location -> no seat list: the election cards (elections prop)
+        // are the unscoped view, so there is nothing to fetch.
         if (shapeIds.length > 0) {
           const { data: seatRows } = await getActiveSeatsByShapeIds(
             supabase,
             shapeIds
           );
-          resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
-        } else {
-          const { data: seatRows } = await getActiveSeats(supabase);
           resSeats = (seatRows || []) as unknown as SeatWithCandidates[];
         }
 
@@ -280,10 +283,15 @@ export default function ElectionsPageClient({
     await fetchSeatsForBoundaries(resetTarget);
   };
 
+  // No location yet: the election cards stand in for the seat list. Layout
+  // order is unchanged either way -- the finder leads on desktop (finding your
+  // own candidates is the point) and the list/cards lead on mobile.
+  const cardMode = !loading && matchedBoundaries.length === 0 && elections.length > 0;
+
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 flex flex-col gap-6 lg:gap-8">
       <MissionRegisterCTA variant="elections" nextPath="/elections" />
-      <PageHeader icon={Vote} title={t("elections.title")} />
+      <PageHeader icon={Vote} title={t("elections.h1")} subtitle={t("elections.intro")} wrapTitle />
 
       {role === "normal" && (
         <Card
@@ -422,6 +430,10 @@ export default function ElectionsPageClient({
       {loading ? (
         <div className="order-2 lg:order-3 flex justify-center py-16">
           <Spinner size="md" />
+        </div>
+      ) : cardMode ? (
+        <div className="order-2 lg:order-3">
+          <ElectionDirectoryCards elections={elections} />
         </div>
       ) : seats.length === 0 ? (
         <div className="order-2 lg:order-3">

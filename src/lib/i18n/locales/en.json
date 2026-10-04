@@ -188,7 +188,15 @@
     "resetLoc": "Reset to your profile location",
     "showingSeats": "Showing active seats",
     "runCta": "Interested in serving your community? Switch to candidate mode to file your candidacy.",
-    "runBtn": "Run for Office"
+    "runBtn": "Run for Office",
+    "h1": "Who's Running in My Constituency?",
+    "intro": "Every 2026 candidate by riding, ward and district. Pick an election below, or find your own constituency with your location or an address.",
+    "browseTitle": "Browse every 2026 election",
+    "browseSubtitle": "Open an election to see its parties, races and every candidate.",
+    "races": "races",
+    "candidatesComingSoon": "Candidate list coming soon",
+    "placesTitle": "Browse who's running by place",
+    "placesSubtitle": "Jump straight to the places with the most candidates."
   },
   "findDistrict": {
     "title": "Find your electoral district and representatives",

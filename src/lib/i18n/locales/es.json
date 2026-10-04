@@ -188,7 +188,15 @@
     "resetLoc": "Restablecer a tu ubicación guardada",
     "showingSeats": "Mostrando puestos activos",
     "runCta": "¿Quieres representar a tu comunidad? Cambia a modo candidato y presenta tu candidatura.",
-    "runBtn": "Postularme a un cargo"
+    "runBtn": "Postularme a un cargo",
+    "h1": "¿Quién se postula en mi circunscripción?",
+    "intro": "Todos los candidatos de 2026 por circunscripción, barrio y distrito. Elige una elección abajo o encuentra tu circunscripción con tu ubicación o una dirección.",
+    "browseTitle": "Explora cada elección de 2026",
+    "browseSubtitle": "Abre una elección para ver sus partidos, contiendas y a todos los candidatos.",
+    "races": "contiendas",
+    "candidatesComingSoon": "Lista de candidatos próximamente",
+    "placesTitle": "Explora quién se postula por lugar",
+    "placesSubtitle": "Ve directo a los lugares con más candidatos."
   },
   "findDistrict": {
     "title": "Encuentra tu distrito electoral y representantes",

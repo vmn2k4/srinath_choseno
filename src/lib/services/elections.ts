@@ -32,6 +32,41 @@ export async function getElections(supabase: Client) {
   return supabase.from("elections").select("*").order("created_at", { ascending: false });
 }
 
+export type PublicElectionDirectoryRow = {
+  election_id: string;
+  election_name: string;
+  election_date: string | null;
+  status: string;
+  seat_count: number;
+  candidate_count: number;
+};
+
+// One row per live election with its race/candidate counts -- see
+// 20261004000000_public_election_directory.sql. `as any` on the client:
+// types.ts hasn't been regenerated since that migration (needs Docker), same
+// situation as signupFunnel.ts; drop the cast once it has.
+export async function getPublicElectionDirectory(supabase: Client) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const res = await (supabase as any).rpc("get_public_election_directory");
+  return res as { data: PublicElectionDirectoryRow[] | null; error: { message: string } | null };
+}
+
+export type PublicElectionPlaceRow = {
+  election_id: string;
+  shape_id: number;
+  place_name: string;
+  candidate_count: number;
+};
+
+// Top places per election by candidate count -- see
+// 20261004000001_public_election_places.sql. Same `as any` caveat as
+// getPublicElectionDirectory above.
+export async function getPublicElectionPlaces(supabase: Client, perElection = 8) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const res = await (supabase as any).rpc("get_public_election_places", { p_per_election: perElection });
+  return res as { data: PublicElectionPlaceRow[] | null; error: { message: string } | null };
+}
+
 export async function getElectionById(supabase: Client, electionId: string) {
   return supabase
     .from("elections")

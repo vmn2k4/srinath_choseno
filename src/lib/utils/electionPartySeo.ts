@@ -22,7 +22,7 @@ export interface Faq {
   a: string;
 }
 
-const plural = (n: number, one: string, many = `${one}s`) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
+export const plural = (n: number, one: string, many = `${one}s`) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
 
 export function formatElectionDate(d?: string | null): string | null {
   if (!d) return null;
@@ -146,7 +146,7 @@ export function partyFacts(election: ElectionLite, party: PartySummary, view: Pa
 // ── Structured data ─────────────────────────────────────────────────────
 const abs = (path: string) => `${SITE_URL}${path}`;
 
-const breadcrumb = (items: Array<{ name: string; path: string }>) => ({
+export const breadcrumb = (items: Array<{ name: string; path: string }>) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
@@ -155,7 +155,7 @@ const breadcrumb = (items: Array<{ name: string; path: string }>) => ({
   ],
 });
 
-const faqPage = (faqs: Faq[]) => ({
+export const faqPage = (faqs: Faq[]) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),

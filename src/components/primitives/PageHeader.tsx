@@ -9,6 +9,7 @@ export default function PageHeader({
   subtitle,
   action,
   size = "default",
+  wrapTitle = false,
   className = "",
 }: {
   icon?: ComponentType<{ className?: string; size?: number }>;
@@ -16,6 +17,8 @@ export default function PageHeader({
   subtitle?: ReactNode;
   action?: ReactNode;
   size?: "default" | "hero";
+  /** Let a long title wrap instead of truncating to one line. */
+  wrapTitle?: boolean;
   className?: string;
 }) {
   const titleSize = size === "hero" ? "text-3xl sm:text-4xl" : "text-2xl";
@@ -25,7 +28,7 @@ export default function PageHeader({
       <div className="flex items-center gap-3 min-w-0">
         {Icon && <Icon className="text-primary shrink-0" size={size === "hero" ? 28 : 24} />}
         <div className="min-w-0">
-          <h1 className={`${titleSize} font-bold text-text-main truncate`}>{title}</h1>
+          <h1 className={`${titleSize} font-bold text-text-main ${wrapTitle ? "" : "truncate"}`.trim()}>{title}</h1>
           {subtitle && <p className="text-text-muted text-sm mt-0.5">{subtitle}</p>}
         </div>
       </div>

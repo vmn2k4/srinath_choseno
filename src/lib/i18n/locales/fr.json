@@ -188,7 +188,15 @@
     "resetLoc": "Réinitialiser selon votre profil",
     "showingSeats": "Sièges actifs affichés",
     "runCta": "Vous souhaitez vous investir pour votre commune ? Passez en mode candidat pour déclarer votre candidature.",
-    "runBtn": "Déposer ma candidature"
+    "runBtn": "Déposer ma candidature",
+    "h1": "Qui se présente dans ma circonscription ?",
+    "intro": "Tous les candidats de 2026 par circonscription, quartier et district. Choisissez une élection ci-dessous ou trouvez votre circonscription grâce à votre position ou à une adresse.",
+    "browseTitle": "Parcourir chaque élection de 2026",
+    "browseSubtitle": "Ouvrez une élection pour voir ses partis, ses courses et tous ses candidats.",
+    "races": "courses",
+    "candidatesComingSoon": "Liste des candidats bientôt disponible",
+    "placesTitle": "Parcourir les candidats par lieu",
+    "placesSubtitle": "Accédez directement aux lieux qui comptent le plus de candidats."
   },
   "findDistrict": {
     "title": "Trouvez votre circonscription et vos élus",

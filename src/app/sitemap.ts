@@ -3,6 +3,7 @@ import { createPublicClient } from "@/lib/supabase/public";
 import { getPublishedNewsArticles, NEWS_CATEGORIES } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds, getElectionCandidatesWithParty } from "@/lib/services/elections";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
+import { withRetry } from "@/lib/utils/withRetry";
 import { summarizeParties, toRosterCandidates } from "@/lib/utils/electionParties";
 import { hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { getAllBlogPosts } from "@/lib/services/blogs";
@@ -17,20 +18,6 @@ const baseUrl = SITE_URL;
 // under crawler load. A failed regeneration keeps serving the last good copy.
 export const revalidate = 21600;
 
-
-// Anon queries have a 3s statement_timeout, and a cold DB connection pays its
-// first-plan cost inside that budget, so a query that normally takes ~1s can
-// time out once. Retry those; anything else fails fast.
-async function withRetry<T extends { error?: unknown }>(fn: () => PromiseLike<T>, attempts = 5): Promise<T> {
-  let res = await fn();
-  for (let i = 1; i < attempts; i++) {
-    const msg = String((res.error as { message?: string } | null | undefined)?.message ?? "");
-    if (!res.error || !/timeout|schema cache/i.test(msg)) break;
-    await new Promise((r) => setTimeout(r, 1000 * i));
-    res = await fn();
-  }
-  return res;
-}
 
 function getStaticRoutes(): MetadataRoute.Sitemap {
   return [
