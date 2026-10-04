@@ -109,10 +109,16 @@ export default async function CandidacyPage({ params }: CandidatePageProps) {
   const supabase = await createPublicClient();
 
   const candidate = await getCandidate(realCandidateId);
+  // realCandidateId is the slug's short hash ("c68816"), good only for
+  // getCandidate's lookup -- the answers/posts columns are uuids, so those
+  // queries need the resolved candidate's full id.
+  const candidateUuid = candidate?.id;
 
   const [{ data: answers }, { data: posts }, supportCountRes, candidateProfileRes] = await Promise.all([
-    getPublicCandidateAnswers(supabase, realCandidateId),
-    getCandidacyWallPosts(supabase, realCandidateId, candidate?.profiles?.current_ghost_id),
+    candidateUuid ? getPublicCandidateAnswers(supabase, candidateUuid) : Promise.resolve({ data: [] }),
+    candidateUuid
+      ? getCandidacyWallPosts(supabase, candidateUuid, candidate?.profiles?.current_ghost_id)
+      : Promise.resolve({ data: [] }),
     candidate?.politician_id
       ? getSupporterCount(supabase, candidate.politician_id)
       : Promise.resolve({ count: 0 }),

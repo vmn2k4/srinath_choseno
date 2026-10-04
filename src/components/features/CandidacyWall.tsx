@@ -197,6 +197,10 @@ export default function CandidacyWall({
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
   const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [candidate, setCandidate] = useState<CandidateRecord | null>(initialCandidate);
+  // candidateId is the URL slug (e.g. "jane-doe-c68816"); every DB column that
+  // takes a candidate id is a uuid, so queries/writes must use the resolved
+  // record's id. The slug is only valid as input to getPublicCandidateById.
+  const realCandidateId = candidate?.id ?? candidateId;
   const [candidateProfile, setCandidateProfile] = useState<any>(initialCandidateProfile);
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>(initialAnswers);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
@@ -273,7 +277,7 @@ export default function CandidacyWall({
   }, [posts]);
 
   const loadAnswers = async () => {
-    const { data: answerRows } = await getPublicCandidateAnswers(supabase, candidateId);
+    const { data: answerRows } = await getPublicCandidateAnswers(supabase, realCandidateId);
     const visible = ((answerRows as unknown as QuestionnaireAnswer[]) || [])
       .filter((a) => a.election_questions?.visible_to_public)
       .sort(
@@ -289,7 +293,7 @@ export default function CandidacyWall({
 
   const loadPosts = async (ghostId?: string) => {
     const targetGhostId = ghostId ?? candidate?.profiles?.current_ghost_id;
-    const { data } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
+    const { data } = await getCandidacyWallPosts(supabase, realCandidateId, targetGhostId);
     const authored = (data as PostWithComments[]) || [];
 
     let mentioned: PostWithComments[] = [];
@@ -361,7 +365,7 @@ export default function CandidacyWall({
             getAnonymousSupportSettings(supabase),
             politicianId ? getSupporterCount(supabase, politicianId) : Promise.resolve({ count: 0 }),
             politicianId ? getPoliticianEngagementSummaries(supabase, [politicianId]) : Promise.resolve({ data: [] }),
-            getPublicCandidateAnswers(supabase, candidateId),
+            getPublicCandidateAnswers(supabase, cand.id),
           ]);
 
         if (politicianId && isMounted) {
@@ -385,7 +389,9 @@ export default function CandidacyWall({
       }
 
       const targetGhostId = cand?.profiles?.current_ghost_id;
-      const { data: postRows } = await getCandidacyWallPosts(supabase, candidateId, targetGhostId);
+      const { data: postRows } = cand
+        ? await getCandidacyWallPosts(supabase, cand.id, targetGhostId)
+        : { data: [] };
       if (isMounted) {
         setPosts((postRows as PostWithComments[]) || []);
         setLoading(false);
@@ -413,7 +419,7 @@ export default function CandidacyWall({
     if (!candidate) return;
     const next = !candidate.nomination_filed;
     setCandidate((prev) => (prev ? { ...prev, nomination_filed: next } : null));
-    await updateNominationFiled(supabase, candidateId, next);
+    await updateNominationFiled(supabase, realCandidateId, next);
   };
 
   // Shared "you need to sign in first" redirect -- used by the Support
@@ -463,7 +469,7 @@ export default function CandidacyWall({
     e.preventDefault();
     setSubmittingClaim(true);
     setClaimStatus("");
-    const { error } = await requestCandidacyClaim(supabase, candidateId, {
+    const { error } = await requestCandidacyClaim(supabase, realCandidateId, {
       motivation: claimMotivation,
       contactEmail: claimContactEmail,
       socialMediaInfo: claimSocialMedia,
@@ -516,7 +522,7 @@ export default function CandidacyWall({
       const { data: newPost, error } = await createCandidatePost(supabase, {
         ghost_id: profile.current_ghost_id,
         content: newPostContent.trim(),
-        election_candidate_id: candidateId,
+        election_candidate_id: realCandidateId,
         link_metadata: linkMetadata,
         image_url: finalImageUrl,
       });
@@ -616,7 +622,7 @@ export default function CandidacyWall({
         answerId,
         activeGhostId,
         content.trim(),
-        candidateId
+        realCandidateId
       );
       if (error) throw error;
 
@@ -1015,7 +1021,7 @@ export default function CandidacyWall({
               <Alert tone="info" className="text-xs">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
                   <span>Answer your interview questions to let voters hear from you directly.</span>
-                  <Button size="sm" onClick={() => router.push(`/apply/${candidateId}`)} className="shrink-0">
+                  <Button size="sm" onClick={() => router.push(`/apply/${realCandidateId}`)} className="shrink-0">
                     Answer Now
                   </Button>
                 </div>
@@ -1373,7 +1379,7 @@ export default function CandidacyWall({
 
       {showReel && (
         <PlayInterviewReel
-          candidateId={candidateId}
+          candidateId={realCandidateId}
           candidateName={displayName}
           onClose={() => setShowReel(false)}
         />
