@@ -20,7 +20,7 @@ const BASE_URL = SITE_URL;
 // CandidacyWall re-fetches client-side with the real session on mount
 // regardless of this SSR shell, so the only cost is a brief loading state
 // for that rare admin-preview case, never wrong content.
-export const revalidate = 300;
+export const revalidate = 86400;
 
 interface CandidatePageProps {
   params: Promise<{ candidateId: string }>;

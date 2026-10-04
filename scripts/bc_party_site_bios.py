@@ -123,7 +123,10 @@ def fold(s):
 
 
 def rkey(r):
-    return " ".join(sorted(re.findall(r"[a-z0-9]+", fold(r or ""))))
+    # Dashes (incl. the en-dash party sites use: "Vancouver–South Granville") become word
+    # breaks BEFORE accent-folding, which would otherwise drop them and fuse the words.
+    r = (r or "").replace("–", "-").replace("—", "-").replace("&", "and").replace("-", " ")
+    return " ".join(sorted(re.findall(r"[a-z0-9]+", fold(r))))
 
 
 def surname(n):
@@ -150,7 +153,11 @@ def main():
     plan, nomatch = [], []
     for c in scraped:
         pool = [d for d in cands if d["party"] == DB_PARTY[c["party"]] and surname(d["name"]) == surname(c["name"])]
-        hit = [d for d in pool if rkey(d["riding"]) == rkey(c["riding"])] or (pool if len(pool) == 1 else [])
+        hit = [d for d in pool if rkey(d["riding"]) == rkey(c["riding"])]
+        # Riding text can differ from ours; fall back to surname alone only when the first
+        # initial agrees too -- otherwise a same-surname candidate in ANOTHER riding matches.
+        if not hit and len(pool) == 1 and pool[0]["name"][:1].lower() == c["name"][:1].lower():
+            hit = pool
         if len(hit) != 1:
             nomatch.append((c["party"], c["name"], c["riding"], len(pool)))
             continue

@@ -10,7 +10,7 @@ export const contentType = OG_IMAGE_CONTENT_TYPE;
 // Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
 // route eligible for Next's static image caching; revalidate bounds how
 // stale a cached card can get after the candidate's data changes.
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 interface Props {
   params: Promise<{ candidateId: string }>;
@@ -51,7 +51,7 @@ export default async function Image({ params }: Props) {
           subtitle: candidate?.statement || null,
           photoUrl: avatarUrl || null,
         }),
-        next: { revalidate: 3600 },
+        next: { revalidate: 86400 },
       });
       if (res.ok) {
         const buffer = await res.arrayBuffer();

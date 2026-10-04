@@ -5,17 +5,20 @@ const PAGE_SIZE = 1000;
 
 type PageResult<T> = { data: T[] | null; error: unknown };
 
+// pageSize: smaller pages for heavy joins that would exceed the anon role's
+// 3s statement_timeout at 1000 rows.
 export async function fetchAllPages<T>(
-  buildQuery: (from: number, to: number) => PromiseLike<PageResult<T>>
+  buildQuery: (from: number, to: number) => PromiseLike<PageResult<T>>,
+  pageSize: number = PAGE_SIZE
 ): Promise<PageResult<T>> {
   let allRows: T[] = [];
   let from = 0;
   while (true) {
-    const { data, error } = await buildQuery(from, from + PAGE_SIZE - 1);
+    const { data, error } = await buildQuery(from, from + pageSize - 1);
     if (error) return { data: null, error };
     allRows = allRows.concat(data || []);
-    if (!data || data.length < PAGE_SIZE) break;
-    from += PAGE_SIZE;
+    if (!data || data.length < pageSize) break;
+    from += pageSize;
   }
   return { data: allRows, error: null };
 }

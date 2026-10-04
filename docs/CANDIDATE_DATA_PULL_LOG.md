@@ -23,6 +23,11 @@ current process, and the two big sections below it (primary-contamination
 cleanup, then the minor-party/independent gap fill) for how this was
 learned the hard way and what's still not automated.
 
+**Latest full reconciliation: 2026-10-02** — every US House, Senate **and
+Governor** seat re-checked against Ballotpedia in one pass (see the
+"2026-10-02 — Ballotpedia refresh" section). Scripts for that pass are saved
+in [`scripts/ballotpedia_refresh/`](../scripts/ballotpedia_refresh/README.md).
+
 ## Summary, as of 2026-09-03
 
 | Election | Seats | Candidates | Source | Script |
@@ -39,6 +44,16 @@ learned the hard way and what's still not automated.
 | US House minor-party/independent gap fill | 435 | ~350 added | Ballotpedia (full certified ballot, not just headline nominees) | `scripts/us_house_primary_fixes/add_missing.py` |
 
 ---
+
+**Update, 2026-10-02 — US Midterm Elections only** (everything else in the
+table above is unchanged since 2026-09-03; BC/Ontario/Manitoba have their own
+later sections below):
+
+| Office | Seats | Candidates before 10-02 | Candidates now | Source |
+|---|---|---|---|---|
+| U.S. House | 435 | 1,285 | **1,235** | Ballotpedia, per-state "elections in <State>, 2026" pages |
+| U.S. Senate | 35 | 302 | **158** | Ballotpedia, per-state "Senate election in <State>, 2026" pages (FL + OH are *special* elections) |
+| Governor | 36 | 32 | **162** | Ballotpedia, per-state "gubernatorial election, 2026" pages |
 
 ## BC (Councillor + Mayor + School Trustee) — Elections BC LECFA PDF
 
@@ -2169,6 +2184,142 @@ Rhode Island (primaries still not held as of 2026-09-04) — same exclusions
 as the original fix; re-run this same Ballotpedia sweep alongside the
 original primary-contamination pipeline once each is available.
 
+## 2026-10-02 — Ballotpedia refresh: House, Senate and Governor, all 506 seats
+
+**Why**: the Senate and Governor rolls had never been reconciled against anything
+post-primary (Senate was still the original FEC pull, Governor covered only a few
+states), and the House had gone three weeks without a re-check — NC, NH and RI in
+particular were never part of the 2026-09-03/04 per-state cleanup (that pass fixed
+"all but NC/NH/RI").
+
+**Source**: Ballotpedia only, per the "Re-running these" guidance. Each page's
+current-year *general election* list (not the primary tables) is treated as the real
+ballot; anything listed under "Withdrawn or disqualified" / "Did not make the
+ballot" is treated as not running.
+
+### How the data got out of Ballotpedia (this was the hard part)
+
+- **`curl` and `WebFetch` are blocked** — Ballotpedia answers with an empty HTTP 202
+  bot-challenge page. What works: a real browser tab already on `ballotpedia.org`
+  (the in-app browser pane), running same-origin `fetch()` from the JS console. The
+  scraper is saved as `scripts/ballotpedia_refresh/scrape_ballotpedia.js`.
+- **Throttling**: after roughly 60–100 rapid requests, pages start coming back with no
+  `#mw-content-text` (looks like a normal 200). Keep ≥1.2 s between fetches, and
+  re-run *only* the states still missing rather than the whole list. Every full pass
+  here needed 1–2 patch-up rounds for the last alphabet states.
+- **Getting JSON out of the browser**: `fetch()` from the Ballotpedia origin to
+  `localhost` is blocked, and `navigator.clipboard` needs focus. What worked: stash
+  the JSON in `window.name` (survives navigation), navigate that tab to a tiny local
+  Python receiver (`scripts/ballotpedia_refresh/recv.py`), which POSTs `window.name`
+  back to itself and writes the file.
+- **Navigating wipes the page's JS globals** — re-define the helper functions after
+  any `navigate`, or the background loop silently dies.
+
+### Page-format traps (each one would have written bad data)
+
+1. **House pages come in two layouts**: per-district "General election candidates"
+   lists (WA, CA, TX, ...) and per-race "General election for U.S. House <State>
+   District N" tables (AL partly, AK, DE, ND, SD, VT, WY, ...). `parseHouse` handles both.
+2. **Senate/Governor pages contain the 2024/2022/2018 general-election tables under
+   the same heading as 2026.** Taking "the first `General election for` block" returned
+   Florida's *2024* race (Rick Scott vs. Mucarsel-Powell) as if it were current.
+   Florida and Ohio Senate are **special** elections whose heading starts "Special
+   general election for". Fix: match `(Special )?[Gg]eneral election for`, and require
+   the block's intro sentence to contain "2026" *and* "running" — a block that says
+   "ran"/"defeated" is a past race. Caught only because the Florida diff looked wrong;
+   verify every race's intro sentence, don't trust position on the page.
+3. **A naive scrape of the first block also pulls in poll rows, bios, withdrawn
+   candidates and primary lists** (Maine Governor returned 21 "candidates" including
+   "Siena University/The New York Times"). Cut the block at the first of "Incumbents are
+   bolded" / "Withdrawn or disqualified" / any "primary" heading.
+4. **Governor URLs differ**: most are `<State>_gubernatorial_election,_2026`, but
+   AK, IL, KS, MD, MN, OH, SD are `<State>_gubernatorial_and_lieutenant_gubernatorial_
+   election,_2026` (the plain URL is a 404 that still returns HTTP-200-looking HTML).
+   Senate URL is **singular** `..._Senate_election_in_<State>,_2026` (plural 404s).
+   Lieutenant Governor blocks share the page — filter on heading `^Governor`.
+5. **Party text arrives as a clean abbreviation (`D`/`R`/`L`/`G`), a full name
+   (`Democratic Party`), or a cross-endorsement (`Democratic Party, Working Families`
+   or `D / Working Families Party`)** — take the first segment. Write-ins appear as
+   `Name (Party):Write-in`; keep the parenthesised party, default `Independent`.
+6. **Names are not comparable as strings.** DB names have middle names, honorifics and
+   mangled suffixes (`Nicholas Iii Begich`, `S. Brett Brett Hon. Guthrie`,
+   `Asa Bryant Iii Buck`, `Ashley Hinson Arenholz`); Ballotpedia uses nicknames
+   (`Bob Smith` vs `Robert Bob J Smith`). A (last name, first initial) key produced
+   ~100 false add/remove pairs. Final matching: **last name within the same seat**, plus
+   token-containment (Ballotpedia last name appears anywhere in the DB name, which
+   catches `Hinson`/`Hinson Arenholz`), plus fuzzy ≥0.82 for typos (`Etsi`/`Esti`,
+   `Riechard`/`Reichard` — those were left as the DB spelling, not "fixed").
+7. **Ballotpedia lists certified write-in candidates** in the general-election list.
+   Earlier sweeps (2026-09-04) deliberately included write-ins, so this pass kept them.
+   If the policy ever changes, filter on party text `Write-in`.
+
+### What ran
+
+Queries to export current state (House shown; Senate/Governor are the same with
+`es.role_title in ('Governor','U.S. Senator')`):
+
+```sql
+select es.role_title, ms.properties->>'statefp', ms.code, es.id,
+       coalesce(ec.id::text,''), coalesce(p.full_name,''), coalesce(pp.name,''),
+       (ec.added_by_election_admin_id is not null)
+from election_seats es join elections e on e.id=es.election_id
+join map_shapes ms on ms.id=es.map_shape_id
+left join election_candidates ec on ec.seat_id=es.id
+left join profiles p on p.id=ec.politician_id
+left join politician_profiles pr on pr.id=ec.politician_id
+left join political_parties pp on pp.id=pr.political_party_id
+where e.name='2026 US Midterm Elections' and es.role_title in ('U.S. Representative','U.S. Senator');
+```
+
+`map_shapes.code` is state FIPS + 2-digit district (`0650` = CA-50; at-large = `..00`).
+Senate and Governor seats share the same `State` shape, so one state FIPS has both.
+
+Safety checks before any delete (all in the saved SQL builders): row must have
+`added_by_election_admin_id` = the pipeline admin and `claimed_at IS NULL`; its profile is
+deleted only if it has no other candidacy, no `office_holders` link, no news-article link
+and no ratings. Every row about to be deleted was exported to CSV first. The whole change for
+each batch is a single transaction.
+
+**Results**
+
+| Batch | Removed | Added | New parties |
+|---|---|---|---|
+| House (435 seats) | 99 | 49 | Independent Party of Connecticut, America First Party Nebraska, Nebraska Working People |
+| Senate (35 seats) + Governor (36 seats) | 223 | 209 | 8 (Approval Voting, United Citizens, Faith in Humanity, Freedom and Unity, End the Corruption!, Green Mountain Peace and Justice Party of Vermont, American Solidarity, Prohibition) |
+
+- **House removals** were primary losers and independents who did not make the
+  ballot, concentrated in **NC (~34, after holding Chuck Edwards out)**, **NH (14)**, plus CO, MA, NY, TX, WV, FL, GA, MI, OH.
+  Adds were minor-party/independent nominees missing before (NC Libertarians/Greens,
+  MD Greens, MA/NE/WY/SD independents) and **Delaware**: Arminio (R) replaces Whalen.
+- **Senate removals** were primary losers plus sitting senators who are not on the 2026 ballot
+  (Ernst, McConnell, Tillis, Durbin, Peters, Daines, Cornyn, Mullin, Tuberville, ...).
+  Their *candidacy* rows were deleted; their profiles were **kept** because they have linked
+  news articles / officeholder history.
+- **Governor** went from 32 to 162 candidates — essentially all of it new coverage, since
+  only a handful of states had been loaded before (see the Governor section above).
+
+### Deliberately NOT changed (left for a human)
+
+- **Chuck Edwards (R, NC-11)** — sitting congressman. Ballotpedia shows him winning the
+  primary, then under "Did not make the ballot" with Jennifer Balkcom as the Republican.
+  Kept in the DB on user instruction; verify against the NC State Board of Elections.
+- **Andrew Tupone (Green, PA-7)** — Ballotpedia: did not make the ballot. Kept on user
+  instruction (he also has a linked news article).
+- **Louisiana (6 districts) and FL-10** — Ballotpedia lists no candidates yet, so the
+  existing rows were left as-is.
+- **NY-10 Daniel Goldman** — Ballotpedia shows him with party "Incumbent" and no party;
+  skipped by the diff, needs a manual look.
+- Ballotpedia's own banner on several states says "The candidate list in this election
+  may not be complete" — treat the result as a snapshot, not final.
+
+### Still not automated
+
+The browser scrape and file hand-off are manual. The diff and SQL-builder scripts are saved but
+read fixed filenames in the current directory. A proper `scripts/refresh_us_2026_from_ballotpedia.py`
+would need either a headless-browser fetch that passes Ballotpedia's bot check, or an accepted
+manual paste step. The House removal side is now covered by `build_house_sql.py`, which
+closes the "Known gap" noted in the section below.
+
 ## Re-running these
 
 ### ⚠️ US House + Senate: `refresh_us_2026_candidates.py` is superseded — do not treat it as the source of truth
@@ -2209,8 +2360,10 @@ and updates as candidates drop or are added. To re-check a state:
    (`MISSING = {district: [(name, party), ...]}`, optional `NEW_PARTIES`)
    — same pattern used for the 2026-09-04 minor-party sweep.
 
-**Known gap, honestly**: nothing in this repo automates the removal side
-of this yet. `add_missing.py` is intentionally add-only (this pass never
+**Known gap, honestly** *(partly closed 2026-10-02 — see that section; the
+scripts in `scripts/ballotpedia_refresh/` now handle removals too, but still need
+a manual browser scrape)*: nothing in this repo fully automates the removal side
+of this. `add_missing.py` is intentionally add-only (this pass never
 needed to delete a real, still-running nominee — only to restore ones
 wrongly deleted earlier, see the false-positive corrections above). A
 proper `scripts/refresh_us_2026_from_ballotpedia.py` — fetch every state's
@@ -2222,6 +2375,9 @@ before November 3 as more candidates withdraw and general-election ballots
 finalize.
 
 ```bash
+# US House + Senate + Governor, current process (2026-10-02): scrape Ballotpedia in a
+# browser tab, then diff + apply -- see scripts/ballotpedia_refresh/README.md
+#
 # US House + Senate: FEC-only — picks up new FEC filers, does NOT reliably
 # catch primary dropouts or minor-party/independent candidates. Superseded
 # by the Ballotpedia process above for anything post-primary. Still useful

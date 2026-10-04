@@ -23,7 +23,7 @@ const BASE_URL = SITE_URL;
 // flash), this one visibly SWAPS from the generic list to the personalized
 // one for a returning signed-in user -- a real, if brief, UI change worth
 // knowing about if it ever needs revisiting.
-export const revalidate = 300;
+export const revalidate = 86400; // daily; /api/revalidate/elections refreshes sooner when the roster changes
 
 export const metadata: Metadata = {
   title: "Track 2026 Election Candidates by District | Choseno",

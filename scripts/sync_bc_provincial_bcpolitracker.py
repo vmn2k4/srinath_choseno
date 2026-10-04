@@ -83,10 +83,13 @@ PARTY_MAP = {
     "BC Green": "Green Party",
     "CentreBC": "CentreBC",
     "Libertarian Party of BC": "Libertarian",
+    # The tracker spells this label two ways; both are the one party we already have.
+    "Christian Heritage Party of BC": "Christian Heritage Party",
+    "Christian Heritage Party of B.C.": "Christian Heritage Party",
 }
 # Real parties BCPoliTracker names that don't exist in political_parties yet
 # -- created on first use rather than silently dropped to Independent.
-UNSEEDED_PARTIES = {"OneBC"}
+UNSEEDED_PARTIES = {"OneBC", "Communist Party of BC", "Freedom Party of BC"}
 NO_PARTY_LABELS = {"Independent", "No affiliation", ""}
 
 
@@ -249,7 +252,13 @@ def same_person_variant(name, have):
     """Same seat already has this person under a spelling variant (accents, middle initial,
     Reah/Rohini): same surname + same first initial. Conservative -- skips rather than duplicates."""
     t = _fold(name)
-    return any((h := _fold(x)) and t and h[-1] == t[-1] and h[0][0] == t[0][0] for x in have)
+    def same(h):
+        if not (h and t and h[-1] == t[-1]):
+            return False
+        # same surname + same first initial, OR one name's words are all inside the other's
+        # ("Scott MacDonald" vs "Donald Scott MacDonald").
+        return h[0][0] == t[0][0] or set(t) <= set(h) or set(h) <= set(t)
+    return any(same(_fold(x)) for x in have)
 
 
 def build_plan(db_url):

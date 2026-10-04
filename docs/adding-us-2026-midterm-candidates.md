@@ -1,5 +1,18 @@
 # Starting the 2026 US Midterms & loading confirmed candidates — how-to / progress log
 
+> **Update 2026-10-02 — read before using this doc to refresh data.** This doc
+> covers the *initial* FEC-based load (`start_us_2026_midterms.py`), which is still the
+> right way to **create the election and its seats**. It is **no longer the right way to keep
+> candidate rolls current**: FEC has no concept of primary elimination, so any re-run after a
+> state's primary reintroduces losers. On 2026-10-02 every House, Senate and Governor seat was
+> reconciled against Ballotpedia instead (House 1,235 / Senate 158 / Governor 162 candidates).
+> The process, the Ballotpedia page-format traps, and the saved scripts are in
+> [CANDIDATE_DATA_PULL_LOG.md](CANDIDATE_DATA_PULL_LOG.md) ("2026-10-02 — Ballotpedia refresh")
+> and [`scripts/ballotpedia_refresh/`](../scripts/ballotpedia_refresh/README.md).
+> Governor candidates are no longer limited to the few states with a live-fetch handler —
+> all 36 Governor races now have their full ballot, sourced from Ballotpedia.
+
+
 **Status (as of this writing, run still in progress after a full data-correctness
 fix + clean redo — see "Critical bug" section below before trusting any earlier
 numbers from this session). See "RESUMING THIS WORK" if you're picking this up

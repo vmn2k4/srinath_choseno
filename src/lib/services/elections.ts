@@ -757,9 +757,11 @@ export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: numbe
 // lookup (getActiveSeatsByShapeIds) is naturally small and doesn't paginate.
 export async function getActiveSeats(
   supabase: Client,
-  opts: { limit?: number; offset?: number; withCount?: boolean } = {}
+  opts: { limit?: number; offset?: number; withCount?: boolean; skipStatusSync?: boolean } = {}
 ) {
-  await supabase.rpc("sync_election_status");
+  // skipStatusSync: the sitemap pages through this and doesn't need a write
+  // RPC per page -- every other caller still syncs.
+  if (!opts.skipStatusSync) await supabase.rpc("sync_election_status");
   let q = supabase
     .from("election_seats")
     .select(

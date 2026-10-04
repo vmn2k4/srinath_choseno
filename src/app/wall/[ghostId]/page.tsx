@@ -29,10 +29,12 @@ const BASE_URL = SITE_URL;
 // Every table this page reads (profiles' politician branch, politician_
 // profiles/supporters/ratings, non-removed posts, office_holders,
 // news_articles) is publicly readable independent of who's asking -- see
-// src/lib/supabase/publicServer.ts. 5 minutes: fresh enough that a just-cast
-// support/rating shows up quickly, long enough to spare the DB on repeat
-// visits to what's likely the highest-traffic page type in the app.
-export const revalidate = 300;
+// src/lib/supabase/publicServer.ts. A day: PoliticianWallClient refetches
+// posts and the supporter count client-side on mount, so visitors never see
+// the stale SSR numbers for long, and a short TTL only meant crawlers walking
+// thousands of walls re-rendered each one from the DB (see the 2026-10-03
+// outage). Nothing calls revalidatePath for walls, so TTL is the only refresh.
+export const revalidate = 86400;
 
 interface WallPageProps {
   params: Promise<{ ghostId: string }>;

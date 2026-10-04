@@ -10,7 +10,7 @@ export const contentType = OG_IMAGE_CONTENT_TYPE;
 // Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
 // route eligible for Next's static image caching; revalidate bounds how
 // stale a cached card can get after the seat's data changes.
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 interface Props {
   params: Promise<{ seatId: string }>;
@@ -49,7 +49,7 @@ export default async function Image({ params }: Props) {
   if (seat?.id && supabaseUrl) {
     try {
       const functionUrl = `${supabaseUrl}/functions/v1/generate-election-og-image?seatId=${seat.id}&v=${CARD_VERSION}`;
-      const res = await fetch(functionUrl, { next: { revalidate: 3600 } });
+      const res = await fetch(functionUrl, { next: { revalidate: 86400 } });
       if (res.ok) {
         const buffer = await res.arrayBuffer();
         return new Response(buffer, {

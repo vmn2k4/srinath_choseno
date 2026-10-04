@@ -18,7 +18,7 @@ const PAGE_SIZE = 24;
 // page.tsx) -- everything this page reads is public, so it doesn't need the
 // cookie-reading client, and revalidate actually works instead of silently
 // no-opping.
-export const revalidate = 300;
+export const revalidate = 86400;
 
 interface WallNewsPageProps {
   params: Promise<{ ghostId: string }>;

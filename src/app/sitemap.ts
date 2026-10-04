@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import { getPublishedNewsArticles, NEWS_CATEGORIES } from "@/lib/services/news";
 import { getActiveSeats, getCandidatesBySeatIds, getElectionCandidatesWithParty } from "@/lib/services/elections";
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
@@ -11,6 +11,11 @@ import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
 import { SITE_URL } from "@/lib/constants/site";
 
 const baseUrl = SITE_URL;
+
+// Cookie-free client + revalidate: with the cookie-based client every
+// /sitemap.xml hit re-ran hundreds of parallel candidate queries and timed out
+// under crawler load. A failed regeneration keeps serving the last good copy.
+export const revalidate = 21600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -36,11 +41,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
 
   const [{ data: articles }, { data: seats, error: seatsError }] = await Promise.all([
     getPublishedNewsArticles(supabase, { limit: 500 }),
-    fetchAllPages((from, to) => getActiveSeats(supabase, { limit: to - from + 1, offset: from })),
+    fetchAllPages((from, to) => getActiveSeats(supabase, { limit: to - from + 1, offset: from, skipStatusSync: true }), 300),
   ]);
 
   // News is secondary to elections/races, and an old article matters less
@@ -141,14 +146,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Chunked: one .in() over every seat id overflows the request URL, and a
     // chunk's result must stay under PostgREST's 1000-row response cap.
     const seatIds = allSeatRows.map((s) => s.id);
-    const candidateChunks = await Promise.all(
-      Array.from({ length: Math.ceil(seatIds.length / 50) }, (_, i) =>
-        getCandidatesBySeatIds(supabase, seatIds.slice(i * 50, i * 50 + 50)).then((r) => {
-          if (r.error) throw new Error(`sitemap: failed to load candidates: ${r.error.message}`);
-          return r.data || [];
+    // Few at a time: firing every chunk at once saturated the DB.
+    const chunkCount = Math.ceil(seatIds.length / 50);
+    const CHUNK_CONCURRENCY = 4;
+    const candidateChunks: Awaited<ReturnType<typeof getCandidatesBySeatIds>>["data"][] = [];
+    for (let start = 0; start < chunkCount; start += CHUNK_CONCURRENCY) {
+      const batch = await Promise.all(
+        Array.from({ length: Math.min(CHUNK_CONCURRENCY, chunkCount - start) }, (_, k) => {
+          const i = start + k;
+          return getCandidatesBySeatIds(supabase, seatIds.slice(i * 50, i * 50 + 50)).then((r) => {
+            if (r.error) throw new Error(`sitemap: failed to load candidates: ${r.error.message}`);
+            return r.data || [];
+          });
         })
-      )
-    );
+      );
+      candidateChunks.push(...batch);
+    }
     const candidates = candidateChunks.flat();
     const candidateList = (candidates || []) as Array<{
       id: string;

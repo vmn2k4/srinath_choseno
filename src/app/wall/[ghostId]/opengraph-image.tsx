@@ -11,7 +11,7 @@ export const contentType = OG_IMAGE_CONTENT_TYPE;
 // Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
 // route eligible for Next's static image caching; revalidate bounds how
 // stale a cached card can get after the wall owner's profile changes.
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 interface Props {
   params: Promise<{ ghostId: string }>;

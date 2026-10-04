@@ -14,7 +14,15 @@ import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } fro
 import { SITE_URL } from "@/lib/constants/site";
 import { loadElection, STATUS_LABELS } from "./loadElection";
 
-export const revalidate = 300;
+export const revalidate = 86400; // daily; /api/revalidate/elections refreshes sooner when the roster changes
+
+// Without this export Next renders a dynamic-segment route on every request
+// and ignores `revalidate`. An empty list prerenders nothing at build time
+// but lets each URL be generated once on first visit, then served from the
+// cache (ISR) until `revalidate` expires.
+export function generateStaticParams() {
+  return [];
+}
 
 interface PageProps {
   params: Promise<{ electionSlug: string }>;

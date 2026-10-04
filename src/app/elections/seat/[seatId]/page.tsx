@@ -25,7 +25,15 @@ const BASE_URL = SITE_URL;
 // a draft election sees a brief loading state instead of instant content,
 // never wrong/missing content. Everyone else (the overwhelming majority —
 // non-draft elections, non-admin visitors) gets the real caching win.
-export const revalidate = 300;
+export const revalidate = 86400; // daily; /api/revalidate/elections refreshes sooner when the roster changes
+
+// Without this export Next renders a dynamic-segment route on every request
+// and ignores `revalidate`. An empty list prerenders nothing at build time
+// but lets each URL be generated once on first visit, then served from the
+// cache (ISR) until `revalidate` expires.
+export function generateStaticParams() {
+  return [];
+}
 
 interface SeatPageProps {
   params: Promise<{ seatId: string }>;

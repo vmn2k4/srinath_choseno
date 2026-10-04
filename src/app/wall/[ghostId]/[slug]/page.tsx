@@ -17,7 +17,7 @@ import { notFound, redirect } from "next/navigation";
 const BASE_URL = SITE_URL;
 
 // Same reasoning as the wall page above (see src/app/wall/[ghostId]/page.tsx).
-export const revalidate = 300;
+export const revalidate = 86400;
 
 interface WallSlugPageProps {
   params: Promise<{ ghostId: string; slug: string }>;
