@@ -16,12 +16,17 @@ export const loadElection = cache(async (electionSlug: string) => {
   const electionId = extractIdFromSlug(electionSlug);
   if (electionId.length !== 36) return null;
   const supabase = await createPublicClient();
-  const { data: election } = await getElectionById(supabase, electionId);
+  const { data: election, error: electionError } = await getElectionById(supabase, electionId);
+  // Throw on a DB error instead of returning null/empty: ISR would cache that
+  // as a 404 or "0 candidates" page for a day. A throw is never cached (and
+  // keeps the last good page on revalidation).
+  if (electionError) throw electionError;
   if (!election) return null;
-  const [{ data: rows }, { data: seats }] = await Promise.all([
+  const [{ data: rows, error: rowsError }, { data: seats, error: seatsError }] = await Promise.all([
     getElectionCandidatesWithParty(supabase, election.id),
     getElectionSeatsByElectionId(supabase, election.id),
   ]);
+  if (rowsError || seatsError) throw rowsError || seatsError;
   return {
     election,
     roster: toRosterCandidates(rows || []),
