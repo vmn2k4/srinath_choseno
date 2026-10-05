@@ -307,6 +307,40 @@ export async function getShapeContainers(supabase: Client, shapeId: number | str
     .eq("map_shape_id", Number(shapeId));
 }
 
+// Name of the Province/State a shape sits inside (null if none recorded), for
+// SEO labels like "Victoria, BC". Cached: the mapping is static.
+export async function getProvinceNameForShape(supabase: Client, shapeId: number | string): Promise<string | null> {
+  const { data } = await fetchWithCache(`shape_province:${shapeId}`, () => getShapeContainers(supabase, shapeId), 60 * 60 * 1000);
+  const rows = (data || []) as unknown as Array<{ map_shapes?: { name?: string; boundary_type?: string } | null }>;
+  const province = rows.find((r) => r.map_shapes?.boundary_type === "Province" || r.map_shapes?.boundary_type === "State");
+  return province?.map_shapes?.name ?? null;
+}
+
+// Batched province lookup: shapeId -> Province/State name, chunked so a long
+// race list doesn't overflow the request URL. Missing shapes are just absent.
+export async function getProvinceNamesForShapes(supabase: Client, shapeIds: number[]): Promise<Map<number, string>> {
+  const ids = [...new Set(shapeIds)];
+  const CHUNK = 150;
+  const chunks: number[][] = [];
+  for (let i = 0; i < ids.length; i += CHUNK) chunks.push(ids.slice(i, i + CHUNK));
+  const results = await Promise.all(
+    chunks.map((c) =>
+      supabase
+        .from("shape_containers")
+        .select("map_shape_id, map_shapes:container_shape_id(name, boundary_type)")
+        .in("map_shape_id", c)
+    )
+  );
+  const out = new Map<number, string>();
+  for (const { data } of results) {
+    for (const r of (data || []) as unknown as Array<{ map_shape_id: number; map_shapes?: { name?: string; boundary_type?: string } | null }>) {
+      const t = r.map_shapes?.boundary_type;
+      if (r.map_shapes?.name && (t === "Province" || t === "State")) out.set(r.map_shape_id, r.map_shapes.name);
+    }
+  }
+  return out;
+}
+
 // shape_containers — batched variant of getShapeContainers, for resolving
 // every container (e.g. a user's Province) that ANY of their boundary
 // memberships sits inside in one round trip. Used by PoliticianSidebar to

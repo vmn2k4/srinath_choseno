@@ -4,7 +4,7 @@ import { cache } from "react";
 import Link from "next/link";
 import { MapPin, Landmark, ArrowRight, Building, Network, Vote } from "lucide-react";
 import { createPublicClient } from "@/lib/supabase/publicServer";
-import { getMapShapeById, getShapeContainers } from "@/lib/services/boundaries";
+import { getMapShapeById, getShapeContainers, getProvinceNameForShape } from "@/lib/services/boundaries";
 import {
   getElectionRoleTypes,
   getActiveSeatsByShapeIds,
@@ -15,6 +15,7 @@ import BoundaryDirectoryClient from "@/components/features/BoundaryDirectoryClie
 import type { BranchHolderNode, RepresentationBranch } from "@/components/features/RepresentationBranchTree";
 import { buildBoundarySlug, buildSeatSlug, buildCandidateSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
 import { buildRaceDescription, partyShort, shortDate } from "@/lib/utils/seatRaceSeo";
+import { withProvince } from "@/lib/utils/regionLabel";
 import { Card, Badge } from "@/components/primitives";
 import { SITE_URL } from "@/lib/constants/site";
 
@@ -94,23 +95,35 @@ const candidateParty = (c: RaceCandidateRow) => {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { boundarySlug } = await params;
-  const { shape } = await loadShape(boundarySlug);
+  const { supabase, shape } = await loadShape(boundarySlug);
 
   if (!shape) {
     return { title: "Boundary Not Found | Choseno" };
   }
 
-  const title = `${shape.name} 2026 Elections — Candidates & Reps | Choseno`;
+  // "Victoria" alone is ambiguous (also a city in Manitoba, a state in
+  // Australia); "Victoria, BC" is what people actually search for. Display
+  // text only -- the canonical URL/slug below still uses shape.name.
+  const place = withProvince(shape.name, await getProvinceNameForShape(supabase, shape.id));
   const { seatRows, candidatesBySeat } = await loadRaces(shape.id);
   const withCandidates = seatRows.filter((s) => (candidatesBySeat.get(s.id) || []).length > 0);
+  // Lead with the place + "candidates" (the query), then the roles being
+  // elected; fall back to shorter variants so the title stays SERP-sized.
+  const roleList = [...new Set(withCandidates.map((s) => s.role_title))];
+  const titleVariants = [
+    roleList.length > 0 ? `${place} Election 2026 Candidates: ${roleList.slice(0, 2).join(" & ")} | Choseno` : null,
+    `${place} Election 2026: Candidates & Elected Officials | Choseno`,
+    `${place} 2026 Election Candidates | Choseno`,
+  ].filter((v): v is string => !!v);
+  const title = titleVariants.find((v) => v.length <= 66) || titleVariants[titleVariants.length - 1];
   // With a live race, lead with who is running (what people search for);
   // otherwise fall back to the generic directory description.
-  let description = `Who represents you in ${shape.name}? View all 2026 ${shape.boundary_type} candidates, your current elected officials, constituent ratings and real voter feedback on Choseno.`;
+  let description = `Who represents you in ${place}? View all 2026 ${shape.boundary_type} candidates, your current elected officials, constituent ratings and real voter feedback on Choseno.`;
   if (withCandidates.length === 1) {
     const seat = withCandidates[0];
     description = buildRaceDescription({
       roleTitle: seat.role_title,
-      boundaryName: shape.name,
+      boundaryName: place,
       electionName: seat.elections?.name || "2026 Election",
       electionDate: seat.elections?.election_date,
       candidates: (candidatesBySeat.get(seat.id) || []).map((c) => ({ name: candidateName(c), party: candidateParty(c) })),
@@ -120,7 +133,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       .map((s) => `${s.role_title} (${(candidatesBySeat.get(s.id) || []).length})`)
       .join(", ");
     const date = shortDate(withCandidates[0].elections?.election_date);
-    const text = `${shape.name} 2026 election candidates: ${roles}${date ? `, voting ${date}` : ""}. Parties, bios and voter ratings on Choseno.`;
+    const first = withCandidates[0];
+    const names = (candidatesBySeat.get(first.id) || []).slice(0, 2).map(candidateName);
+    const nameText = names.length > 0 ? ` ${first.role_title} candidates include ${names.join(", ")}.` : "";
+    const text = `${place} 2026 election candidates: ${roles}${date ? `, voting ${date}` : ""}.${nameText} Bios, parties and voter ratings.`;
     description = text.length > 160 ? `${text.slice(0, 157).replace(/\s+\S*$/, "")}...` : text;
   }
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
@@ -251,6 +267,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     .filter((r) => r.role_title && r.role_title !== "Elected Official");
 
   const canonicalUrl = `${BASE_URL}/elections/${buildBoundarySlug(shape)}`;
+  const placeName = withProvince(shape.name, currentProvince);
   const breadcrumbItems = [
     { name: "Home", url: BASE_URL },
     { name: "Elections", url: `${BASE_URL}/elections` },
@@ -354,7 +371,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     seatRows.length > 0
       ? `There ${seatRows.length === 1 ? "is" : "are"} currently ${seatRows.length} active election seat${
           seatRows.length === 1 ? "" : "s"
-        } for ${shape.name} in the 2026 election cycle, with ${totalActiveCandidates} declared candidate${
+        } for ${placeName} in the 2026 election cycle, with ${totalActiveCandidates} declared candidate${
           totalActiveCandidates === 1 ? "" : "s"
         } so far. Compare candidate positions and read verified constituent ratings before you vote.`
       : null;
@@ -423,7 +440,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
   if (electionSentence) {
     faqEntities.push({
       "@type": "Question",
-      name: `Are there active elections in ${shape.name}?`,
+      name: `Are there active elections in ${placeName}?`,
       acceptedAnswer: { "@type": "Answer", text: electionSentence },
     });
   }
@@ -478,11 +495,11 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
               </Badge>
             </div>
             <h1 className="font-display text-2xl sm:text-4xl font-extrabold tracking-tight text-text-main truncate">
-              {shape.name}
+              {placeName}
             </h1>
             <p className="mt-1 text-sm text-text-muted flex items-center gap-1.5 flex-wrap">
               <MapPin size={15} className="text-primary shrink-0" />
-              Electoral Directory &amp; Office Holders
+              2026 Election Candidates &amp; Office Holders
               <span className="sm:hidden font-semibold text-text-main">
                 · {totalRepresentatives} active rep{totalRepresentatives === 1 ? "" : "s"}
               </span>
@@ -539,7 +556,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
           </div>
           <div className="space-y-1.5">
             <h2 className="font-display text-xl sm:text-2xl font-extrabold text-text-main leading-snug">
-              {seatRows.length === 1 ? "There's a race" : "There are races"} happening in {shape.name}
+              {seatRows.length === 1 ? "There's a race" : "There are races"} happening in {placeName}
             </h2>
             <p className="text-sm text-text-muted">
               {totalActiveCandidates} declared candidate{totalActiveCandidates === 1 ? "" : "s"} so far — compare

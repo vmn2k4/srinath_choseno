@@ -1,3 +1,5 @@
+import { getProvinceNameForShape } from "@/lib/services/boundaries";
+import { withProvince } from "@/lib/utils/regionLabel";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cache } from "react";
@@ -37,7 +39,10 @@ const getSeatWithCandidates = cache(async (seatId: string) => {
     getSeatById(supabase, seatId),
     getCandidatesBySeatIds(supabase, [seatId]),
   ]);
-  return { seat, candidates };
+  const placeName = seat?.map_shapes?.name
+    ? withProvince(seat.map_shapes.name, seat.map_shape_id ? await getProvinceNameForShape(supabase, seat.map_shape_id) : null)
+    : undefined;
+  return { seat, candidates, placeName };
 });
 
 export async function generateMetadata({
@@ -45,7 +50,7 @@ export async function generateMetadata({
 }: CandidateSeatPageProps): Promise<Metadata> {
   const { seatId, candidateId } = await params;
 
-  const { seat, candidates } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, placeName } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     return {
@@ -67,15 +72,15 @@ export async function generateMetadata({
   const candSlug = selectedCandidate ? buildCandidateSlug(selectedCandidate) : candidateId;
 
   const title = candidateName
-    ? buildCandidateTitle({ name: candidateName, roleTitle: seat.role_title, boundaryName: seat.map_shapes?.name })
-    : `${seat.role_title} Candidates — ${seat.map_shapes?.name || "Electoral Seat"} | Choseno`;
+    ? buildCandidateTitle({ name: candidateName, roleTitle: seat.role_title, boundaryName: placeName })
+    : `${seat.role_title} Candidates — ${placeName || "Electoral Seat"} | Choseno`;
 
   const pp = selectedCandidate?.profiles?.politician_profiles;
   const party = Array.isArray(pp?.political_parties) ? pp.political_parties[0] : pp?.political_parties;
   const description = buildCandidateDescription({
     name: candidateName || "This candidate",
     roleTitle: seat.role_title,
-    boundaryName: seat.map_shapes?.name,
+    boundaryName: placeName,
     party: party?.name ?? null,
     electionName: seat.elections?.name,
     electionDate: seat.elections?.election_date,

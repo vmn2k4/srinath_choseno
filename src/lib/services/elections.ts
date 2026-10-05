@@ -1008,7 +1008,7 @@ async function fetchPublicCandidateById(supabase: Client, candidateId: string) {
   // profile's actual stored slug and silently link to the wrong wall.
   const columns = `
     id, statement, politician_id, status, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, seat_id,
-    election_seats ( role_title, map_shapes ( name, boundary_type, properties ), elections ( name, status ) ),
+    election_seats ( role_title, map_shape_id, map_shapes ( name, boundary_type, properties ), elections ( name, status ) ),
     profiles!election_candidates_politician_id_fkey!inner ( full_name, current_ghost_id, politician_profiles ( wall_slug ) )
   `;
 

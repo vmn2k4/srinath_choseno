@@ -7,6 +7,8 @@ import {
   getPublicCandidateAnswers,
   getCandidacyWallPosts,
 } from "@/lib/services/elections";
+import { getProvinceNameForShape } from "@/lib/services/boundaries";
+import { withProvince } from "@/lib/utils/regionLabel";
 import { getPoliticianProfile } from "@/lib/services/profile";
 import { getSupporterCount } from "@/lib/services/politicianWall";
 import { buildCandidateSlug, buildSeatSlug, extractIdFromSlug } from "@/lib/utils/slugs";
@@ -31,7 +33,7 @@ type PublicCandidate = {
   seat_id?: string;
   statement: string | null;
   politician_id: string;
-  election_seats?: { role_title?: string; map_shapes?: { name?: string } | null } | null;
+  election_seats?: { role_title?: string; map_shape_id?: number; map_shapes?: { name?: string } | null } | null;
   profiles?: { full_name?: string; current_ghost_id?: string; politician_profiles?: { avatar_url?: string } } | null;
 };
 
@@ -67,11 +69,17 @@ export async function generateMetadata({
   const canonicalUrl = `${BASE_URL}/candidacy/${slug}`;
   const ogImageUrl = `${BASE_URL}/candidacy/${realCandidateId}/opengraph-image`;
 
-  const title = buildCandidateTitle({ name, roleTitle, boundaryName: candidate.election_seats?.map_shapes?.name });
+  const rawPlace = candidate.election_seats?.map_shapes?.name;
+  const seatShapeId = candidate.election_seats?.map_shape_id;
+  // Province-qualified ("Victoria, BC") for titles/descriptions only.
+  const placeName = rawPlace
+    ? withProvince(rawPlace, seatShapeId ? await getProvinceNameForShape(await createPublicClient(), seatShapeId) : null)
+    : rawPlace;
+  const title = buildCandidateTitle({ name, roleTitle, boundaryName: placeName });
   const description = buildCandidateDescription({
     name,
     roleTitle,
-    boundaryName: candidate.election_seats?.map_shapes?.name,
+    boundaryName: placeName,
     statement: candidate.statement,
   });
 

@@ -1,3 +1,5 @@
+import { getProvinceNameForShape } from "@/lib/services/boundaries";
+import { withProvince } from "@/lib/utils/regionLabel";
 import { partyShort } from "@/lib/utils/seatRaceSeo";
 import { Metadata } from "next";
 import { cache } from "react";
@@ -67,10 +69,20 @@ export async function generateMetadata({
     activeCandidacy?.election_seats?.role_title ||
     (owner?.politician_profiles as any)?.political_target_role ||
     "Representative";
-  const boundaryName =
+  const rawBoundaryName =
     activeCandidacy?.election_seats?.map_shapes?.name ||
     (owner?.politician_profiles as any)?.target_boundary_name ||
     "";
+  // Province-qualify ("Victoria, BC") when we can resolve the boundary shape:
+  // the candidacy's seat shape, else the profile's resolved boundary.
+  const seatShapeId =
+    (activeCandidacy?.election_seats as { map_shape_id?: number } | null | undefined)?.map_shape_id ??
+    (owner?.politician_profiles as any)?.resolved_boundary_id ??
+    null;
+  const boundaryName =
+    rawBoundaryName && seatShapeId
+      ? withProvince(rawBoundaryName, await getProvinceNameForShape(await createPublicClient(), seatShapeId))
+      : rawBoundaryName;
   const electionYear = activeCandidacy?.election_seats?.elections?.election_date?.slice(0, 4) || "2026";
 
   // roleTitle stays unprefixed -- it feeds buildPoliticianWallSlug below, and

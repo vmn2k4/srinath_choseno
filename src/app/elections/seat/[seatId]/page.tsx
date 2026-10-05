@@ -6,6 +6,8 @@ import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds, getOfficeHoldersForShape } from "@/lib/services/elections";
 import { buildRaceDescription, buildRaceParagraphs, buildRaceTitle, buildCandidateTitle, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
+import { getProvinceNameForShape } from "@/lib/services/boundaries";
+import { withProvince } from "@/lib/utils/regionLabel";
 import {
   buildSeatSlug,
   buildCandidateSlug,
@@ -72,13 +74,20 @@ const getSeatWithCandidates = cache(async (seatId: string) => {
     (h) => h.election_role_types?.role_title === seat?.role_title
   );
 
-  return { seat, candidates, supporterCountByPolitician, incumbentRow };
+  // Province-qualified place name for titles/headings/schema ("Victoria, BC").
+  // Display only: buildSeatSlug(seat) keeps using the raw shape name so URLs
+  // don't change.
+  const placeName = seat?.map_shapes?.name
+    ? withProvince(seat.map_shapes.name, seat.map_shape_id ? await getProvinceNameForShape(supabase, seat.map_shape_id) : null)
+    : "District";
+
+  return { seat, candidates, supporterCountByPolitician, incumbentRow, placeName };
 });
 
-function toRaceFacts(seat: any, candidates: any[], incumbentRow: any): RaceFacts {
+function toRaceFacts(seat: any, candidates: any[], incumbentRow: any, placeName: string): RaceFacts {
   return {
     roleTitle: seat.role_title || "Electoral Seat",
-    boundaryName: seat.map_shapes?.name || "District",
+    boundaryName: placeName,
     electionName: seat.elections?.name || "2026 Election",
     electionDate: seat.elections?.election_date,
     candidates: candidates.map((c) => {
@@ -130,7 +139,7 @@ export async function generateMetadata({
   const { seatId } = await params;
   const { candidate: candidateId } = await searchParams;
 
-  const { seat, candidates, supporterCountByPolitician, incumbentRow } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician, incumbentRow, placeName } = await getSeatWithCandidates(seatId);
 
   if (!seat) {
     // Not a 404: an admin previewing a draft election lands here too (the
@@ -153,7 +162,7 @@ export async function generateMetadata({
   const candidateName = selectedCandidate?.display_name || selectedCandidate?.profiles?.full_name;
 
   const roleTitle = seat.role_title || "Electoral Seat";
-  const boundaryName = seat.map_shapes?.name || "District";
+  const boundaryName = placeName;
   const electionYear = seat.elections?.election_date?.slice(0, 4) || "2026";
   const candCount = (candidates as any[])?.length || 0;
 
@@ -169,7 +178,7 @@ export async function generateMetadata({
       ? candidateListNames[0]
       : "";
 
-  const raceFacts = toRaceFacts(seat, (candidates as any[]) || [], incumbentRow);
+  const raceFacts = toRaceFacts(seat, (candidates as any[]) || [], incumbentRow, placeName);
   const title = candidateName
     ? buildCandidateTitle({ name: candidateName, roleTitle, boundaryName })
     : buildRaceTitle(raceFacts);
@@ -229,10 +238,10 @@ export async function generateMetadata({
 export default async function ElectionSeatPage({ params }: SeatPageProps) {
   const { seatId } = await params;
 
-  const { seat, candidates, supporterCountByPolitician, incumbentRow } = await getSeatWithCandidates(seatId);
+  const { seat, candidates, supporterCountByPolitician, incumbentRow, placeName } = await getSeatWithCandidates(seatId);
 
   const roleTitle = seat?.role_title || "Electoral Seat";
-  const boundaryName = seat?.map_shapes?.name || "District";
+  const boundaryName = placeName;
   const electionDateRaw = seat?.elections?.election_date;
   const electionYear = electionDateRaw?.slice(0, 4) || "2026";
   // Formatted from the date string itself, not via Date (UTC parsing shifts it a day).
@@ -435,7 +444,7 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
           <h2 id="about-race-heading" className="font-display text-2xl font-bold text-text-main">
             About the {roleTitle} race in {boundaryName}
           </h2>
-          {buildRaceParagraphs(toRaceFacts(seat, candList, incumbentRow)).map((para, i) => (
+          {buildRaceParagraphs(toRaceFacts(seat, candList, incumbentRow, placeName)).map((para, i) => (
             <p key={i}>{para}</p>
           ))}
         </section>

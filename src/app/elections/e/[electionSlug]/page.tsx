@@ -10,6 +10,9 @@ import FindDistrictPromo from "@/components/features/FindDistrictPromo";
 import JsonLdScript from "@/components/features/JsonLdScript";
 import { summarizeParties } from "@/lib/utils/electionParties";
 import { buildSeatSlug } from "@/lib/utils/slugs";
+import { withProvince } from "@/lib/utils/regionLabel";
+import { createPublicClient } from "@/lib/supabase/publicServer";
+import { getProvinceNamesForShapes } from "@/lib/services/boundaries";
 import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { SITE_URL } from "@/lib/constants/site";
 import { loadElection, STATUS_LABELS } from "./loadElection";
@@ -70,6 +73,12 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
   const racesWithCandidates = seats
     .filter((seat) => candidateCountBySeat.has(seat.id))
     .map((seat) => ({ seat, count: candidateCountBySeat.get(seat.id) || 0 }));
+  // Province-qualified link text ("Mayor — Victoria, BC"); the href/slug is untouched.
+  const shapeIdOf = (seat: unknown) => (seat as { map_shapes?: { id?: number } | null }).map_shapes?.id;
+  const provinceByShape = await getProvinceNamesForShapes(
+    await createPublicClient(),
+    racesWithCandidates.map((r) => shapeIdOf(r.seat)).filter((id): id is number => typeof id === "number")
+  );
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
@@ -147,7 +156,7 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
             {racesWithCandidates.map((r) => (
               <li key={r.seat.id}>
                 <Link href={`/elections/seat/${buildSeatSlug(r.seat as Parameters<typeof buildSeatSlug>[0])}`} className="text-primary hover:underline">
-                  {r.seat.role_title} — {r.seat.map_shapes?.name || "District"}
+                  {r.seat.role_title} — {r.seat.map_shapes?.name ? withProvince(r.seat.map_shapes.name, provinceByShape.get(shapeIdOf(r.seat) ?? -1)) : "District"}
                 </Link>
                 <span className="text-text-muted"> ({r.count})</span>
               </li>

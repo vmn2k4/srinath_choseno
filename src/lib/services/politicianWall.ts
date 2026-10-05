@@ -530,7 +530,7 @@ export async function getActiveCandidacies(supabase: Client, profileId: string) 
     .select(
       `id, seat_id, status,
        election_seats(
-         id, role_title,
+         id, role_title, map_shape_id,
          map_shapes(name, boundary_type, properties),
          elections(id, name, status, election_date)
        )`
