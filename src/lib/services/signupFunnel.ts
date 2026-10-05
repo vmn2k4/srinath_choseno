@@ -18,6 +18,7 @@ type Client = SupabaseClient<Database>;
 export type SignupFunnelEventType = "failed" | "abandoned";
 export type SignupFunnelReason =
   | "email_already_exists"
+  | "rate_limited"
   | "validation_error"
   | "google_oauth_error"
   | "unknown_error";

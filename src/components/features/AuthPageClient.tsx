@@ -12,6 +12,17 @@ import { createClient } from "@/lib/supabase/client";
 import { trackSignUp, trackLogin, trackSignUpFailed, trackSignUpAbandoned } from "@/lib/analytics/events";
 import { Mail, Flag } from "lucide-react";
 
+// Supabase answers a repeat sign-up / confirmation-email request inside its
+// ~60s window with "For security purposes, you can only request this after N
+// seconds." (code over_email_send_rate_limit). It's an expected cooldown, not
+// a form error, so it gets a countdown instead of the raw sentence.
+function parseEmailCooldownSeconds(err: { message?: string; code?: string }): number | null {
+  const match = err.message?.match(/after (\d+) seconds?/i);
+  if (match && /for security purposes/i.test(err.message ?? "")) return Number(match[1]);
+  if (err.code === "over_email_send_rate_limit") return 60;
+  return null;
+}
+
 export default function AuthPageClient({
   initialRole,
   nextPath,
@@ -28,6 +39,7 @@ export default function AuthPageClient({
   const router = useRouter();
   const { session, profile, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // An incoming ?error= (e.g. an expired "forgot password" link) always
@@ -43,6 +55,12 @@ export default function AuthPageClient({
         }
       : { type: "", text: "" }
   );
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = window.setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
 
   useEffect(() => {
     if (session && !authLoading && profile) {
@@ -115,6 +133,7 @@ export default function AuthPageClient({
           router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));
           router.refresh();
         } else {
+          setCooldown(60);
           setMessage({
             type: "success",
             text: "Account created! Check your email for confirmation or log in.",
@@ -129,13 +148,22 @@ export default function AuthPageClient({
         }
       }
     } catch (err: unknown) {
-      const errorObj = err as { error_description?: string; message?: string };
+      const errorObj = err as { error_description?: string; message?: string; code?: string };
       const text = errorObj.error_description || errorObj.message || "An unexpected error occurred.";
+      const wait = parseEmailCooldownSeconds(errorObj);
       if (isSignUp) {
         hasReportedOutcomeRef.current = true;
-        trackSignUpFailed({ method: "email", reason: "validation_error", message: text });
+        trackSignUpFailed({ method: "email", reason: wait !== null ? "rate_limited" : "validation_error", message: text });
       }
-      setMessage({ type: "error", text });
+      if (wait !== null) {
+        setCooldown(wait);
+        setMessage({
+          type: "error",
+          text: `Please wait ${wait} seconds before trying again. If you just signed up, check your inbox (and spam folder) for the confirmation email.`,
+        });
+      } else {
+        setMessage({ type: "error", text });
+      }
     } finally {
       setLoading(false);
     }
@@ -262,8 +290,14 @@ export default function AuthPageClient({
             </div>
           )}
 
-          <Button type="submit" size="lg" disabled={loading} className="mt-2 w-full font-bold">
-            {loading ? "Processing..." : isSignUp ? t("auth.signUpBtn") : t("auth.signInBtn")}
+          <Button type="submit" size="lg" disabled={loading || cooldown > 0} className="mt-2 w-full font-bold">
+            {loading
+              ? "Processing..."
+              : cooldown > 0
+                ? `Please wait ${cooldown}s`
+                : isSignUp
+                  ? t("auth.signUpBtn")
+                  : t("auth.signInBtn")}
           </Button>
         </form>
 
