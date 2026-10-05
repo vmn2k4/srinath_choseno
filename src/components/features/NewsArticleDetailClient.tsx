@@ -24,6 +24,8 @@ import { Card, Badge, Button, Avatar, Spinner, Modal } from "@/components/primit
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
+import { DISTRICT_BANNER_NEWS_SLUGS } from "@/lib/constants/site";
 import NewsComments from "@/components/features/NewsComments";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
@@ -896,6 +898,14 @@ export default function NewsArticleDetailClient({
             </div>
           ) : (
             <p className="text-text-muted text-sm italic">No article content yet.</p>
+          )}
+
+          {DISTRICT_BANNER_NEWS_SLUGS.includes(slug) && (
+            <DistrictRacesBanner
+              className="mt-8"
+              title="Which of these candidates will be on your ballot?"
+              description="Find your district to see every race you can vote in, from mayor to MLA, and the candidates running in it."
+            />
           )}
         </div>
 

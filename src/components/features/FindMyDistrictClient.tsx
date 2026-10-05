@@ -5,14 +5,16 @@ import Link from "next/link";
 import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles, Check, Loader2 } from "lucide-react";
 import InteractiveLocationPicker from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
+import DistrictSeatCards, { type DistrictSeat } from "./DistrictSeatCards";
 import MissionRegisterCTA from "./MissionRegisterCTA";
 import { findBoundariesByPoint, syncUserBoundaryMemberships } from "@/lib/services/boundaries";
-import { getActiveSeatsByShapeIds, getCandidatesBySeatIds, resolveRepresentationBranch } from "@/lib/services/elections";
+import { getActiveSeatsWithCandidateCounts, resolveRepresentationBranch } from "@/lib/services/elections";
 import { getOwnProfile, upsertProfileCore } from "@/lib/services/profile";
-import { buildBoundarySlug, buildSeatSlug } from "@/lib/utils/slugs";
+import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { Card, Spinner, Button } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
+import { recordDistrictLookup } from "@/lib/services/districtLookups";
 import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLocationGate } from "@/components/LocationRequiredGate";
@@ -21,24 +23,6 @@ import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/
 import { REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
-
-type SeatWithElections = {
-  id: string;
-  role_title: string;
-  candidateCount: number;
-  map_shapes?: { name?: string; properties?: unknown } | null;
-  elections?: { name?: string; election_date?: string } | null;
-};
-
-function formatElectionDate(dateString?: string): string {
-  if (!dateString) return "";
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  } catch {
-    return "";
-  }
-}
 
 // Thin wrapper around the shared resolveRepresentationBranch (src/lib/
 // services/elections.ts) -- this used to be a full copy-pasted
@@ -84,7 +68,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   const [error, setError] = useState("");
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
-  const [seats, setSeats] = useState<SeatWithElections[]>([]);
+  const [seats, setSeats] = useState<DistrictSeat[]>([]);
   const [settingProfileLocation, setSettingProfileLocation] = useState(false);
   const [profileLocationSet, setProfileLocationSet] = useState(false);
   // Below md: if we already know the constituency, the map/search picker
@@ -132,46 +116,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
         const shapeIds = matched
           .filter((b) => !(b.boundary_type || "").toLowerCase().includes("polling"))
           .map((b) => b.id);
-
-        if (shapeIds.length === 0) {
-          setSeats([]);
-          setSeatsLoading(false);
-          return;
-        }
-
-        // Fetch seats for all boundaries
-        const { data: seatsData } = await getActiveSeatsByShapeIds(supabase, shapeIds);
-        const seatRows = (seatsData || []) as Array<{
-          id: string;
-          role_title: string;
-          map_shapes?: { name?: string; properties?: unknown } | null;
-          elections?: { id: string; name: string; election_date: string; status: string } | null;
-        }>;
-
-        if (seatRows.length === 0) {
-          setSeats([]);
-          setSeatsLoading(false);
-          return;
-        }
-
-        // Fetch candidate counts for each seat
-        const seatIds = seatRows.map((s) => s.id);
-        const { data: candidateRows } = await getCandidatesBySeatIds(supabase, seatIds);
-        const candidateCountBySeat = new Map<string, number>();
-        (candidateRows || []).forEach((c: any) => {
-          candidateCountBySeat.set(c.seat_id, (candidateCountBySeat.get(c.seat_id) || 0) + 1);
-        });
-
-        // Format seats with candidate counts and preserve elections data
-        const formattedSeats = seatRows.map((seat) => ({
-          id: seat.id,
-          role_title: seat.role_title,
-          candidateCount: candidateCountBySeat.get(seat.id) || 0,
-          map_shapes: seat.map_shapes || undefined,
-          elections: seat.elections || undefined,
-        }));
-
-        setSeats(formattedSeats);
+        setSeats(await getActiveSeatsWithCandidateCounts(supabase, shapeIds));
       } catch (err) {
         console.error("Error resolving seats:", err);
         setSeats([]);
@@ -221,6 +166,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     }
     const matched = (data as MatchedBoundary[] | null) || [];
     trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
+    recordDistrictLookup(supabase, { source: "find_my_district", method: "unknown", boundaryCount: matched.filter((b) => !(b.boundary_type || "").toLowerCase().includes("polling")).length });
     setBoundaries(matched);
     if (!hasInitialBoundaries) {
       setGuestLocation({ lat, lng, boundaries: matched });
@@ -411,35 +357,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
                   </h2>
                   <p className="text-sm text-text-muted">Explore the races happening in your electoral boundaries</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {seats.map((seat) => (
-                    <Link
-                      key={seat.id}
-                      href={`/elections/seat/${buildSeatSlug({
-                        id: seat.id,
-                        role_title: seat.role_title,
-                        map_shapes: seat.map_shapes || { name: "", properties: {} },
-                      })}`}
-                      className="group flex items-start justify-between gap-3 p-4 rounded-lg bg-white/80 hover:bg-primary hover:text-white border border-primary/20 hover:border-primary transition-all shadow-sm hover:shadow-md"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="font-bold text-text-main group-hover:text-white">{seat.role_title}</div>
-                        <div className="text-xs text-text-muted group-hover:text-white/70 mt-1 space-y-0.5">
-                          {seat.map_shapes?.name && (
-                            <div>{seat.map_shapes.name}</div>
-                          )}
-                          {seat.elections?.election_date && (
-                            <div>{formatElectionDate(seat.elections.election_date)}</div>
-                          )}
-                        </div>
-                      </div>
-                      <span className="font-bold text-primary group-hover:text-white flex items-center gap-2 text-sm whitespace-nowrap shrink-0">
-                        {seat.candidateCount}
-                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                <DistrictSeatCards seats={seats} />
               </div>
             ) : null}
           </section>

@@ -776,13 +776,53 @@ export async function getOpenSeatsNearShapeIds(supabase: Client, shapeIds: numbe
     .order("role_title");
 }
 
-export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: number[]) {
-  await supabase.rpc("sync_election_status");
+export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: number[], opts: { skipStatusSync?: boolean } = {}) {
+  if (!opts.skipStatusSync) await supabase.rpc("sync_election_status");
   return supabase
     .from("election_seats")
     .select("id, role_title, map_shapes(name, boundary_type, properties), elections!inner(id, name, election_date, status)")
     .in("map_shape_id", shapeIds)
     .in("elections.status", ["nominations_open", "nominations_closed", "active"]);
+}
+
+// Active seats inside the given boundaries, each with its candidate count --
+// shared by /find-my-district's "2026 Candidates in Your Area" and the
+// auto-locate DistrictRacesBanner so both show identical numbers.
+export async function getActiveSeatsWithCandidateCounts(supabase: Client, shapeIds: number[]) {
+  if (shapeIds.length === 0) return [];
+  // skipStatusSync: this runs on page load for every visitor who shares a
+  // location, and sync_election_status is a write RPC -- not needed to count.
+  const { data: seatsData } = await getActiveSeatsByShapeIds(supabase, shapeIds, { skipStatusSync: true });
+  const seatRows = (seatsData || []) as unknown as Array<{
+    id: string;
+    role_title: string;
+    map_shapes?: { name?: string; properties?: unknown } | null;
+    elections?: { id: string; name: string; election_date: string; status: string } | null;
+  }>;
+  if (seatRows.length === 0) return [];
+
+  // Lean count-only fetch (seat_id, no profile/bio payload) -- the full
+  // getCandidatesBySeatIds roster query was the slow part of this lookup.
+  // profiles!inner keeps the same test-candidate filtering as the roster.
+  let q = supabase
+    .from("election_candidates")
+    .select("seat_id, profiles!election_candidates_politician_id_fkey!inner(id)")
+    .in("seat_id", seatRows.map((s) => s.id))
+    .limit(10000);
+  if (!isDevEnvironment()) q = q.eq("profiles.is_test", false);
+  const { data: candidateRows } = await q;
+  const countBySeat = new Map<string, number>();
+  ((candidateRows || []) as unknown as Array<{ seat_id: string }>).forEach((c) => {
+    countBySeat.set(c.seat_id, (countBySeat.get(c.seat_id) || 0) + 1);
+  });
+
+  return seatRows.map((seat) => ({
+    id: seat.id,
+    role_title: seat.role_title,
+    candidateCount: countBySeat.get(seat.id) || 0,
+    map_shapes: seat.map_shapes || undefined,
+    elections: seat.elections || undefined,
+  }));
 }
 
 // Platform-wide active seats, unscoped by boundary membership — used for

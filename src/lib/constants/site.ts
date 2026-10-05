@@ -25,3 +25,9 @@ export const ANON_REP_PREVIEW_LIMIT = 3;
 // both used to fetch get_founder_count separately and show the raw number.
 export const EARLY_EXPLORER_BADGE_LINE =
   "Be an early explorer — join now and earn a permanent Founder badge on your profile.";
+
+// News articles that show the auto-locate DistrictRacesBanner under the body
+// (districts + elections for the visitor's location). Article bodies are
+// DB-authored markdown, so this opts articles in by slug; add a slug here for
+// any other election-related story.
+export const DISTRICT_BANNER_NEWS_SLUGS = ["bc-election-2026-where-each-party-stands"];

@@ -12,6 +12,7 @@ import { Card, Button, Input, Avatar } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
+import { recordDistrictLookup } from "@/lib/services/districtLookups";
 import { getOfficeHoldersForShapes } from "@/lib/services/elections";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { reportContent, type ReportTargetType } from "@/lib/services/moderation";
@@ -161,7 +162,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
     }
   }, [guestLocation, supabase]);
 
-  const resolveLocation = async (lat: number, lng: number) => {
+  const resolveLocation = async (lat: number, lng: number, method: "gps" | "address") => {
     setError("");
     setLoadingResults(true);
     setBoundaries(null);
@@ -177,6 +178,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
     );
     setBoundaries(matched);
     setGuestLocation({ lat, lng, boundaries: matched });
+    recordDistrictLookup(supabase, { source: "home_widget", method, boundaryCount: matched.length });
 
     if (matched.length > 0) {
       const { data: holderRows } = await getOfficeHoldersForShapes(
@@ -198,7 +200,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocating(false);
-        resolveLocation(position.coords.latitude, position.coords.longitude);
+        resolveLocation(position.coords.latitude, position.coords.longitude, "gps");
       },
       (err) => {
         setLocating(false);
@@ -211,7 +213,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
   const selectSuggestion = (s: GeocodeSuggestion) => {
     setQuery("");
     setSuggestions([]);
-    resolveLocation(s.lat, s.lng);
+    resolveLocation(s.lat, s.lng, "address");
   };
 
   const reset = () => {

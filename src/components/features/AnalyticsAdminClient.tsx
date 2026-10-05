@@ -10,6 +10,10 @@ import {
   type DailyUserSignupsGroup,
   type DailyUserSignup,
 } from "@/lib/services/analytics";
+import {
+  getAdminDistrictLookupMetrics,
+  type DistrictLookupMetrics,
+} from "@/lib/services/districtLookups";
 import { Card, Button, Spinner, PageHeader, Badge, Input } from "@/components/primitives";
 import {
   Users,
@@ -27,15 +31,23 @@ import {
   Calendar,
   Filter,
   Heart,
+  MapPin,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getAnonymousSupportAdminBreakdown } from "@/lib/services/politicianWall";
+
+const DISTRICT_SOURCE_LABELS: Record<string, string> = {
+  district_banner: "Auto-locate banner (election pages & news)",
+  home_widget: "Homepage widget",
+  find_my_district: "Find My District page",
+};
 
 export default function AnalyticsAdminClient() {
   const supabase = createClient();
   const [metrics, setMetrics] = useState<any>(null);
   const [dailySignups, setDailySignups] = useState<DailyUserSignupsGroup[]>([]);
   const [support, setSupport] = useState<SupportClickMetrics | null>(null);
+  const [districtMetrics, setDistrictMetrics] = useState<DistrictLookupMetrics | null>(null);
   const [topSupported, setTopSupported] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -50,12 +62,15 @@ export default function AnalyticsAdminClient() {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
 
-    const [resMetrics, resSignups, resSupport, resTop] = await Promise.all([
+    const [resMetrics, resSignups, resSupport, resTop, resDistricts] = await Promise.all([
       getAdminAnalyticsMetrics(supabase),
       getAdminDailyUserSignups(supabase),
       getAdminSupportMetrics(supabase),
       getAnonymousSupportAdminBreakdown(supabase),
+      getAdminDistrictLookupMetrics(supabase),
     ]);
+
+    if (resDistricts.success) setDistrictMetrics(resDistricts.metrics);
 
     if (resSupport.success) setSupport(resSupport.metrics);
     if (resTop.data) {
@@ -292,6 +307,52 @@ export default function AnalyticsAdminClient() {
                     </span>
                     <span className="text-text-muted shrink-0">
                       <strong className="text-text-main">{r.total_count}</strong> ({r.authenticated_count} signed-in / {r.anonymous_count} logged-out)
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Card>
+      )}
+
+      {/* People who found their district (DB-backed; every surface: banner, homepage widget, /find-my-district) */}
+      {districtMetrics && (
+        <Card padding="lg" className="space-y-4">
+          <div>
+            <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <MapPin size={20} className="text-primary" />
+              Districts Found
+            </h2>
+            <p className="text-xs text-text-muted mt-1">
+              Unique people (distinct browsers) whose location matched at least one district, site-wide. Lookups with no match are listed separately.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {([
+              ["Today", districtMetrics.windows.today],
+              ["Last 7 days", districtMetrics.windows.d7],
+              ["Last 30 days", districtMetrics.windows.d30],
+              ["All time", districtMetrics.windows.allTime],
+            ] as const).map(([label, v]) => (
+              <div key={label} className="rounded-xl border border-border-light/20 bg-surface/50 p-3 space-y-1">
+                <span className="text-xs font-bold text-text-muted uppercase tracking-wider">{label}</span>
+                <p className="text-2xl font-bold text-text-main">{v.people.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">
+                  {v.lookups.toLocaleString()} lookups · {v.notFound.toLocaleString()} no match
+                </p>
+              </div>
+            ))}
+          </div>
+          {districtMetrics.bySource.length > 0 && (
+            <div className="space-y-1">
+              <h3 className="text-sm font-bold text-text-main">By surface (all time)</h3>
+              <ul className="divide-y divide-border-light/20 text-sm">
+                {districtMetrics.bySource.map((r) => (
+                  <li key={r.source} className="flex items-center justify-between py-1.5 gap-3">
+                    <span className="text-text-main">{DISTRICT_SOURCE_LABELS[r.source] ?? r.source}</span>
+                    <span className="text-text-muted shrink-0">
+                      <strong className="text-text-main">{r.people.toLocaleString()}</strong> people · {r.lookups.toLocaleString()} lookups
                     </span>
                   </li>
                 ))}

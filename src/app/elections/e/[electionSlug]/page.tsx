@@ -6,7 +6,7 @@ import { Card, Badge, EmptyState } from "@/components/primitives";
 import ElectionPartyCard from "@/components/features/ElectionPartyCard";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
 import FaqSection from "@/components/features/FaqSection";
-import FindDistrictPromo from "@/components/features/FindDistrictPromo";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import JsonLdScript from "@/components/features/JsonLdScript";
 import { summarizeParties } from "@/lib/utils/electionParties";
 import { buildSeatSlug } from "@/lib/utils/slugs";
@@ -116,7 +116,7 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
       </Card>
 
       {roster.length > 0 && (
-        <FindDistrictPromo
+        <DistrictRacesBanner
           title="Which of these candidates will be on your ballot?"
           description="Find your district to see every race you can vote in, from mayor to MLA, and the candidates running in it."
         />
