@@ -70,14 +70,16 @@ export function recordDistrictBannerClick(
   params: { targetType: "seat" | "boundary"; targetId: string | number }
 ): void {
   if (typeof window === "undefined") return;
+  // The PostgREST builder is lazy -- the request only goes out once it's
+  // awaited/.then()'d, so a bare `void supabase.rpc(...)` silently sends nothing.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in generated types.ts yet
-  void supabase.rpc("log_district_banner_click" as any, {
+  void Promise.resolve(supabase.rpc("log_district_banner_click" as any, {
     p_target_type: params.targetType,
     p_target_id: String(params.targetId),
     p_visitor_id: getOrCreateAnonSupporterId(),
     p_page: window.location.pathname,
     p_is_test: isDevEnvironment(),
-  });
+  })).catch(() => {});
 }
 
 export type DistrictLookupWindow = { lookups: number; people: number; notFound: number };
