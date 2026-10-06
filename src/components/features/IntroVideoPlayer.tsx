@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { parseYouTubeId } from "@/lib/utils/youtube";
+import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
 
 // Intro videos are vertical shorts, so both branches are sized as portrait
 // (9:16, capped width) rather than a full-width landscape player.
-// Plays a candidate's intro_video_url, which is either an uploaded file or a
-// YouTube link. YouTube uses the same privacy-enhanced embed as the home-page
+// Plays a candidate's intro_video_url, which is an uploaded file, a YouTube
+// link, or a Facebook video link -- all of them play inside the site. YouTube uses the same privacy-enhanced embed as the home-page
 // demo (HomeDemoVideo), behind a click-to-play thumbnail so no YouTube
 // requests happen until the viewer presses play.
 export default function IntroVideoPlayer({
@@ -19,8 +20,39 @@ export default function IntroVideoPlayer({
 }) {
   const [playing, setPlaying] = useState(false);
   const youTubeId = parseYouTubeId(url);
+  const facebookEmbed = youTubeId ? null : facebookVideoEmbedUrl(url, true);
 
-  if (!youTubeId) return <video src={url} controls className={className} />;
+  if (!youTubeId && !facebookEmbed) return <video src={url} controls className={className} />;
+
+  // Facebook has no public thumbnail URL, so it gets a plain click-to-play
+  // card; the player (and any Facebook request) only loads once pressed.
+  if (facebookEmbed) {
+    return (
+      <div className="relative w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden bg-black">
+        {playing ? (
+          <iframe
+            className="absolute inset-0 w-full h-full border-0"
+            src={facebookEmbed}
+            title="Candidate intro video"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            className="group absolute inset-0 w-full h-full cursor-pointer flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-surface via-surface-hover to-surface-active"
+            aria-label="Play intro video"
+          >
+            <span className="w-16 h-16 rounded-full bg-primary text-text-on-primary flex items-center justify-center shadow-xl transition-transform group-hover:scale-110">
+              <Play className="w-7 h-7 fill-current translate-x-0.5" aria-hidden="true" />
+            </span>
+            <span className="text-xs font-semibold text-text-secondary">Play video</span>
+          </button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden bg-black">

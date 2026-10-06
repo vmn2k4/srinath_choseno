@@ -10,7 +10,10 @@ export const contentType = OG_IMAGE_CONTENT_TYPE;
 // Cookie-free createPublicClient (see src/lib/supabase/public.ts) keeps this
 // route eligible for Next's static image caching; revalidate bounds how
 // stale a cached card can get after the candidate's data changes.
-export const revalidate = 86400;
+// Bumped to 7 days to reduce RLS auth evaluation load from crawlers hitting
+// hundreds of og-image routes per minute — each query triggers policy
+// evaluation on election_candidates + profiles, calling auth.uid() 5+ times.
+export const revalidate = 604800; // 7 days
 
 interface Props {
   params: Promise<{ candidateId: string }>;

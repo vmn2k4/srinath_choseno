@@ -16,7 +16,7 @@
 import { ImageResponse } from 'npm:@vercel/og@^0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
 import { encodeBase64 } from 'jsr:@std/encoding@1/base64';
-import { PartiesOgCard, type PartyCardRow } from './card.tsx';
+import { PartiesOgCard, PartyOgCard, type PartyCardRow } from './card.tsx';
 
 const BUCKET = 'election-og-images';
 // No TTL: the stored PNG is reused until the election's candidate/seat roster
@@ -29,6 +29,7 @@ const CARD_VERSION = 'v1';
 const SITE = 'https://www.choseno.com';
 const MAX_CARDS = 8;
 const AVATARS_PER_CARD = 4;
+const PARTY_AVATARS = 12;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -65,7 +66,11 @@ Deno.serve(async (req) => {
   }
 
   const supabaseAdmin = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
-  const objectPath = `parties/${electionId}-${CARD_VERSION}.png`;
+  // Optional: a single party's card (numeric party id, or "none" for independents)
+  // instead of the whole-election grid. Same cache bucket + staleness rules.
+  const partyParam = new URL(req.url).searchParams.get('partyId');
+  const partyKey = partyParam && /^(\d+|none)$/.test(partyParam) ? partyParam : null;
+  const objectPath = `parties/${electionId}${partyKey ? `-p${partyKey}` : ''}-${CARD_VERSION}.png`;
   const refresh = new URL(req.url).searchParams.get('refresh') === '1';
 
   const cached = await loadCached(supabaseAdmin, objectPath);
@@ -90,7 +95,7 @@ Deno.serve(async (req) => {
   // request for an election with nothing stored yet.
   try {
     const startedAt = Date.now();
-    const png = await renderCard(supabaseAdmin, electionId);
+    const png = await renderCard(supabaseAdmin, electionId, partyKey);
     if (!png) return new Response('Election not found', { status: 404, headers: CORS_HEADERS });
 
     // If the roster changed while rendering, this PNG is already stale: don't
@@ -177,7 +182,7 @@ function loadFonts(): Promise<any[] | undefined> {
 }
 
 // Mirrors getElectionCandidatesWithParty() + summarizeParties() in the Next app.
-async function renderCard(supabaseAdmin: any, electionId: string): Promise<ArrayBuffer | null> {
+async function renderCard(supabaseAdmin: any, electionId: string, partyKey: string | null): Promise<ArrayBuffer | null> {
   const { data: election } = await supabaseAdmin
     .from('elections')
     .select('id, name, election_date, status')
@@ -219,6 +224,32 @@ async function renderCard(supabaseAdmin: any, electionId: string): Promise<Array
     const g = groups.get(key) ?? { name: party ? party.name : 'Independents', id: party ? party.id : null, cands: [] };
     g.cands.push({ name: prof?.full_name || 'Candidate', avatarUrl: pp?.avatar_url ?? null, seatId: r.seat_id });
     groups.set(key, g);
+  }
+
+  if (partyKey) {
+    const g = groups.get(partyKey === 'none' ? 'none' : `p${partyKey}`);
+    if (!g) return null;
+    const raceCount = new Set(g.cands.map((c) => c.seatId)).size;
+    const shownCands = [...g.cands].sort((a, b) => Number(!!b.avatarUrl) - Number(!!a.avatarUrl)).slice(0, PARTY_AVATARS);
+    const photos = await Promise.all(shownCands.map((c) => toDataUri(c.avatarUrl)));
+    const totalRaces = seatCount || new Set(rows.map((r) => r.seat_id)).size;
+    const dateLabel = election.election_date
+      ? new Date(`${election.election_date}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+      : null;
+    const image = new ImageResponse(
+      PartyOgCard({
+        partyName: g.name,
+        electionName: election.name,
+        dateLabel,
+        hue: hueFor(g.id == null ? null : g.name, g.id),
+        candidateCount: g.cands.length,
+        raceCount,
+        totalRaces,
+        avatars: shownCands.map((c, k) => ({ name: c.name, photo: photos[k] })),
+      }) as any,
+      { ...SIZE, fonts: await loadFonts() },
+    );
+    return await image.arrayBuffer();
   }
 
   // Biggest party first, the independents group last.

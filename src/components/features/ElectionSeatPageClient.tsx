@@ -11,6 +11,7 @@ import PlayInterviewReel from "./PlayInterviewReel";
 import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
 import dynamic from "next/dynamic";
 import { parseYouTubeId } from "@/lib/utils/youtube";
+import { parseFacebookVideoUrl } from "@/lib/utils/facebookVideo";
 import StartCallFlow from "./StartCallFlow";
 import {
   getSeatById,
@@ -709,12 +710,14 @@ export default function ElectionSeatPageClient({
 
   const handleAdminYouTubeSubmit = async (candidateId: string) => {
     const id = parseYouTubeId(youTubeInput);
-    if (!id) {
-      setRemoveCandidateStatus("Error: Enter a valid YouTube link (watch, youtu.be, or shorts)");
+    const facebookUrl = id ? null : parseFacebookVideoUrl(youTubeInput);
+    if (!id && !facebookUrl) {
+      setRemoveCandidateStatus("Error: Enter a valid YouTube or Facebook video link");
       return;
     }
-    // Stored as the canonical watch URL; IntroVideoPlayer detects YouTube from it.
-    await handleAdminIntroVideoUploaded(candidateId, `https://www.youtube.com/watch?v=${id}`);
+    // Stored in canonical form; IntroVideoPlayer detects YouTube/Facebook from it
+    // and plays both inside the site.
+    await handleAdminIntroVideoUploaded(candidateId, id ? `https://www.youtube.com/watch?v=${id}` : (facebookUrl as string));
     setYouTubeInput("");
   };
 
@@ -1145,7 +1148,7 @@ export default function ElectionSeatPageClient({
                                               : "border-border-light text-text-secondary"
                                           }`}
                                         >
-                                          {m === "upload" ? "Record / Upload" : "YouTube link"}
+                                          {m === "upload" ? "Record / Upload" : "YouTube / Facebook link"}
                                         </button>
                                       ))}
                                     </div>
@@ -1160,7 +1163,7 @@ export default function ElectionSeatPageClient({
                                           type="url"
                                           value={youTubeInput}
                                           onChange={(e) => setYouTubeInput(e.target.value)}
-                                          placeholder="https://www.youtube.com/watch?v=..."
+                                          placeholder="YouTube or Facebook video link"
                                           className="flex-1 min-w-0 rounded-lg border border-border-light bg-surface px-2.5 py-1.5 text-xs"
                                         />
                                         <Button size="sm" onClick={() => handleAdminYouTubeSubmit(c.id)}>

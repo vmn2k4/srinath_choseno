@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import AdminSubNav from "./AdminSubNav";
+import GrowthStoryPanel from "./GrowthStoryPanel";
 import { Card, Button, Spinner, PageHeader, Badge, Select } from "@/components/primitives";
 import {
   Users,
@@ -309,6 +310,8 @@ export default function GoogleAnalyticsAdminClient() {
                 </div>
               </div>
             )}
+
+            <GrowthStoryPanel />
 
             {/* Geography — where visitors are from */}
             <div>

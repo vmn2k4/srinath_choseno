@@ -55,8 +55,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Choseno", type: "website", images: [{ url: `${SITE_URL}/og-elections-v2.jpg`, width: 1200, height: 630, alt: title }] },
-    twitter: { card: "summary_large_image", title, description, images: [`${SITE_URL}/og-elections-v2.jpg`] },
+    // No explicit `images`: the dynamic card in ./opengraph-image.tsx supplies
+    // og:image / twitter:image.
+    openGraph: { title, description, url, siteName: "Choseno", type: "website" },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 

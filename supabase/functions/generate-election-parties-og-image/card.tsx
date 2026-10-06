@@ -164,3 +164,80 @@ export function PartiesOgCard(input: PartiesOgCardInput) {
     </div>
   );
 }
+
+export interface PartyOgCardInput {
+  partyName: string;
+  electionName: string;
+  dateLabel: string | null;
+  hue: string;
+  candidateCount: number;
+  raceCount: number;
+  totalRaces: number;
+  avatars: { name: string; photo: string | null }[];
+}
+
+// Single-party share card: mirrors the hero on /elections/e/[election]/party/[party].
+export function PartyOgCard(input: PartyOgCardInput) {
+  const coverage = input.totalRaces > 0 ? Math.min(100, Math.round((input.raceCount / input.totalRaces) * 100)) : 0;
+  const more = input.candidateCount - input.avatars.length;
+  const nameSize = input.partyName.length > 28 ? 60 : input.partyName.length > 20 ? 72 : 88;
+  const stat = (label: string, value: string, suffix?: string) => (
+    <div style={{ display: 'flex', flexDirection: 'column', marginRight: 64 }}>
+      <div style={{ display: 'flex', fontSize: 20, fontWeight: 700, color: MUTED, textTransform: 'uppercase', letterSpacing: 2 }}>{label}</div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', fontSize: 64, fontWeight: 900, lineHeight: 1.1, color: INK }}>
+        {value}
+        {suffix && <div style={{ display: 'flex', fontSize: 32, fontWeight: 700, color: MUTED, marginLeft: 8, marginBottom: 6 }}>{suffix}</div>}
+      </div>
+    </div>
+  );
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(135deg, #f6f9ff 0%, #eef2ff 55%, #e8dcf8 100%)',
+        fontFamily: 'Public Sans, sans-serif',
+        color: INK,
+      }}
+    >
+      <div style={{ display: 'flex', height: 14, width: '100%', background: input.hue }} />
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '34px 56px 40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', fontSize: 22, fontWeight: 700, color: MUTED, textTransform: 'uppercase', letterSpacing: 2, maxWidth: 860 }}>
+            {`Party · ${input.electionName}${input.dateLabel ? ` · ${input.dateLabel}` : ''}`}
+          </div>
+          <div style={{ display: 'flex', fontSize: 34, fontWeight: 900, color: '#f97316' }}>Choseno</div>
+        </div>
+        <div style={{ display: 'flex', fontSize: nameSize, fontWeight: 900, lineHeight: 1.05, marginTop: 18, color: input.hue }}>
+          {`${input.partyName} candidates`}
+        </div>
+        <div style={{ display: 'flex', marginTop: 34 }}>
+          {stat('Candidates', String(input.candidateCount))}
+          {input.totalRaces > 0 && stat('Races', String(input.raceCount), `/ ${input.totalRaces}`)}
+          {input.totalRaces > 0 && stat('Coverage', `${coverage}%`)}
+        </div>
+        {input.totalRaces > 0 && (
+          <div style={{ display: 'flex', height: 14, width: 700, borderRadius: 7, background: '#d8e6f3', marginTop: 18, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', height: 14, width: `${coverage}%`, background: input.hue, borderRadius: 7 }} />
+          </div>
+        )}
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: 'auto', paddingRight: 14 }}>
+          {input.avatars.map((a, k) => {
+            const box = { width: 64, height: 64, borderRadius: 32, marginRight: -14, border: '3px solid #ffffff' };
+            return a.photo ? (
+              <img key={k} src={a.photo} width={64} height={64} style={{ ...box, objectFit: 'cover' }} />
+            ) : (
+              <div key={k} style={{ ...box, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#7c6bd6', color: '#ffffff', fontSize: 28, fontWeight: 900 }}>
+                {(a.name.trim()[0] || '?').toUpperCase()}
+              </div>
+            );
+          })}
+          {more > 0 && <div style={{ display: 'flex', fontSize: 24, fontWeight: 700, color: MUTED, marginLeft: 28 }}>{`+${more} more`}</div>}
+          <div style={{ display: 'flex', marginLeft: 'auto', fontSize: 22, fontWeight: 700, color: MUTED }}>choseno.com</div>
+        </div>
+      </div>
+    </div>
+  );
+}

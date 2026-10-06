@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkIcon } from "lucide-react";
+import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
 
 export type LinkMetadata = {
   title?: string;
@@ -45,6 +46,9 @@ export default function LinkPreview({
   // or simply unreachable (e.g. a network policy blocking third-party
   // calls), instead of the actual video.
   const youTubeEmbedUrl = getYouTubeEmbedUrl(url || metadata?.url || "");
+  // Same idea for a Facebook video: Facebook's own player, so it plays here
+  // rather than taking the viewer to facebook.com.
+  const facebookEmbedUrl = youTubeEmbedUrl ? null : facebookVideoEmbedUrl(url || metadata?.url || "");
 
   // Ref instead of a dependency-array entry: this is a "call me when the
   // fetch resolves" callback, not a value the effect should re-run for —
@@ -110,6 +114,27 @@ export default function LinkPreview({
           <div className="p-3 bg-surface border-t border-border">
             <h4 className="text-sm font-semibold text-text-secondary line-clamp-1">{data.title || data.url}</h4>
             {data.description && <p className="text-xs text-text-muted mt-1 line-clamp-1">{data.description}</p>}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (facebookEmbedUrl) {
+    return (
+      <div className="my-3 rounded-lg overflow-hidden border border-border-light bg-black">
+        <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
+          <iframe
+            src={facebookEmbedUrl}
+            title={data?.title || "Facebook video"}
+            className="absolute inset-0 w-full h-full border-0"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+        {data?.title && (
+          <div className="p-3 bg-surface border-t border-border">
+            <h4 className="text-sm font-semibold text-text-secondary line-clamp-1">{data.title}</h4>
           </div>
         )}
       </div>
