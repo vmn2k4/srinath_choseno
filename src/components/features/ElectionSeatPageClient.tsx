@@ -80,6 +80,8 @@ import {
 } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { buildSeatSlug, buildCandidateSlug, buildElectionSlug, buildPoliticianWallSlug, extractIdFromSlug } from "@/lib/utils/slugs";
+import DistrictRacesBanner from "./DistrictRacesBanner";
+import { electionCountdown } from "./DistrictSeatCards";
 import { trackElectionViewed } from "@/lib/analytics/events";
 import { SITE_URL } from "@/lib/constants/site";
 import MissionRegisterCTA from "./MissionRegisterCTA";
@@ -1480,22 +1482,11 @@ export default function ElectionSeatPageClient({
             <p className="text-sm text-text-muted mb-4">
               Several races can be on your ballot at once. Rate the candidates in each one.
             </p>
-            <div className="mb-5 flex items-center justify-between gap-3 flex-wrap rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="shrink-0 w-11 h-11 rounded-full bg-primary/20 flex items-center justify-center">
-                  <MapPin size={20} className="text-primary-light" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-bold text-text-main">Not sure which races are on your ballot?</p>
-                  <p className="text-xs text-text-muted mt-0.5">
-                    Find your district to see every race you can vote in, from mayor to MLA.
-                  </p>
-                </div>
-              </div>
-              <Button as={Link} href="/find-my-district" size="sm" className="shrink-0 gap-1.5">
-                <MapPin size={14} /> Find Your District
-              </Button>
-            </div>
+            <DistrictRacesBanner
+              className="mb-5"
+              title="Not sure which races are on your ballot?"
+              description="Find your district to see every race you can vote in, from mayor to MLA."
+            />
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {relatedSeats.map((r) => {
                 const slug = buildSeatSlug({
@@ -1526,12 +1517,17 @@ export default function ElectionSeatPageClient({
                           : "No candidates yet"}
                       </span>
                       {r.election_date && (
-                        <span className="flex items-center gap-1">
-                          <Calendar size={11} />
+                        <span className="flex items-center gap-1.5 font-semibold text-text-main">
+                          <Calendar size={11} className="text-primary" />
                           {new Date(r.election_date + "T00:00:00").toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
                           })}
+                          {electionCountdown(r.election_date) && (
+                            <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold text-primary">
+                              {electionCountdown(r.election_date)}
+                            </span>
+                          )}
                         </span>
                       )}
                     </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 
 export type DistrictSeat = {
@@ -79,9 +79,20 @@ export default function DistrictSeatCards({
                     <span className={`font-normal ${first ? "text-white/80" : "text-text-muted group-hover:text-white/80"}`}> · {seat.map_shapes.name}</span>
                   )}
                 </div>
-                <div className={`mt-0.5 text-[11px] ${first ? "text-white/80" : "text-text-muted group-hover:text-white/80"}`}>
-                  {formatElectionDate(seat.elections?.election_date)}
-                  {countdown && <span className="font-semibold"> · {countdown}</span>}
+                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs">
+                  <span className={`flex items-center gap-1 font-bold ${first ? "text-white" : "text-text-main group-hover:text-white"}`}>
+                    <Calendar size={12} aria-hidden="true" />
+                    {formatElectionDate(seat.elections?.election_date)}
+                  </span>
+                  {countdown && (
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[11px] font-extrabold ${
+                        first ? "bg-white text-primary" : "bg-primary/15 text-primary group-hover:bg-white group-hover:text-primary"
+                      }`}
+                    >
+                      {countdown}
+                    </span>
+                  )}
                 </div>
               </div>
               <span className={`flex shrink-0 items-center gap-1 text-xs font-bold ${first ? "text-white" : "text-primary group-hover:text-white"}`}>
