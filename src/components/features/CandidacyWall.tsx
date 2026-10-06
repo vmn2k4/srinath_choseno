@@ -179,6 +179,9 @@ interface CandidacyWallProps {
   initialAnswers?: QuestionnaireAnswer[];
   initialPosts?: PostWithComments[];
   initialSupportCount?: number;
+  // Optional right-hand rail beside the wall feed (stacks below it under lg),
+  // same slot PoliticianWallClient offers. Omitted when embedded.
+  sidebar?: React.ReactNode;
 }
 
 export default function CandidacyWall({
@@ -189,6 +192,7 @@ export default function CandidacyWall({
   initialAnswers = [],
   initialPosts = [],
   initialSupportCount = 0,
+  sidebar,
 }: CandidacyWallProps) {
   const supabase = createClient();
   const { user, loading: authLoading } = useAuth();
@@ -1207,8 +1211,10 @@ export default function CandidacyWall({
             )}
           </Card>
 
-          {/* Wall Feed & Composer */}
-          <div className="space-y-6">
+          {/* Wall Feed & Composer -- paired with the optional sidebar in a grid
+              starting here (the profile card above stays full-width). */}
+          <div className={sidebar ? "lg:grid lg:grid-cols-[1fr_340px] lg:gap-8 lg:items-start" : undefined}>
+          <div className="min-w-0 space-y-6">
           {user && profile?.current_ghost_id && (
             <Card padding={composerOpen ? "md" : "sm"}>
               {!composerOpen ? (
@@ -1356,8 +1362,10 @@ export default function CandidacyWall({
               ))}
             </div>
           )}
+          </div>
+          {sidebar && <div className="mt-8 lg:mt-0">{sidebar}</div>}
+          </div>
         </div>
-      </div>
       )}
 
       {mediaPreview && (

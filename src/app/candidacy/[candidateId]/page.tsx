@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { cache } from "react";
 import CandidacyWall from "@/components/features/CandidacyWall";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import {
   getPublicCandidateById,
@@ -205,6 +206,13 @@ export default async function CandidacyPage({ params }: CandidatePageProps) {
         initialAnswers={visibleAnswers as any}
         initialPosts={(posts as any) || []}
         initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
+        sidebar={
+          <DistrictRacesBanner
+            orientation="vertical"
+            title="Who's on your ballot?"
+            description="Find your district to see every race you can vote in and the candidates running in it."
+          />
+        }
       />
     </div>
   );
