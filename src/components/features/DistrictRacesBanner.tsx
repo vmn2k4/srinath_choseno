@@ -191,15 +191,20 @@ export default function DistrictRacesBanner({
         </p>
       )}
 
-      {/* Districts: supporting info, kept small and last. */}
-      <div className="border-t border-primary/15 pt-2.5">
-        <div className="flex items-center justify-between gap-2">
+      {/* Districts: supporting info, kept small and last. One line in the wide
+          layout (label, chips, change link); stacked in the narrow rail. */}
+      <div className={`border-t border-primary/15 pt-2.5 ${vertical ? "" : "flex flex-wrap items-center gap-x-3 gap-y-1.5"}`}>
+        {vertical ? (
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">Your districts</span>
+            <Link href="/find-my-district" className="text-[11px] font-semibold text-primary hover:underline">
+              Not right? Change
+            </Link>
+          </div>
+        ) : (
           <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">Your districts</span>
-          <Link href="/find-my-district" className="text-[11px] font-semibold text-primary hover:underline">
-            Not right? Change
-          </Link>
-        </div>
-        <ul className="mt-1.5 flex flex-wrap gap-1">
+        )}
+        <ul className={`flex flex-wrap gap-1 ${vertical ? "mt-1.5" : "flex-1"}`}>
           {boundaries.map((b) => (
             <li key={b.id}>
               <Link
@@ -210,10 +215,16 @@ export default function DistrictRacesBanner({
               >
                 <Layers size={10} className="text-primary" aria-hidden="true" />
                 {b.name}
+                {!vertical && b.boundary_type && <span className="text-text-muted">· {b.boundary_type}</span>}
               </Link>
             </li>
           ))}
         </ul>
+        {!vertical && (
+          <Link href="/find-my-district" className="shrink-0 text-[11px] font-semibold text-primary hover:underline">
+            Not right? Change
+          </Link>
+        )}
       </div>
     </section>
   );
