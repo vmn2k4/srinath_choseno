@@ -490,6 +490,33 @@
   --color-danger-light: #991b1b;
 }
 
+[data-theme="warm-orange"] {
+  --color-background: #fff9f4;
+  --color-surface: #ffffff;
+  --color-surface-hover: #fff0e4;
+  --color-surface-active: #fde2cc;
+  --color-surface-elevated: rgba(234, 88, 12, 0.08);
+  --color-border: #f9d9c0;
+  --color-border-light: rgba(31, 41, 55, 0.12);
+  --color-text-main: #1c1917;
+  --color-text-secondary: #292524;
+  --color-text-tertiary: #44403c;
+  --color-text-muted: #57534e;
+  --color-text-dark: #78716c;
+  --color-text-darker: #f0dccb;
+  --color-primary: #ea580c;
+  --color-primary-hover: #c2410c;
+  --color-primary-light: #c2410c;
+  --color-primary-lighter: #fdba74;
+  --color-accent: #0284c7;
+  --color-accent-hover: #0369a1;
+  --color-text-on-primary: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-light: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #991b1b;
+}
+
 /* ============ Muted OSM basemap (Leaflet) ============ */
 /* Stock OpenStreetMap tiles are high-contrast (bold red/orange highways,
    saturated greens). We switched to them from CARTO Voyager after CARTO

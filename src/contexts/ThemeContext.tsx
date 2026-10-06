@@ -24,6 +24,7 @@ export const THEMES = [
   { key: "soft-lavender", label: "Soft lavender", mode: "light" },
   { key: "sky-cyan", label: "Sky cyan", mode: "light" },
   { key: "peach-amber", label: "Peach amber", mode: "light" },
+  { key: "warm-orange", label: "Warm orange", mode: "light" },
 ] as const;
 
 export type ThemeKey = (typeof THEMES)[number]["key"];
