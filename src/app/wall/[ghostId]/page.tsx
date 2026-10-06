@@ -24,6 +24,7 @@ import { SITE_URL } from "@/lib/constants/site";
 import { buildPoliticianWallSlug, buildSeatSlug } from "@/lib/utils/slugs";
 import { normalizeCountryCode } from "@/lib/utils/newsGeography";
 import NewsArticleCard from "@/components/features/NewsArticleCard";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import RelatedPoliticianCard from "@/components/features/RelatedPoliticianCard";
 
 const BASE_URL = SITE_URL;
@@ -441,6 +442,15 @@ export default async function WallPage({ params }: WallPageProps) {
           initialSupportCount={"count" in supportCountRes ? supportCountRes.count || 0 : 0}
           sidebar={
             <div className="space-y-8">
+              {/* Auto-locate banner (vertical variant of the one on election
+                  pages): asks for the visitor's location and shows their
+                  districts + open races, else the Find Your District promo. */}
+              <DistrictRacesBanner
+                orientation="vertical"
+                title="Who's on your ballot?"
+                description="Find your district to see every race you can vote in and the candidates running in it."
+              />
+
               {/* Related People -- the other half of "this wall is empty,
                   now what": someone landing on a wall with no
                   reviews/posts/news yet gets somewhere else to go instead

@@ -22,9 +22,18 @@ export function formatElectionDate(dateString?: string): string {
 
 // The race cards under "2026 Candidates in Your Area" -- shared by
 // /find-my-district and the auto-locate DistrictRacesBanner.
-export default function DistrictSeatCards({ seats, onSeatClick }: { seats: DistrictSeat[]; onSeatClick?: (seat: DistrictSeat) => void }) {
+export default function DistrictSeatCards({
+  seats,
+  onSeatClick,
+  singleColumn = false,
+}: {
+  seats: DistrictSeat[];
+  onSeatClick?: (seat: DistrictSeat) => void;
+  // One card per row, for narrow side columns.
+  singleColumn?: boolean;
+}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div className={`grid grid-cols-1 gap-3 ${singleColumn ? "" : "sm:grid-cols-2"}`.trim()}>
       {seats.map((seat) => (
         <Link
           key={seat.id}

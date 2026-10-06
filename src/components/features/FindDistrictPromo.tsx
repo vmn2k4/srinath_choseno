@@ -7,10 +7,29 @@ import { Button } from "@/components/primitives";
 export default function FindDistrictPromo({
   title = "Not sure which races are on your ballot?",
   description = "Find your district to see every race you can vote in, from mayor to MLA.",
+  orientation = "horizontal",
 }: {
   title?: string;
   description?: string;
+  // "vertical" stacks icon / text / button for narrow side columns.
+  orientation?: "horizontal" | "vertical";
 }) {
+  if (orientation === "vertical") {
+    return (
+      <div className="flex flex-col items-start gap-3 rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20">
+          <MapPin size={20} className="text-primary-light" />
+        </div>
+        <div>
+          <p className="text-sm font-bold text-text-main">{title}</p>
+          <p className="mt-1 text-xs text-text-muted">{description}</p>
+        </div>
+        <Button as={Link} href="/find-my-district" size="sm" className="w-full gap-1.5">
+          <MapPin size={14} /> Find Your District
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4">
       <div className="flex min-w-0 items-center gap-3">

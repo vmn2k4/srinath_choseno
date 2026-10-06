@@ -33,12 +33,16 @@ const isElectoral = (b: MatchedBoundary) => !(b.boundary_type || "").toLowerCase
 export default function DistrictRacesBanner({
   title,
   description,
+  orientation = "horizontal",
   className = "",
 }: {
   title?: string;
   description?: string;
+  // "vertical" is the narrow side-column layout (e.g. the wall page's right rail).
+  orientation?: "horizontal" | "vertical";
   className?: string;
 }) {
+  const vertical = orientation === "vertical";
   const supabase = createClient();
   const guestLocation = useGuestLocation();
   const askedRef = useRef(false);
@@ -125,7 +129,7 @@ export default function DistrictRacesBanner({
   if (boundaries.length === 0) {
     return (
       <div className={className}>
-        <FindDistrictPromo title={title} description={description} />
+        <FindDistrictPromo title={title} description={description} orientation={orientation} />
       </div>
     );
   }
@@ -133,11 +137,11 @@ export default function DistrictRacesBanner({
   return (
     <section
       aria-label="Districts and elections in your area"
-      className={`rounded-2xl border-2 border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-5 sm:p-6 space-y-4 ${className}`.trim()}
+      className={`rounded-2xl border-2 border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent ${vertical ? "p-4" : "p-5 sm:p-6"} space-y-4 ${className}`.trim()}
     >
-      <div className="flex flex-wrap items-start justify-between gap-2">
+      <div className={vertical ? "space-y-2" : "flex flex-wrap items-start justify-between gap-2"}>
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-text-main flex items-center gap-2">
+          <h2 className={`${vertical ? "text-base" : "text-lg sm:text-xl"} font-black text-text-main flex items-center gap-2`}>
             <Sparkles size={20} className="text-primary" aria-hidden="true" />
             Your districts &amp; elections
           </h2>
@@ -148,13 +152,13 @@ export default function DistrictRacesBanner({
         </Link>
       </div>
 
-      <ul className="flex flex-wrap gap-2">
+      <ul className={vertical ? "flex flex-col gap-1.5" : "flex flex-wrap gap-2"}>
         {boundaries.map((b) => (
           <li key={b.id}>
             <Link
               href={`/elections/${buildBoundarySlug(b)}`}
               onClick={() => recordDistrictBannerClick(supabase, { targetType: "boundary", targetId: b.id })}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border-light/40 bg-surface-elevated/70 px-3 py-1.5 text-xs font-semibold text-text-main hover:border-primary/40 hover:text-primary transition-colors"
+              className={`${vertical ? "flex w-full" : "inline-flex"} items-center gap-1.5 rounded-full border border-border-light/40 bg-surface-elevated/70 px-3 py-1.5 text-xs font-semibold text-text-main hover:border-primary/40 hover:text-primary transition-colors`}
             >
               <Layers size={12} className="text-primary" aria-hidden="true" />
               {b.name}
@@ -169,6 +173,7 @@ export default function DistrictRacesBanner({
       ) : seats.length > 0 ? (
         <DistrictSeatCards
           seats={seats}
+          singleColumn={vertical}
           onSeatClick={(seat) => recordDistrictBannerClick(supabase, { targetType: "seat", targetId: seat.id })}
         />
       ) : (
