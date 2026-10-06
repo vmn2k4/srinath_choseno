@@ -63,11 +63,30 @@ export function recordDistrictLookup(
   });
 }
 
+// Click on a race card / district chip in the auto-locate banner -- the
+// "did they engage after finding their district" signal. Fire-and-forget.
+export function recordDistrictBannerClick(
+  supabase: Client,
+  params: { targetType: "seat" | "boundary"; targetId: string | number }
+): void {
+  if (typeof window === "undefined") return;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in generated types.ts yet
+  void supabase.rpc("log_district_banner_click" as any, {
+    p_target_type: params.targetType,
+    p_target_id: String(params.targetId),
+    p_visitor_id: getOrCreateAnonSupporterId(),
+    p_page: window.location.pathname,
+    p_is_test: isDevEnvironment(),
+  });
+}
+
 export type DistrictLookupWindow = { lookups: number; people: number; notFound: number };
 
 export type DistrictLookupMetrics = {
   windows: { today: DistrictLookupWindow; d7: DistrictLookupWindow; d30: DistrictLookupWindow; allTime: DistrictLookupWindow };
   bySource: Array<{ source: DistrictLookupSource; lookups: number; people: number }>;
+  // Counted only for activity AFTER a visitor's first found district.
+  engagement: { peopleFound: number; peopleClicked: number; raceClicks: number; districtClicks: number; peopleSupported: number };
 };
 
 const EMPTY_WINDOW: DistrictLookupWindow = { lookups: 0, people: 0, notFound: 0 };
@@ -79,6 +98,7 @@ export async function getAdminDistrictLookupMetrics(
   const empty: DistrictLookupMetrics = {
     windows: { today: EMPTY_WINDOW, d7: EMPTY_WINDOW, d30: EMPTY_WINDOW, allTime: EMPTY_WINDOW },
     bySource: [],
+    engagement: { peopleFound: 0, peopleClicked: 0, raceClicks: 0, districtClicks: 0, peopleSupported: 0 },
   };
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RPC not in generated types.ts yet
@@ -90,6 +110,7 @@ export async function getAdminDistrictLookupMetrics(
       metrics: {
         windows: { ...empty.windows, ...(d.windows || {}) },
         bySource: d.bySource || [],
+        engagement: { ...empty.engagement, ...(d.engagement || {}) },
       },
     };
   } catch (err) {

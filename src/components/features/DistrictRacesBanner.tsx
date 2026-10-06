@@ -20,7 +20,7 @@ import DistrictSeatCards, { type DistrictSeat } from "./DistrictSeatCards";
 import { createClient } from "@/lib/supabase/client";
 import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getActiveSeatsWithCandidateCounts } from "@/lib/services/elections";
-import { recordDistrictLookup } from "@/lib/services/districtLookups";
+import { recordDistrictLookup, recordDistrictBannerClick } from "@/lib/services/districtLookups";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { getGuestLocation, setGuestLocation, useGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 
@@ -153,6 +153,7 @@ export default function DistrictRacesBanner({
           <li key={b.id}>
             <Link
               href={`/elections/${buildBoundarySlug(b)}`}
+              onClick={() => recordDistrictBannerClick(supabase, { targetType: "boundary", targetId: b.id })}
               className="inline-flex items-center gap-1.5 rounded-full border border-border-light/40 bg-surface-elevated/70 px-3 py-1.5 text-xs font-semibold text-text-main hover:border-primary/40 hover:text-primary transition-colors"
             >
               <Layers size={12} className="text-primary" aria-hidden="true" />
@@ -166,7 +167,10 @@ export default function DistrictRacesBanner({
       {seatsLoading ? (
         <p className="text-sm text-text-muted">Loading elections in your area…</p>
       ) : seats.length > 0 ? (
-        <DistrictSeatCards seats={seats} />
+        <DistrictSeatCards
+          seats={seats}
+          onSeatClick={(seat) => recordDistrictBannerClick(supabase, { targetType: "seat", targetId: seat.id })}
+        />
       ) : (
         <p className="flex items-center gap-1.5 text-sm text-text-muted">
           <MapPin size={14} aria-hidden="true" /> No elections are currently open in your districts.

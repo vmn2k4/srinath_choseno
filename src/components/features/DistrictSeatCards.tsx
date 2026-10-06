@@ -22,12 +22,13 @@ export function formatElectionDate(dateString?: string): string {
 
 // The race cards under "2026 Candidates in Your Area" -- shared by
 // /find-my-district and the auto-locate DistrictRacesBanner.
-export default function DistrictSeatCards({ seats }: { seats: DistrictSeat[] }) {
+export default function DistrictSeatCards({ seats, onSeatClick }: { seats: DistrictSeat[]; onSeatClick?: (seat: DistrictSeat) => void }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {seats.map((seat) => (
         <Link
           key={seat.id}
+          onClick={() => onSeatClick?.(seat)}
           href={`/elections/seat/${buildSeatSlug({
             id: seat.id,
             role_title: seat.role_title,

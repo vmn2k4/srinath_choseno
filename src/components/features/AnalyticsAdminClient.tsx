@@ -344,6 +344,30 @@ export default function AnalyticsAdminClient() {
               </div>
             ))}
           </div>
+          <div className="space-y-1">
+            <h3 className="text-sm font-bold text-text-main">Engagement after finding a district</h3>
+            <p className="text-xs text-text-muted">
+              Counts only activity after the person&apos;s first found district. Clicks are on the banner&apos;s race cards and district chips (tracked from when this shipped); supports are anonymous &ldquo;Support&rdquo; clicks.
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+              {([
+                ["Clicked a race or district", districtMetrics.engagement.peopleClicked, districtMetrics.engagement.peopleFound],
+                ["Race card clicks", districtMetrics.engagement.raceClicks, null],
+                ["District chip clicks", districtMetrics.engagement.districtClicks, null],
+                ["Supported a candidate", districtMetrics.engagement.peopleSupported, districtMetrics.engagement.peopleFound],
+              ] as const).map(([label, n, of]) => (
+                <div key={label} className="rounded-xl border border-border-light/20 bg-surface/50 p-3 space-y-1">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-wider">{label}</span>
+                  <p className="text-2xl font-bold text-text-main">{n.toLocaleString()}</p>
+                  {of !== null && (
+                    <p className="text-xs text-text-muted">
+                      of {of.toLocaleString()} people ({of > 0 ? Math.round((n / of) * 100) : 0}%)
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
           {districtMetrics.bySource.length > 0 && (
             <div className="space-y-1">
               <h3 className="text-sm font-bold text-text-main">By surface (all time)</h3>
