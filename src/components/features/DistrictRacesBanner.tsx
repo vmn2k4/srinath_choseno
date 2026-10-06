@@ -7,9 +7,9 @@
 // unsupported, or the lookup fails -- it renders the original promo in the
 // same slot, so the page never has a hole in it.
 //
-// Reuses: findBoundariesByPoint (lookup), the shared guest location store
-// (so /find-my-district, the homepage widget and this banner all agree and
-// a returning visitor isn't re-prompted), getActiveSeatsWithCandidateCounts
+// Only ever displays districts from a fresh GPS fix on this page load -- never
+// a previously saved location. Reuses: findBoundariesByPoint (lookup),
+// getActiveSeatsWithCandidateCounts
 // and DistrictSeatCards (same race cards as /find-my-district).
 
 import { useEffect, useRef, useState } from "react";
@@ -22,7 +22,7 @@ import { findBoundariesByPoint } from "@/lib/services/boundaries";
 import { getActiveSeatsWithCandidateCounts } from "@/lib/services/elections";
 import { recordDistrictLookup, recordDistrictBannerClick } from "@/lib/services/districtLookups";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
-import { getGuestLocation, setGuestLocation, useGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
+import { getGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 
 // Set once the visitor has been asked (and said no / dismissed) this session,
 // so navigating between pages doesn't re-prompt on every load.
@@ -44,21 +44,21 @@ export default function DistrictRacesBanner({
 }) {
   const vertical = orientation === "vertical";
   const supabase = createClient();
-  const guestLocation = useGuestLocation();
   const askedRef = useRef(false);
   const [loaded, setLoaded] = useState<{ key: string; rows: DistrictSeat[] } | null>(null);
-
-  const boundaries = (guestLocation?.boundaries || []).filter(isElectoral);
+  // Districts from THIS page load's GPS fix only. A location saved earlier
+  // (search box, map pin, another page) is deliberately ignored here: a wrong
+  // district is worse than showing the Find Your District promo.
+  const [boundaries, setBoundaries] = useState<MatchedBoundary[]>([]);
   const boundaryKey = boundaries.map((b) => b.id).join(",");
 
-  // Ask for the location once per mount when nothing is stored yet. The
-  // result lands in the guest location store, which re-renders us via the hook.
+  // Ask the browser for the real location once per mount. If it's denied,
+  // unsupported, times out, or the lookup fails, nothing is set and the
+  // promo stays.
   useEffect(() => {
     if (askedRef.current) return;
     askedRef.current = true;
 
-    const stored = getGuestLocation();
-    if (stored && stored.boundaries.some(isElectoral)) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
     try {
       if (sessionStorage.getItem(ASKED_SESSION_KEY)) return;
@@ -74,8 +74,15 @@ export default function DistrictRacesBanner({
           const { data, error } = await findBoundariesByPoint(supabase, lat, lng);
           if (cancelled || error) return;
           const matched = ((data as MatchedBoundary[] | null) || []).filter(isElectoral);
-          setGuestLocation({ lat, lng, boundaries: matched });
-          recordDistrictLookup(supabase, { source: "district_banner", method: "gps", boundaryCount: matched.length });
+          setBoundaries(matched);
+          // Only count a lookup (and share the location with the rest of the
+          // site) when it's new, so a granted-permission visitor reloading
+          // pages isn't logged as a fresh lookup every time.
+          const prev = (getGuestLocation()?.boundaries || []).filter(isElectoral).map((b) => b.id).join(",");
+          if (prev !== matched.map((b) => b.id).join(",")) {
+            setGuestLocation({ lat, lng, boundaries: matched });
+            recordDistrictLookup(supabase, { source: "district_banner", method: "gps", boundaryCount: matched.length });
+          }
         },
         () => {
           try {
@@ -84,7 +91,7 @@ export default function DistrictRacesBanner({
             /* ignore */
           }
         },
-        { timeout: 10000, maximumAge: 5 * 60 * 1000 }
+        { timeout: 10000, maximumAge: 60 * 1000 }
       );
 
     // A previously denied permission can't prompt again -- skip straight to the fallback promo.
