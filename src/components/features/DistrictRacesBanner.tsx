@@ -28,6 +28,25 @@ import { getGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/
 // so navigating between pages doesn't re-prompt on every load.
 const ASKED_SESSION_KEY = "choseno_geo_asked";
 
+// Local races first (municipal / school board are the ones people know least
+// and are decided closest to home), then soonest election, then provincial,
+// federal and state/national.
+const LOCAL_RANK = (type?: string | null) => {
+  const t = (type || "").toLowerCase();
+  if (t.includes("municipal") || t.includes("school") || t.includes("ward") || t.includes("city")) return 0;
+  if (t.includes("provincial") || t.includes("state house") || t.includes("state senate")) return 1;
+  if (t.includes("federal")) return 2;
+  return 3;
+};
+const sortByRelevance = (rows: DistrictSeat[]) =>
+  [...rows].sort(
+    (a, b) =>
+      LOCAL_RANK((a.map_shapes as { boundary_type?: string } | null | undefined)?.boundary_type) -
+        LOCAL_RANK((b.map_shapes as { boundary_type?: string } | null | undefined)?.boundary_type) ||
+      (a.elections?.election_date || "").localeCompare(b.elections?.election_date || "") ||
+      b.candidateCount - a.candidateCount
+  );
+
 const isElectoral = (b: MatchedBoundary) => !(b.boundary_type || "").toLowerCase().includes("polling");
 
 export default function DistrictRacesBanner({
@@ -127,7 +146,10 @@ export default function DistrictRacesBanner({
   }, [boundaryKey, supabase]);
 
   const seatsLoading = loaded?.key !== boundaryKey;
-  const seats = loaded?.key === boundaryKey ? loaded.rows : [];
+  const seats = loaded?.key === boundaryKey ? sortByRelevance(loaded.rows) : [];
+  const visibleLimit = vertical ? 4 : 6;
+  const visibleSeats = seats.slice(0, visibleLimit);
+  const hiddenCount = seats.length - visibleSeats.length;
 
   if (boundaries.length === 0) {
     return (
@@ -140,50 +162,59 @@ export default function DistrictRacesBanner({
   return (
     <section
       aria-label="Districts and elections in your area"
-      className={`rounded-2xl border-2 border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent ${vertical ? "p-4" : "p-5 sm:p-6"} space-y-4 ${className}`.trim()}
+      className={`rounded-2xl border-2 border-primary/30 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent ${vertical ? "p-3.5" : "p-4 sm:p-5"} space-y-3 ${className}`.trim()}
     >
-      <div className={vertical ? "space-y-2" : "flex flex-wrap items-start justify-between gap-2"}>
-        <div>
-          <h2 className={`${vertical ? "text-base" : "text-lg sm:text-xl"} font-black text-text-main flex items-center gap-2`}>
-            <Sparkles size={20} className="text-primary" aria-hidden="true" />
-            Your districts &amp; elections
-          </h2>
-          <p className="mt-1 text-sm text-text-muted">The districts you belong to and the races on your ballot.</p>
-        </div>
-        <Link href="/find-my-district" className="text-xs font-semibold text-primary hover:underline">
-          Not right? Change location
-        </Link>
-      </div>
-
-      <ul className={vertical ? "flex flex-col gap-1.5" : "flex flex-wrap gap-2"}>
-        {boundaries.map((b) => (
-          <li key={b.id}>
-            <Link
-              href={`/elections/${buildBoundarySlug(b)}`}
-              onClick={() => recordDistrictBannerClick(supabase, { targetType: "boundary", targetId: b.id })}
-              className={`${vertical ? "flex w-full" : "inline-flex"} items-center gap-1.5 rounded-full border border-border-light/40 bg-surface-elevated/70 px-3 py-1.5 text-xs font-semibold text-text-main hover:border-primary/40 hover:text-primary transition-colors`}
-            >
-              <Layers size={12} className="text-primary" aria-hidden="true" />
-              {b.name}
-              {b.boundary_type && <span className="font-normal text-text-muted">· {b.boundary_type}</span>}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <h2 className={`${vertical ? "text-base" : "text-lg"} font-black text-text-main flex items-center gap-2`}>
+        <Sparkles size={18} className="text-primary" aria-hidden="true" />
+        {seatsLoading || seats.length > 0 ? "Races on your ballot" : "Your districts"}
+      </h2>
 
       {seatsLoading ? (
         <p className="text-sm text-text-muted">Loading elections in your area…</p>
       ) : seats.length > 0 ? (
-        <DistrictSeatCards
-          seats={seats}
-          singleColumn={vertical}
-          onSeatClick={(seat) => recordDistrictBannerClick(supabase, { targetType: "seat", targetId: seat.id })}
-        />
+        <>
+          <DistrictSeatCards
+            variant="banner"
+            seats={visibleSeats}
+            singleColumn={vertical}
+            onSeatClick={(seat) => recordDistrictBannerClick(supabase, { targetType: "seat", targetId: seat.id })}
+          />
+          {hiddenCount > 0 && (
+            <Link href="/find-my-district" className="block text-xs font-semibold text-primary hover:underline">
+              + {hiddenCount} more {hiddenCount === 1 ? "race" : "races"} in your area →
+            </Link>
+          )}
+        </>
       ) : (
         <p className="flex items-center gap-1.5 text-sm text-text-muted">
           <MapPin size={14} aria-hidden="true" /> No elections are currently open in your districts.
         </p>
       )}
+
+      {/* Districts: supporting info, kept small and last. */}
+      <div className="border-t border-primary/15 pt-2.5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">Your districts</span>
+          <Link href="/find-my-district" className="text-[11px] font-semibold text-primary hover:underline">
+            Not right? Change
+          </Link>
+        </div>
+        <ul className="mt-1.5 flex flex-wrap gap-1">
+          {boundaries.map((b) => (
+            <li key={b.id}>
+              <Link
+                href={`/elections/${buildBoundarySlug(b)}`}
+                onClick={() => recordDistrictBannerClick(supabase, { targetType: "boundary", targetId: b.id })}
+                title={b.boundary_type}
+                className="inline-flex items-center gap-1 rounded-full border border-border-light/40 bg-surface-elevated/70 px-2 py-0.5 text-[11px] font-medium text-text-main hover:border-primary/40 hover:text-primary transition-colors"
+              >
+                <Layers size={10} className="text-primary" aria-hidden="true" />
+                {b.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
