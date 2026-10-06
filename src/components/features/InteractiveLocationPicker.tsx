@@ -271,7 +271,7 @@ export default function InteractiveLocationPicker({
                 onClick={() => selectAddress(item)}
                 className="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 flex items-center gap-2 border-b border-black/5 last:border-b-0 transition-colors"
               >
-                <MapPin size={14} className="text-blue-600 shrink-0" />
+                <MapPin size={14} className="text-primary shrink-0" />
                 <span className="truncate">{item.display_name}</span>
               </button>
             ))}
@@ -312,10 +312,10 @@ export default function InteractiveLocationPicker({
                 size="sm"
                 onClick={autoDetectGPS}
                 disabled={loading}
-                className="w-full shadow-md text-xs gap-1.5 !bg-blue-600 !text-white hover:!bg-blue-700"
+                className="w-full shadow-md text-xs gap-1.5"
               >
                 {loading ? (
-                  <Loader2 size={14} className="animate-spin !text-white" />
+                  <Loader2 size={14} className="animate-spin" />
                 ) : (
                   <Navigation size={14} className="!text-white" />
                 )}
@@ -333,9 +333,9 @@ export default function InteractiveLocationPicker({
             className="shadow-lg text-xs gap-1.5 !bg-white !border !border-black/10 !text-slate-800 hover:!bg-slate-50"
           >
             {loading ? (
-              <Loader2 size={14} className="animate-spin !text-blue-600" />
+              <Loader2 size={14} className="animate-spin !text-primary" />
             ) : (
-              <Navigation size={14} className="!text-blue-600" />
+              <Navigation size={14} className="!text-primary" />
             )}
             {t("location.autoDetect")}
           </Button>

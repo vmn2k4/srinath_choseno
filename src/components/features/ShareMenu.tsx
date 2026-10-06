@@ -261,7 +261,7 @@ export default function ShareMenu({
           window.open(prefilledTwitterUrl, "_blank", "noopener,noreferrer");
           closeMenu("X Long Post");
         }}
-        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-800 font-semibold transition-colors text-left w-full cursor-pointer group"
+        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-primary/10 text-primary font-semibold transition-colors text-left w-full cursor-pointer group"
       >
         <div className="flex items-center gap-2.5">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -269,7 +269,7 @@ export default function ShareMenu({
           </svg>
           <span>Share on X (Pre-Filled Long Post)</span>
         </div>
-        <span className="text-[9px] uppercase font-bold tracking-wider bg-sky-100 group-hover:bg-sky-200 text-sky-700 px-1.5 py-0.5 rounded transition-colors">
+        <span className="text-[9px] uppercase font-bold tracking-wider bg-primary/15 group-hover:bg-primary/25 text-primary px-1.5 py-0.5 rounded transition-colors">
           Auto-Filled
         </span>
       </button>
@@ -292,7 +292,7 @@ export default function ShareMenu({
           window.open("https://x.com/compose/articles", "_blank", "noopener,noreferrer");
           closeMenu("X Articles");
         }}
-        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full cursor-pointer group"
+        className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-primary/10 text-primary font-semibold transition-colors text-left w-full cursor-pointer group"
       >
         <div className="flex items-center gap-2.5">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -307,11 +307,11 @@ export default function ShareMenu({
 
       {/* 2c. Copy & Download Share Card Graphic */}
       {shareData.imageUrl && (
-        <div className="flex items-center gap-1 my-0.5 px-1 py-1 rounded-lg bg-sky-50/70 border border-sky-100">
+        <div className="flex items-center gap-1 my-0.5 px-1 py-1 rounded-lg bg-primary/10 border border-primary/20">
           <button
             onClick={handleCopyImage}
             title="Copy Share Card image to clipboard to paste (Cmd+V) into your X post"
-            className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-sky-100 text-sky-800 font-medium transition-colors text-[11px] cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-primary/15 text-primary font-medium transition-colors text-[11px] cursor-pointer"
           >
             {copiedImage ? (
               <>
@@ -320,7 +320,7 @@ export default function ShareMenu({
               </>
             ) : (
               <>
-                <ImageIcon size={12} className="text-sky-600" />
+                <ImageIcon size={12} className="text-primary" />
                 <span>Copy Image (Cmd+V)</span>
               </>
             )}
@@ -328,7 +328,7 @@ export default function ShareMenu({
           <button
             onClick={handleDownloadImage}
             title="Download Share Card PNG"
-            className="p-1.5 rounded-md hover:bg-sky-100 text-sky-700 transition-colors cursor-pointer"
+            className="p-1.5 rounded-md hover:bg-primary/15 text-primary transition-colors cursor-pointer"
           >
             <Download size={13} />
           </button>
@@ -343,7 +343,7 @@ export default function ShareMenu({
           window.open(shareData.twitterUrl, "_blank", "noopener,noreferrer");
           closeMenu("X");
         }}
-        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-600 font-medium transition-colors text-left w-full cursor-pointer text-xs"
+        className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-primary/10 text-primary font-medium transition-colors text-left w-full cursor-pointer text-xs"
       >
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -364,7 +364,7 @@ export default function ShareMenu({
             window.open(shareData.mediumTwitterUrl, "_blank", "noopener,noreferrer");
             closeMenu("X Medium Post");
           }}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-sky-50 text-sky-700 font-semibold transition-colors text-left w-full cursor-pointer"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-primary/10 text-primary font-semibold transition-colors text-left w-full cursor-pointer"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

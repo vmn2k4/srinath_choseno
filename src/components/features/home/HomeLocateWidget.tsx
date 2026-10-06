@@ -305,7 +305,7 @@ export default function HomeLocateWidget({ className = "" }: { className?: strin
                     onClick={() => selectSuggestion(s)}
                     className="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 flex items-center gap-2 border-b border-black/5 last:border-b-0 transition-colors"
                   >
-                    <MapPin size={13} className="text-blue-600 shrink-0" aria-hidden="true" />
+                    <MapPin size={13} className="text-primary shrink-0" aria-hidden="true" />
                     <span className="truncate">{s.display_name}</span>
                   </button>
                 ))}
