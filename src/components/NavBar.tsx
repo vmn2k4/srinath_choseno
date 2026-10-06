@@ -38,7 +38,7 @@ export default function NavBar() {
   const isActive = (path: string) => pathname === path;
 
   const navLinkClass = (active: boolean) =>
-    `px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+    `px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
       active
         ? "text-primary bg-primary/10 border border-primary/25 font-semibold"
         : "text-text-muted hover:text-text-main hover:bg-surface-hover"
@@ -121,9 +121,9 @@ export default function NavBar() {
   return (
     <>
     <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border w-full">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
         <Link href="/" className="hover:opacity-90 transition-opacity">
-          <ChosenoLogo size="md" />
+          <ChosenoLogo size="sm" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -237,7 +237,7 @@ export default function NavBar() {
               </Link>
               <Link
                 href="/auth"
-                className={`px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                className={`px-3.5 py-1 rounded-lg text-sm font-semibold transition-all duration-200 ${
                   isActive("/auth")
                     ? "text-text-main bg-primary/20 border border-primary/40 shadow-sm"
                     : "text-text-on-primary bg-primary hover:bg-primary-hover shadow-sm"

@@ -33,7 +33,7 @@ export default function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-border-light/50 bg-surface-elevated/60 text-text-main hover:bg-surface-hover hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all duration-200 cursor-pointer"
+        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium border border-border-light/50 bg-surface-elevated/60 text-text-main hover:bg-surface-hover hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-all duration-200 cursor-pointer"
         aria-expanded={open}
         aria-haspopup="true"
         title="Change language"
