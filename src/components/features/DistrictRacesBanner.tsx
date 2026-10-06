@@ -12,7 +12,7 @@
 // getActiveSeatsWithCandidateCounts
 // and DistrictSeatCards (same race cards as /find-my-district).
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Layers, MapPin, Sparkles } from "lucide-react";
 import FindDistrictPromo from "./FindDistrictPromo";
@@ -44,7 +44,6 @@ export default function DistrictRacesBanner({
 }) {
   const vertical = orientation === "vertical";
   const supabase = createClient();
-  const askedRef = useRef(false);
   const [loaded, setLoaded] = useState<{ key: string; rows: DistrictSeat[] } | null>(null);
   // Districts from THIS page load's GPS fix only. A location saved earlier
   // (search box, map pin, another page) is deliberately ignored here: a wrong
@@ -56,9 +55,6 @@ export default function DistrictRacesBanner({
   // unsupported, times out, or the lookup fails, nothing is set and the
   // promo stays.
   useEffect(() => {
-    if (askedRef.current) return;
-    askedRef.current = true;
-
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
     try {
       if (sessionStorage.getItem(ASKED_SESSION_KEY)) return;
