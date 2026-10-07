@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Card, Avatar, Badge } from "@/components/primitives";
+import { Card, Badge } from "@/components/primitives";
 import PickShareReportButton from "@/components/features/PickShareReportButton";
 import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
+import PickShareCandidates from "@/components/features/PickShareCandidates";
 import { SITE_URL } from "@/lib/constants/site";
-import { buildSeatSlug } from "@/lib/utils/slugs";
 import { joinNames, pickSharePath } from "@/lib/utils/pickShare";
 import { loadPickShare } from "./loadPickShare";
 
@@ -52,8 +51,6 @@ export default async function PickSharePage({ params }: Props) {
 
   const { share, seat, picked, others } = data;
   const author = share.authorLabel || "A Choseno voter";
-  const seatSlug = buildSeatSlug(seat);
-  const raceHref = seatSlug ? `/elections/seat/${seatSlug}` : "/elections";
   const place = seat.map_shapes?.name;
 
   return (
@@ -76,40 +73,12 @@ export default async function PickSharePage({ params }: Props) {
         )}
       </Card>
 
-      <Card padding="md" className="space-y-3">
-        <h2 className="text-sm font-bold text-text-main">Candidates {author} supports</h2>
-        <ul className="space-y-2">
-          {picked.map((c) => (
-            <li key={c.id} className="flex items-start gap-3 rounded-xl border border-primary/40 bg-primary/5 p-3">
-              <Avatar src={c.avatarUrl} name={c.name} size="md" />
-              <div className="min-w-0">
-                <p className="font-bold text-text-main truncate">{c.name}</p>
-                {c.partyName && <p className="text-xs text-text-muted truncate">{c.partyName}</p>}
-                {c.note && <p className="mt-1 text-sm italic text-text-main">“{c.note}”</p>}
-              </div>
-            </li>
-          ))}
-        </ul>
-        {others.length > 0 && (
-          <p className="text-xs text-text-muted">
-            Also running: {others.slice(0, 8).map((c) => c.name).join(", ")}
-            {others.length > 8 ? ` and ${others.length - 8} more` : ""}
-          </p>
-        )}
-      </Card>
-
-      <Card padding="md" className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <p className="font-bold text-text-main">Who&apos;s your pick?</p>
-          <p className="text-xs text-text-muted">Compare everyone in the race, then share your own picks.</p>
-        </div>
-        <Link
-          href={raceHref}
-          className="inline-flex justify-center px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-text-on-primary font-bold text-sm transition-colors"
-        >
-          See the full race
-        </Link>
-      </Card>
+      <PickShareCandidates
+        seat={{ id: seat.id, role_title: seat.role_title, map_shapes: { name: seat.map_shapes?.name } }}
+        authorName={author}
+        picked={picked}
+        others={others}
+      />
 
       <div className="flex flex-col items-center gap-2 text-center">
         <p className="text-[11px] text-text-muted/80 max-w-md">

@@ -2,7 +2,7 @@
 
 import { Fragment, useState } from "react";
 import IntroVideoTile from "./IntroVideoTile";
-import { TrendingUp, Calendar, MapPin, Heart, Users, ChevronRight, CircleCheck } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, ChevronRight, Share2 } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import PickShareDialog from "./PickShareDialog";
 import PoliticianInlineRating from "./PoliticianInlineRating";
@@ -180,7 +180,7 @@ export default function ElectionResultsPanel({
                   onClick={() => setShowPickShare(true)}
                   title="Circle the candidates you support and share them"
                 >
-                  <CircleCheck size={14} /> Share my picks
+                  <Share2 size={14} /> Share my picks
                 </Button>
               </div>
             )}

@@ -5,6 +5,8 @@ export interface PickRosterCandidate {
   name: string;
   avatarUrl: string | null;
   partyName: string | null;
+  // politician profile id (for the Support button); null if unknown
+  profileId?: string | null;
 }
 
 // Normalizes rows from getCandidatesBySeatIds (profiles is a to-one embed,
@@ -20,6 +22,7 @@ export function toPickRoster(rows: any[]): PickRosterCandidate[] {
       name: (c.display_name || profile?.full_name || "Candidate") as string,
       avatarUrl: (pol?.avatar_url as string | null) || null,
       partyName: (c.party_name || party?.name || null) as string | null,
+      profileId: (profile?.id as string | undefined) ?? null,
     };
   });
 }
