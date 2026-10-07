@@ -152,7 +152,15 @@ export async function getGa4Overview(
           property,
           dateRanges: [{ startDate: "1daysAgo", endDate: "today" }],
           dimensions: [{ name: "dateHour" }],
-          metrics: [{ name: "sessions" }, { name: "activeUsers" }, { name: "newUsers" }],
+          metrics: [
+            { name: "sessions" },
+            { name: "activeUsers" },
+            { name: "newUsers" },
+            { name: "screenPageViews" },
+            { name: "bounceRate" },
+            { name: "averageSessionDuration" },
+            { name: "conversions" },
+          ],
           orderBys: [{ dimension: { dimensionName: "dateHour" } }],
         }),
         client.runReport({
@@ -214,16 +222,42 @@ export async function getGa4Overview(
 
     const totalsRow = totalsRes.rows?.[0];
 
+    let totals: Ga4Overview["totals"] = {
+      sessions: metricNum(totalsRow, 0),
+      activeUsers: metricNum(totalsRow, 1),
+      pageViews: metricNum(totalsRow, 2),
+      avgEngagementSec: Math.round(metricNum(totalsRow, 3)),
+      bounceRate: bounceRatePct(totalsRow, 4),
+      conversions: metricNum(totalsRow, 5),
+      newUsers: metricNum(totalsRow, 6),
+    };
+
+    // "Last 24 hours" must be a true rolling window, but a `1daysAgo..today`
+    // date range is yesterday + today-so-far (two calendar days). Rebuild the
+    // totals from the last 24 hourly rows. Sessions, new users, page views and
+    // conversions are additive across hours; bounce rate and engagement are
+    // session-weighted. activeUsers is not additive (a user active in several
+    // hours is counted per hour), so the hourly sum is only an upper bound --
+    // cap the two-day figure with it.
+    if (days === 1) {
+      const rows = (hourlyRes.rows || []).slice(-24);
+      const sum = (i: number) => rows.reduce((a, r) => a + metricNum(r, i), 0);
+      const weighted = (i: number) =>
+        rows.reduce((a, r) => a + metricNum(r, i) * metricNum(r, 0), 0);
+      const sessions = sum(0);
+      totals = {
+        sessions,
+        activeUsers: Math.min(totals.activeUsers, sum(1)),
+        newUsers: sum(2),
+        pageViews: sum(3),
+        bounceRate: sessions ? Math.round((weighted(4) / sessions) * 10000) / 100 : 0,
+        avgEngagementSec: sessions ? Math.round(weighted(5) / sessions) : 0,
+        conversions: sum(6),
+      };
+    }
+
     const data: Ga4Overview = {
-      totals: {
-        sessions: metricNum(totalsRow, 0),
-        activeUsers: metricNum(totalsRow, 1),
-        pageViews: metricNum(totalsRow, 2),
-        avgEngagementSec: Math.round(metricNum(totalsRow, 3)),
-        bounceRate: bounceRatePct(totalsRow, 4),
-        conversions: metricNum(totalsRow, 5),
-        newUsers: metricNum(totalsRow, 6),
-      },
+      totals,
       dailyTrend: (trendRes.rows || []).map((row) => ({
         date: formatGa4Date(dimStr(row, 0)),
         sessions: metricNum(row, 0),
