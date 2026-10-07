@@ -22,7 +22,7 @@ export const loadPickShare = cache(async (code: string) => {
   if (!seat) return null;
 
   const roster = toPickRoster((rows as any[]) || []);
-  const { picked, others } = splitRoster(roster, share.pickedCandidateIds);
+  const { picked, others } = splitRoster(roster, share.picks);
   // Every pick may have been withdrawn since sharing (candidate deleted).
   if (picked.length === 0) return null;
   return { share, seat: seat as any, picked, others };

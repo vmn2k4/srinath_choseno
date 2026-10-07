@@ -24,10 +24,19 @@ export function toPickRoster(rows: any[]): PickRosterCandidate[] {
   });
 }
 
-// Picked candidates first (in the order the sharer chose), then the rest.
-export function splitRoster(roster: PickRosterCandidate[], pickedIds: string[]) {
+export interface PickedCandidate extends PickRosterCandidate {
+  note: string | null;
+}
+
+// Picked candidates first (in the order the sharer chose, each carrying
+// their own note), then the rest.
+export function splitRoster(roster: PickRosterCandidate[], picks: { candidateId: string; note: string | null }[]) {
   const byId = new Map(roster.map((c) => [c.id, c]));
-  const picked = pickedIds.map((id) => byId.get(id)).filter((c): c is PickRosterCandidate => Boolean(c));
+  const picked: PickedCandidate[] = [];
+  for (const p of picks) {
+    const c = byId.get(p.candidateId);
+    if (c) picked.push({ ...c, note: p.note });
+  }
   const pickedSet = new Set(picked.map((c) => c.id));
   const others = roster.filter((c) => !pickedSet.has(c.id));
   return { picked, others };

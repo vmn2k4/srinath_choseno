@@ -40,7 +40,9 @@ export default function PickShareDialog({
   onClose: () => void;
 }) {
   const [picked, setPicked] = useState<string[]>(initialPickedIds);
-  const [note, setNote] = useState("");
+  // Per-candidate "why I support them" notes, keyed by candidacy id.
+  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [imgLoaded, setImgLoaded] = useState(false);
   // Lazy initializer so the stored name is read once on mount, client-only.
   const [name, setName] = useState(readStoredName);
   const [submitting, setSubmitting] = useState(false);
@@ -64,8 +66,7 @@ export default function PickShareDialog({
     const trimmedName = name.trim();
     const { data, error: rpcError } = await createRacePickShare(createClient(), {
       seatId: seat.id,
-      candidateIds: picked,
-      note: note.trim(),
+      picks: picked.map((id) => ({ candidateId: id, note: (notes[id] || "").trim() })),
       authorLabel: trimmedName,
       anonId: getOrCreateAnonSupporterId(),
     });
@@ -83,15 +84,25 @@ export default function PickShareDialog({
     setCode(data);
   }
 
+  const firstNote = picked.map((id) => (notes[id] || "").trim()).find(Boolean);
+  const previewTitle = `${name.trim() || "A Choseno voter"} supports ${joinNames(pickedNames)}${
+    roleTitle ? ` — ${roleTitle}${place ? `, ${place}` : ""}` : ""
+  }`;
+  const previewDescription = firstNote
+    ? `“${firstNote}” See everyone running and make your own picks on Choseno.`
+    : "See everyone running and make your own picks on Choseno.";
+
   let shareData: ShareData | null = null;
   if (code) {
     // utm params ride on the link people click so first-touch signup
     // attribution (signupSource.ts) can credit pick shares.
     const url = `${SITE_URL}${pickSharePath(code)}?utm_source=pick_share&utm_medium=social`;
-    const cleanNote = note.trim();
-    const basePostText = `I'm backing ${joinNames(pickedNames)} for ${roleTitle}${place ? ` in ${place}` : ""}.${
-      cleanNote ? `\n\n“${cleanNote}”` : ""
-    }\n\nSee everyone running and make your own picks:`;
+    const noteLines = picked
+      .map((id) => ({ name: roster.find((c) => c.id === id)?.name, note: (notes[id] || "").trim() }))
+      .filter((l) => l.name && l.note)
+      .map((l) => `• ${l.name}: “${l.note}”`);
+    const headline = `I'm backing ${joinNames(pickedNames)} for ${roleTitle}${place ? ` in ${place}` : ""}.`;
+    const basePostText = `${headline}${noteLines.length ? `\n\n${noteLines.join("\n")}` : ""}\n\nSee everyone running and make your own picks:`;
     const hashtags = Array.from(new Set([cleanTag(roleTitle) || "Election", cleanTag(place), "Vote2026", "Choseno"].filter(Boolean)));
     const hashtagList = hashtags.map((t) => `#${t}`).join(" ");
     shareData = {
@@ -100,7 +111,7 @@ export default function PickShareDialog({
       hashtagList,
       shareText: `${basePostText}\n\n${hashtagList}\n${url}`,
       hashtags,
-      twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(
+      twitterUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${headline} See everyone running:`)}&url=${encodeURIComponent(
         url
       )}&hashtags=${encodeURIComponent(hashtags.join(","))}`,
       imageUrl: `${SITE_URL}${pickSharePath(code)}/opengraph-image`,
@@ -120,9 +131,51 @@ export default function PickShareDialog({
       {code && shareData ? (
         <>
           <p className="text-sm text-text-secondary">
-            You&apos;re backing <strong className="text-text-main">{joinNames(pickedNames)}</strong>. Share the link — it
-            shows your picks circled, and brings friends to the full race.
+            You&apos;re backing <strong className="text-text-main">{joinNames(pickedNames)}</strong>. This is how your link
+            will look when friends see it:
           </p>
+
+          {/* WhatsApp-style link preview mock. Deliberately uses WhatsApp's own
+              colours (an imitation of a third-party UI, not our theme) and the
+              real generated OG image, so what you see is what they get. */}
+          <div className="rounded-xl p-3" style={{ backgroundColor: "#e5ddd5" }}>
+            <p className="text-[10px] font-semibold uppercase tracking-wide mb-1.5" style={{ color: "#667781" }}>
+              WhatsApp preview
+            </p>
+            <div className="ml-auto max-w-[92%] rounded-lg p-1 shadow-sm" style={{ backgroundColor: "#d9fdd3", color: "#111b21" }}>
+              <div className="rounded-md overflow-hidden" style={{ backgroundColor: "#c5eebd" }}>
+                <div className="relative w-full" style={{ aspectRatio: "1200 / 630", backgroundColor: "#b6dcae" }}>
+                  {!imgLoaded && (
+                    <span className="absolute inset-0 flex items-center justify-center text-[11px]" style={{ color: "#667781" }}>
+                      Generating your image…
+                    </span>
+                  )}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${pickSharePath(code)}/opengraph-image`}
+                    alt="Preview of your shared picks"
+                    onLoad={() => setImgLoaded(true)}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+                  />
+                </div>
+                <div className="px-2.5 py-2">
+                  <p className="text-[13px] font-semibold leading-snug line-clamp-2">{previewTitle}</p>
+                  <p className="text-xs leading-snug line-clamp-2" style={{ color: "#54656f" }}>
+                    {previewDescription}
+                  </p>
+                  <p className="text-[11px] mt-0.5" style={{ color: "#667781" }}>
+                    choseno.com
+                  </p>
+                </div>
+              </div>
+              <p className="px-1.5 pt-1 pb-0.5 text-[13px] leading-snug break-all" style={{ color: "#027eb5" }}>
+                {shareData.url}
+              </p>
+              <p className="px-1.5 pb-0.5 text-[10px] text-right" style={{ color: "#667781" }}>
+                now
+              </p>
+            </div>
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <ShareMenu
               articleId={code}
@@ -144,7 +197,17 @@ export default function PickShareDialog({
               Preview page
             </a>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setCode(null);
+                setImgLoaded(false);
+              }}
+            >
+              Edit picks
+            </Button>
             <Button variant="outline" size="sm" onClick={onClose}>
               Done
             </Button>
@@ -154,10 +217,10 @@ export default function PickShareDialog({
         <>
           <p className="text-sm text-text-secondary">
             Pick the candidates you support in <strong className="text-text-main">{roleTitle}</strong>
-            {place ? ` (${place})` : ""}. You can choose more than one.
+            {place ? ` (${place})` : ""}. You can choose more than one, and tell people why you support each.
           </p>
 
-          <ul className="space-y-1.5 max-h-72 overflow-y-auto pr-1">
+          <ul className="space-y-1.5 max-h-[55vh] overflow-y-auto pr-1">
             {roster.map((c) => {
               const on = picked.includes(c.id);
               return (
@@ -184,27 +247,28 @@ export default function PickShareDialog({
                       {on && <Check size={14} />}
                     </span>
                   </button>
+                  {on && (
+                    <div className="mt-1.5 pl-2 pr-1 pb-1">
+                      <label htmlFor={`pick-note-${c.id}`} className="sr-only">
+                        Why do you support {c.name}?
+                      </label>
+                      <Textarea
+                        id={`pick-note-${c.id}`}
+                        rows={2}
+                        maxLength={PICK_SHARE_NOTE_MAX}
+                        value={notes[c.id] || ""}
+                        onChange={(e) => setNotes((prev) => ({ ...prev, [c.id]: e.target.value }))}
+                        placeholder={`Why do you support ${c.name.split(" ")[0]}? (optional)`}
+                      />
+                      <p className="text-[11px] text-text-muted text-right">
+                        {(notes[c.id] || "").length}/{PICK_SHARE_NOTE_MAX} · no links please
+                      </p>
+                    </div>
+                  )}
                 </li>
               );
             })}
           </ul>
-
-          <div className="space-y-1">
-            <label htmlFor="pick-share-note" className="text-xs font-semibold text-text-main">
-              Why do you support them? <span className="font-normal text-text-muted">(optional)</span>
-            </label>
-            <Textarea
-              id="pick-share-note"
-              rows={2}
-              maxLength={PICK_SHARE_NOTE_MAX}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="e.g. She fixed our school bus routes."
-            />
-            <p className="text-[11px] text-text-muted text-right">
-              {note.length}/{PICK_SHARE_NOTE_MAX} · no links please
-            </p>
-          </div>
 
           <div className="space-y-1">
             <label htmlFor="pick-share-name" className="text-xs font-semibold text-text-main">

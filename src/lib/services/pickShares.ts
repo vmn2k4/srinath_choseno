@@ -16,12 +16,19 @@ export const PICK_SHARE_NAME_MAX = 40;
 
 export async function createRacePickShare(
   supabase: Client,
-  args: { seatId: string; candidateIds: string[]; note?: string; authorLabel?: string; anonId?: string | null }
+  args: {
+    seatId: string;
+    // Ordered picks; each may carry its own "why I support them" note.
+    picks: { candidateId: string; note?: string }[];
+    authorLabel?: string;
+    anonId?: string | null;
+  }
 ) {
   return (supabase as any).rpc("create_race_pick_share", {
     p_seat_id: args.seatId,
-    p_candidate_ids: args.candidateIds,
-    p_note: args.note || null,
+    p_candidate_ids: args.picks.map((p) => p.candidateId),
+    p_note: null,
+    p_pick_notes: args.picks.map((p) => p.note?.trim() || ""),
     p_author_label: args.authorLabel || null,
     p_anon_id: args.anonId || null,
     p_is_test: isDevEnvironment(),
@@ -41,7 +48,7 @@ export async function getRacePickShareByCode(supabase: Client, code: string) {
 
   const { data: picks, error: picksError } = await (supabase as any)
     .from("race_pick_share_picks")
-    .select("candidate_id, position")
+    .select("candidate_id, position, note")
     .eq("share_id", share.id)
     .order("position", { ascending: true });
 
@@ -53,7 +60,10 @@ export async function getRacePickShareByCode(supabase: Client, code: string) {
       note: (share.note as string | null) ?? null,
       authorLabel: (share.author_label as string | null) ?? null,
       createdAt: share.created_at as string,
-      pickedCandidateIds: ((picks || []) as { candidate_id: string }[]).map((p) => p.candidate_id),
+      picks: ((picks || []) as { candidate_id: string; note: string | null }[]).map((p) => ({
+        candidateId: p.candidate_id,
+        note: p.note || null,
+      })),
     },
     error: picksError,
   };

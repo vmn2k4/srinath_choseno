@@ -26,8 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const who = joinNames(picked.map((c) => c.name));
   const race = [seat.role_title, seat.map_shapes?.name].filter(Boolean).join(", ");
   const title = `${author} supports ${who}${race ? ` — ${race}` : ""}`;
-  const description = share.note
-    ? `“${share.note}” See everyone running and make your own picks on Choseno.`
+  const firstNote = share.note || picked.find((c) => c.note)?.note;
+  const description = firstNote
+    ? `“${firstNote}” See everyone running and make your own picks on Choseno.`
     : `See everyone running${race ? ` for ${race}` : ""} and make your own picks on Choseno.`;
   const url = `${SITE_URL}${pickSharePath(code)}`;
 
@@ -76,11 +77,12 @@ export default async function PickSharePage({ params }: Props) {
         <h2 className="text-sm font-bold text-text-main">Candidates {author} supports</h2>
         <ul className="space-y-2">
           {picked.map((c) => (
-            <li key={c.id} className="flex items-center gap-3 rounded-xl border border-primary/40 bg-primary/5 p-3">
+            <li key={c.id} className="flex items-start gap-3 rounded-xl border border-primary/40 bg-primary/5 p-3">
               <Avatar src={c.avatarUrl} name={c.name} size="md" />
               <div className="min-w-0">
                 <p className="font-bold text-text-main truncate">{c.name}</p>
                 {c.partyName && <p className="text-xs text-text-muted truncate">{c.partyName}</p>}
+                {c.note && <p className="mt-1 text-sm italic text-text-main">“{c.note}”</p>}
               </div>
             </li>
           ))}

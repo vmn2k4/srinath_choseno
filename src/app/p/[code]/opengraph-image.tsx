@@ -126,10 +126,19 @@ export default async function Image({ params }: Props) {
   const { share, seat, picked: allPicked, others: allOthers } = loaded;
   const picked = allPicked.slice(0, MAX_PICKED_SHOWN);
   const n = picked.length;
-  const pickPx = n === 1 ? 240 : n === 2 ? 205 : n === 3 ? 175 : n === 4 ? 145 : 120;
-  const otherPx = n >= 4 ? 64 : 80;
-  const pickTileW = pickPx + Math.round(pickPx * 0.18) + 36;
-  const otherTileW = otherPx + 28;
+  // Per-pick quotes need width and height, so faces shrink when any pick
+  // has a note; the quote font/length scale down as picks are added.
+  const hasQuotes = picked.some((c) => c.note);
+  const pickPx = hasQuotes
+    ? n === 1 ? 190 : n === 2 ? 160 : n === 3 ? 130 : 105
+    : n === 1 ? 240 : n === 2 ? 205 : n === 3 ? 175 : n === 4 ? 145 : 120;
+  const otherPx = n >= 4 ? 56 : 72;
+  const pickTileW = hasQuotes
+    ? n === 1 ? 560 : n === 2 ? 400 : n === 3 ? 310 : 232
+    : pickPx + Math.round(pickPx * 0.18) + 36;
+  const otherTileW = otherPx + 24;
+  const quoteSize = n === 1 ? 28 : n === 2 ? 24 : n === 3 ? 21 : 17;
+  const quoteMax = n === 1 ? 140 : n === 2 ? 110 : n === 3 ? 85 : 60;
 
   // Fill what's left of the row with the un-picked candidates (zoomed out);
   // anything that doesn't fit collapses into a "+N" tile.
@@ -155,7 +164,7 @@ export default async function Image({ params }: Props) {
   const place = seat?.map_shapes?.name || "";
   const raceLine = place ? `${roleTitle} · ${place}` : roleTitle;
   const note = share.note ? truncateWordSafe(share.note, 120) : null;
-  const nameSize = n === 1 ? 40 : n <= 3 ? 30 : 24;
+  const nameSize = hasQuotes ? (n === 1 ? 34 : n <= 3 ? 26 : 20) : n === 1 ? 40 : n <= 3 ? 30 : 24;
 
   return new ImageResponse(
     (
@@ -188,7 +197,7 @@ export default async function Image({ params }: Props) {
           <span style={{ color: ORANGE, marginLeft: 10 }}>{n === 1 ? "is backing" : "is backing these picks"}</span>
         </div>
 
-        <div style={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center", gap: 0 }}>
+        <div style={{ display: "flex", flex: 1, alignItems: hasQuotes ? "flex-start" : "center", justifyContent: "center", gap: 0, paddingTop: hasQuotes ? 14 : 0 }}>
           {picked.map((c, i) => (
             <div key={c.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", width: pickTileW }}>
               <Face name={c.name} src={pickedFaces[i]} px={pickPx} ring />
@@ -203,6 +212,16 @@ export default async function Image({ params }: Props) {
               {c.partyName && n <= 3 && (
                 <div style={{ display: "flex", marginTop: 4, fontSize: 20, fontWeight: 700, color: MUTED }}>
                   {truncateWordSafe(c.partyName, 24)}
+                </div>
+              )}
+              {c.note && (
+                <div
+                  style={{
+                    display: "flex", marginTop: 10, padding: "0 10px", fontSize: quoteSize, fontWeight: 700, color: INK,
+                    fontStyle: "italic", textAlign: "center", justifyContent: "center", lineHeight: 1.25,
+                  }}
+                >
+                  {`“${truncateWordSafe(c.note, quoteMax)}”`}
                 </div>
               )}
             </div>
