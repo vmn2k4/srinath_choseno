@@ -79,6 +79,8 @@ SRC_DECRIM = ("CP24: Timeline of B.C.'s overdose emergency", "https://www.cp24.c
 SRC_DRIPA = ("National Newswatch: Eby moving forward with First Nations after DRIPA climbdown", "https://nationalnewswatch.com/2026/04/20/eby-moving-forward-with-first-nations-after-latest-climbdown-on-indigenous-law")
 SRC_HRC = ("Castanet: Bill to repeal B.C. Human Rights Code voted down", "https://www.castanetkamloops.net/news/Kelowna/600905/Kelowna-MLAs-bill-to-repeal-BC-Human-Rights-Code-quickly-voted-down")
 SRC_HRC2 = ("Williams Lake Tribune: Doerkson responds to Human Rights Code controversy", "https://wltribune.com/2026/03/06/mla-lorne-doerkson-responds-to-human-rights-code-repeal-act-controversy/")
+SRC_HRC3 = ("Langley Advance Times: Vote on bill to repeal B.C. Human Rights Code explained", "https://langleyadvancetimes.com/2026/03/03/vote-on-mlas-bill-to-repeal-b-c-human-rights-code-explained/")
+SRC_NEUFELD = ("CP24: Ex-B.C. school trustee to fight $750,000 penalty", "https://www.cp24.com/news/canada/2026/02/24/ex-bc-school-trustee-to-fight-750000-penalty-for-insidious-anti-sogi-campaign/")
 SRC_MAAHS = ("Today in BC: NDP calls for Conservatives to drop Chilliwack candidate", "https://todayinbc.com/2026/10/02/ndp-calls-for-conservatives-to-drop-chilliwack-candidate-over-lgbtq-remarks/")
 SRC_INTERIM = ("CP24: Former candidate asks B.C. Conservatives to plug noses", "https://www.cp24.com/news/canada/2026/09/24/former-candidate-asks-bc-conservatives-to-plug-noses-for-any-concerns-about-leader/")
 SRC_NOTAX = ("Global News: Conservatives promise no new taxes", "https://globalnews.ca/news/12075070/bc-election-september-27-conservative-platform/")
@@ -88,7 +90,7 @@ SOURCES_BY_SLUG = {
     SLUG_SE: src(SRC_DATES, SRC_POLL, SRC_HEALTH, SRC_DEBT, SRC_MOODYS, SRC_TAX),
     SLUG_OE: src(SRC_DATES, SRC_POLL, SRC_TAX, SRC_DEBT, SRC_MOODYS, SRC_DECRIM, SRC_DRIPA),
     SLUG_SD: src(SRC_DATES, SRC_POLL, SRC_NOTAX, SRC_INTERIM, SRC_ICBC, SRC_TAX),
-    SLUG_OD: src(SRC_DATES, SRC_HRC, SRC_HRC2, SRC_MAAHS, SRC_INTERIM, SRC_FLOOR, SRC_ICBC),
+    SLUG_OD: src(SRC_DATES, SRC_HRC, SRC_HRC3, SRC_NEUFELD, SRC_HRC2, SRC_MAAHS, SRC_INTERIM, SRC_FLOOR, SRC_ICBC),
     SLUG_HUB: src(SRC_DATES, SRC_POLL),
 }
 
@@ -335,6 +337,7 @@ Opponents have questioned whether an interim leader can stay on. Supporters answ
 - **Much of the support is anti-NDP, not pro-Doerkson.** Direct praise for him by name is thinner than for the party.
 - **He is new and relatively unknown.** Many voters are judging the party, not the man. In an Angus Reid poll, about half of British Columbians said they were concerned the Conservatives are not ready to govern.
 - **Split on the right.** Some Conservatives and OneBC voters call him too much of a "rebadged Liberal."
+- **The Human Rights Code vote.** Defenders note that Doerkson's yes vote on a 2026 bill to repeal B.C.'s Human Rights Code was at first reading, a procedural step, and that he says it did not mean he supports the bill. Critics disagree; see [why people don't support him](/news/""" + SLUG_OD + """).
 - **Reddit under-represents these voters.** YouTube and X carry more raw Conservative enthusiasm.
 
 """ + HOW_WE_KNOW + """
@@ -389,11 +392,21 @@ body = DATELINE + """Lorne Doerkson is the interim leader of the BC Conservative
 
 """ + KEY_DATES + """
 
-## 1. The Human Rights Code vote
+## 1. The Human Rights Code vote, explained
 
-The most repeated named criticism of Doerkson on Reddit concerns a February 2026 private member's bill to repeal BC's Human Rights Code. On Feb. 26, Conservative MLA Tara Armstrong's Human Rights Code Repeal Act failed at first reading by a vote of 50 to 37, with all 37 votes in favour coming from Conservative MLAs. Doerkson was among those who voted yes.
+Many voters have heard "Doerkson voted to repeal the Human Rights Code" without knowing what that means. Here is the issue in plain terms.
 
-Doerkson has said that vote was procedural: "My vote for this bill, at first reading, is not an indication of me supporting its content at all," adding that the bill "never would have come forward for debate." Critics counter that a leader seeking to govern should not have voted to advance it, and warn the party could try again with a majority. This is the issue most often cited by LGBTQ and equity-minded voters.
+**What the Human Rights Code is.** It is the B.C. law that says you can't be treated unfairly because of who you are: your race, religion, sex, disability, age, sexual orientation, gender identity and other protected grounds. It applies to everyday situations such as getting hired, being paid, renting a home, or being served at a store or school. If you believe you were discriminated against, you can file a complaint with the B.C. Human Rights Tribunal, which hears these cases. The Code also created the province's Human Rights Commissioner.
+
+**What the bill proposed.** On Feb. 26, 2026, MLA Tara Armstrong, who sits as an independent, introduced the Human Rights Code Repeal Act. According to coverage of the bill, it would have repealed the Code, abolished the Tribunal and the Commissioner, and wiped out earlier Tribunal rulings. The coverage we found did not describe any replacement law.
+
+**Why she brought it.** Armstrong framed it as a defence of freedom of expression. The context was a February 2026 Tribunal ruling against Barry Neufeld, a former Chilliwack school trustee. The Tribunal found that his years-long public campaign against sexual orientation and gender identity (SOGI) school resources broke the Code, including its rules on employment discrimination, discriminatory publications and hate speech, and ordered him to pay $750,000 to a teachers' association. Neufeld's lawyer said he would seek a judicial review.
+
+**Why it caused an uproar.** Opponents said repealing the Code would leave people with no legal route to challenge, for example, a landlord who refuses to rent to someone because of their race or disability, or an employer who pays a woman less than a man for the same job. Jobs Minister Ravi Kahlon said the Conservatives "voted to legalize discrimination," and 17 pride societies and organizations signed a letter condemning the bill.
+
+**What happened.** The bill failed at first reading on Feb. 26 by a vote of 50 to 37. The 37 yes votes were all 34 Conservative MLAs, plus independents Dallas Brodie and Jordan Kealy, and Armstrong herself. First reading is normally a formality, a first look before any debate, which is why the vote itself was unusual and why the Conservatives say it should not be read as an endorsement.
+
+**Where Doerkson fits.** He was one of the 34 Conservatives who voted yes. He says that was a procedural vote: "My vote for this bill, at first reading, is not an indication of me supporting its content at all," and the bill "never would have come forward for debate." Critics answer that the whole caucus backing even a first reading of a bill to scrap the Code says something about the party he leads, and that voters should ask whether a Conservative government would bring anything similar back. Doerkson's defenders say it is being blown out of proportion. The Conservatives have not proposed repealing the Code in their campaign.
 
 ## 2. Candidates and the "extremist" question
 
