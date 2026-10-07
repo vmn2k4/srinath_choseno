@@ -192,3 +192,41 @@ export async function getAdminSupportMetrics(
     return { success: false, error: err instanceof Error ? err.message : String(err), metrics: emptyMetrics };
   }
 }
+
+export type SignupSourceRow = { label: string; count: number };
+export type SignupSourceReport = {
+  window_days: number;
+  total_signups: number;
+  tracked: number;
+  untracked: number;
+  by_trigger: SignupSourceRow[];
+  by_page_type: SignupSourceRow[];
+  by_last_page: SignupSourceRow[];
+  by_landing_page: SignupSourceRow[];
+  by_referrer: SignupSourceRow[];
+  by_method: SignupSourceRow[];
+  recent: {
+    signup_order: number;
+    created_at: string;
+    trigger: string;
+    landing_page: string | null;
+    referrer: string;
+    last_page: string | null;
+    method: string | null;
+    trail: string | null;
+  }[];
+};
+
+// Admin-only (enforced in the RPC). See 20261007000001_signup_source_report.sql.
+export async function getAdminSignupSourceReport(
+  supabase: Client,
+  days: number
+): Promise<{ success: boolean; report: SignupSourceReport | null; error?: string }> {
+  try {
+    const { data, error } = await supabase.rpc("get_admin_signup_source_report" as any, { p_days: days });
+    if (error) throw error;
+    return { success: true, report: data as unknown as SignupSourceReport };
+  } catch (err) {
+    return { success: false, report: null, error: err instanceof Error ? err.message : String(err) };
+  }
+}

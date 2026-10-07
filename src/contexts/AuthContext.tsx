@@ -12,7 +12,8 @@ import {
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { getSession, onAuthStateChange, signOut as signOutService } from "@/lib/services/auth";
-import { fetchOrHealProfile, getOwnProfile } from "@/lib/services/profile";
+import { fetchOrHealProfile, getOwnProfile, recordSignupSource } from "@/lib/services/profile";
+import { readSignupContext, clearSignupContext } from "@/lib/analytics/signupSource";
 import type { Database } from "@/lib/supabase/types";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
@@ -69,6 +70,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (active) {
         setProfile(data as AuthProfile | null);
         setLoading(false);
+        // Best-effort signup attribution -- deliberately after loading is
+        // released and not awaited, so it can never delay or break sign-in.
+        // Only for fresh signups that haven't been tagged yet.
+        try {
+          const p = data as (AuthProfile & { signup_source?: unknown }) | null;
+          const ctx = readSignupContext();
+          if (p && p.signup_order != null && !p.signup_source && ctx) {
+            void recordSignupSource(supabase, {
+              ...ctx,
+              method: newSession.user.app_metadata?.provider === "google" ? "google" : "email",
+            }).then(() => clearSignupContext());
+          } else if (p?.signup_source) {
+            clearSignupContext();
+          }
+        } catch {
+          // never let attribution affect auth
+        }
       }
     };
 

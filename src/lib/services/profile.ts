@@ -492,3 +492,16 @@ export function getFounderTier(signupOrder: number | null | undefined) {
   }
   return { label: "Founding Member", tone: "accent" as const, order: signupOrder };
 }
+
+// Fire-and-forget: tags a brand-new signup with where it came from. Never
+// throws and never awaited by callers -- it must not be able to affect
+// sign-in. The RPC itself only writes once, for accounts <7 days old.
+// `as any` on the RPC name: types.ts hasn't been regenerated for it yet.
+export async function recordSignupSource(supabase: Client, source: Record<string, unknown>) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase as any).rpc("record_signup_source", { p_source: source });
+  } catch {
+    // swallow
+  }
+}

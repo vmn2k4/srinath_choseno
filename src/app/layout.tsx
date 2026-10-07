@@ -11,6 +11,7 @@ import LocationRequiredGate from "@/components/LocationRequiredGate";
 import DebugUserSwitcher from "@/components/dev/DebugUserSwitcher";
 import FakeProductionToggle from "@/components/dev/FakeProductionToggle";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import SignupSourceCapture from "@/components/analytics/SignupSourceCapture";
 import VercelAnalytics from "@/components/analytics/VercelAnalytics";
 import VercelSpeedInsights from "@/components/analytics/VercelSpeedInsights";
 
@@ -121,6 +122,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </AuthProvider>
           </ThemeProvider>
         </LanguageProvider>
+        <SignupSourceCapture />
         <GoogleAnalytics />
         <VercelAnalytics />
         <VercelSpeedInsights />
