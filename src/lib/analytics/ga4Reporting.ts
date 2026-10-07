@@ -1,5 +1,5 @@
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
-import { DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays, type Ga4Granularity } from "@/lib/constants/ga4";
+import { DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays, type Ga4Granularity, type Ga4TrendRangeDays } from "@/lib/constants/ga4";
 
 // Server-only -- uses a service account private key, must never be imported
 // from a Client Component. Talks to the GA4 Data API (read-only reporting),
@@ -97,6 +97,40 @@ function formatGa4Date(raw: string): string {
 function formatGa4Hour(raw: string): string {
   if (raw.length !== 10) return raw;
   return `${raw.slice(8, 10)}:00`;
+}
+
+type Ga4Row = {
+  dimensionValues?: { value?: string | null }[] | null;
+  metricValues?: { value?: string | null }[] | null;
+};
+
+// One entry per day (oldest first, at most `keep`), each with 24 hourly
+// session counts. GA4 omits zero-session hours, so past days default to 0;
+// only the newest day has "future" hours, which are blanked (null) after its
+// last reported hour so the chart line stops at "now".
+function buildHourlyByDay(rows: Ga4Row[], keep: number): Ga4Overview["hourlyByDay"] {
+  const byDay = new Map<string, (number | null)[]>();
+  for (const row of rows) {
+    const raw = dimStr(row, 0);
+    if (raw.length !== 10) continue;
+    const date = formatGa4Date(raw.slice(0, 8));
+    const hours = byDay.get(date) ?? Array<number | null>(24).fill(0);
+    hours[Number(raw.slice(8, 10))] = metricNum(row, 0);
+    byDay.set(date, hours);
+  }
+  return [...byDay.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(-keep)
+    .map(([date, hours], i, all) => {
+      if (i === all.length - 1) {
+        const last = rows
+          .map((r) => dimStr(r, 0))
+          .filter((r) => r.startsWith(date.replace(/-/g, "")))
+          .reduce((m, r) => Math.max(m, Number(r.slice(8, 10))), -1);
+        for (let h = last + 1; h < 24; h++) hours[h] = null;
+      }
+      return { date, total: hours.reduce<number>((a, v) => a + (v ?? 0), 0), hours };
+    });
 }
 
 export async function getGa4Overview(
@@ -261,30 +295,7 @@ export async function getGa4Overview(
       };
     }
 
-    const byDay = new Map<string, (number | null)[]>();
-    for (const row of hourlyRes.rows || []) {
-      const raw = dimStr(row, 0);
-      if (raw.length !== 10) continue;
-      const date = formatGa4Date(raw.slice(0, 8));
-      const hours = byDay.get(date) ?? Array<number | null>(24).fill(0);
-      hours[Number(raw.slice(8, 10))] = metricNum(row, 0);
-      byDay.set(date, hours);
-    }
-    const hourlyByDay = [...byDay.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .slice(-3)
-      .map(([date, hours], i, all) => {
-        // GA4 omits zero-session hours, so only the newest day has "future"
-        // hours: blank those after its last reported hour.
-        if (i === all.length - 1) {
-          const last = (hourlyRes.rows || [])
-            .map((r) => dimStr(r, 0))
-            .filter((r) => r.startsWith(date.replace(/-/g, "")))
-            .reduce((m, r) => Math.max(m, Number(r.slice(8, 10))), -1);
-          for (let h = last + 1; h < 24; h++) hours[h] = null;
-        }
-        return { date, total: hours.reduce<number>((a, v) => a + (v ?? 0), 0), hours };
-      });
+    const hourlyByDay = buildHourlyByDay(hourlyRes.rows || [], 3);
 
     const data: Ga4Overview = {
       totals,
@@ -348,6 +359,74 @@ export async function getGa4Overview(
     return { success: true, data };
   } catch (err) {
     console.error("GA4 Data API request failed:", err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Per-chart trend queries for /admin/traffic: the last `days` days ending
+// today, fetched on demand so each chart's range picker is independent of the
+// page-level date range. One GA4 query each (the overview already fires ten
+// at once, and GA4 caps concurrent requests per property).
+
+function trendDateRanges(days: Ga4TrendRangeDays) {
+  return [{ startDate: days <= 1 ? "today" : `${days - 1}daysAgo`, endDate: "today" }];
+}
+
+export async function getGa4HourlyByDay(
+  days: Ga4TrendRangeDays
+): Promise<{ success: boolean; data?: Ga4Overview["hourlyByDay"]; error?: string }> {
+  if (!isGa4ReportingConfigured()) {
+    return { success: false, error: "Google Analytics reporting is not configured yet." };
+  }
+  try {
+    const [res] = await getClient().runReport({
+      property: `properties/${PROPERTY_ID}`,
+      dateRanges: trendDateRanges(days),
+      dimensions: [{ name: "dateHour" }],
+      metrics: [{ name: "sessions" }],
+      orderBys: [{ dimension: { dimensionName: "dateHour" } }],
+    });
+    return { success: true, data: buildHourlyByDay(res.rows || [], days) };
+  } catch (err) {
+    console.error("GA4 hourly trend request failed:", err);
+    return { success: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+export async function getGa4DailyTrend(
+  days: Ga4TrendRangeDays
+): Promise<{ success: boolean; data?: Ga4Overview["dailyTrend"]; error?: string }> {
+  if (!isGa4ReportingConfigured()) {
+    return { success: false, error: "Google Analytics reporting is not configured yet." };
+  }
+  try {
+    const [res] = await getClient().runReport({
+      property: `properties/${PROPERTY_ID}`,
+      dateRanges: trendDateRanges(days),
+      dimensions: [{ name: "date" }],
+      metrics: [
+        { name: "sessions" },
+        { name: "activeUsers" },
+        { name: "screenPageViews" },
+        { name: "bounceRate" },
+        { name: "newUsers" },
+      ],
+      orderBys: [{ dimension: { dimensionName: "date" } }],
+    });
+    return {
+      success: true,
+      data: (res.rows || []).map((row) => ({
+        date: formatGa4Date(dimStr(row, 0)),
+        sessions: metricNum(row, 0),
+        activeUsers: metricNum(row, 1),
+        pageViews: metricNum(row, 2),
+        bounceRate: bounceRatePct(row, 3),
+        newUsers: metricNum(row, 4),
+      })),
+    };
+  } catch (err) {
+    console.error("GA4 daily trend request failed:", err);
     return { success: false, error: err instanceof Error ? err.message : String(err) };
   }
 }

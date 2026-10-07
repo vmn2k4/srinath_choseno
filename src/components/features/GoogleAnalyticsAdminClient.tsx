@@ -20,7 +20,7 @@ import {
   Zap,
   UserPlus,
 } from "lucide-react";
-import { GA4_DATE_RANGES, type Ga4DateRangeDays } from "@/lib/constants/ga4";
+import { GA4_DATE_RANGES, GA4_TREND_RANGES, type Ga4DateRangeDays, type Ga4TrendRangeDays } from "@/lib/constants/ga4";
 import type { Ga4Overview } from "@/lib/analytics/ga4Reporting";
 
 const RANGE_LABELS: Record<Ga4DateRangeDays, string> = {
@@ -35,10 +35,154 @@ const RANGE_LABELS: Record<Ga4DateRangeDays, string> = {
 
 type HourlyByDay = Ga4Overview["hourlyByDay"];
 
-// Overlaid lines, one per day, sharing an hour-of-day axis. Newest day is
-// drawn thick and last so it reads as "now"; older days fade back. The
-// Cumulative toggle answers "are we ahead of or behind yesterday so far?".
-function HourlyByDayChart({ days }: { days: HourlyByDay }) {
+type DailyPoint = Ga4Overview["dailyTrend"][number];
+
+// Segmented "1d 3d 5d ..." picker shared by the two trend charts. Each chart
+// owns its own range, independent of the page-level date range.
+function TrendRangePicker({ value, onChange }: { value: Ga4TrendRangeDays; onChange: (d: Ga4TrendRangeDays) => void }) {
+  return (
+    <div role="group" aria-label="Chart range in days" className="flex rounded-md border border-border-light/40 overflow-hidden text-[11px]">
+      {GA4_TREND_RANGES.map((d) => (
+        <button
+          key={d}
+          type="button"
+          aria-pressed={value === d}
+          onClick={() => onChange(d)}
+          className={`px-2 py-1 ${value === d ? "bg-accent text-white" : "text-text-muted hover:bg-surface"}`}
+        >
+          {d}d
+        </button>
+      ))}
+    </div>
+  );
+}
+
+type BarItem = { key: string; value: number; title: string; hoverLabel: string };
+
+// Tailwind only sees complete class strings, so the two gradients are spelled
+// out in full rather than built from the tone name.
+const BAR_TONES = {
+  accent: "bg-gradient-to-t from-accent to-accent/60 hover:from-accent hover:to-accent",
+  primary: "bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary",
+} as const;
+
+// Bar chart with the actual number printed above each bar. The label adapts
+// to the room: full "2,710" when it fits, compact "2.7k" when it doesn't, and
+// every Nth bar when even that is too tight (the newest bar is always
+// labelled).
+function SessionBars({
+  items,
+  tone,
+  footerLeft,
+  footerRight,
+  busy = false,
+}: {
+  items: BarItem[];
+  tone: keyof typeof BAR_TONES;
+  footerLeft?: string;
+  footerRight?: string;
+  busy?: boolean;
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const update = () => setWidth(el.clientWidth);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const n = items.length;
+  const max = Math.max(...items.map((i) => i.value), 1);
+  const compact = (v: number) => (v >= 10000 ? `${Math.round(v / 1000)}k` : v >= 1000 ? `${(v / 1000).toFixed(1).replace(/\.0$/, "")}k` : String(v));
+  const full = (v: number) => v.toLocaleString();
+  const dense = n > 16;
+  const charW = dense ? 5.4 : 6;
+  const slot = width > 0 ? (width - 24 - (n - 1) * 2) / n : 0;
+  const widest = (f: (v: number) => string) => Math.max(...items.map((i) => f(i.value).length)) * charW + 4;
+  const fmt = slot >= widest(full) ? full : compact;
+  const stride = slot > 0 ? Math.max(1, Math.ceil(widest(fmt) / slot)) : 0;
+
+  return (
+    <div className={`flex gap-3 transition-opacity ${busy ? "opacity-60" : ""}`}>
+      {/* Y-axis labels, aligned to the bars' top and baseline */}
+      <div className="flex flex-col justify-between h-44 text-right pr-2 pt-6 pb-3">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} className="text-[10px] text-text-muted font-mono leading-none">
+            {Math.round((max / 4) * (4 - i)).toLocaleString()}
+          </div>
+        ))}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div ref={wrapRef} className="flex items-end gap-0.5 h-44 bg-surface/30 rounded-lg px-3 pb-3 pt-6 border border-border-light/20">
+          {items.map((it, i) => {
+            const heightPct = Math.max((it.value / max) * 100, 2);
+            const labelled = stride > 0 && (n - 1 - i) % stride === 0;
+            return (
+              <div key={it.key} className="flex-1 group relative" style={{ height: `${heightPct}%` }}>
+                {labelled && (
+                  <span
+                    className="pointer-events-none absolute left-1/2 -top-4 -translate-x-1/2 whitespace-nowrap font-mono leading-none text-text-muted"
+                    style={{ fontSize: dense ? 9 : 10 }}
+                  >
+                    {fmt(it.value)}
+                  </span>
+                )}
+                <div title={it.title} className={`w-full h-full ${BAR_TONES[tone]} rounded-sm transition-all cursor-pointer`} />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  <div className="text-[10px] text-text-muted font-mono">{it.hoverLabel}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex justify-between mt-6 text-[10px] text-text-muted font-mono">
+          <span>{footerLeft}</span>
+          <span>{footerRight}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function lerpHex(a: string, b: string, t: number): string {
+  const part = (h: string, i: number) => parseInt(h.slice(1 + i * 2, 3 + i * 2), 16);
+  const ch = (i: number) => Math.round(part(a, i) + (part(b, i) - part(a, i)) * t).toString(16).padStart(2, "0");
+  return `#${ch(0)}${ch(1)}${ch(2)}`;
+}
+
+type ChartLine = {
+  key: string;
+  name: string;
+  total: number;
+  vals: (number | null)[];
+  color: string;
+  width: number;
+  opacity: number;
+  dash?: string;
+  legend: boolean;
+};
+
+// Overlaid lines sharing an hour-of-day axis. Up to 7 days each get their own
+// line, newest thick and last, older days fading back. Beyond 7 days that
+// would be spaghetti, so the older days become a faint backdrop and the chart
+// highlights the newest day, the day before, and a dashed average of all the
+// previous days. The Cumulative toggle answers "are we ahead of or behind so
+// far?".
+function HourlyByDayChart({
+  days,
+  rangeDays,
+  onRangeChange,
+  loading,
+}: {
+  days: HourlyByDay;
+  rangeDays: Ga4TrendRangeDays;
+  onRangeChange: (d: Ga4TrendRangeDays) => void;
+  loading: boolean;
+}) {
   const [mode, setMode] = useState<"hourly" | "cumulative">("hourly");
   const [hover, setHover] = useState<number | null>(null);
   // Render at the container's real pixel width (not a scaled viewBox) so the
@@ -56,38 +200,76 @@ function HourlyByDayChart({ days }: { days: HourlyByDay }) {
   }, []);
   const narrow = W < 520;
   const H = narrow ? 200 : 240, PL = 40, PR = 12, PT = 12, PB = 24;
-  const style = [
-    { color: "#c4a8ee", width: 1.75 },
-    { color: "#9b6fdc", width: 2 },
-    { color: "#6d1fc9", width: 3 },
-  ].slice(-days.length);
+  const LIGHT = "#c4a8ee", MID = "#9b6fdc", DARK = "#6d1fc9";
 
   const series = days.map((d) => {
     let run = 0;
     return d.hours.map((v) => (v == null ? null : mode === "cumulative" ? (run += v) : v));
   });
-  const max = Math.max(...series.flat().map((v) => v ?? 0), 1);
-  const x = (h: number) => PL + (h / 23) * (W - PL - PR);
-  const y = (v: number) => PT + (1 - v / max) * (H - PT - PB);
+  const n = days.length;
+  const many = n > 7;
   const label = (date: string) =>
     new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+  const lines: ChartLine[] = [];
+  if (!many) {
+    days.forEach((d, i) => {
+      const t = n > 1 ? i / (n - 1) : 1;
+      lines.push({
+        key: d.date,
+        name: label(d.date),
+        total: d.total,
+        vals: series[i],
+        color: lerpHex(LIGHT, DARK, t),
+        width: i === n - 1 ? 3 : 1.75 + t * 0.5,
+        opacity: 1,
+        legend: true,
+      });
+    });
+  } else {
+    for (let i = 0; i < n - 2; i++) {
+      lines.push({ key: days[i].date, name: label(days[i].date), total: days[i].total, vals: series[i], color: LIGHT, width: 1, opacity: 0.35, legend: false });
+    }
+    const prior = series.slice(0, n - 1);
+    const avgVals = Array.from({ length: 24 }, (_, h) => {
+      const present = prior.map((v) => v[h]).filter((v): v is number => v != null);
+      return present.length ? present.reduce((a, v) => a + v, 0) / present.length : null;
+    });
+    const avgTotal = Math.round(days.slice(0, n - 1).reduce((a, d) => a + d.total, 0) / (n - 1));
+    lines.push({ key: "avg", name: `Avg of previous ${n - 1} days`, total: avgTotal, vals: avgVals, color: "#64748b", width: 2.25, opacity: 1, dash: "6 4", legend: true });
+    lines.push({ key: days[n - 2].date, name: label(days[n - 2].date), total: days[n - 2].total, vals: series[n - 2], color: MID, width: 2, opacity: 1, legend: true });
+    lines.push({ key: days[n - 1].date, name: label(days[n - 1].date), total: days[n - 1].total, vals: series[n - 1], color: DARK, width: 3, opacity: 1, legend: true });
+  }
+  const shown = lines.filter((l) => l.legend);
+  const newest = lines[lines.length - 1];
+
+  const max = Math.max(...lines.flatMap((l) => l.vals).map((v) => v ?? 0), 1);
+  const x = (h: number) => PL + (h / 23) * (W - PL - PR);
+  const y = (v: number) => PT + (1 - v / max) * (H - PT - PB);
   const path = (vals: (number | null)[]) =>
     vals.map((v, h) => (v == null ? "" : `${h === 0 || vals[h - 1] == null ? "M" : "L"}${x(h).toFixed(1)},${y(v).toFixed(1)}`)).join(" ");
-  const lastToday = series[series.length - 1].reduce<number>((m, v, h) => (v == null ? m : h), -1);
+  const lastToday = newest.vals.reduce<number>((m, v, h) => (v == null ? m : h), -1);
 
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-        <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">Hourly Traffic — Last 3 Days</h3>
+        <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
+          Hourly Traffic — {rangeDays === 1 ? "Today" : `Last ${rangeDays} Days`}
+          {loading && <span className="ml-2 normal-case font-normal">Loading…</span>}
+        </h3>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <div className="flex items-center gap-3 text-[11px] text-text-muted">
-            {days.map((d, i) => (
-              <span key={d.date} className="flex items-center gap-1">
-                <span className="inline-block w-3 h-0.5 rounded" style={{ background: style[i].color, height: style[i].width }} />
-                {label(d.date)} · {d.total.toLocaleString()}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-text-muted">
+            {shown.map((l) => (
+              <span key={l.key} className="flex items-center gap-1">
+                <span
+                  className="inline-block w-3 rounded"
+                  style={{ background: l.dash ? "transparent" : l.color, height: l.width, borderTop: l.dash ? `2px dashed ${l.color}` : undefined }}
+                />
+                {l.name} · {l.total.toLocaleString()}
               </span>
             ))}
           </div>
+          <TrendRangePicker value={rangeDays} onChange={onRangeChange} />
           <div className="flex rounded-md border border-border-light/40 overflow-hidden text-[11px]">
             {(["hourly", "cumulative"] as const).map((m) => (
               <button
@@ -101,7 +283,7 @@ function HourlyByDayChart({ days }: { days: HourlyByDay }) {
           </div>
         </div>
       </div>
-      <div ref={wrapRef} className="relative bg-surface/30 rounded-lg border border-border-light/20">
+      <div ref={wrapRef} className={`relative bg-surface/30 rounded-lg border border-border-light/20 transition-opacity ${loading ? "opacity-60" : ""}`}>
         <svg
           width={W}
           height={H}
@@ -126,17 +308,17 @@ function HourlyByDayChart({ days }: { days: HourlyByDay }) {
               {String(h).padStart(2, "0")}:00
             </text>
           ))}
-          {series.map((vals, i) => (
-            <path key={days[i].date} d={path(vals)} fill="none" stroke={style[i].color} strokeWidth={style[i].width} strokeLinejoin="round" strokeLinecap="round" />
+          {lines.map((l) => (
+            <path key={l.key} d={path(l.vals)} fill="none" stroke={l.color} strokeWidth={l.width} strokeOpacity={l.opacity} strokeDasharray={l.dash} strokeLinejoin="round" strokeLinecap="round" />
           ))}
           {lastToday >= 0 && (
-            <circle cx={x(lastToday)} cy={y(series[series.length - 1][lastToday] ?? 0)} r={4.5} fill={style[style.length - 1].color} stroke="white" strokeWidth={1.5} />
+            <circle cx={x(lastToday)} cy={y(newest.vals[lastToday] ?? 0)} r={4.5} fill={newest.color} stroke="white" strokeWidth={1.5} />
           )}
           {hover != null && (
             <g>
               <line x1={x(hover)} x2={x(hover)} y1={PT} y2={H - PB} stroke="currentColor" strokeOpacity={0.25} strokeDasharray="3 3" />
-              {series.map((vals, i) => vals[hover] != null && (
-                <circle key={i} cx={x(hover)} cy={y(vals[hover] as number)} r={3.5} fill={style[i].color} />
+              {shown.map((l) => l.vals[hover] != null && (
+                <circle key={l.key} cx={x(hover)} cy={y(l.vals[hover] as number)} r={3.5} fill={l.color} />
               ))}
             </g>
           )}
@@ -149,13 +331,15 @@ function HourlyByDayChart({ days }: { days: HourlyByDay }) {
             <div className="font-mono text-text-muted mb-0.5">
               {String(hover).padStart(2, "0")}:00{mode === "cumulative" ? " (running total)" : ""}
             </div>
-            {days.map((d, i) => (
-              <div key={d.date} className="flex items-center justify-between gap-3">
+            {shown.map((l) => (
+              <div key={l.key} className="flex items-center justify-between gap-3">
                 <span className="flex items-center gap-1.5">
-                  <span className="inline-block w-2 h-2 rounded-full" style={{ background: style[i].color }} />
-                  {label(d.date)}
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ background: l.color }} />
+                  {l.name}
                 </span>
-                <span className="font-semibold text-text-main">{series[i][hover] == null ? "—" : (series[i][hover] as number).toLocaleString()}</span>
+                <span className="font-semibold text-text-main">
+                  {l.vals[hover] == null ? "—" : Math.round(l.vals[hover] as number).toLocaleString()}
+                </span>
               </div>
             ))}
           </div>
@@ -171,6 +355,45 @@ export default function GoogleAnalyticsAdminClient() {
   const [configured, setConfigured] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<Ga4Overview | null>(null);
+
+  // Per-chart ranges for the hourly overlay and the daily sessions chart,
+  // independent of the page-level date range. Results are cached per range so
+  // flipping back is instant. Loads are triggered by the pickers and by the
+  // overview finishing -- never in parallel with the overview, since GA4 caps
+  // concurrent requests per property and the overview fires ten.
+  const [hourlyDays, setHourlyDays] = useState<Ga4TrendRangeDays>(3);
+  const [dailyDays, setDailyDays] = useState<Ga4TrendRangeDays>(7);
+  const hourlyDaysRef = useRef<Ga4TrendRangeDays>(3);
+  const dailyDaysRef = useRef<Ga4TrendRangeDays>(7);
+  const [hourlyCache, setHourlyCache] = useState<Partial<Record<number, HourlyByDay>>>({});
+  const [dailyCache, setDailyCache] = useState<Partial<Record<number, DailyPoint[]>>>({});
+  const [trendBusy, setTrendBusy] = useState({ hourly: false, daily: false });
+  const [trendError, setTrendError] = useState<string | null>(null);
+  const trendInFlight = useRef(new Set<string>());
+  const trendLoaded = useRef(new Set<string>());
+
+  const loadTrend = useCallback(async (kind: "hourly" | "daily", n: Ga4TrendRangeDays) => {
+    // The overview response already carries the 3-day hourly series.
+    if (kind === "hourly" && n === 3) return;
+    const key = `${kind}:${n}`;
+    if (trendInFlight.current.has(key) || trendLoaded.current.has(key)) return;
+    trendInFlight.current.add(key);
+    setTrendBusy((b) => ({ ...b, [kind]: true }));
+    setTrendError(null);
+    try {
+      const res = await fetch(`/api/admin/ga4/trends?kind=${kind}&days=${n}`);
+      const body = await res.json();
+      if (!res.ok || body.error) throw new Error(body?.error || "Failed to load trend data.");
+      if (kind === "hourly") setHourlyCache((c) => ({ ...c, [n]: body.hourlyByDay as HourlyByDay }));
+      else setDailyCache((c) => ({ ...c, [n]: body.dailyTrend as DailyPoint[] }));
+      trendLoaded.current.add(key);
+    } catch (err) {
+      setTrendError(err instanceof Error ? err.message : "Failed to load trend data.");
+    } finally {
+      trendInFlight.current.delete(key);
+      setTrendBusy((b) => ({ ...b, [kind]: false }));
+    }
+  }, []);
 
   const fetchGa4 = useCallback(async (rangeDays: Ga4DateRangeDays) => {
     setLoading(true);
@@ -188,17 +411,38 @@ export default function GoogleAnalyticsAdminClient() {
       } else {
         setConfigured(true);
         setData(body.data as Ga4Overview);
+        void loadTrend("daily", dailyDaysRef.current);
+        void loadTrend("hourly", hourlyDaysRef.current);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load Google Analytics data.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loadTrend]);
 
   useEffect(() => {
     fetchGa4(days);
   }, [days, fetchGa4]);
+
+  const handleRefresh = () => {
+    trendLoaded.current.clear();
+    setHourlyCache({});
+    setDailyCache({});
+    fetchGa4(days);
+  };
+
+  const pickHourly = (n: Ga4TrendRangeDays) => {
+    hourlyDaysRef.current = n;
+    setHourlyDays(n);
+    void loadTrend("hourly", n);
+  };
+  const pickDaily = (n: Ga4TrendRangeDays) => {
+    dailyDaysRef.current = n;
+    setDailyDays(n);
+    void loadTrend("daily", n);
+  };
+  const hourlyData = hourlyCache[hourlyDays] ?? (hourlyDays === 3 ? data?.hourlyByDay : undefined);
 
   return (
     <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-8">
@@ -228,7 +472,7 @@ export default function GoogleAnalyticsAdminClient() {
         <Button
           size="sm"
           variant="outline"
-          onClick={() => fetchGa4(days)}
+          onClick={handleRefresh}
           disabled={loading}
           className="gap-1.5 text-xs"
         >
@@ -338,113 +582,79 @@ export default function GoogleAnalyticsAdminClient() {
                   </h3>
                   <span className="text-[11px] text-text-muted">last 24 hours</span>
                 </div>
-                <div className="flex gap-3">
-                  {/* Y-axis labels */}
-                  <div className="flex flex-col justify-between h-40 text-right pr-2 py-2">
-                    {(() => {
-                      const max = Math.max(...data.hourlyTrend.map((h) => h.sessions), 1);
-                      const labels = [];
-                      for (let i = 0; i <= 4; i++) {
-                        labels.push(Math.round((max / 4) * (4 - i)));
-                      }
-                      return labels.map((label, idx) => (
-                        <div key={idx} className="text-[10px] text-text-muted font-mono leading-none">
-                          {label.toLocaleString()}
-                        </div>
-                      ));
-                    })()}
-                  </div>
-                  {/* Chart */}
-                  <div className="flex-1">
-                    <div className="flex items-end gap-0.5 h-40 bg-surface/30 rounded-lg p-3 border border-border-light/20">
-                      {data.hourlyTrend.map((hour) => {
-                        const max = Math.max(...data.hourlyTrend.map((h) => h.sessions), 1);
-                        const heightPct = Math.max((hour.sessions / max) * 100, 2);
-                        return (
-                          <div
-                            key={hour.dateHour}
-                            className="flex-1 group relative"
-                            style={{ height: `${heightPct}%` }}
-                          >
-                            <div
-                              title={`${hour.hourLabel}: ${hour.sessions} sessions, ${hour.activeUsers} users, ${hour.newUsers} new`}
-                              className="w-full h-full bg-gradient-to-t from-accent to-accent/60 hover:from-accent hover:to-accent rounded-sm transition-all cursor-pointer"
-                            />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                              <div className="text-[10px] text-text-muted font-mono">{hour.hourLabel}</div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="flex justify-between mt-6 text-[10px] text-text-muted font-mono">
-                      <span>{data.hourlyTrend[0]?.hourLabel}</span>
-                      <span>{data.hourlyTrend[data.hourlyTrend.length - 1]?.hourLabel}</span>
-                    </div>
-                  </div>
-                </div>
+                <SessionBars
+                  tone="accent"
+                  items={data.hourlyTrend.map((h) => ({
+                    key: h.dateHour,
+                    value: h.sessions,
+                    title: `${h.hourLabel}: ${h.sessions} sessions, ${h.activeUsers} users, ${h.newUsers} new`,
+                    hoverLabel: h.hourLabel,
+                  }))}
+                  footerLeft={data.hourlyTrend[0]?.hourLabel}
+                  footerRight={data.hourlyTrend[data.hourlyTrend.length - 1]?.hourLabel}
+                />
               </div>
             )}
 
-            {/* Same clock hour, last 3 days overlaid */}
-            {data.hourlyByDay?.length > 0 && <HourlyByDayChart days={data.hourlyByDay} />}
-
-            {/* Daily sessions trend with y-axis labels */}
-            {data.dailyTrend.length > 0 && (
+            {/* Same clock hour, last N days overlaid -- N picked on the chart */}
+            {hourlyData?.length ? (
+              <HourlyByDayChart
+                days={hourlyData}
+                rangeDays={hourlyDays}
+                onRangeChange={pickHourly}
+                loading={trendBusy.hourly}
+              />
+            ) : (
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
-                    Daily Sessions Trend
+                    Hourly Traffic — {hourlyDays === 1 ? "Today" : `Last ${hourlyDays} Days`}
                   </h3>
-                  <span className="text-[11px] text-text-muted">{RANGE_LABELS[days].toLowerCase()}</span>
+                  <TrendRangePicker value={hourlyDays} onChange={pickHourly} />
                 </div>
-                <div className="flex gap-3">
-                  {/* Y-axis labels */}
-                  <div className="flex flex-col justify-between h-40 text-right pr-2 py-2">
-                    {(() => {
-                      const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
-                      const labels = [];
-                      for (let i = 0; i <= 4; i++) {
-                        labels.push(Math.round((max / 4) * (4 - i)));
-                      }
-                      return labels.map((label, idx) => (
-                        <div key={idx} className="text-[10px] text-text-muted font-mono leading-none">
-                          {label.toLocaleString()}
-                        </div>
-                      ));
-                    })()}
-                  </div>
-                  {/* Chart */}
-                  <div className="flex-1">
-                    <div className="flex items-end gap-0.5 h-40 bg-surface/30 rounded-lg p-3 border border-border-light/20">
-                      {data.dailyTrend.map((day) => {
-                        const max = Math.max(...data.dailyTrend.map((d) => d.sessions), 1);
-                        const heightPct = Math.max((day.sessions / max) * 100, 2);
-                        return (
-                          <div
-                            key={day.date}
-                            className="flex-1 group relative"
-                            style={{ height: `${heightPct}%` }}
-                          >
-                            <div
-                              title={`${day.date}: ${day.sessions} sessions, ${day.activeUsers} users (${day.newUsers} new), ${day.bounceRate.toFixed(1)}% bounce`}
-                              className="w-full h-full bg-gradient-to-t from-primary to-primary/60 hover:from-primary hover:to-primary rounded-sm transition-all cursor-pointer"
-                            />
-                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                              <div className="text-[10px] text-text-muted font-mono">{day.date}</div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="flex justify-between mt-6 text-[10px] text-text-muted font-mono">
-                      <span>{data.dailyTrend[0]?.date}</span>
-                      <span>{data.dailyTrend[data.dailyTrend.length - 1]?.date}</span>
-                    </div>
-                  </div>
+                <div className="h-40 flex items-center justify-center text-xs text-text-muted bg-surface/30 rounded-lg border border-border-light/20">
+                  {trendBusy.hourly ? "Loading…" : "No data for this range."}
                 </div>
               </div>
             )}
+            {trendError && <p className="text-xs text-danger">{trendError}</p>}
+
+            {/* Daily sessions trend with y-axis labels -- its own range picker */}
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
+                  Daily Sessions Trend
+                  <span className="ml-2 normal-case font-normal">
+                    {trendBusy.daily ? "Loading…" : dailyDays === 1 ? "today" : `last ${dailyDays} days`}
+                  </span>
+                </h3>
+                <TrendRangePicker value={dailyDays} onChange={pickDaily} />
+              </div>
+              {(() => {
+                const daily = dailyCache[dailyDays];
+                if (!daily?.length) {
+                  return (
+                    <div className="h-40 flex items-center justify-center text-xs text-text-muted bg-surface/30 rounded-lg border border-border-light/20">
+                      {trendBusy.daily ? "Loading…" : "No data for this range."}
+                    </div>
+                  );
+                }
+                return (
+                  <SessionBars
+                    tone="primary"
+                    busy={trendBusy.daily}
+                    items={daily.map((day) => ({
+                      key: day.date,
+                      value: day.sessions,
+                      title: `${day.date}: ${day.sessions} sessions, ${day.activeUsers} users (${day.newUsers} new), ${day.bounceRate.toFixed(1)}% bounce`,
+                      hoverLabel: day.date,
+                    }))}
+                    footerLeft={daily[0]?.date}
+                    footerRight={daily[daily.length - 1]?.date}
+                  />
+                );
+              })()}
+            </div>
 
             <GrowthStoryPanel />
 

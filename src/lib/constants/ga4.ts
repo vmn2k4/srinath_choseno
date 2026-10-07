@@ -16,3 +16,9 @@ export const DEFAULT_GA4_DATE_RANGE_DAYS: Ga4DateRangeDays = 30;
 export const GA4_GRANULARITIES = ["day", "week", "month"] as const;
 export type Ga4Granularity = (typeof GA4_GRANULARITIES)[number];
 export const DEFAULT_GA4_GRANULARITY: Ga4Granularity = "day";
+
+// Per-chart pickers on /admin/traffic (hourly overlay + daily sessions): the
+// last N days ending today. Separate from GA4_DATE_RANGES above, which drives
+// the summary cards.
+export const GA4_TREND_RANGES = [1, 3, 5, 7, 9, 14, 30] as const;
+export type Ga4TrendRangeDays = (typeof GA4_TREND_RANGES)[number];
