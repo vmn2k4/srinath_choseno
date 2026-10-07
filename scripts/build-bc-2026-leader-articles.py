@@ -24,7 +24,7 @@ SLUG_SD = "why-people-support-lorne-doerkson-bc-election-2026"
 SLUG_OD = "why-people-oppose-lorne-doerkson-bc-election-2026"
 SLUG_HUB = "bc-provincial-snap-election-2026-informed-vote"
 
-DATELINE = "**VICTORIA, B.C. — Oct. 6, 2026 —** "
+DATELINE = "**Oct. 6, 2026 —** "
 
 KEY_DATES = """## BC election 2026: key dates
 
@@ -36,7 +36,9 @@ Not sure who is running where you live? Use the **find your district** tool belo
 
 HOW_WE_KNOW = """## How we gathered this
 
-This is a qualitative read of public posts, not a poll. Choseno reviewed public comments on Reddit (r/britishcolumbia, r/vancouver, r/BCpolitics, r/VictoriaBC and others), X and YouTube from late September to Oct. 6, 2026, and grouped the recurring arguments. Online commenters skew louder and more partisan than the average voter, and Reddit leans younger and more urban. The claims below are what commenters say, not verified findings by Choseno."""
+This is a qualitative read of public posts, not a poll. Choseno reviewed public comments on Reddit (r/britishcolumbia, r/vancouver, r/BCpolitics, r/VictoriaBC and others), X and YouTube from late September to Oct. 6, 2026, and grouped the recurring arguments. Online commenters skew louder and more partisan than the average voter, and Reddit leans younger and more urban.
+
+Where a claim is a checkable fact (a date, a vote, a tax rate, a budget figure), Choseno checked it against news reports and official sources, which are linked in the sources list. Claims we could not confirm were left out. Opinions are attributed to commenters, not presented as fact."""
 
 
 def cross(links):
@@ -64,6 +66,32 @@ COMMON_SOURCES = [
 
 articles = []
 
+def src(*pairs):
+    return COMMON_SOURCES + [{"label": l, "url": u} for l, u in pairs]
+
+SRC_DATES = ("CTV News: What's next in B.C. politics after the Conservative leader's resignation", "https://www.ctvnews.ca/vancouver/article/whats-next-in-bc-politics-after-the-conservative-leaders-resignation/")
+SRC_TAX = ("Daily Hive: Eby's NDP proposes higher taxes on top incomes", "https://dailyhive.com/vancouver/david-eby-bc-ndp-higher-income-taxes-top-earners-platform")
+SRC_POLL = ("Global News: Angus Reid poll after the snap election call", "https://globalnews.ca/news/12073073/bc-conservatives-ahead-ndp-snap-election-poll/")
+SRC_DEBT = ("Fraser Institute: B.C. 2026 budget", "https://www.fraserinstitute.org/commentary/bc-government-continues-disastrous-record-2026-budget")
+SRC_MOODYS = ("CTV News: Eby defends budget after credit drop", "https://www.ctvnews.ca/vancouver/article/premier-eby-defends-budget-after-credit-drop-but-opposition-says-bc-is-going-broke/")
+SRC_HEALTH = ("B.C. Government: primary care update", "https://news.gov.bc.ca/releases/2026HLTH0018-000361")
+SRC_DECRIM = ("CP24: Timeline of B.C.'s overdose emergency", "https://www.cp24.com/news/canada/2026/04/08/a-timeline-of-british-columbias-10-year-overdose-health-emergency/")
+SRC_DRIPA = ("National Newswatch: Eby moving forward with First Nations after DRIPA climbdown", "https://nationalnewswatch.com/2026/04/20/eby-moving-forward-with-first-nations-after-latest-climbdown-on-indigenous-law")
+SRC_HRC = ("Castanet: Bill to repeal B.C. Human Rights Code voted down", "https://www.castanetkamloops.net/news/Kelowna/600905/Kelowna-MLAs-bill-to-repeal-BC-Human-Rights-Code-quickly-voted-down")
+SRC_HRC2 = ("Williams Lake Tribune: Doerkson responds to Human Rights Code controversy", "https://wltribune.com/2026/03/06/mla-lorne-doerkson-responds-to-human-rights-code-repeal-act-controversy/")
+SRC_MAAHS = ("Today in BC: NDP calls for Conservatives to drop Chilliwack candidate", "https://todayinbc.com/2026/10/02/ndp-calls-for-conservatives-to-drop-chilliwack-candidate-over-lgbtq-remarks/")
+SRC_INTERIM = ("CP24: Former candidate asks B.C. Conservatives to plug noses", "https://www.cp24.com/news/canada/2026/09/24/former-candidate-asks-bc-conservatives-to-plug-noses-for-any-concerns-about-leader/")
+SRC_NOTAX = ("Global News: Conservatives promise no new taxes", "https://globalnews.ca/news/12075070/bc-election-september-27-conservative-platform/")
+SRC_ICBC = ("Global News: B.C. Conservatives promise to end ICBC monopoly (2024)", "https://globalnews.ca/news/10792598/bc-conservatives-promise-end-icbc-monopoly")
+SRC_FLOOR = ("CTV News: Doerkson joins the B.C. Conservatives (2024)", "https://bc.ctvnews.ca/bc-united-mla-lorne-doerkson-switches-over-to-join-the-bc-conservatives-1.6909190")
+SOURCES_BY_SLUG = {
+    SLUG_SE: src(SRC_DATES, SRC_POLL, SRC_HEALTH, SRC_DEBT, SRC_MOODYS, SRC_TAX),
+    SLUG_OE: src(SRC_DATES, SRC_POLL, SRC_TAX, SRC_DEBT, SRC_MOODYS, SRC_DECRIM, SRC_DRIPA),
+    SLUG_SD: src(SRC_DATES, SRC_POLL, SRC_NOTAX, SRC_INTERIM, SRC_ICBC, SRC_TAX),
+    SLUG_OD: src(SRC_DATES, SRC_HRC, SRC_HRC2, SRC_MAAHS, SRC_INTERIM, SRC_FLOOR, SRC_ICBC),
+    SLUG_HUB: src(SRC_DATES, SRC_POLL),
+}
+
 # ───────────────────────── 1. Why people support Eby ─────────────────────────
 body = DATELINE + """With British Columbia heading to the polls on Oct. 24, 2026, many voters are asking the same question: why would anyone vote for Premier David Eby's BC NDP in this snap election? Public posts on Reddit, X and YouTube point to one reason far above the rest, and it isn't enthusiasm for Eby himself.
 
@@ -83,7 +111,7 @@ Younger voters and renters are over-represented in this group. Some say the zoni
 
 ## Health care: more family doctors, hospitals and a new med school
 
-Supporters point to more people matched with a family doctor, new and expanded hospitals, thousands of new nurses and a new medical school at SFU. Some describe their own experience: getting a family doctor after months on a waitlist. Others, including people caring for a family member in treatment, say they fear funding cuts under a Conservative government.
+Supporters point to government figures: the province says more than 600,000 people have been connected to a family doctor or nurse practitioner since 2023 and that about 77% of British Columbians now have a primary care provider. They also cite new and expanded hospitals. Some describe their own experience: getting a family doctor after months on a waitlist. Others, including people caring for a family member in treatment, say they fear funding cuts under a Conservative government.
 
 Not everyone agrees. Even some supporters note that specialist access is still slow, and critics (see below) say the system still feels broken.
 
@@ -93,7 +121,7 @@ Posts in this group often take the form of a list: no MSP premiums, ICBC rate re
 
 ## A solid, competent government, with a deficit seen as investment
 
-Some supporters argue the NDP is simply running a competent government. They accept that Eby is a weak communicator and has changed course on some decisions, but see that as a government correcting mistakes. On the deficit, they say borrowing is funding hospitals, hiring and infrastructure, and that the province is better off than when he started.
+Some supporters argue the NDP is simply running a competent government. They accept that Eby is a weak communicator and has changed course on some decisions, but see that as a government correcting mistakes. On the deficit, they say borrowing is funding hospitals, hiring and infrastructure, and that the province is better off than when he started. The numbers behind that argument are contested: the 2026/27 deficit is projected at roughly $13–14 billion, and Moody's lowered B.C.'s credit rating in March, citing large structural deficits.
 
 ## Standing up to Trump
 
@@ -111,12 +139,12 @@ Based on what posters say about themselves: progressive and Green-leaning voters
 
 - **Anger at the snap election.** Nearly universal, even among supporters.
 - **Party over leader.** Many say they like the NDP more than Eby, and some miss John Horgan.
-- **Tax backlash.** A proposed higher tax bracket starting around $190,000 income drew a wave of "this lost my vote" replies, though a few higher earners said they would still vote NDP.
+- **Tax backlash.** The NDP's proposal to raise income tax rates above about $190,000 drew a wave of "this lost my vote" replies, though a few higher earners said they would still vote NDP.
 - **Left-wing complaints** that the party drifted right on drugs, resource projects and tenancy rules.
 
 """ + faq([
     ("Why do people support David Eby?", "The most common reason is to prevent a Conservative government. Others credit his housing reforms, health-care hiring, cost-of-living programs and his stand against U.S. trade pressure."),
-    ("Is David Eby popular in BC?", "Online sentiment is mixed. Reddit commenters often dislike Eby personally while still voting NDP. YouTube and X comment sections lean more strongly against him. This is not a poll, and polls have shown the race close or the Conservatives ahead."),
+    ("Is David Eby popular in BC?", "Online sentiment is mixed. Reddit commenters often dislike Eby personally while still voting NDP. YouTube and X comment sections lean more strongly against him. An Angus Reid poll after the election call had the Conservatives at 43%, the NDP at 35% and the Greens at 12%, and 65% of respondents said Eby was putting staying in power over the province's interests."),
     ("When is the BC election?", "Saturday, Oct. 24, 2026. Advance voting runs Oct. 16–21."),
     ("What is David Eby's housing record?", "Supporters point to multiplex zoning, limits on short-term rentals, vacancy and speculation taxes, and rent caps. Critics say housing remains unaffordable."),
 ]) + """
@@ -168,25 +196,27 @@ body = DATELINE + """Premier David Eby called a snap election for Oct. 24, 2026,
 The single biggest source of anger after Sept. 22 is the election call. Critics say Eby still had roughly two years and a majority, and called the vote right after Conservative leader Kerry-Lynne Findlay resigned, while the opposition was in disarray. Common complaints:
 
 - It looks like political opportunism, and some call it incompetence for letting the Conservatives regroup.
-- It costs taxpayers tens of millions of dollars (some posts say far more, but those figures are unverified).
+- It costs taxpayers tens of millions of dollars (commenters' estimates vary widely and we could not confirm a figure).
 - It pushed aside municipal issues and left people feeling forced to vote.
 - Framing it as a fight with Donald Trump, critics say, dodges BC's own problems.
 
-Even some NDP supporters say they will vote for the party "but hate Eby for making me do this."
+Polling echoes the mood: an Angus Reid survey after the call found 65% of respondents said Eby is putting staying in power over the province's interests, against 21% who disagreed. Even some NDP supporters say they will vote for the party "but hate Eby for making me do this."
 
 ## 2. The "millionaire tax" that starts near $190,000
 
-In the days around Oct. 4–5, a proposed higher tax bracket starting at about $190,000 of income set off a flood of posts. The argument isn't mainly about the policy. It's about the label: commenters say calling it a tax on millionaires is misleading, since it hits doctors, tech workers, specialists, dual-income households and some trades, while people holding millions in assets are untouched.
+On Oct. 4, Eby announced an NDP plan to raise income tax rates for higher earners. Under it, the rate on taxable income between $190,405 and $265,545 would rise from 16.8% to 18.8%, the rate on income from $265,545 to $1 million would rise from 20.5% to 22.5%, and a new 24.5% bracket would apply above $1 million. The NDP says it would raise about $1 billion a year, start in the 2027 tax year and affect about 3.9% of income earners.
+
+The backlash is largely about the label. Commenters say calling it a tax on millionaires is misleading, since the increases begin around $190,000 and hit doctors, tech workers, specialists, dual-income households and some trades, while people holding millions in assets are untouched. The NDP's own framing is that it targets the top few percent of earners.
 
 Several people who say they voted NDP last time wrote that this "lost my vote." Others said they would sit the election out or vote Conservative or Green.
 
 ## 3. Deficit and debt
 
-Critics blame Eby's government for moving from a surplus to multi-billion-dollar deficits and rising provincial debt, and say tax increases are cleaning up mismanagement rather than paying for better services. A recurring contrast is with former premier John Horgan, who many describe as more measured. (Dollar figures in these posts are commenters' claims, not Choseno's.)
+Critics blame Eby's government for moving from a surplus to large deficits and rising provincial debt, and say tax increases are cleaning up mismanagement rather than paying for better services. The underlying numbers are real: the 2026/27 deficit is projected at roughly $13–14 billion, the Fraser Institute (a think tank critical of the government) puts total provincial debt at $183.4 billion this fiscal year, and Moody's lowered B.C.'s credit rating to Aa1 in March, citing large structural deficits. The government defends the borrowing as investment in hospitals and infrastructure. A recurring contrast in posts is with former premier John Horgan, whom many describe as more measured.
 
 ## 4. Drugs, "safe supply" and public disorder
 
-A durable theme from the 2024 election carried into this one. Opponents link Eby-era drug policy, including decriminalization and safe supply, to visible disorder, overdoses and theft, and say his later "get tough" turn came too late. Some lifelong NDP voters say the flip-flopping eroded their trust.
+A durable theme from the 2024 election carried into this one. Opponents link Eby-era drug policy, including decriminalization and safe supply, to visible disorder, overdoses and theft, and say his later "get tough" turn came too late. The record is that the decriminalization pilot ended on Jan. 31, 2026, with Eby saying it "did not work," and that since February 2025 prescribed alternatives must be taken under witness. Some lifelong NDP voters say the flip-flopping eroded their trust.
 
 ## 5. Leadership: "I liked Horgan, I don't like Eby"
 
@@ -194,7 +224,7 @@ Many posts aren't about one policy at all. They describe Eby as having poor poli
 
 ## 6. Property rights, DRIPA and housing
 
-Homeowners and right-leaning voters cite concerns about property rights, Indigenous title uncertainty under the Declaration on the Rights of Indigenous Peoples Act (DRIPA), and density rules. Others say housing is still unaffordable despite years of NDP action.
+Homeowners and right-leaning voters cite concerns about property rights, Indigenous title uncertainty under the Declaration on the Rights of Indigenous Peoples Act (DRIPA), and density rules. On DRIPA, the government proposed amendments and then a suspension of parts of the law, and in April 2026 dropped those plans after First Nations objected. Critics from both directions point to that as evidence of an unclear position. Others say housing is still unaffordable despite years of NDP action.
 
 ## 7. Health care still feels broken
 
@@ -216,7 +246,7 @@ High earners and professionals in Metro Vancouver near the $190,000 line; blue-c
 """ + faq([
     ("Why don't people want David Eby re-elected?", "The most cited reasons are the snap election call, a proposed higher tax bracket starting near $190,000, the deficit and debt, drug and public-safety policy, and doubts about his leadership compared with John Horgan."),
     ("Why did Eby call an early election?", "Eby called the vote on Sept. 22, 2026, about two years early, arguing voters deserve a say amid the Canada–U.S. trade fight. Critics call it opportunistic."),
-    ("What is the BC millionaire tax?", "A proposed higher income tax bracket announced around Oct. 4–5, 2026 that starts at roughly $190,000. Critics say that threshold hits professionals, not just millionaires."),
+    ("What is the BC millionaire tax?", "An NDP proposal announced Oct. 4, 2026 to raise provincial income tax rates by 2 points on income above $190,405 and add a 24.5% bracket above $1 million, starting in 2027. Critics say the label is misleading because the increases begin well below $1 million."),
     ("Who could replace Eby?", "Polls have shown the BC Conservatives, led on an interim basis by Lorne Doerkson, competitive or ahead. See our [explainer on why people oppose Doerkson](/news/" + SLUG_OD + ") and [why people support him](/news/" + SLUG_SD + ")."),
 ]) + """
 
@@ -270,9 +300,10 @@ body = DATELINE + """Lorne Doerkson became interim leader of the BC Conservative
 By far the loudest pro-Conservative reason is wanting the NDP out. Many supporters barely mention Doerkson, and instead cite:
 
 - The provincial deficit and debt.
-- The Oct. 4–5 proposed tax bracket starting around $190,000, which several commenters said pushed them to switch.
+- The NDP's Oct. 4 proposal to raise rates on incomes above about $190,000, which several commenters said pushed them to switch.
 - Anger at the snap election.
 - Drug policy, crime and public disorder.
+- The Conservatives' pledge of "no new taxes," which Doerkson repeated on the campaign trail.
 
 Some say they usually don't vote Conservative but are willing to "give them a shot." A few say they don't even know their local candidate and will vote Conservative regardless.
 
@@ -282,15 +313,15 @@ After the turmoil that ended Findlay's leadership, supporters and some fence-sit
 
 ## 3. Fiscal restraint, resources and property rights
 
-Supporters point to the party's pledge to balance the budget through deregulation and productivity rather than cuts (Doerkson has said he has no detailed path yet), its support for resource industries including energy, and its position on repealing the Declaration on the Rights of Indigenous Peoples Act (DRIPA), which Doerkson has called his top priority. Some commenters frame the choice simply as "if you're anti private property, vote NDP."
+Supporters point to the party's pledge of no new taxes, its stated aim of balancing the budget through deregulation and productivity rather than cuts (critics note no costed plan has been released), its support for resource industries including energy, and its call to repeal the Declaration on the Rights of Indigenous Peoples Act (DRIPA), which the party has said it would do in cooperation with First Nations. Some commenters frame the choice simply as "if you're anti private property, vote NDP."
 
 ## 4. ICBC and no-fault insurance
 
-A smaller group argues that opening ICBC to competition or changing no-fault rules would help crash victims. Others defend the idea, saying Doerkson is not proposing to double rates but to change no-fault laws.
+A smaller group argues that changing ICBC's no-fault system would help crash victims, and some commenters back opening ICBC to competition. Doerkson has said there have been "challenges with no-fault insurance" but that an insurance policy would come later, so the party's position was still unsettled at the time of writing. An earlier Conservative platform in 2024 proposed ending ICBC's monopoly.
 
 ## 5. "The interim-leader arguments don't matter"
 
-Opponents have questioned whether an interim leader can stay on. Supporters answer that if the Conservatives win, Doerkson remains premier as long as he has the confidence of the legislature, whether or not he is party leader. The party's board has said he'd remain if elected.
+Opponents have questioned whether an interim leader can stay on. Supporters answer that if the Conservatives win, Doerkson would be premier as long as he has the confidence of the legislature, whether or not he is party leader. The party's constitution says an interim leader can't run for the permanent job, and its board has said it will pursue an amendment to keep him on, which would need a two-thirds vote of members at a general meeting.
 
 ## Who the supporters appear to be
 
@@ -302,7 +333,7 @@ Opponents have questioned whether an interim leader can stay on. Supporters answ
 ## Caveats
 
 - **Much of the support is anti-NDP, not pro-Doerkson.** Direct praise for him by name is thinner than for the party.
-- **He is new and relatively unknown.** Many voters are judging the party, not the man.
+- **He is new and relatively unknown.** Many voters are judging the party, not the man. In an Angus Reid poll, about half of British Columbians said they were concerned the Conservatives are not ready to govern.
 - **Split on the right.** Some Conservatives and OneBC voters call him too much of a "rebadged Liberal."
 - **Reddit under-represents these voters.** YouTube and X carry more raw Conservative enthusiasm.
 
@@ -311,7 +342,7 @@ Opponents have questioned whether an interim leader can stay on. Supporters answ
 """ + faq([
     ("Who is Lorne Doerkson?", "Lorne Doerkson is the MLA for Cariboo-Chilcotin and the interim leader of the BC Conservatives after Kerry-Lynne Findlay resigned on Sept. 20, 2026."),
     ("Why do people support Lorne Doerkson?", "Mostly to remove David Eby and the NDP over the deficit, taxes and public safety. Others like his calm, steady image and the party's focus on fiscal restraint and resources."),
-    ("Could Lorne Doerkson become premier?", "If the Conservatives win the most seats and have the confidence of the legislature, he would be premier. Opponents dispute whether he can stay leader long term; see our [explainer](/news/" + SLUG_OD + ")."),
+    ("Could Lorne Doerkson become premier?", "If the Conservatives win the most seats and have the confidence of the legislature, he would be premier. As interim leader he can't run for permanent leader under the party constitution, which the board says it will amend; see our [explainer](/news/" + SLUG_OD + ")."),
     ("When is the BC election?", "Saturday, Oct. 24, 2026. Advance voting runs Oct. 16–21."),
 ]) + """
 
@@ -360,39 +391,37 @@ body = DATELINE + """Lorne Doerkson is the interim leader of the BC Conservative
 
 ## 1. The Human Rights Code vote
 
-The most repeated named criticism of Doerkson on Reddit concerns a February 2026 private member's bill to repeal BC's Human Rights Code. Commenters repeatedly paste the list of 37 Conservative MLAs who voted for it, a list that includes Doerkson, and warn the party would try again with a majority. This is the issue most often cited by LGBTQ and equity-minded voters.
+The most repeated named criticism of Doerkson on Reddit concerns a February 2026 private member's bill to repeal BC's Human Rights Code. On Feb. 26, Conservative MLA Tara Armstrong's Human Rights Code Repeal Act failed at first reading by a vote of 50 to 37, with all 37 votes in favour coming from Conservative MLAs. Doerkson was among those who voted yes.
+
+Doerkson has said that vote was procedural: "My vote for this bill, at first reading, is not an indication of me supporting its content at all," adding that the bill "never would have come forward for debate." Critics counter that a leader seeking to govern should not have voted to advance it, and warn the party could try again with a majority. This is the issue most often cited by LGBTQ and equity-minded voters.
 
 ## 2. Candidates and the "extremist" question
 
-Critics say Doerkson has not purged the party's right flank. They point to his refusal to fire two candidates, Heather Maahs and Anna Kindy, over comments critics describe as anti-LGBTQ and anti-vaccine. For these voters, the controversy shows the party hasn't moderated since Kerry-Lynne Findlay. (Choseno has not independently verified every statement attributed to individual candidates.)
+Critics say Doerkson has not purged the party's right flank. The NDP called on him to drop two incumbents running again as Conservatives: Heather Maahs in Chilliwack North, over a 2022 podcast in which she called the SOGI curriculum a "monster" and said of school library books, "it's for sure grooming," and Anna Kindy in North Island, over 2022 remarks about COVID-19 vaccines. Both remain Conservative candidates. A Conservative candidate responded by pointing to the NDP's record rather than addressing the remarks, and we found no direct statement from Doerkson on whether they should be dropped. For critics, the controversy shows the party hasn't moderated since Kerry-Lynne Findlay.
 
 ## 3. Interim leader, unknown quantity
 
 A large share of posts focus on the fact that Doerkson is an interim leader. Critics argue:
 
-- Under the party's constitution an interim leader cannot simply stay on as leader, and some predict legal challenges.
-- Voters may be electing a placeholder who is replaced later, sometimes naming Caroline Elliott or former BC Liberals.
-- He has little name recognition and the party lacks a full platform.
+- Under the party's constitution an interim leader cannot run for permanent leader. The board says it will pursue an amendment, which needs a two-thirds vote at a general meeting, and the NDP calls that a gamble. Some commenters speculate about legal challenges.
+- Voters may be electing a placeholder who is replaced later.
+- He has little name recognition and the party has released little detail beyond a "no new taxes" pledge.
 
-Supporters dispute this (see [why people support Doerkson](/news/""" + SLUG_SD + """)); the legal questions have not been tested.
+Supporters dispute this (see [why people support Doerkson](/news/""" + SLUG_SD + """)); the constitutional question has not been tested.
 
 ## 4. "Fake Conservative" or "Christy Clark Liberal"
 
-Doerkson is a former BC Liberal and is criticized from both flanks at once. From the left, commenters warn a Conservative government would bring Liberal-era cuts. From the right and from OneBC supporters, he is a "leftist Liberal" or "rebadged Liberal" who distanced himself from some candidates and isn't conservative enough.
+Doerkson was elected as a BC Liberal in 2020, sat as part of BC United, and crossed the floor to the Conservatives in 2024. He is criticized from both flanks at once. From the left, commenters warn a Conservative government would bring Liberal-era cuts. From the right and from OneBC supporters, he is a "leftist Liberal" or "rebadged Liberal" who distanced himself from some candidates and isn't conservative enough.
 
 ## 5. MAGA, culture-war and social-policy fears
 
-Left-leaning critics say a Conservative government would be influenced by "MAGA-style" politics, citing past statements about SOGI 123 school resources and DRIPA. From the other side, some voters say he isn't hard-right enough on those same issues.
+Left-leaning critics say a Conservative government would be influenced by "MAGA-style" politics, pointing to his reported statement that SOGI 123 school resources should be repealed and to the party's call to repeal DRIPA. From the other side, some voters say he isn't hard-right enough on those same issues.
 
 ## 6. ICBC and public services
 
-Critics fear privatized or more expensive auto insurance, cuts to public services and benefits for wealthy backers. They cite Doerkson's comments on changing ICBC's no-fault system.
+Critics fear privatized or more expensive auto insurance and cuts to public services. They cite Doerkson's comment that there have been "challenges with no-fault insurance" and the party's 2024 pledge to end ICBC's monopoly. The party had not released an insurance policy at the time of writing.
 
-## 7. Judgment and science
-
-Some commenters cite a letter Doerkson wrote on MLA letterhead supporting a controversial ostrich farm in a dispute with federal authorities, arguing it shows poor judgment. Others point to his reported reluctance to take a position on human-caused climate change. These claims come from commenters; read the underlying reports for context.
-
-## 8. Conservatives angry about how Findlay was removed
+## 7. Conservatives angry about how Findlay was removed
 
 Some conservative voters say they won't vote for the party because Findlay was chosen by members while Doerkson was not, and they don't want to reward the leadership turmoil.
 
@@ -407,9 +436,9 @@ A frequent warning from opponents is that anger at Eby shouldn't lead to "teachi
 """ + HOW_WE_KNOW + """
 
 """ + faq([
-    ("Why don't people support Lorne Doerkson?", "Common reasons: the Human Rights Code repeal vote, controversial candidates, his interim-leader status, his past with the BC Liberals, and fears about ICBC and social policy. Some on the right say he isn't conservative enough."),
-    ("Is Lorne Doerkson the permanent BC Conservative leader?", "No. He became interim leader on Sept. 20, 2026. Critics question what happens after the election; supporters say he would stay premier if he keeps the legislature's confidence."),
-    ("What did Doerkson vote on the Human Rights Code?", "Commenters note he was among the 37 Conservative MLAs who voted for a February 2026 bill to repeal the code. Check the legislative record for the details."),
+    ("Why don't people support Lorne Doerkson?", "Common reasons: his first-reading vote on the Human Rights Code repeal bill, controversial candidates, his interim-leader status, his past with the BC Liberals, and fears about ICBC and social policy. Some on the right say he isn't conservative enough."),
+    ("Is Lorne Doerkson the permanent BC Conservative leader?", "No. He became interim leader on Sept. 20, 2026. Critics question what happens after the election; the party says it will amend its constitution, and supporters say he would stay premier if he keeps the legislature's confidence."),
+    ("What did Doerkson vote on the Human Rights Code?", "He voted yes on first reading of a February 2026 bill to repeal the code, which failed 50–37. He says it was a routine procedural vote and not support for the bill's content."),
     ("When is the BC election?", "Saturday, Oct. 24, 2026. Advance voting runs Oct. 16–21."),
 ]) + """
 
@@ -545,7 +574,7 @@ for a in articles:
             category="Elections", country="CA", province="BC", impactArea="state",
             eventDate="2026-10-06", status="draft",
             author={"name": "Choseno Civic News Desk", "bio": "Civic and political reporting"},
-            sources=COMMON_SOURCES,
+            sources=SOURCES_BY_SLUG[a['slug']],
         )
         a["tweetarticle"] = (f"{a['headline'].upper()}\n\n{a['summary']}\n\nVoting day is Sat., Oct. 24; advance voting runs Oct. 16-21.\n\n"
                              f"Read the full guide on Choseno:\n{BASE}/news/{a['slug']}\n\n#BCElection2026 #Choseno")
@@ -554,7 +583,7 @@ for a in articles:
         category="Elections", country="CA", province="BC", impactArea="state",
         eventDate="2026-10-06", status="draft",
         author={"name": "Choseno Civic News Desk", "bio": "Civic and political reporting"},
-        sources=COMMON_SOURCES,
+        sources=SOURCES_BY_SLUG[a['slug']],
     )
     a["tweetarticle"] = tweetarticle(a, "David Eby" if "Eby" in a["taggedPoliticians"][0] else "Lorne Doerkson")
 
