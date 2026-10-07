@@ -2,9 +2,10 @@
 
 import { Fragment, useState } from "react";
 import IntroVideoTile from "./IntroVideoTile";
-import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight, CircleCheck } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
 import ShareMenu, { type ShareData } from "./ShareMenu";
+import PickShareDialog from "./PickShareDialog";
 import PoliticianInlineRating from "./PoliticianInlineRating";
 import { BioLinkIcons } from "./BioLinks";
 import { SITE_URL } from "@/lib/constants/site";
@@ -71,6 +72,8 @@ export default function ElectionResultsPanel({
   // "Read more" — a one-line bio teaser below the row, independent of the
   // rating expand above (a visitor can have both open at once).
   const [expandedBioId, setExpandedBioId] = useState<string | null>(null);
+  // "Share my picks" dialog (multi-select candidates -> /p/<code> share link).
+  const [showPickShare, setShowPickShare] = useState(false);
   const roleTitle = seat?.role_title || "this seat";
   const boundaryName = seat?.map_shapes?.name || "this district";
   const electionDateRaw = seat?.elections?.election_date;
@@ -564,6 +567,18 @@ export default function ElectionResultsPanel({
             </p>
           </div>
         </div>
+        <div className="flex items-center gap-2 flex-wrap shrink-0">
+        {seat?.id && rows.length > 0 && (
+          <Button
+            type="button"
+            variant="outline"
+            className="gap-2 !border-2 !border-primary/60 !text-primary font-extrabold"
+            onClick={() => setShowPickShare(true)}
+            title="Circle the candidates you support and share them"
+          >
+            <CircleCheck size={16} /> Share my picks
+          </Button>
+        )}
         <div className="relative shrink-0 z-40">
           <span className="absolute inset-0 rounded-xl bg-primary/40 animate-ping pointer-events-none" />
           <ShareMenu
@@ -577,7 +592,17 @@ export default function ElectionResultsPanel({
             className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-text-on-primary font-extrabold text-sm shadow-[0_6px_18px_color-mix(in_srgb,var(--color-primary)_25%,transparent)] hover:shadow-[0_8px_22px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
           />
         </div>
+        </div>
       </div>
+
+      {showPickShare && seat?.id && (
+        <PickShareDialog
+          seat={seat}
+          roster={rows.map((r) => ({ id: r.candidate.id, name: r.name, avatarUrl: r.avatarUrl || null, partyName: r.partyName }))}
+          initialPickedIds={rows.filter((r) => r.candidate.profiles?.id && mySupportedPoliticianIds?.has(r.candidate.profiles.id)).map((r) => r.candidate.id)}
+          onClose={() => setShowPickShare(false)}
+        />
+      )}
 
       <p className="hidden sm:block text-[11px] text-text-muted/80 border-t border-border-light/30 pt-3">
         Community Support reflects Choseno user activity (favorites/support clicks), not a scientific poll,
