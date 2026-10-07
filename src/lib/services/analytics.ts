@@ -58,55 +58,21 @@ export async function getAdminAnalyticsMetrics(
     const past7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const past30d = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
-    // Admin analytics reflects real platform activity regardless of which
-    // build (dev or prod) the admin is viewing it from -- unlike the
-    // user-facing feed/wall queries, this always excludes is_test content.
-    const [
-      { count: totalPosts },
-      { count: totalComments },
-      { count: totalUsers },
-      { count: dnuCount },
-    ] = await Promise.all([
-      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false),
-      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false),
-      supabase.from("profiles").select("id", { count: "exact", head: true }),
-      supabase.from("profiles").select("id", { count: "exact", head: true }).gte("created_at", startOfToday),
-    ]);
-
-    const [{ count: postsToday }, { count: posts7d }, { count: posts30d }] = await Promise.all([
-      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", startOfToday),
-      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past7d),
-      supabase.from("posts").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past30d),
-    ]);
-
-    const [{ count: commentsToday }, { count: comments7d }, { count: comments30d }] = await Promise.all([
-      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", startOfToday),
-      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past7d),
-      supabase.from("comments").select("id", { count: "exact", head: true }).eq("is_test", false).gte("created_at", past30d),
-    ]);
-
-    const uniqueUserSet = async (since: string) => {
-      const [posts, comments, profiles] = await Promise.all([
-        supabase.from("posts").select("ghost_id").eq("is_test", false).gte("created_at", since),
-        supabase.from("comments").select("ghost_id").eq("is_test", false).gte("created_at", since),
-        supabase.from("profiles").select("id").gte("updated_at", since),
-      ]);
-      return new Set([
-        ...(posts.data || []).map((p) => p.ghost_id).filter(Boolean),
-        ...(comments.data || []).map((c) => c.ghost_id).filter(Boolean),
-        ...(profiles.data || []).map((pr) => pr.id).filter(Boolean),
-      ]);
-    };
-
-    const [dauSet, wauSet, mauSet] = await Promise.all([
-      uniqueUserSet(past24h),
-      uniqueUserSet(past7d),
-      uniqueUserSet(past30d),
-    ]);
-
-    const dau = Math.max(dauSet.size, dnuCount || (totalUsers && totalUsers > 0 ? 1 : 0));
-    const wau = Math.max(wauSet.size, dau);
-    const mau = Math.max(mauSet.size, wau);
+    // Headline numbers cover real users only (confirmed, non-admin, non-test,
+    // non-mailsac accounts and what they posted) -- computed server-side in
+    // get_admin_real_user_metrics, which also drops the auto-generated news
+    // wall posts and the imported politician profiles.
+    const { data: real, error: realError } = await supabase.rpc(
+      "get_admin_real_user_metrics" as any,
+      {
+        p_start_of_today: startOfToday,
+        p_past_24h: past24h,
+        p_past_7d: past7d,
+        p_past_30d: past30d,
+      } as any
+    );
+    if (realError) throw realError;
+    const r = (real || {}) as Record<string, number>;
 
     const { data: profilesWithRoles } = await supabase.from("profiles").select("role");
     const rolesMap = { citizen: 0, politician: 0, candidate: 0, admin: 0 };
@@ -119,20 +85,20 @@ export async function getAdminAnalyticsMetrics(
     return {
       success: true,
       metrics: {
-        totalPosts: totalPosts || 0,
-        totalComments: totalComments || 0,
-        totalUsers: totalUsers || 0,
-        dnu: dnuCount || 0,
-        dau: dau || 0,
-        wau: wau || 0,
-        mau: mau || 0,
+        totalPosts: r.totalPosts || 0,
+        totalComments: r.totalComments || 0,
+        totalUsers: r.totalUsers || 0,
+        dnu: r.dnu || 0,
+        dau: r.dau || 0,
+        wau: r.wau || 0,
+        mau: r.mau || 0,
         activity: {
-          postsToday: postsToday || 0,
-          posts7d: posts7d || 0,
-          posts30d: posts30d || 0,
-          commentsToday: commentsToday || 0,
-          comments7d: comments7d || 0,
-          comments30d: comments30d || 0,
+          postsToday: r.postsToday || 0,
+          posts7d: r.posts7d || 0,
+          posts30d: r.posts30d || 0,
+          commentsToday: r.commentsToday || 0,
+          comments7d: r.comments7d || 0,
+          comments30d: r.comments30d || 0,
         },
         rolesBreakdown: rolesMap,
       },
