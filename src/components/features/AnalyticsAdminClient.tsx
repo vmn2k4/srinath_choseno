@@ -7,6 +7,8 @@ import {
   getAdminDailyUserSignups,
   getAdminSupportMetrics,
   type SupportClickMetrics,
+  getAdminPickShareStats,
+  type PickShareStats,
   type DailyUserSignupsGroup,
   type DailyUserSignup,
 } from "@/lib/services/analytics";
@@ -32,6 +34,7 @@ import {
   Filter,
   Heart,
   MapPin,
+  Share2,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getAnonymousSupportAdminBreakdown } from "@/lib/services/politicianWall";
@@ -47,6 +50,7 @@ export default function AnalyticsAdminClient() {
   const [metrics, setMetrics] = useState<any>(null);
   const [dailySignups, setDailySignups] = useState<DailyUserSignupsGroup[]>([]);
   const [support, setSupport] = useState<SupportClickMetrics | null>(null);
+  const [pickShares, setPickShares] = useState<PickShareStats | null>(null);
   const [districtMetrics, setDistrictMetrics] = useState<DistrictLookupMetrics | null>(null);
   const [topSupported, setTopSupported] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,13 +66,16 @@ export default function AnalyticsAdminClient() {
     if (isRefresh) setRefreshing(true);
     else setLoading(true);
 
-    const [resMetrics, resSignups, resSupport, resTop, resDistricts] = await Promise.all([
+    const [resMetrics, resSignups, resSupport, resTop, resDistricts, resPickShares] = await Promise.all([
       getAdminAnalyticsMetrics(supabase),
       getAdminDailyUserSignups(supabase),
       getAdminSupportMetrics(supabase),
       getAnonymousSupportAdminBreakdown(supabase),
       getAdminDistrictLookupMetrics(supabase),
+      getAdminPickShareStats(supabase),
     ]);
+
+    if (resPickShares.success) setPickShares(resPickShares.stats);
 
     if (resDistricts.success) setDistrictMetrics(resDistricts.metrics);
 
@@ -308,6 +315,53 @@ export default function AnalyticsAdminClient() {
                     <span className="text-text-muted shrink-0">
                       <strong className="text-text-main">{r.total_count}</strong> ({r.authenticated_count} signed-in / {r.anonymous_count} logged-out)
                     </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Card>
+      )}
+
+      {/* "Share my picks" links generated (DB-backed; every link is one share) */}
+      {pickShares && (
+        <Card padding="lg" className="space-y-4">
+          <div>
+            <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <Share2 size={20} className="text-primary" />
+              Pick Shares
+            </h2>
+            <p className="text-xs text-text-muted mt-1">
+              Share links generated from &ldquo;Share my picks&rdquo; on race pages (one link = one share). Includes shares later hidden by reports; excludes test data.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {([
+              ["Today", pickShares.windows.today],
+              ["Last 7 days", pickShares.windows.d7],
+              ["Last 30 days", pickShares.windows.d30],
+              ["All time", pickShares.windows.allTime],
+            ] as const).map(([label, v]) => (
+              <div key={label} className="rounded-xl border border-border-light/20 bg-surface/50 p-3 space-y-1">
+                <span className="text-xs font-bold text-text-muted uppercase tracking-wider">{label}</span>
+                <p className="text-2xl font-bold text-text-main">{v.total.toLocaleString()}</p>
+                <p className="text-xs text-text-muted">
+                  {v.signed_in.toLocaleString()} signed-in · {v.logged_out.toLocaleString()} logged-out
+                </p>
+              </div>
+            ))}
+          </div>
+          {pickShares.top_races.length > 0 && (
+            <div className="space-y-1">
+              <h3 className="text-sm font-bold text-text-main">Most shared races (all time)</h3>
+              <ul className="divide-y divide-border-light/20 text-sm">
+                {pickShares.top_races.map((r, i) => (
+                  <li key={`${r.role_title}-${r.place}-${i}`} className="flex items-center justify-between py-1.5 gap-3">
+                    <span className="text-text-main truncate">
+                      {r.role_title}
+                      {r.place ? <span className="text-text-muted"> · {r.place}</span> : null}
+                    </span>
+                    <strong className="text-text-main shrink-0">{r.shares}</strong>
                   </li>
                 ))}
               </ul>

@@ -193,6 +193,27 @@ export async function getAdminSupportMetrics(
   }
 }
 
+export type PickShareWindow = { total: number; signed_in: number; logged_out: number };
+export type PickShareStats = {
+  windows: { today: PickShareWindow; d7: PickShareWindow; d30: PickShareWindow; allTime: PickShareWindow };
+  top_races: { role_title: string; place: string | null; shares: number }[];
+};
+
+// "Share my picks" links generated (race_pick_shares), excluding is_test rows.
+// Admin-only (enforced in the RPC). See 20261008000004_admin_pick_share_stats.sql.
+export async function getAdminPickShareStats(
+  supabase: Client
+): Promise<{ success: boolean; stats: PickShareStats | null; error?: string }> {
+  try {
+    const todayStart = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).toISOString();
+    const { data, error } = await supabase.rpc("get_admin_pick_share_stats" as any, { p_today_start: todayStart });
+    if (error) throw error;
+    return { success: true, stats: data as unknown as PickShareStats };
+  } catch (err) {
+    return { success: false, stats: null, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
 export type SignupSourceRow = { label: string; count: number };
 export type SignupSourceReport = {
   window_days: number;
