@@ -2,15 +2,12 @@
 
 import { Fragment, useState } from "react";
 import IntroVideoTile from "./IntroVideoTile";
-import { TrendingUp, Calendar, MapPin, Heart, Users, Share2, ExternalLink, ChevronRight, CircleCheck } from "lucide-react";
+import { TrendingUp, Calendar, MapPin, Heart, Users, ChevronRight, CircleCheck } from "lucide-react";
 import { Card, Avatar, Badge, Button, StarRating } from "@/components/primitives";
-import ShareMenu, { type ShareData } from "./ShareMenu";
 import PickShareDialog from "./PickShareDialog";
 import PoliticianInlineRating from "./PoliticianInlineRating";
 import { BioLinkIcons } from "./BioLinks";
-import { SITE_URL } from "@/lib/constants/site";
 import Link from "next/link";
-import { buildSeatSlug } from "@/lib/utils/slugs";
 import { partyPath } from "@/lib/utils/electionPartySeo";
 import { parseBioLinks } from "@/lib/utils/bioLinks";
 
@@ -161,94 +158,33 @@ export default function ElectionResultsPanel({
   const leader = topRows.length === 1 ? topRows[0] : null;
   const topPct = totalSupport > 0 ? Math.round((topSupportCount / totalSupport) * 1000) / 10 : 0;
 
-  // ── Share card copy ──────────────────────────────────────────────────
-  // Reuses the same ShareMenu (Copy Link, X, WhatsApp, LinkedIn, Facebook,
-  // Telegram, Pinterest, Email) already wired up for news articles
-  // (NewsArticleDetailClient.tsx) instead of a second share widget -- see
-  // docs/SERVICES.md's "extend, don't duplicate" rule.
-  //
-  // Three distinct templates, not one generic one stretched across every
-  // state -- "someone's leading", "it's tied", and "nobody's voted yet"
-  // are different hooks and read as flat/wrong when forced through the
-  // same sentence. No emojis (deliberate, per feedback); candidate names
-  // double as inline hashtags ("#RickLarsen: 42% (3 votes)") so each
-  // candidate is individually discoverable without also cramming every
-  // name into the trailing hashtag list.
-  const seatSlug = buildSeatSlug(seat);
-  const shareUrl = seatSlug ? `${SITE_URL}/elections/seat/${seatSlug}` : SITE_URL;
-  const otherNames = rows.map((r) => r.name).filter((n) => n !== leader?.name);
-  const hasSupport = totalSupport > 0;
-
-  const cleanTag = (s: string) => s.replace(/[^a-zA-Z0-9]/g, "");
-  const pctFor = (supporterCount: number) =>
-    totalSupport > 0 ? Math.round((supporterCount / totalSupport) * 1000) / 10 : 0;
-
-  // Capped so a crowded primary doesn't turn the post into a wall of
-  // text -- anything past the cap gets an honest "+N more" instead of
-  // silently vanishing.
-  const MAX_LISTED_CANDIDATES = 6;
-  const listedRows = rows.slice(0, MAX_LISTED_CANDIDATES);
-  const hiddenRowCount = rows.length - listedRows.length;
-  const standingsBlock =
-    listedRows
-      .map((r) => `• #${cleanTag(r.name)}: ${pctFor(r.supporterCount)}% (${r.supporterCount} vote${r.supporterCount === 1 ? "" : "s"})`)
-      .join("\n") + (hiddenRowCount > 0 ? `\n+ ${hiddenRowCount} more on Choseno` : "");
-  const ballotLine = `On the ballot: ${listedRows.map((r) => `#${cleanTag(r.name)}`).join(", ")}${hiddenRowCount > 0 ? ` & ${hiddenRowCount} more` : ""}`;
-
-  const introLine = leader
-    ? otherNames.length > 0
-      ? `${leader.name} is currently leading with ${topPct}% of the community's support, ahead of ${otherNames.slice(0, 2).join(", ")}${otherNames.length > 2 ? " & others" : ""}.`
-      : `${leader.name} is currently leading with ${topPct}% of the community's support.`
-    : isTie
-    ? `It's a dead heat — ${topRows.map((r) => r.name).join(" & ")} are tied at ${topPct}% each. Your vote breaks the tie.`
-    : rows.length > 0
-    ? `We're starting the poll now — spend two minutes to show your support for ${boundaryName}'s next ${roleTitle}.`
-    : `Candidates for this seat haven't been added yet.`;
-
-  // A short hook after the candidate breakdown that recruits the reader to
-  // understand why their community supports these candidates, then make an
-  // informed choice themselves. Bridges from "here's what people picked" to
-  // "now it's your turn."
-  const whyLine = "See why your community supports — make your choice and join.";
-
-  const ctaLine = rows.length === 0 ? null : hasSupport ? "Cast your vote & join the conversation:" : "Be the first to vote:";
-
-  const header = `Choseno Community Poll — ${roleTitle} | ${boundaryName}`;
-  const basePostText =
-    rows.length === 0
-      ? `${header}\n\n${introLine}`
-      : hasSupport
-      ? `${header}\n\n${introLine}\n\n${standingsBlock}\n\n${whyLine}\n\n${ctaLine}`
-      : `${header}\n\n${introLine}\n\n${ballotLine}\n\n${whyLine}\n\n${ctaLine}`;
-
-  const yearTag =
-    electionDate && !Number.isNaN(electionDate.getTime()) ? `Vote${electionDate.getFullYear()}` : "Vote2026";
-  const hashtags = Array.from(
-    new Set([cleanTag(roleTitle) || "Election", cleanTag(boundaryName), yearTag, "CommunitySupport", "Choseno"].filter(Boolean))
-  );
-  const formattedHashtagString = hashtags.map((t) => `#${t}`).join(" ");
-  const shareText = `${basePostText}\n\n${formattedHashtagString}\n${shareUrl}`;
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(basePostText)}&url=${encodeURIComponent(
-    shareUrl
-  )}&hashtags=${encodeURIComponent(hashtags.join(","))}`;
-
-  const shareData: ShareData = {
-    url: shareUrl,
-    basePostText,
-    hashtagList: formattedHashtagString,
-    shareText,
-    hashtags,
-    twitterUrl,
-  };
-
   return (
     <Card padding="md" className="space-y-5">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <h3 className="text-text-main font-bold flex items-center gap-2 text-base">
-            <TrendingUp size={18} className="text-primary" />
-            Community Support
-          </h3>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h3 className="text-text-main font-bold flex items-center gap-2 text-base">
+              <TrendingUp size={18} className="text-primary" />
+              Community Support
+            </h3>
+            {seat?.id && rows.length > 0 && (
+              // Primary call to action: solid brand fill + a soft pulsing halo
+              // (same attention treatment the old "Share This Race" button had).
+              <div className="relative">
+                <span className="absolute inset-0 rounded-xl bg-primary/40 animate-ping pointer-events-none" />
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="sm"
+                  className="relative gap-1.5 !rounded-xl font-extrabold hover:scale-105 active:scale-95 transition-transform"
+                  onClick={() => setShowPickShare(true)}
+                  title="Circle the candidates you support and share them"
+                >
+                  <CircleCheck size={14} /> Share my picks
+                </Button>
+              </div>
+            )}
+          </div>
           {/* Full sentence on desktop; a shorter version on mobile so this
               doesn't eat three lines before the candidate rows even start. */}
           <p className="hidden sm:block text-xs text-text-muted mt-1 max-w-md">
@@ -546,53 +482,6 @@ export default function ElectionResultsPanel({
             </Fragment>
           );
         })}
-      </div>
-
-      {/* Share CTA — the other half of the "support, then spread the word"
-          loop this panel is built around. Framed as a nudge to go swing the
-          standings, not a plain "share this page" afterthought, since that's
-          what actually gets someone to forward it to a friend. */}
-      <div className="rounded-2xl border-2 border-primary/40 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 p-4 sm:p-5 flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="shrink-0 w-11 h-11 rounded-full bg-primary/20 flex items-center justify-center animate-pulse">
-            <Share2 size={20} className="text-primary-light" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-text-main">Think the standings should look different?</p>
-            <p className="hidden sm:block text-xs text-text-muted mt-0.5">
-              Share this race with friends and rally more support for your candidate.
-            </p>
-            <p className="sm:hidden text-xs text-text-muted mt-0.5">
-              Share it to rally more support.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 flex-wrap shrink-0">
-        {seat?.id && rows.length > 0 && (
-          <Button
-            type="button"
-            variant="outline"
-            className="gap-2 !border-2 !border-primary/60 !text-primary font-extrabold"
-            onClick={() => setShowPickShare(true)}
-            title="Circle the candidates you support and share them"
-          >
-            <CircleCheck size={16} /> Share my picks
-          </Button>
-        )}
-        <div className="relative shrink-0 z-40">
-          <span className="absolute inset-0 rounded-xl bg-primary/40 animate-ping pointer-events-none" />
-          <ShareMenu
-            articleId={seat?.id || "election-seat"}
-            shareData={shareData}
-            label="Share This Race"
-            triggerTitle="Share this race"
-            shareTitle={`${roleTitle} — ${boundaryName}`}
-            menuAlign="above"
-            iconSize={16}
-            className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-text-on-primary font-extrabold text-sm shadow-[0_6px_18px_color-mix(in_srgb,var(--color-primary)_25%,transparent)] hover:shadow-[0_8px_22px_color-mix(in_srgb,var(--color-primary)_35%,transparent)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          />
-        </div>
-        </div>
       </div>
 
       {showPickShare && seat?.id && (

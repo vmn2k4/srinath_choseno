@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { MapPin, ArrowRight, Layers, Network, ChevronDown, Sparkles, Check, Loader2 } from "lucide-react";
-import InteractiveLocationPicker from "./InteractiveLocationPicker";
+import InteractiveLocationPicker, { type LocationSelectMeta } from "./InteractiveLocationPicker";
 import BoundaryDirectoryClient from "./BoundaryDirectoryClient";
 import DistrictSeatCards, { type DistrictSeat } from "./DistrictSeatCards";
 import MissionRegisterCTA from "./MissionRegisterCTA";
@@ -11,7 +11,7 @@ import { findBoundariesByPoint, syncUserBoundaryMemberships } from "@/lib/servic
 import { getActiveSeatsWithCandidateCounts, resolveRepresentationBranch } from "@/lib/services/elections";
 import { getOwnProfile, upsertProfileCore } from "@/lib/services/profile";
 import { buildBoundarySlug } from "@/lib/utils/slugs";
-import { Card, Spinner, Button } from "@/components/primitives";
+import { Card, Spinner, Button, Alert } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
 import { trackFindDistrictCompleted } from "@/lib/analytics/events";
 import { recordDistrictLookup } from "@/lib/services/districtLookups";
@@ -19,7 +19,7 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLocationGate } from "@/components/LocationRequiredGate";
 import type { RepresentationBranch } from "./RepresentationBranchTree";
-import { useGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
+import { useGuestLocation, getGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 import { REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
 type ShapeRow = { id: number; name: string; country: string; boundary_type: string; properties?: unknown };
@@ -76,6 +76,20 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   // screen with a GPS-permission overlay on every visit. md+ always shows
   // the full two-column layout — there's room for both there.
   const [pickerOpen, setPickerOpen] = useState(!hasInitialBoundaries);
+  // Set when the current result came from an approximate (IP-based) location
+  // rather than GPS/address/pin -- shown as a notice, and never saved as the
+  // visitor's remembered location.
+  const [approxPlace, setApproxPlace] = useState<string | null | undefined>(undefined);
+  // No location on file (no profile constituency, nothing remembered from a
+  // previous visit) -> have the picker try GPS on load. Read from
+  // localStorage in an effect (not render) to stay hydration-safe.
+  const [autoDetectOnLoad, setAutoDetectOnLoad] = useState(false);
+  useEffect(() => {
+    if (hasInitialBoundaries) return;
+    const saved = getGuestLocation();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!saved || saved.boundaries.length === 0) setAutoDetectOnLoad(true);
+  }, [hasInitialBoundaries]);
 
   const resolveAllBranches = useCallback(
     async (matched: MatchedBoundary[]) => {
@@ -151,7 +165,9 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     }
   }, [hasInitialBoundaries, guestLocation, initialBoundaries, resolveAllBranches, resolveAllSeats]);
 
-  const handleLocationSelect = async (lat: number, lng: number) => {
+  const handleLocationSelect = async (lat: number, lng: number, meta?: LocationSelectMeta) => {
+    const approximate = meta?.source === "ip";
+    setApproxPlace(approximate ? meta?.place ?? null : undefined);
     setSelectedLat(lat);
     setSelectedLng(lng);
     setLoading(true);
@@ -168,7 +184,8 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
     trackFindDistrictCompleted({ found: matched.length > 0, boundaryCount: matched.length });
     recordDistrictLookup(supabase, { source: "find_my_district", method: "unknown", boundaryCount: matched.filter((b) => !(b.boundary_type || "").toLowerCase().includes("polling")).length });
     setBoundaries(matched);
-    if (!hasInitialBoundaries) {
+    // An IP-based guess is not worth remembering across pages/visits.
+    if (!hasInitialBoundaries && !approximate) {
       setGuestLocation({ lat, lng, boundaries: matched });
     }
     await Promise.all([resolveAllBranches(matched), resolveAllSeats(matched)]);
@@ -258,6 +275,8 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
                 currentLat={selectedLat}
                 currentLng={selectedLng}
                 onLocationSelect={handleLocationSelect}
+                approximateFallback
+                autoDetectOnMount={autoDetectOnLoad}
                 loading={loading}
                 error={error}
                 isVisible={pickerOpen}
@@ -272,6 +291,13 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
               <div className="flex justify-center py-12">
                 <Spinner />
               </div>
+            )}
+
+            {!loading && boundaries && approxPlace !== undefined && (
+              <Alert tone="info">
+                Showing results{approxPlace ? ` near ${approxPlace}` : ""} based on your network location, which is only
+                approximate. For exact results, drag the pin or search your address.
+              </Alert>
             )}
 
             {/* Boundaries List */}

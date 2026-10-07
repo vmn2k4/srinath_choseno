@@ -15,10 +15,21 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { trackSearch } from "@/lib/analytics/events";
 import { geocodeAddressFree } from "@/lib/utils/geocode";
 
+export type LocationSelectMeta = { source: "ip"; place?: string | null };
+
 interface InteractiveLocationPickerProps {
   currentLat?: string | number;
   currentLng?: string | number;
-  onLocationSelect: (lat: number, lng: number) => void;
+  // `meta` is only passed for approximate (IP) fallback results, so existing
+  // callers that take (lat, lng) are unaffected.
+  onLocationSelect: (lat: number, lng: number, meta?: LocationSelectMeta) => void;
+  // Opt-in: when GPS is denied/unavailable, Auto-detect falls back to an
+  // approximate (IP-based) location instead of failing. Off by default --
+  // flows that persist the result to a profile want a precise point.
+  approximateFallback?: boolean;
+  // Run the existing GPS auto-detect once on mount (silently: no error shown
+  // and no IP fallback if the visitor declines the browser prompt).
+  autoDetectOnMount?: boolean;
   loading?: boolean;
   error?: string;
   isVisible?: boolean; // Signal that the container became visible (went from hidden to shown)
@@ -28,6 +39,8 @@ export default function InteractiveLocationPicker({
   currentLat,
   currentLng,
   onLocationSelect,
+  approximateFallback = false,
+  autoDetectOnMount = false,
   loading = false,
   error = "",
   isVisible = true,
@@ -190,11 +203,27 @@ export default function InteractiveLocationPicker({
     mapInstanceRef.current.invalidateSize();
   }, [currentLat, currentLng]);
 
-  const autoDetectGPS = () => {
+  // City-level fallback for when GPS is blocked/unavailable (a browser never
+  // re-prompts once denied): the caller's own IP geo from /api/geo/approx.
+  const fetchApproximateLocation = async (gpsMessage: string) => {
+    try {
+      const res = await fetch("/api/geo/approx", { cache: "no-store" });
+      const data = res.ok ? await res.json() : null;
+      if (data?.found) {
+        onLocationSelect(data.lat, data.lng, { source: "ip", place: data.place ?? null });
+        return;
+      }
+    } catch {
+      // fall through to the GPS error
+    }
+    setGeoError(`GPS error: ${gpsMessage}`);
+  };
+
+  const autoDetectGPS = (silent = false) => {
     setGeoError("");
     setShowLocateOverlay(false);
     if (!navigator.geolocation) {
-      setGeoError("Geolocation is not supported by your browser.");
+      if (!silent) setGeoError("Geolocation is not supported by your browser.");
       return;
     }
     navigator.geolocation.getCurrentPosition(
@@ -205,11 +234,27 @@ export default function InteractiveLocationPicker({
         );
       },
       (err) => {
-        setGeoError(`GPS error: ${err.message}`);
+        if (silent) {
+          // Declined/blocked on load: leave the locate overlay up so the
+          // visitor can click Auto-detect (which then uses the fallback).
+          setShowLocateOverlay(true);
+        } else if (approximateFallback) {
+          fetchApproximateLocation(err.message);
+        } else {
+          setGeoError(`GPS error: ${err.message}`);
+        }
       },
       { timeout: 10000 }
     );
   };
+
+  const autoDetectTried = useRef(false);
+  useEffect(() => {
+    if (!autoDetectOnMount || autoDetectTried.current) return;
+    autoDetectTried.current = true;
+    autoDetectGPS(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoDetectOnMount]);
 
   const selectAddress = (suggestion: any) => {
     setShowLocateOverlay(false);
@@ -310,7 +355,7 @@ export default function InteractiveLocationPicker({
 
               <Button
                 size="sm"
-                onClick={autoDetectGPS}
+                onClick={() => autoDetectGPS()}
                 disabled={loading}
                 className="w-full shadow-md text-xs gap-1.5"
               >
@@ -328,7 +373,7 @@ export default function InteractiveLocationPicker({
         <div className="absolute bottom-3 right-3 z-20">
           <Button
             size="sm"
-            onClick={autoDetectGPS}
+            onClick={() => autoDetectGPS()}
             disabled={loading}
             className="shadow-lg text-xs gap-1.5 !bg-white !border !border-black/10 !text-slate-800 hover:!bg-slate-50"
           >

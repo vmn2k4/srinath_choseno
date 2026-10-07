@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Card, Avatar, Badge } from "@/components/primitives";
 import PickShareReportButton from "@/components/features/PickShareReportButton";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import { SITE_URL } from "@/lib/constants/site";
 import { buildSeatSlug } from "@/lib/utils/slugs";
 import { joinNames, pickSharePath } from "@/lib/utils/pickShare";
@@ -56,16 +57,18 @@ export default async function PickSharePage({ params }: Props) {
   const place = seat.map_shapes?.name;
 
   return (
-    <div className="w-full max-w-2xl mx-auto animate-fade-in pb-20 px-4 space-y-5">
+    <div className="w-full max-w-5xl mx-auto animate-fade-in pb-20 px-4 lg:grid lg:grid-cols-[1fr_340px] lg:gap-8 lg:items-start">
+      <div className="min-w-0 space-y-5">
       <Card variant="hero" padding="lg" as="header">
         <Badge tone="primary">Shared picks</Badge>
         <h1 className="mt-3 font-display text-3xl sm:text-4xl font-bold text-text-main leading-tight">
           {author} supports {joinNames(picked.map((c) => c.name))}
         </h1>
-        <p className="mt-2 text-text-secondary">
+        {/* The race is the point of the page, so it gets a prominent badge. */}
+        <Badge tone="primary" shape="pill" size="sm" className="mt-3 !text-sm !px-3.5 !py-1.5">
           {seat.role_title}
           {place ? ` · ${place}` : ""}
-        </p>
+        </Badge>
         {share.note && (
           <blockquote className="mt-4 border-l-4 border-primary pl-4 text-lg italic text-text-main">
             “{share.note}”
@@ -113,6 +116,18 @@ export default async function PickSharePage({ params }: Props) {
           This is one voter&apos;s personal opinion, shared on Choseno. It is not an endorsement by Choseno.
         </p>
         <PickShareReportButton code={code} />
+      </div>
+      </div>
+
+      {/* Same vertical "Who's on your ballot?" rail used on the wall and
+          candidacy pages: asks for the visitor's location and shows their
+          districts + open races, else the Find Your District promo. */}
+      <div className="mt-8 lg:mt-0">
+        <DistrictRacesBanner
+          orientation="vertical"
+          title="Who's on your ballot?"
+          description="Find your district to see every race you can vote in and the candidates running in it."
+        />
       </div>
     </div>
   );
