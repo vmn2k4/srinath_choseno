@@ -587,6 +587,10 @@ for a in articles:
     )
     a["tweetarticle"] = tweetarticle(a, "David Eby" if "Eby" in a["taggedPoliticians"][0] else "Lorne Doerkson")
 
+# The article page doesn't render content.sources, so cite them in the body.
+for a in articles:
+    a["body"] += "\n\n## Sources\n\n" + "\n".join(f"- [{x['label']}]({x['url']})" for x in a["sources"])
+
 out = os.path.join(HERE, "bc-election-2026-leader-support-oppose.json")
 with open(out, "w") as f:
     json.dump(articles, f, indent=2, ensure_ascii=False)
