@@ -9,7 +9,7 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 // Bump IMAGE_VERSION whenever the card layout changes so old renders are
 // ignored (new key) instead of served stale forever.
 const BUCKET = "pick-share-og-images";
-const IMAGE_VERSION = "v1";
+const IMAGE_VERSION = "v2";
 
 const supabaseUrl = () => process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || "";
 const objectPath = (code: string) => `${IMAGE_VERSION}/${code}.png`;

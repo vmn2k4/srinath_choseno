@@ -203,9 +203,32 @@ export default function InteractiveLocationPicker({
     mapInstanceRef.current.invalidateSize();
   }, [currentLat, currentLng]);
 
+  // A page can't re-trigger the browser's location prompt once the user has
+  // BLOCKED it (only the user can unblock it in site settings), but if they
+  // merely dismissed the prompt the browser will ask again on the next click.
+  // Tell them which situation they're in instead of the raw browser error.
+  const waitingForPermission = useRef(false);
+  const describeDenied = async () => {
+    let state: PermissionState = "denied";
+    try {
+      state = (await navigator.permissions.query({ name: "geolocation" as PermissionName })).state;
+    } catch {
+      // Permissions API unavailable: assume blocked.
+    }
+    if (state === "prompt") {
+      return "Location permission wasn't granted. Press Auto-Detect again and choose Allow when your browser asks.";
+    }
+    waitingForPermission.current = true;
+    return "Location access is blocked for this site. Click the icon at the left of your browser's address bar, set Location to Allow, then press Auto-Detect again. Or search an address or drop a pin on the map.";
+  };
+
+  const showGpsError = async (err: GeolocationPositionError) => {
+    setGeoError(err.code === err.PERMISSION_DENIED ? await describeDenied() : `GPS error: ${err.message}`);
+  };
+
   // City-level fallback for when GPS is blocked/unavailable (a browser never
   // re-prompts once denied): the caller's own IP geo from /api/geo/approx.
-  const fetchApproximateLocation = async (gpsMessage: string) => {
+  const fetchApproximateLocation = async (err: GeolocationPositionError) => {
     try {
       const res = await fetch("/api/geo/approx", { cache: "no-store" });
       const data = res.ok ? await res.json() : null;
@@ -216,7 +239,7 @@ export default function InteractiveLocationPicker({
     } catch {
       // fall through to the GPS error
     }
-    setGeoError(`GPS error: ${gpsMessage}`);
+    await showGpsError(err);
   };
 
   const autoDetectGPS = (silent = false) => {
@@ -228,6 +251,7 @@ export default function InteractiveLocationPicker({
     }
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        waitingForPermission.current = false;
         onLocationSelect(
           position.coords.latitude,
           position.coords.longitude
@@ -239,14 +263,38 @@ export default function InteractiveLocationPicker({
           // visitor can click Auto-detect (which then uses the fallback).
           setShowLocateOverlay(true);
         } else if (approximateFallback) {
-          fetchApproximateLocation(err.message);
+          fetchApproximateLocation(err);
         } else {
-          setGeoError(`GPS error: ${err.message}`);
+          showGpsError(err);
         }
       },
       { timeout: 10000 }
     );
   };
+
+  // If they fix the permission in browser settings while this page is open,
+  // detect right away instead of making them click again.
+  useEffect(() => {
+    let status: PermissionStatus | null = null;
+    let cancelled = false;
+    const onChange = () => {
+      if (status?.state === "granted" && waitingForPermission.current) autoDetectGPS();
+    };
+    navigator.permissions
+      ?.query({ name: "geolocation" as PermissionName })
+      .then((st) => {
+        if (cancelled) return;
+        status = st;
+        st.addEventListener("change", onChange);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+      status?.removeEventListener("change", onChange);
+    };
+    // autoDetectGPS only closes over stable props/refs for this purpose.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const autoDetectTried = useRef(false);
   useEffect(() => {

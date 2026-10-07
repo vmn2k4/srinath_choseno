@@ -176,23 +176,20 @@ export default function PickShareDialog({
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-text-main">Share your picks</p>
             <ShareMenu
+              layout="icons"
               articleId={code}
               shareData={shareData}
-              label="Share my picks"
-              triggerTitle="Share my picks"
               shareTitle={`${roleTitle}${place ? ` — ${place}` : ""}`}
-              menuAlign="below"
-              iconSize={16}
               onShare={(platform) => trackShare("race_pick_share", platform ? `${code}:${platform}` : code)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-text-on-primary font-extrabold text-sm hover:scale-105 active:scale-95 transition-all cursor-pointer"
             />
             <a
               href={pickSharePath(code)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-primary hover:text-primary-hover"
+              className="inline-block text-sm font-semibold text-primary hover:text-primary-hover"
             >
               Preview page
             </a>
