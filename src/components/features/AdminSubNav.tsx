@@ -4,12 +4,15 @@ import React from "react";
 import Link from "next/link";
 
 const TABS = [
-  { key: "boundaries", label: "Geospatial Boundaries", href: "/admin" },
-  { key: "analytics", label: "Platform Analytics", href: "/admin/analytics" },
   { key: "traffic", label: "Google Analytics", href: "/admin/traffic" },
+  { key: "analytics", label: "Platform Analytics", href: "/admin/analytics" },
   { key: "signup-sources", label: "Signup Sources", href: "/admin/signup-sources" },
-  { key: "region-explorer", label: "Region & Funnel Explorer", href: "/admin/region-explorer" },
   { key: "search-console", label: "Search Console", href: "/admin/search-console" },
+  { key: "region-explorer", label: "Region & Funnel Explorer", href: "/admin/region-explorer" },
+  { key: "news", label: "News", href: "/admin/news" },
+  { key: "news-distribution", label: "News Distribution", href: "/admin/news-distribution" },
+  { key: "news-import", label: "Bulk News Import", href: "/admin/news-import" },
+  { key: "moderation", label: "Moderation", href: "/admin/moderation" },
   { key: "elections", label: "Elections & Seats", href: "/admin/elections" },
   { key: "election-admins", label: "Seat Administrators", href: "/admin/election-admins" },
   { key: "office-holders", label: "Office Holders", href: "/admin/office-holders" },
@@ -17,12 +20,9 @@ const TABS = [
   { key: "claim_requests", label: "Claim Requests", href: "/admin/claim_requests" },
   { key: "campaign", label: "Campaign", href: "/admin/campaign" },
   { key: "calls", label: "Calls", href: "/admin/calls" },
+  { key: "boundaries", label: "Geospatial Boundaries", href: "/admin/boundaries" },
   { key: "visualizer", label: "Boundary Inspector", href: "/admin/visualize" },
   { key: "theme", label: "Site Theme", href: "/admin/theme" },
-  { key: "news", label: "News", href: "/admin/news" },
-  { key: "news-distribution", label: "News Distribution", href: "/admin/news-distribution" },
-  { key: "news-import", label: "Bulk News Import", href: "/admin/news-import" },
-  { key: "moderation", label: "Moderation", href: "/admin/moderation" },
 ];
 
 export default function AdminSubNav({

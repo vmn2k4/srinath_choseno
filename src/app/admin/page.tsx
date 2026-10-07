@@ -1,11 +1,7 @@
-import { Metadata } from "next";
-import AdminPageClient from "@/components/features/AdminPageClient";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Geospatial Boundaries Admin | Choseno",
-  description: "Manage country codes, boundary types, shapefile uploads, and electoral redistricting.",
-};
-
-export default function AdminPage() {
-  return <AdminPageClient />;
+// Admin landing page: analytics is what gets opened most, so /admin opens it.
+// The boundaries tool that used to live here is now at /admin/boundaries.
+export default function AdminIndexPage() {
+  redirect("/admin/traffic");
 }

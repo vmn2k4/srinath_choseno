@@ -20,7 +20,7 @@ import {
   Zap,
   UserPlus,
 } from "lucide-react";
-import { GA4_DATE_RANGES, DEFAULT_GA4_DATE_RANGE_DAYS, type Ga4DateRangeDays } from "@/lib/constants/ga4";
+import { GA4_DATE_RANGES, type Ga4DateRangeDays } from "@/lib/constants/ga4";
 import type { Ga4Overview } from "@/lib/analytics/ga4Reporting";
 
 const RANGE_LABELS: Record<Ga4DateRangeDays, string> = {
@@ -166,7 +166,7 @@ function HourlyByDayChart({ days }: { days: HourlyByDay }) {
 }
 
 export default function GoogleAnalyticsAdminClient() {
-  const [days, setDays] = useState<Ga4DateRangeDays>(DEFAULT_GA4_DATE_RANGE_DAYS);
+  const [days, setDays] = useState<Ga4DateRangeDays>(1);
   const [loading, setLoading] = useState(true);
   const [configured, setConfigured] = useState(true);
   const [error, setError] = useState<string | null>(null);

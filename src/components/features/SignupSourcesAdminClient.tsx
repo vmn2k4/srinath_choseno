@@ -57,7 +57,7 @@ export default function SignupSourcesAdminClient() {
   }, [supabase, days]);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pb-16 space-y-6">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 space-y-6">
       <PageHeader title="Signup Sources" subtitle="What brings visitors to sign up (real signups only, tracked since this feature launched)." />
       <AdminSubNav active="signup-sources" />
       <div className="flex gap-2">

@@ -463,7 +463,7 @@ export default function AdminNewsDistributionClient() {
 
   return (
     <div className="min-h-screen bg-background text-text-main p-4 sm:p-6 lg:p-8 font-sans">
-      <div className="max-w-[1600px] mx-auto space-y-4">
+      <div className="w-full max-w-none space-y-4">
         {/* Navigation Tabs */}
         <AdminSubNav active="news-distribution" />
 
