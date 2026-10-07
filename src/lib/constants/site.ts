@@ -30,4 +30,15 @@ export const EARLY_EXPLORER_BADGE_LINE =
 // (districts + elections for the visitor's location). Article bodies are
 // DB-authored markdown, so this opts articles in by slug; add a slug here for
 // any other election-related story.
-export const DISTRICT_BANNER_NEWS_SLUGS = ["bc-election-2026-where-each-party-stands"];
+export const DISTRICT_BANNER_NEWS_SLUGS = [
+  "bc-election-2026-where-each-party-stands",
+  "bc-provincial-snap-election-2026-informed-vote",
+  "why-people-support-david-eby-bc-election-2026",
+  "why-people-oppose-david-eby-bc-election-2026",
+  "why-people-support-lorne-doerkson-bc-election-2026",
+  "why-people-oppose-lorne-doerkson-bc-election-2026",
+];
+
+// Time-sensitive election coverage: the sitemap pins these at top priority
+// regardless of article age (everything else decays 0.6 -> 0.4 -> 0.2).
+export const PRIORITY_NEWS_SLUGS: readonly string[] = DISTRICT_BANNER_NEWS_SLUGS;

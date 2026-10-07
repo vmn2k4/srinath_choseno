@@ -9,7 +9,7 @@ import { hubPath, partyPath } from "@/lib/utils/electionPartySeo";
 import { getAllBlogPosts } from "@/lib/services/blogs";
 import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug } from "@/lib/utils/slugs";
 import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
-import { SITE_URL } from "@/lib/constants/site";
+import { SITE_URL, PRIORITY_NEWS_SLUGS } from "@/lib/constants/site";
 
 const baseUrl = SITE_URL;
 
@@ -85,8 +85,8 @@ async function buildSitemap(): Promise<MetadataRoute.Sitemap> {
   const articleRoutes: MetadataRoute.Sitemap = (articles || []).map((a) => ({
     url: `${baseUrl}/news/${a.slug}`,
     lastModified: a.published_at ? new Date(a.published_at) : new Date(),
-    changeFrequency: "weekly",
-    priority: newsPriority(a.published_at),
+    changeFrequency: PRIORITY_NEWS_SLUGS.includes(a.slug) ? "daily" : "weekly",
+    priority: PRIORITY_NEWS_SLUGS.includes(a.slug) ? 1 : newsPriority(a.published_at),
     // Same image-sitemap extension as news-sitemap.xml -- hero_image_url when
     // the article has one, otherwise the generated OG card, so Search/Discover
     // (not just Google News) has an image to show for every article.

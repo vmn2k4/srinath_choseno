@@ -5,6 +5,8 @@ import { CalendarDays } from "lucide-react";
 import { Card, Badge, Avatar } from "@/components/primitives";
 import PartyRosterClient from "@/components/features/PartyRosterClient";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
+import ElectionResearchLinks from "@/components/features/ElectionResearchLinks";
+import { getPartyResearch } from "@/lib/constants/electionResearch";
 import FaqSection from "@/components/features/FaqSection";
 import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import JsonLdScript from "@/components/features/JsonLdScript";
@@ -75,6 +77,7 @@ export default async function ElectionPartyPage({ params }: PageProps) {
   const rivalHrefs = Object.fromEntries(parties.map((p) => [p.slug, partyPath(election, p)]));
   const { summary, faqs } = partyFacts(election, party, view, totalRaces);
   const date = formatElectionDate(election.election_date);
+  const research = getPartyResearch(election.id, party.id);
   const otherParties = parties.filter((p) => p.slug !== party.slug);
 
   return (
@@ -138,6 +141,8 @@ export default async function ElectionPartyPage({ params }: PageProps) {
       />
 
       <PartyRosterClient partyName={party.name} partyId={party.id} view={view} rivalHrefs={rivalHrefs} />
+
+      {research && <ElectionResearchLinks heading={research.heading} links={research.links} />}
 
       <FaqSection faqs={faqs} heading={`${party.name} in the ${election.name} — frequently asked questions`} />
 

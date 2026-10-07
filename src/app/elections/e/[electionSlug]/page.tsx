@@ -5,6 +5,8 @@ import { CalendarDays, Landmark, Users, Vote } from "lucide-react";
 import { Card, Badge, EmptyState } from "@/components/primitives";
 import ElectionPartyCard from "@/components/features/ElectionPartyCard";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
+import ElectionResearchLinks from "@/components/features/ElectionResearchLinks";
+import { BC_2026_ELECTION_ID, BC_2026_RESEARCH_LINKS } from "@/lib/constants/electionResearch";
 import FaqSection from "@/components/features/FaqSection";
 import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import JsonLdScript from "@/components/features/JsonLdScript";
@@ -120,6 +122,10 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
           title="Which of these candidates will be on your ballot?"
           description="Find your district to see every race you can vote in, from mayor to MLA, and the candidates running in it."
         />
+      )}
+
+      {election.id === BC_2026_ELECTION_ID && (
+        <ElectionResearchLinks heading="What voters say about Eby and Doerkson" links={BC_2026_RESEARCH_LINKS} />
       )}
 
       {roster.length === 0 ? (

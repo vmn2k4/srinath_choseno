@@ -26,6 +26,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import NewsArticleBody from "@/components/features/NewsArticleBody";
 import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import { DISTRICT_BANNER_NEWS_SLUGS } from "@/lib/constants/site";
+import { BC_2026_RESEARCH_LINKS } from "@/lib/constants/electionResearch";
+import ElectionResearchLinks from "@/components/features/ElectionResearchLinks";
 import NewsComments from "@/components/features/NewsComments";
 import MissionRegisterCTA from "@/components/features/MissionRegisterCTA";
 import NewsArticleLinkedPoliticians from "@/components/features/NewsArticleLinkedPoliticians";
@@ -898,6 +900,14 @@ export default function NewsArticleDetailClient({
             </div>
           ) : (
             <p className="text-text-muted text-sm italic">No article content yet.</p>
+          )}
+
+          {slug === "bc-election-2026-where-each-party-stands" && (
+            <ElectionResearchLinks
+              className="mt-8"
+              heading="What voters say about the two frontrunners"
+              links={BC_2026_RESEARCH_LINKS}
+            />
           )}
 
           {DISTRICT_BANNER_NEWS_SLUGS.includes(slug) && (
