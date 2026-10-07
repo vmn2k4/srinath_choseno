@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import AdminSubNav from "./AdminSubNav";
 import GrowthStoryPanel from "./GrowthStoryPanel";
 import { Card, Button, Spinner, PageHeader, Badge, Select } from "@/components/primitives";
@@ -32,6 +32,138 @@ const RANGE_LABELS: Record<Ga4DateRangeDays, string> = {
   30: "Last 30 days",
   90: "Last 90 days",
 };
+
+type HourlyByDay = Ga4Overview["hourlyByDay"];
+
+// Overlaid lines, one per day, sharing an hour-of-day axis. Newest day is
+// drawn thick and last so it reads as "now"; older days fade back. The
+// Cumulative toggle answers "are we ahead of or behind yesterday so far?".
+function HourlyByDayChart({ days }: { days: HourlyByDay }) {
+  const [mode, setMode] = useState<"hourly" | "cumulative">("hourly");
+  const [hover, setHover] = useState<number | null>(null);
+  // Render at the container's real pixel width (not a scaled viewBox) so the
+  // chart fills the card like the other charts and stays crisp at any size.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [W, setW] = useState(1000);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const update = () => setW(Math.max(280, Math.floor(el.clientWidth)));
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const narrow = W < 520;
+  const H = narrow ? 200 : 240, PL = 40, PR = 12, PT = 12, PB = 24;
+  const style = [
+    { color: "#c4a8ee", width: 1.75 },
+    { color: "#9b6fdc", width: 2 },
+    { color: "#6d1fc9", width: 3 },
+  ].slice(-days.length);
+
+  const series = days.map((d) => {
+    let run = 0;
+    return d.hours.map((v) => (v == null ? null : mode === "cumulative" ? (run += v) : v));
+  });
+  const max = Math.max(...series.flat().map((v) => v ?? 0), 1);
+  const x = (h: number) => PL + (h / 23) * (W - PL - PR);
+  const y = (v: number) => PT + (1 - v / max) * (H - PT - PB);
+  const label = (date: string) =>
+    new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const path = (vals: (number | null)[]) =>
+    vals.map((v, h) => (v == null ? "" : `${h === 0 || vals[h - 1] == null ? "M" : "L"}${x(h).toFixed(1)},${y(v).toFixed(1)}`)).join(" ");
+  const lastToday = series[series.length - 1].reduce<number>((m, v, h) => (v == null ? m : h), -1);
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">Hourly Traffic — Last 3 Days</h3>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex items-center gap-3 text-[11px] text-text-muted">
+            {days.map((d, i) => (
+              <span key={d.date} className="flex items-center gap-1">
+                <span className="inline-block w-3 h-0.5 rounded" style={{ background: style[i].color, height: style[i].width }} />
+                {label(d.date)} · {d.total.toLocaleString()}
+              </span>
+            ))}
+          </div>
+          <div className="flex rounded-md border border-border-light/40 overflow-hidden text-[11px]">
+            {(["hourly", "cumulative"] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                className={`px-2 py-1 capitalize ${mode === m ? "bg-accent text-white" : "text-text-muted hover:bg-surface"}`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div ref={wrapRef} className="relative bg-surface/30 rounded-lg border border-border-light/20">
+        <svg
+          width={W}
+          height={H}
+          className="block"
+          onMouseLeave={() => setHover(null)}
+          onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const px = ((e.clientX - r.left) / r.width) * W;
+            setHover(Math.min(23, Math.max(0, Math.round(((px - PL) / (W - PL - PR)) * 23))));
+          }}
+        >
+          {[0, 0.25, 0.5, 0.75, 1].map((f) => (
+            <g key={f}>
+              <line x1={PL} x2={W - PR} y1={y(max * f)} y2={y(max * f)} stroke="currentColor" strokeOpacity={0.1} />
+              <text x={PL - 6} y={y(max * f) + 3} textAnchor="end" fontSize={11} fill="currentColor" opacity={0.5}>
+                {Math.round(max * f).toLocaleString()}
+              </text>
+            </g>
+          ))}
+          {Array.from({ length: narrow ? 4 : 8 }, (_, i) => i * (narrow ? 6 : 3)).map((h) => (
+            <text key={h} x={x(h)} y={H - 6} textAnchor="middle" fontSize={11} fill="currentColor" opacity={0.5}>
+              {String(h).padStart(2, "0")}:00
+            </text>
+          ))}
+          {series.map((vals, i) => (
+            <path key={days[i].date} d={path(vals)} fill="none" stroke={style[i].color} strokeWidth={style[i].width} strokeLinejoin="round" strokeLinecap="round" />
+          ))}
+          {lastToday >= 0 && (
+            <circle cx={x(lastToday)} cy={y(series[series.length - 1][lastToday] ?? 0)} r={4.5} fill={style[style.length - 1].color} stroke="white" strokeWidth={1.5} />
+          )}
+          {hover != null && (
+            <g>
+              <line x1={x(hover)} x2={x(hover)} y1={PT} y2={H - PB} stroke="currentColor" strokeOpacity={0.25} strokeDasharray="3 3" />
+              {series.map((vals, i) => vals[hover] != null && (
+                <circle key={i} cx={x(hover)} cy={y(vals[hover] as number)} r={3.5} fill={style[i].color} />
+              ))}
+            </g>
+          )}
+        </svg>
+        {hover != null && (
+          <div
+            className="pointer-events-none absolute top-2 rounded-md border border-border-light/40 bg-surface px-2.5 py-1.5 text-[11px] shadow-md"
+            style={{ left: `${(x(hover) / W) * 100}%`, transform: hover > 16 ? "translateX(calc(-100% - 8px))" : "translateX(8px)" }}
+          >
+            <div className="font-mono text-text-muted mb-0.5">
+              {String(hover).padStart(2, "0")}:00{mode === "cumulative" ? " (running total)" : ""}
+            </div>
+            {days.map((d, i) => (
+              <div key={d.date} className="flex items-center justify-between gap-3">
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ background: style[i].color }} />
+                  {label(d.date)}
+                </span>
+                <span className="font-semibold text-text-main">{series[i][hover] == null ? "—" : (series[i][hover] as number).toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function GoogleAnalyticsAdminClient() {
   const [days, setDays] = useState<Ga4DateRangeDays>(DEFAULT_GA4_DATE_RANGE_DAYS);
@@ -253,6 +385,9 @@ export default function GoogleAnalyticsAdminClient() {
                 </div>
               </div>
             )}
+
+            {/* Same clock hour, last 3 days overlaid */}
+            {data.hourlyByDay?.length > 0 && <HourlyByDayChart days={data.hourlyByDay} />}
 
             {/* Daily sessions trend with y-axis labels */}
             {data.dailyTrend.length > 0 && (

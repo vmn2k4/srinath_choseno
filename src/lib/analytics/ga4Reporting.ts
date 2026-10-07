@@ -49,6 +49,10 @@ export type Ga4Overview = {
   // Last 24 hours, regardless of the selected date range -- lets the admin
   // see intraday traffic shape even when looking at a 30/90-day window.
   hourlyTrend: { hourLabel: string; dateHour: string; sessions: number; activeUsers: number; newUsers: number }[];
+  // Sessions per clock hour (0-23, property timezone) for the last 3
+  // calendar days, oldest first, so the same hour can be compared across
+  // days. Hours not yet reached today are null.
+  hourlyByDay: { date: string; total: number; hours: (number | null)[] }[];
   topPages: { path: string; views: number; avgEngagementSec: number }[];
   topEvents: { name: string; count: number }[];
   devices: { category: string; sessions: number; bounceRate: number }[];
@@ -146,11 +150,12 @@ export async function getGa4Overview(
           orderBys: [{ dimension: { dimensionName: "date" } }],
         }),
         // Hourly trend is always "last 24 hours" regardless of the `days`
-        // selector -- fetch a 2-day window so a partial "today" plus all of
-        // "yesterday" gives us at least 24 rows, then slice to the last 24.
+        // selector -- fetch a 3-day window (also feeds hourlyByDay) so a
+        // partial "today" plus all of "yesterday" gives us at least 24 rows,
+        // then slice to the last 24.
         client.runReport({
           property,
-          dateRanges: [{ startDate: "1daysAgo", endDate: "today" }],
+          dateRanges: [{ startDate: "2daysAgo", endDate: "today" }],
           dimensions: [{ name: "dateHour" }],
           metrics: [
             { name: "sessions" },
@@ -256,8 +261,34 @@ export async function getGa4Overview(
       };
     }
 
+    const byDay = new Map<string, (number | null)[]>();
+    for (const row of hourlyRes.rows || []) {
+      const raw = dimStr(row, 0);
+      if (raw.length !== 10) continue;
+      const date = formatGa4Date(raw.slice(0, 8));
+      const hours = byDay.get(date) ?? Array<number | null>(24).fill(0);
+      hours[Number(raw.slice(8, 10))] = metricNum(row, 0);
+      byDay.set(date, hours);
+    }
+    const hourlyByDay = [...byDay.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-3)
+      .map(([date, hours], i, all) => {
+        // GA4 omits zero-session hours, so only the newest day has "future"
+        // hours: blank those after its last reported hour.
+        if (i === all.length - 1) {
+          const last = (hourlyRes.rows || [])
+            .map((r) => dimStr(r, 0))
+            .filter((r) => r.startsWith(date.replace(/-/g, "")))
+            .reduce((m, r) => Math.max(m, Number(r.slice(8, 10))), -1);
+          for (let h = last + 1; h < 24; h++) hours[h] = null;
+        }
+        return { date, total: hours.reduce<number>((a, v) => a + (v ?? 0), 0), hours };
+      });
+
     const data: Ga4Overview = {
       totals,
+      hourlyByDay,
       dailyTrend: (trendRes.rows || []).map((row) => ({
         date: formatGa4Date(dimStr(row, 0)),
         sessions: metricNum(row, 0),
