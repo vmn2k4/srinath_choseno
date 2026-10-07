@@ -74,3 +74,15 @@ export async function reportRacePickShare(supabase: Client, code: string) {
     error: { message: string } | null;
   }>;
 }
+
+// Cheap liveness check (one tiny query) so the OG route never serves a stored
+// image for a share that has since been reported/removed.
+export async function isRacePickShareLive(supabase: Client, code: string) {
+  const { data } = await (supabase as any)
+    .from("race_pick_shares")
+    .select("id")
+    .eq("code", code)
+    .is("removed_at", null)
+    .maybeSingle();
+  return Boolean(data);
+}

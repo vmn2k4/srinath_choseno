@@ -3,6 +3,9 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { OG_IMAGE_SIZE, OG_IMAGE_CONTENT_TYPE, truncateWordSafe } from "@/lib/utils/ogCard";
 import type { PickRosterCandidate } from "@/lib/utils/pickShare";
+import { createPublicClient } from "@/lib/supabase/public";
+import { isRacePickShareLive } from "@/lib/services/pickShares";
+import { getStoredPickShareImage, storePickShareImage } from "@/lib/services/pickShareImages";
 import { loadPickShare } from "./loadPickShare";
 
 export const alt = "Candidates supported on Choseno";
@@ -16,6 +19,7 @@ interface Props {
   params: Promise<{ code: string }>;
 }
 
+const CACHE_CONTROL = "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400";
 const ORANGE = "#f97316";
 const INK = "#0f172a";
 const MUTED = "#64748b";
@@ -109,6 +113,17 @@ function Face({ name, src, px, ring }: { name: string; src: string | null; px: n
 
 export default async function Image({ params }: Props) {
   const { code } = await params;
+
+  // A share's card never changes, so it is rendered once and stored: serve the
+  // stored PNG if there is one (after a cheap check that the share hasn't been
+  // removed), and only fall through to rendering on the first request.
+  if (/^[a-z0-9]{6,12}$/.test(code)) {
+    const stored = await getStoredPickShareImage(code);
+    if (stored && (await isRacePickShareLive(createPublicClient(), code))) {
+      return new Response(stored, { headers: { "Content-Type": "image/png", "Cache-Control": CACHE_CONTROL } });
+    }
+  }
+
   let loaded: Awaited<ReturnType<typeof loadPickShare>> = null;
   try {
     loaded = await loadPickShare(code);
@@ -166,7 +181,7 @@ export default async function Image({ params }: Props) {
   const note = share.note ? truncateWordSafe(share.note, 120) : null;
   const nameSize = hasQuotes ? (n === 1 ? 34 : n <= 3 ? 26 : 20) : n === 1 ? 40 : n <= 3 ? 30 : 24;
 
-  return new ImageResponse(
+  const image = new ImageResponse(
     (
       <div
         style={{
@@ -263,4 +278,11 @@ export default async function Image({ params }: Props) {
     ),
     { ...OG_IMAGE_SIZE, fonts: fonts.length ? fonts : undefined }
   );
+  // Persist the render (best-effort) so every later request is a storage read.
+  // Also set explicit cache headers: without them the CDN serves
+  // `max-age=0, must-revalidate`. The 1h s-maxage bounds how long a
+  // reported/hidden share's image keeps serving from the edge.
+  const png = await image.arrayBuffer();
+  await storePickShareImage(code, png);
+  return new Response(png, { headers: { "Content-Type": "image/png", "Cache-Control": CACHE_CONTROL } });
 }
