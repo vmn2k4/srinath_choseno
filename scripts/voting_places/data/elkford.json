@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21160,
+ "jurisdiction": "Elkford",
+ "source_url": "https://elkford.ca/elections",
+ "places": [
+  {
+   "name": "Elkford Municipal Hall",
+   "address": null,
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "16:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Elkford Community Conference Centre",
+   "address": null,
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

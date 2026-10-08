@@ -1,0 +1,923 @@
+{
+ "map_shape_id": 21305,
+ "jurisdiction": "Surrey",
+ "source_url": "https://www.surrey.ca/2026-municipal-election/voters/where-vote",
+ "places": [
+  {
+   "name": "Kwantlen Park Secondary",
+   "address": "10441 132 Street, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Guildford Recreation Centre",
+   "address": "15105 105 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Fraser Heights Recreation Centre",
+   "address": "10588 160 Street, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Fleetwood Community Centre",
+   "address": "15996 84 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Frank Hurt Secondary",
+   "address": "13940 77 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Princess Margaret Secondary",
+   "address": "12870 72 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "\u00c9cole Panorama Ridge Secondary",
+   "address": "13220 64 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Cloverdale Recreation Centre",
+   "address": "6188 176 Street, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Semiahmoo Secondary",
+   "address": "1785 148 Street, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Earl Marriott Secondary",
+   "address": "15751 16 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "A.H.P Matthew Elementary",
+   "address": "13367 97 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Old Yale Road Elementary",
+   "address": "10135 132 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "LA Matheson Secondary",
+   "address": "9484 122 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Queen Elizabeth Secondary",
+   "address": "9457 King George Boulevard, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "James Ardiel Elementary",
+   "address": "13751 112 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Guildford Park Secondary",
+   "address": "10707 146 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Bonaccord Elementary",
+   "address": "14986 98 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "William F. Davidson Elementary",
+   "address": "15550 99A Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Johnston Heights Secondary",
+   "address": "15350 99 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Berkshire Park Elementary",
+   "address": "15372 94 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Coast Meridian Elementary",
+   "address": "8222 168A Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Fleetwood Park Secondary",
+   "address": "7940 156 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Green Timbers Elementary",
+   "address": "8824 144 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Maple Green Elementary",
+   "address": "14898 Spenser Drive, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Enver Creek Secondary",
+   "address": "14505 84 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Janice Churchill Elementary",
+   "address": "8226 146 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Strawberry Hill Elementary",
+   "address": "7633 124 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Newton Elementary",
+   "address": "13359 81 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Chimney Hill Elementary",
+   "address": "14755 74 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Georges Vanier Elementary",
+   "address": "6985 142 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cougar Creek Elementary",
+   "address": "12236 70A Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Tamanawis Secondary",
+   "address": "12600 66 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Boundary Park Elementary",
+   "address": "12332 Boundary Park Drive, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Colebrook Elementary",
+   "address": "5404 125A Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Goldstone Park Elementary",
+   "address": "6248 142 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Woodward Hill Elementary",
+   "address": "6082 142 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Salish Secondary School",
+   "address": "7278 184 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Surrey Centre Elementary",
+   "address": "16650 104 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Adams Road Elementary",
+   "address": "18228 68 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Katzie Elementary",
+   "address": "6887 194A Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Don Christian Elementary",
+   "address": "6256 184 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Hazelgrove Elementary",
+   "address": "7055 190 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Elgin Hall",
+   "address": "14250 Crescent Road, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Elgin Park Secondary",
+   "address": "13484 24 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Ocean Cliff Elementary",
+   "address": "12550 20 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Ray Shepherd Elementary",
+   "address": "1650 146 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Jessie Lee Elementary",
+   "address": "2064 154 Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Morgan Elementary",
+   "address": "3366 156B Street, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "South Meridian Elementary",
+   "address": "16244 13 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Edgewood Elementary",
+   "address": "16666 23 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Douglas Elementary",
+   "address": "17325 2 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Rosemary Heights Elementary",
+   "address": "15516 36 Avenue, Surrey",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

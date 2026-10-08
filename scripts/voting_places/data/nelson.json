@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21184,
+ "jurisdiction": "Nelson",
+ "source_url": "https://nelsonpolice.ca/3110/Elections",
+ "places": [
+  {
+   "name": "Nelson City Hall (Council Chambers, 2nd Floor)",
+   "address": "310 Ward Street, Nelson",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Prestige Lakeside Resort",
+   "address": "701 Lakeside Drive, Nelson",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

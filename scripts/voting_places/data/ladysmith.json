@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21367,
+ "jurisdiction": "Ladysmith",
+ "source_url": "https://www.ladysmith.ca/election",
+ "places": [
+  {
+   "name": "Ladysmith City Hall",
+   "address": "410 Esplanade, Ladysmith",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Frank Jameson Community Centre",
+   "address": "810 6th Avenue, Ladysmith",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

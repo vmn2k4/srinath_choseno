@@ -1,0 +1,58 @@
+{
+ "map_shape_id": 21341,
+ "jurisdiction": "Central Saanich",
+ "source_url": "https://www.centralsaanich.ca/municipal-hall/elections",
+ "places": [
+  {
+   "name": "Central Saanich Municipal Hall",
+   "address": "1903 Mt. Newton Cross Road, Central Saanich",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Brentwood Elementary",
+   "address": "7085 Wallace Drive, Central Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Keating Elementary",
+   "address": "6843 Central Saanich Road, Central Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

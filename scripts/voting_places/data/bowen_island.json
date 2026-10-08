@@ -1,0 +1,33 @@
+{
+ "map_shape_id": 21319,
+ "jurisdiction": "Bowen Island",
+ "source_url": "https://bowenislandmunicipality.ca/our-government/2026-election/",
+ "places": [
+  {
+   "name": "Bowen Island Community Centre",
+   "address": "580 Bowen Island Trunk Rd, Bowen Island",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Bowen Island Community School",
+   "address": "1041 Mt. Gardner Rd, Bowen Island",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

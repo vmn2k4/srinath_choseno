@@ -1,0 +1,59 @@
+{
+ "map_shape_id": 21711,
+ "jurisdiction": "Port Hardy",
+ "source_url": "https://porthardy.ca/municipal-hall/our-council/2026-general-election/",
+ "places": [
+  {
+   "name": "Port Hardy Municipal Hall",
+   "address": "7360 Columbia St, Port Hardy",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Fort Rupert Curling Club",
+   "address": "5485 Beaver Harbour Rd, Port Hardy",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "14:00",
+     "close": "19:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Hardy Bay Seniors Citizens Centre",
+   "address": "9150 Granville St, Port Hardy",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "11:00",
+     "close": "15:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Port Hardy Civic Centre",
+   "address": "7450 Columbia St, Port Hardy",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

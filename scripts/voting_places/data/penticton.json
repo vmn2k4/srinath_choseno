@@ -1,0 +1,58 @@
+{
+ "map_shape_id": 21222,
+ "jurisdiction": "Penticton",
+ "source_url": "https://www.penticton.ca/elections",
+ "places": [
+  {
+   "name": "Penticton Community Centre Gymnasium",
+   "address": "325 Power Street, Penticton",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Skaha Lake Elementary School",
+   "address": "110 Green Avenue West, Penticton",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance (Oct 10) and election day; smaller venue, may have lineups"
+  },
+  {
+   "name": "Penticton Trade and Convention Centre",
+   "address": "273 Power Street, Penticton",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance (Oct 14) and election day"
+  }
+ ]
+}

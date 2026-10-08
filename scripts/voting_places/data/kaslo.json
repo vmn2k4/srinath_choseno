@@ -1,0 +1,20 @@
+{
+ "map_shape_id": 21187,
+ "jurisdiction": "Kaslo",
+ "source_url": "https://www.rdck.ca/corporate/elections/2026-general-local-election/i-want-to-vote/",
+ "places": [
+  {
+   "name": "Kaslo Legion Hall",
+   "address": "403 5th Street, Kaslo",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Location from the Regional District of Central Kootenay voting list; confirm with the municipality"
+  }
+ ]
+}

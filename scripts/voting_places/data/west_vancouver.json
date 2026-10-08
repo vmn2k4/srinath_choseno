@@ -1,0 +1,123 @@
+{
+ "map_shape_id": 21318,
+ "jurisdiction": "West Vancouver",
+ "source_url": "https://election.westvancouver.ca/voters/where-to-vote",
+ "places": [
+  {
+   "name": "West Vancouver Municipal Hall",
+   "address": "750 17th Street, West Vancouver",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-12",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Gleneagles Community Centre",
+   "address": "6262 Marine Drive, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Hollyburn Elementary School",
+   "address": "1329 Duchess Avenue, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Irwin Park Elementary School",
+   "address": "2455 Haywood Avenue, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Ridgeview Elementary School",
+   "address": "1250 Mathers Avenue, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Rockridge Secondary School",
+   "address": "5350 Headland Drive, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "West Vancouver Community Centre (Sports Gym)",
+   "address": "2121 Marine Drive, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Westcot Elementary School",
+   "address": "760 Westcot Road, West Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

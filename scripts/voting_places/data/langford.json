@@ -1,0 +1,78 @@
+{
+ "map_shape_id": 21348,
+ "jurisdiction": "Langford",
+ "source_url": "https://langford.ca/election-2026/",
+ "places": [
+  {
+   "name": "Eagle Ridge Community Centre (dry floor arena space)",
+   "address": "1089 Langford Parkway, Langford",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Ruth King Elementary School",
+   "address": "2764 Jacklin Road, Langford",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Millstream Elementary School",
+   "address": "626 Hoylake Avenue, Langford",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Happy Valley Elementary School",
+   "address": "3291 Happy Valley Road, Langford",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "PEXSISEN Elementary School",
+   "address": "3100 Constellation Ave, Langford",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

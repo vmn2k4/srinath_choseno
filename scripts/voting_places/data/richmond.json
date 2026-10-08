@@ -1,0 +1,128 @@
+{
+ "map_shape_id": 22013,
+ "jurisdiction": "Richmond",
+ "source_url": "https://richmond.ca/electionservices/votingOpportunities/AdvanceList.aspx",
+ "places": [
+  {
+   "name": "Richmond City Hall",
+   "address": "6911 No. 3 Road, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-03",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-09",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "Cambie Secondary School",
+   "address": "4151 Jacombs Road, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-03",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "City Centre Community Centre",
+   "address": "5900 Minoru Blvd, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "McRoberts Secondary School",
+   "address": "8980 Williams Road, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "McMath Secondary School",
+   "address": "4251 Garry Street, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "Hamilton Elementary School",
+   "address": "5180 Smith Drive, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  },
+  {
+   "name": "Burnett Secondary School",
+   "address": "5011 Granville Avenue, Richmond",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Richmond assigns election-day voting places by home address (look up at richmond.ca/electionservices/votingOpportunities/SearchVotingPlace.aspx)"
+  }
+ ]
+}

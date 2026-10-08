@@ -1,0 +1,366 @@
+{
+ "map_shape_id": 21311,
+ "jurisdiction": "Coquitlam",
+ "source_url": "https://www.coquitlam.ca/1198/Voting-Locations",
+ "places": [
+  {
+   "name": "Town Centre Park Community Centre",
+   "address": "1299 Pinetree Way, Coquitlam",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-05",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Centennial Pavilion",
+   "address": null,
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Coquitlam Centennial Pavilion"
+  },
+  {
+   "name": "Victoria Community Hall",
+   "address": "3435 Victoria Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Alderson Elementary School",
+   "address": "825 Gauthier Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Bramblewood Elementary School",
+   "address": "2875 Panorama Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cape Horn Elementary School",
+   "address": "155 Finnigan Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Como Lake Middle School",
+   "address": "1121 King Albert Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Eagle Ridge Elementary School",
+   "address": "1215 Falcon Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Banting Middle School",
+   "address": "820 Banting Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Nestor Elementary School",
+   "address": "1266 Nestor Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Panorama Heights Elementary School",
+   "address": "1455 Johnson Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Porter Elementary School",
+   "address": "728 Porter Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Glen Elementary School",
+   "address": "3064 Glen Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Gleneagle Secondary School",
+   "address": "1195 Lansdowne Drive, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Harbour View Elementary School",
+   "address": "960 Lillian Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Hillcrest Middle School",
+   "address": "2161 Regan Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lord Baden-Powell Elementary School",
+   "address": "450 Joyce Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Maillardville Community Centre",
+   "address": "1200 Cartier Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Meadowbrook Elementary School",
+   "address": "900 Sharpe Street, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Mundy Road Elementary School",
+   "address": "2200 Austin Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Pinetree Community Centre",
+   "address": "1260 Pinetree Way, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Ranch Park Elementary School",
+   "address": "2701 Spuraway Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Riverview Park Elementary School",
+   "address": "700 Clearwater Way, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Smiling Creek Elementary School",
+   "address": "3456 Princeton Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Walton Elementary School",
+   "address": "2960 Walton Avenue, Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

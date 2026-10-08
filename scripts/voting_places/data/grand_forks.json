@@ -1,0 +1,33 @@
+{
+ "map_shape_id": 21208,
+ "jurisdiction": "Grand Forks",
+ "source_url": "https://www.grandforks.ca/election-2026/",
+ "places": [
+  {
+   "name": "Grand Forks Seniors' Society",
+   "address": null,
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only; hours not confirmed"
+  },
+  {
+   "name": "Dr. D. A. Perley Elementary School",
+   "address": null,
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

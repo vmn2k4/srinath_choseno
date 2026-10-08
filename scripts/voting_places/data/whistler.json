@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21469,
+ "jurisdiction": "Whistler",
+ "source_url": "https://www.whistler.ca/municipal-gov/elections",
+ "places": [
+  {
+   "name": "Whistler Public Library",
+   "address": "4329 Main Street, Whistler",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Myrtle Philip Community School",
+   "address": "6195 Lorimer Road, Whistler",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

@@ -1,0 +1,206 @@
+{
+ "map_shape_id": 21344,
+ "jurisdiction": "Victoria",
+ "source_url": "https://www.victoria.ca/city-government/elections",
+ "places": [
+  {
+   "name": "Victoria Conference Centre, Upper Pavilion",
+   "address": "720 Douglas St, Victoria",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Second floor"
+  },
+  {
+   "name": "Crystal Garden",
+   "address": "713 Douglas St, Victoria",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Accessible voting machine available"
+  },
+  {
+   "name": "University of Victoria, Student Union Building, Mich\u00e8le Pujol Room",
+   "address": "3800 Finnerty Rd, Victoria",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "10:00",
+     "close": "16:00"
+    }
+   ]
+  },
+  {
+   "name": "Central Middle School",
+   "address": "1280 Fort St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "George Jay Elementary School",
+   "address": "1118 Princess Ave, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Glenlyon Norfolk Senior School",
+   "address": "781 Richmond Ave, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "James Bay Community School",
+   "address": "140 Oswego St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Oaklands Elementary School",
+   "address": "2827 Belmont Ave, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Quadra Elementary School",
+   "address": "3031 Quadra St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Quadra Village Neighbourhood Gym",
+   "address": "950 Kings Rd, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Royal Canadian Legion Branch 292",
+   "address": "411 Gorge Rd East, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Sir James Douglas Elementary School",
+   "address": "401 Moss St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Victoria High School",
+   "address": "1260 Grant St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Victoria West Elementary School",
+   "address": "750 Front St, Victoria",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

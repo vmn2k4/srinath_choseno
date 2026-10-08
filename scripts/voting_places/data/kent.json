@@ -1,0 +1,52 @@
+{
+ "map_shape_id": 21243,
+ "jurisdiction": "Kent",
+ "source_url": "https://www.kentbc.ca/district-hall/2026-local-elections/",
+ "places": [
+  {
+   "name": "Agassiz Agricultural Hall",
+   "address": "6800 Pioneer Avenue, Agassiz",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-03",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance (Oct 3) and election day"
+  },
+  {
+   "name": "Lets'em\u00f3:t Regional Recreation & Aquatic Centre",
+   "address": "6660 Pioneer Avenue, Agassiz",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Harrison Mills Hall",
+   "address": "1995 School Road, Harrison Mills",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "11:00",
+     "close": "19:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  }
+ ]
+}

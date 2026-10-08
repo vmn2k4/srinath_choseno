@@ -1,0 +1,161 @@
+{
+ "map_shape_id": 21317,
+ "jurisdiction": "North Vancouver (City)",
+ "source_url": "https://www.cnv.org/city-hall/general-local-election/2026-general-local-election",
+ "places": [
+  {
+   "name": "North Vancouver City Hall",
+   "address": "141 West 14th St, North Vancouver",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "10:00",
+     "close": "16:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "10:00",
+     "close": "19:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "10:00",
+     "close": "18:00"
+    }
+   ],
+   "notes": "Advance voting only; curbside voting on 13th Street"
+  },
+  {
+   "name": "Larson Elementary School (Gym)",
+   "address": "2605 Larson Rd, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Carson Graham Secondary School (Small Gym)",
+   "address": "2145 Jones Ave, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Westview Elementary School (Gym)",
+   "address": "641 West 17th St, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Queen Mary Elementary School (Gym)",
+   "address": "230 W Keith Rd, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Ridgeway Elementary School (Gym)",
+   "address": "420 East 8th St, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Sutherland Secondary School (Gym)",
+   "address": "1860 Sutherland Ave, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; curbside voting available"
+  },
+  {
+   "name": "Harry Jerome Community Recreation Centre",
+   "address": "130 East 23rd St, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "John Braithwaite Community Centre (Shoreline Room)",
+   "address": "145 West 1st St, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Pipe Shop",
+   "address": "115 Victory Ship Way, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "map_shape_id": 21349,
+ "jurisdiction": "View Royal",
+ "source_url": "https://www.viewroyal.ca/EN/main/town/elections-main/voting-dates-locations.html",
+ "places": [
+  {
+   "name": "View Royal Town Hall Council Chambers",
+   "address": "45 View Royal Avenue, View Royal",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "View Royal Elementary School",
+   "address": "218 Helmcken Road, View Royal",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Eagle View Elementary School",
+   "address": "97 Talcott Road, View Royal",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

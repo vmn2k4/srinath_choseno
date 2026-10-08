@@ -1,0 +1,123 @@
+{
+ "map_shape_id": 21249,
+ "jurisdiction": "Mission",
+ "source_url": "https://www.mission.ca/node/1828",
+ "places": [
+  {
+   "name": "Mission Leisure Centre",
+   "address": "7650 Grand Street, Mission",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Albert McMahon Elementary School",
+   "address": "32865 Cherry Avenue, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cherry Hill Elementary School",
+   "address": "32557 Best Avenue, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Mission Central Elementary School",
+   "address": "7466 Welton Street, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Hatzic Middle School",
+   "address": "34800 Dewdney Trunk Road, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Silverdale Elementary School",
+   "address": "29715 Donatelli Avenue, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Stave Falls Elementary School",
+   "address": "30204 Brackley Avenue, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "West Heights Elementary School",
+   "address": "32065 Van Velzen Avenue, Mission",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

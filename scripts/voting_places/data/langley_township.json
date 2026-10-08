@@ -1,0 +1,253 @@
+{
+ "map_shape_id": 21303,
+ "jurisdiction": "Langley (Township)",
+ "source_url": "https://www.tol.ca/en/the-township/2026-voting-dates-and-locations.aspx",
+ "places": [
+  {
+   "name": "Salishan Place by the River",
+   "address": "23430 Mavis Avenue, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-06",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Langley Events Centre, West Gym",
+   "address": "7888 200 Street, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "George Preston Recreation Centre",
+   "address": "20699 42 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Aldergrove Community Centre",
+   "address": "27032 Fraser Highway, Aldergrove",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-09",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Source lists two slightly different street numbers (27032 / 27230); confirm before going"
+  },
+  {
+   "name": "Langley Regional Airport",
+   "address": "5385 216 Street, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "James Kennedy Elementary School",
+   "address": "9060 212 Street, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Aldergrove Community Secondary School",
+   "address": "26850 29 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Alex Hope Elementary School",
+   "address": "21150 85 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Coghlan Community Hall",
+   "address": "6795 256 Street, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "D.W. Poppy Secondary School",
+   "address": "23752 52 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Dorothy Peacock Elementary School",
+   "address": "20292 91A Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Glenwood Elementary School",
+   "address": "20785 24 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "James Hill Elementary School",
+   "address": "22144 Old Yale Road, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lynn Fripps Elementary School",
+   "address": "21020 83 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Parkside Centennial Elementary School",
+   "address": "3300 270 Street, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "R.C. Garnett Demonstration Elementary School",
+   "address": "7096 201 Street, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Wix-Brown Elementary School",
+   "address": "23851 24 Avenue, Langley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

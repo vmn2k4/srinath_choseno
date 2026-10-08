@@ -1,0 +1,45 @@
+{
+ "map_shape_id": 21343,
+ "jurisdiction": "Oak Bay",
+ "source_url": "https://www.oakbay.ca/municipal-hall/municipal-elections",
+ "places": [
+  {
+   "name": "Monterey Recreation Centre",
+   "address": "1442 Monterey Avenue, Oak Bay",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Henderson Recreation Centre",
+   "address": "2291 Cedar Hill X Road, Oak Bay",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

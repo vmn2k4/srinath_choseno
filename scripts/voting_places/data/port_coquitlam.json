@@ -1,0 +1,143 @@
+{
+ "map_shape_id": 21314,
+ "jurisdiction": "Port Coquitlam",
+ "source_url": "https://www.portcoquitlam.ca/elections",
+ "places": [
+  {
+   "name": "Port Coquitlam Community Centre, Mabbett Hall",
+   "address": "2150 Wilson Ave, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Hyde Creek Recreation Centre",
+   "address": "1379 Laurier Ave, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Blakeburn Elementary",
+   "address": "1040 Riverside Dr, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Castle Park Elementary",
+   "address": "1144 Confederation Dr, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cedar Drive Elementary",
+   "address": "3150 Cedar Dr, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Central Elementary",
+   "address": "2260 Central Ave, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Kilmer Elementary",
+   "address": "1575 Knappen St, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Kwayhquitlum Middle",
+   "address": "3280 Flint St, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "The Outlet",
+   "address": "2248 McAllister Ave, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Westwood Elementary",
+   "address": "3610 Hastings St, Port Coquitlam",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

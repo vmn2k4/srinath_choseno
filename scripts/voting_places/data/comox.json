@@ -1,0 +1,51 @@
+{
+ "map_shape_id": 21448,
+ "jurisdiction": "Comox",
+ "source_url": "https://www.comox.ca/node/13237",
+ "places": [
+  {
+   "name": "Comox Community Centre",
+   "address": "1809 Beaufort Avenue, Comox",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Genoa Sail Building, Comox Marina",
+   "address": null,
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "10:00",
+     "close": "14:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-12",
+     "open": "10:00",
+     "close": "14:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  }
+ ]
+}

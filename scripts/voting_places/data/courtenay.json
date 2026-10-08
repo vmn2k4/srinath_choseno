@@ -1,0 +1,45 @@
+{
+ "map_shape_id": 21449,
+ "jurisdiction": "Courtenay",
+ "source_url": "https://www.courtenay.ca/election",
+ "places": [
+  {
+   "name": "Florence Filberg Centre",
+   "address": "411 Anderton Ave, Courtenay",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Queneesh Elementary School",
+   "address": "2345 Mission Rd, Courtenay",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

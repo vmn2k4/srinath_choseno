@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21350,
+ "jurisdiction": "Highlands",
+ "source_url": "https://www.highlands.ca/local-government/elections",
+ "places": [
+  {
+   "name": "Highlands Fire Department (East Fire Hall)",
+   "address": "3613 Woodridge Place, Highlands",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Highlands Community Hall",
+   "address": "729 Finlayson Arm Road, Highlands",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance (Oct 14) and election day"
+  }
+ ]
+}

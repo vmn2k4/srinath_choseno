@@ -1,0 +1,52 @@
+{
+ "map_shape_id": 22023,
+ "jurisdiction": "Prince Rupert",
+ "source_url": "https://www.princerupert.ca/election",
+ "places": [
+  {
+   "name": "Raven Lounge, Prince Rupert Recreation Complex",
+   "address": "1000 McBride Street, Prince Rupert",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only. Election-day locations not published yet; election day voting is 8 am to 8 pm"
+  },
+  {
+   "name": "Prince Rupert Hospital (special voting)",
+   "address": null,
+   "schedules": [
+    {
+     "type": "special",
+     "date": "2026-10-15",
+     "open": "13:00",
+     "close": "15:00"
+    }
+   ],
+   "notes": "Special voting for staff, patients and residents only"
+  },
+  {
+   "name": "Acropolis Manor (special voting)",
+   "address": null,
+   "schedules": [
+    {
+     "type": "special",
+     "date": "2026-10-15",
+     "open": "15:00",
+     "close": "17:00"
+    }
+   ],
+   "notes": "Special voting for staff, patients and residents only"
+  }
+ ]
+}

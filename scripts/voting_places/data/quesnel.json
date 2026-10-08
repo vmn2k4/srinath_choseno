@@ -1,0 +1,58 @@
+{
+ "map_shape_id": 21644,
+ "jurisdiction": "Quesnel",
+ "source_url": "https://www.quesnel.ca/election",
+ "places": [
+  {
+   "name": "Quesnel City Hall",
+   "address": "410 Kinchant Street, Quesnel",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Correlieu Secondary School",
+   "address": "850 Anderson Drive, Quesnel",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Dragon Lake Elementary School",
+   "address": "2671 Quesnel-Hydraulic Road, Quesnel",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

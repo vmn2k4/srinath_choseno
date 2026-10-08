@@ -1,0 +1,44 @@
+{
+ "map_shape_id": 21304,
+ "jurisdiction": "Langley (City)",
+ "source_url": "https://www.langleycity.ca/city-hall/local-elections",
+ "places": [
+  {
+   "name": "Timms Community Centre",
+   "address": "20399 Douglas Crescent, Langley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-06",
+     "open": "13:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": "08:30",
+     "close": "16:30"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  }
+ ]
+}

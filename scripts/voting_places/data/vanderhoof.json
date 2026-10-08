@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21772,
+ "jurisdiction": "Vanderhoof",
+ "source_url": "https://vanderhoof.ca/2026-election",
+ "places": [
+  {
+   "name": "St. Joseph Church gymnasium",
+   "address": "2980 Burrard Avenue, Vanderhoof",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance (Oct 7) and election day"
+  },
+  {
+   "name": "Vanderhoof Municipal Office, Council Chambers",
+   "address": null,
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "10:00",
+     "close": "18:00"
+    }
+   ],
+   "notes": "Advance voting for District of Vanderhoof council races only"
+  }
+ ]
+}

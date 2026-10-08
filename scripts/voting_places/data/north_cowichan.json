@@ -1,0 +1,97 @@
+{
+ "map_shape_id": 21979,
+ "jurisdiction": "North Cowichan",
+ "source_url": "https://www.northcowichan.ca/election",
+ "places": [
+  {
+   "name": "North Cowichan Municipal Hall",
+   "address": "7030 Trans-Canada Highway, North Cowichan",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Chemainus Secondary School",
+   "address": "9947 Daniel Street, Chemainus, North Cowichan",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Crofton Firehall",
+   "address": "1681 Robert Street, Crofton, North Cowichan",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "\u00c9cole Mount Prevost School",
+   "address": "6177 Somenos Road, North Cowichan",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Maple Bay Elementary School",
+   "address": "1500 Donnay Drive, North Cowichan",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Quw'utsun Secondary School",
+   "address": "2003 University Way, North Cowichan",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "map_shape_id": 21430,
+ "jurisdiction": "Campbell River",
+ "source_url": "https://www.campbellriver.ca/elections",
+ "places": [
+  {
+   "name": "Campbell River Community Centre",
+   "address": "401 11th Avenue, Campbell River",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Sportsplex",
+   "address": "1800 South Alder Street, Campbell River",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  }
+ ]
+}

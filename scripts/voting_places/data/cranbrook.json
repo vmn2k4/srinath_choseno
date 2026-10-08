@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21165,
+ "jurisdiction": "Cranbrook",
+ "source_url": "https://cranbrook.ca/our-city/city-departments/corporate-services-1/elections-start",
+ "places": [
+  {
+   "name": "Senior Citizens Hall",
+   "address": "125 17 Ave S, Cranbrook",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Laurie Middle School Gymnasium",
+   "address": "1808 2 St S, Cranbrook",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

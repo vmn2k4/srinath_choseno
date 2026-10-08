@@ -1,0 +1,275 @@
+{
+ "map_shape_id": 21342,
+ "jurisdiction": "Saanich",
+ "source_url": "https://www.saanich.ca/EN/main/local-government/2026-election/where-to-vote.html",
+ "places": [
+  {
+   "name": "Saanich Municipal Hall",
+   "address": "770 Vernon Avenue, Saanich",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Hellenic Community Centre (Greek Hall)",
+   "address": "4648 Elk Lake Drive, Saanich",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Cedar Hill Recreation Centre",
+   "address": "3220 Cedar Hill Road, Saanich",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "University of Victoria, Student Union Building, Michele Pujol Room",
+   "address": "3800 Finnerty Road, Victoria",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "10:00",
+     "close": "16:00"
+    }
+   ]
+  },
+  {
+   "name": "Campus View Elementary School",
+   "address": "3900 Gordon Head Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cedar Hill Middle School",
+   "address": "3910 Cedar Hill Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cloverdale Elementary School",
+   "address": "3427 Quadra Street, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cordova Bay Elementary School",
+   "address": "5238 Cordova Bay Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Doncaster Elementary School",
+   "address": "1525 Rowan Street, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Frank Hobbs Elementary School",
+   "address": "3875 Haro Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Glanford Middle School",
+   "address": "4140 Glanford Avenue, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Gordon Head Recreation Centre",
+   "address": "4100 Lambrick Way, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Hillcrest Elementary School",
+   "address": "4421 Greentree Terrace, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lansdowne Middle School",
+   "address": "1765 Lansdowne Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lochside Elementary School",
+   "address": "1145 Royal Oak Drive, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Prospect Lake Elementary School",
+   "address": "321 Prospect Lake Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Reynolds Secondary School",
+   "address": "3963 Borden Street, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Saanich Commonwealth Place",
+   "address": "4636 Elk Lake Drive, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Silver Threads (Les Passmore Centre)",
+   "address": "286 Hampton Road, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Spectrum Community School",
+   "address": "957 Burnside Road West, Saanich",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

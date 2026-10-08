@@ -1,0 +1,32 @@
+{
+ "map_shape_id": 21365,
+ "jurisdiction": "Lake Cowichan",
+ "source_url": "https://lakecowichan.ca/elections2026.php",
+ "places": [
+  {
+   "name": "Lake Cowichan Municipal Office",
+   "address": "39 South Shore Road, Lake Cowichan",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day location per town; advance location assumed the same, confirm"
+  }
+ ]
+}

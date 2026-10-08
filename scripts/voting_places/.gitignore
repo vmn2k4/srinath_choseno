@@ -1,0 +1,3 @@
+.geocode_cache.json
+.load.sql
+.load.*.sql

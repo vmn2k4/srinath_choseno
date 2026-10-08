@@ -1,0 +1,162 @@
+{
+ "map_shape_id": 22009,
+ "jurisdiction": "Nanaimo",
+ "source_url": "https://www.nanaimo.ca/your-government/elections/voter-information",
+ "places": [
+  {
+   "name": "Beban Park Social Centre",
+   "address": "2300 Bowen Road, Nanaimo",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Protection Island Fire Hall",
+   "address": "26 Pirates Lane, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "10:00",
+     "close": "18:00"
+    }
+   ],
+   "notes": "Election day only; open 10 am to 6 pm"
+  },
+  {
+   "name": "Brechin Elementary School",
+   "address": "510 Millstone Avenue, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Chase River Elementary School",
+   "address": "1503 Cranberry Avenue, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "City of Nanaimo Service and Resource Centre",
+   "address": "411 Dunsmuir Street, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Dover Bay Secondary School",
+   "address": "6135 McGirr Road, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "John Barsby Secondary School",
+   "address": "550 Seventh Street, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Nanaimo District Secondary School",
+   "address": "355 Wakesiah Avenue, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Randerson Ridge Elementary School",
+   "address": "6021 Nelson Road, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Uplands Park Elementary School",
+   "address": "3821 Stronach Drive, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Wellington Secondary School",
+   "address": "3135 Mexicana Road, Nanaimo",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

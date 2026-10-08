@@ -1,0 +1,39 @@
+{
+ "map_shape_id": 21166,
+ "jurisdiction": "Kimberley",
+ "source_url": "https://kimberley.ca/Election2026",
+ "places": [
+  {
+   "name": "Centennial Hall",
+   "address": "100 4th Avenue, Kimberley",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "McKim Middle School",
+   "address": "689 Rotary Drive, Kimberley",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

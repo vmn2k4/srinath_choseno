@@ -1,0 +1,33 @@
+{
+ "map_shape_id": 21608,
+ "jurisdiction": "Vernon",
+ "source_url": "https://www.cfno.org/vitalvote-events",
+ "places": [
+  {
+   "name": "Schubert Centre",
+   "address": "3505 30th Avenue, Vernon",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Vernon City Hall Council Chambers",
+   "address": "3400 30th Street, Vernon",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only; election day locations not listed in sources"
+  }
+ ]
+}

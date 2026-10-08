@@ -1,0 +1,26 @@
+{
+ "map_shape_id": 21630,
+ "jurisdiction": "Sicamous",
+ "source_url": "https://www.sicamous.ca/live-here/news/post/2026-general-local-election-information-for-voters",
+ "places": [
+  {
+   "name": "Sek'emaws (Sicamous) Health Centre",
+   "address": "200 Main Street, Sicamous",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{
+ "map_shape_id": 21218,
+ "jurisdiction": "Princeton",
+ "source_url": "https://princeton.ca/p/election-2026",
+ "places": [
+  {
+   "name": "Princeton & District Community Skills Centre",
+   "address": "206 Vermilion Ave, Princeton",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only; advance location not published"
+  }
+ ]
+}

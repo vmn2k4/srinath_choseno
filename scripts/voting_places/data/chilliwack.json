@@ -1,0 +1,84 @@
+{
+ "map_shape_id": 21241,
+ "jurisdiction": "Chilliwack",
+ "source_url": "https://chilliwack.com/main/page.cfm?id=2446",
+ "places": [
+  {
+   "name": "Chilliwack Landing Sports Centre",
+   "address": "45530 Spadina Avenue, Chilliwack",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Chilliwack Heritage Park",
+   "address": "44140 Luckakuck Way, Chilliwack",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Cultus Lake Community School",
+   "address": "71 Sunnyside Blvd, Chilliwack",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Rosedale Traditional Community School",
+   "address": "50850 Yale Road, Chilliwack",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Yarrow Community School",
+   "address": "4595 Wilson Road, Chilliwack",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

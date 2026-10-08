@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
+import VotingPlacesSection from "@/components/features/VotingPlacesSection";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds, getOfficeHoldersForShape } from "@/lib/services/elections";
 import { buildRaceDescription, buildRaceParagraphs, buildRaceTitle, buildCandidateTitle, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
@@ -431,11 +432,25 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
         )}
       </div>
 
-      <ElectionSeatPageClient
-        seatId={seatId}
-        initialSeat={seat}
-        initialCandidates={(candidates as any[]) || []}
+      {/* Voting places ride in a sticky right-hand rail on wide screens and
+          stack under the race on smaller ones. The section renders nothing
+          when a municipality has no data, so the rail collapses with it. */}
+      <div className="xl:flex xl:items-start xl:gap-6">
+        <div className="min-w-0 flex-1">
+          <ElectionSeatPageClient
+            seatId={seatId}
+            initialSeat={seat}
+            initialCandidates={(candidates as any[]) || []}
+          />
+        </div>
+        <aside className="xl:w-80 xl:shrink-0 xl:sticky xl:top-20 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:pr-6">
+          <VotingPlacesSection
+        mapShapeId={seat?.map_shape_id}
+        electionDate={electionDateRaw}
+        jurisdictionName={boundaryName}
       />
+        </aside>
+      </div>
 
       {/* Visible, server-rendered race summary: built from this seat's own
           candidates, parties and incumbent so it differs page to page. */}

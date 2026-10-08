@@ -1,0 +1,26 @@
+{
+ "map_shape_id": 21195,
+ "jurisdiction": "Nakusp",
+ "source_url": "https://www.rdck.ca/corporate/elections/2026-general-local-election/i-want-to-vote/",
+ "places": [
+  {
+   "name": "Nakusp Community Complex",
+   "address": "200 8th Avenue NW, Nakusp",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Location from the Regional District of Central Kootenay voting list; confirm with the municipality"
+  }
+ ]
+}

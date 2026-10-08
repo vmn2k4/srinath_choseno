@@ -1,0 +1,45 @@
+{
+ "map_shape_id": 21741,
+ "jurisdiction": "Terrace",
+ "source_url": "https://www.terrace.ca/election",
+ "places": [
+  {
+   "name": "Terrace Sportsplex",
+   "address": "3320 Kalum Street, Terrace",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Cassie Hall Elementary School",
+   "address": "2620 Eby Street, Terrace",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "map_shape_id": 21221,
+ "jurisdiction": "Summerland",
+ "source_url": "https://www.summerland.ca/your-city-hall/elections/2026-general-local-elections",
+ "places": [
+  {
+   "name": "Summerland Arena Banquet Room",
+   "address": "8820 Jubilee Road E, Summerland",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  }
+ ]
+}

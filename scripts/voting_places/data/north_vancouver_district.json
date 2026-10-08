@@ -1,0 +1,343 @@
+{
+ "map_shape_id": 21316,
+ "jurisdiction": "North Vancouver (District)",
+ "source_url": "https://www.dnv.org/government-administration/voting-dates-and-locations",
+ "places": [
+  {
+   "name": "District Hall",
+   "address": "355 West Queens Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-12",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance voting only"
+  },
+  {
+   "name": "Parkgate Community Centre",
+   "address": "3625 Banff Court, North Vancouver",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-12",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Lions Gate Hospital (special voting)",
+   "address": "231 East 15th Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "special",
+     "date": "2026-10-10",
+     "open": "09:00",
+     "close": "16:00"
+    }
+   ],
+   "notes": "Special voting for inpatients of Lions Gate Hospital, North Shore Hospice and HOpe Centre only"
+  },
+  {
+   "name": "Argyle Secondary School",
+   "address": "1131 Frederick Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Blueridge Elementary School",
+   "address": "2650 Bronte Drive, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Brooksbank Elementary School",
+   "address": "980 East 13th Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Canyon Heights Elementary School",
+   "address": "4501 Highland Boulevard, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Capilano Elementary School",
+   "address": "1230 West 20th Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Carisbrooke Elementary School",
+   "address": "510 East Carisbrooke Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Cleveland Elementary School",
+   "address": "1255 Eldon Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Eastview Elementary School",
+   "address": "1801 Mountain Highway, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Handsworth Secondary School",
+   "address": "1033 Handsworth Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Highlands Elementary School",
+   "address": "3150 Colwood Drive, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lions Gate Community Recreation Centre",
+   "address": "1733 Lions Gate Lane, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lynn Creek Community Recreation Centre",
+   "address": "1491 Hunter Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Lynnmour Elementary School",
+   "address": "800 Forsman Avenue, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Montroyal Elementary School",
+   "address": "5310 Sonora Drive, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Mountainside Secondary School",
+   "address": "3365 Mahon Avenue, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Norgate Elementary School",
+   "address": "1295 Sowden Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Ross Road Elementary School",
+   "address": "2875 Bushnell Place, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Seycove Secondary School",
+   "address": "1204 Caledonia Avenue, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Sherwood Park Elementary School",
+   "address": "4085 Dollar Road, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Upper Lynn Elementary School",
+   "address": "1540 Coleman Street, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Windsor Secondary School",
+   "address": "931 Broadview Drive, North Vancouver",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

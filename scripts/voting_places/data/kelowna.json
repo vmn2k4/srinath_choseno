@@ -1,0 +1,253 @@
+{
+ "map_shape_id": 21597,
+ "jurisdiction": "Kelowna",
+ "source_url": "https://www.kelowna.ca/city-hall/city-government/elections/voting-locations-map",
+ "places": [
+  {
+   "name": "Parkinson Recreation Centre",
+   "address": "1800 Parkinson Way, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-15",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-16",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "MNP Place",
+   "address": "4105 Gordon Dr, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-16",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "North Glenmore Elementary",
+   "address": "125 Snowsell St, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Rutland Elementary School",
+   "address": "620 Webster Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Black Box Theatre",
+   "address": "1375 Water St, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ]
+  },
+  {
+   "name": "Okanagan College S Building Atrium",
+   "address": "1000 KLO Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "18:00"
+    }
+   ],
+   "notes": "Campus location, closes 6 pm",
+   "lat": 49.8608,
+   "lng": -119.4617
+  },
+  {
+   "name": "UBC Okanagan University Centre Ballroom",
+   "address": "3272 University Way, Kelowna",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "18:00"
+    }
+   ],
+   "notes": "Campus location, closes 6 pm"
+  },
+  {
+   "name": "Central Okanagan United Church",
+   "address": "721 Bernard Ave, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "East Kelowna Community Hall",
+   "address": "2704 East Kelowna Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Evangel Church",
+   "address": "3261 Gordon Dr, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Mission Creek Alliance Church",
+   "address": "2091 Springfield Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Okanagan Mission Hall",
+   "address": "4409 Lakeshore Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Quigley Elementary School",
+   "address": "705 Kitch Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Springvalley Middle School",
+   "address": "350 Ziprick Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Watson Elementary",
+   "address": "475 Yates Rd, Kelowna",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

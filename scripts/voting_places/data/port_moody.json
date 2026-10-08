@@ -1,0 +1,65 @@
+{
+ "map_shape_id": 21315,
+ "jurisdiction": "Port Moody",
+ "source_url": "https://www.portmoody.ca/city-government/elections/voting-information/",
+ "places": [
+  {
+   "name": "Port Moody Recreation Complex",
+   "address": "300 Ioco Road, Port Moody",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-10",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  },
+  {
+   "name": "Kyle Centre",
+   "address": "125 Kyle Street, Port Moody",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Heritage Mountain Community Centre",
+   "address": "200 Panorama Place, Port Moody",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  },
+  {
+   "name": "Glenayre Community Centre",
+   "address": "492 Glencoe Drive, Port Moody",
+   "schedules": [
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Election day only"
+  }
+ ]
+}

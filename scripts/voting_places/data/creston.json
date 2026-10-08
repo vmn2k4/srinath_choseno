@@ -1,0 +1,26 @@
+{
+ "map_shape_id": 21180,
+ "jurisdiction": "Creston",
+ "source_url": "https://www.rdck.ca/corporate/elections/2026-general-local-election/i-want-to-vote/",
+ "places": [
+  {
+   "name": "Creston Community Complex",
+   "address": "312 19th Avenue North, Creston",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Location from the Regional District of Central Kootenay voting list; confirm with the municipality"
+  }
+ ]
+}

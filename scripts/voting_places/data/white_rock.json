@@ -1,0 +1,32 @@
+{
+ "map_shape_id": 21306,
+ "jurisdiction": "White Rock",
+ "source_url": "https://www.whiterockcity.ca/elections",
+ "places": [
+  {
+   "name": "Centennial Arena",
+   "address": "14600 North Bluff Road, White Rock",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": null,
+     "close": null
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-08",
+     "open": null,
+     "close": null
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-13",
+     "open": null,
+     "close": null
+    }
+   ],
+   "notes": "Advance voting hours not published; election day locations not yet published by the city (election day 8 am to 8 pm)"
+  }
+ ]
+}

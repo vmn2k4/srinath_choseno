@@ -26,6 +26,7 @@ Every Supabase call (`.from()`, `.rpc()`, `.storage`, `.auth`) lives in `src/lib
 | `ratings.ts` | politician_ratings (1-5 stars + optional comment), upsert/delete via `upsert_politician_rating`/`delete_politician_rating` RPCs, batch avg+count via `get_politician_rating_summaries` RPC | `PoliticianWallClient` (full rate/review UI), `PoliticianSidebar`, `CurrentOfficeHolderCard`, `ElectionSeatPageClient`, `CandidacyWall`, `elections/[boundarySlug]/page.tsx` (read-only summary badge under each politician's name) |
 | `politicians.ts` | global politician/office-holder search (`search_politicians_and_officeholders` RPC — ranks key leaders first, then proximity to the searcher's own jurisdiction), key_political_leaders CRUD | `GlobalPoliticianSearch` (nav-bar search), `KeyLeadersAdminClient` |
 | `calls.ts` | candidate_call_attempts (outbound AI-voice calling log — status/outcome/transcript), `list_candidate_call_attempts`/`get_call_attempt_context` RPCs, `startCandidateCall` (routes to `/api/admin/calls/start`, not a direct Supabase call — see docs/CANDIDATE_OUTREACH_CALLING.md), `sendCallFollowUpEmail` (wraps `elections.ts`'s `inviteCandidateToClaim`, doesn't duplicate it) | `StartCallFlow`, `CallCampaignDashboardClient` |
+| `votingPlaces.ts` | voting_places + voting_place_schedules (public read; advance/election-day locations per municipality, see docs/VOTING_PLACES.md) | `VotingPlacesSection` (race page) |
 
 ## Conventions
 

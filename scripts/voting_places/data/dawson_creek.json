@@ -1,0 +1,32 @@
+{
+ "map_shape_id": 21839,
+ "jurisdiction": "Dawson Creek",
+ "source_url": "https://www.dawsoncreek.ca/election",
+ "places": [
+  {
+   "name": "Ovintiv Events Centre, Upper Lobby",
+   "address": "300 Hwy 2, Dawson Creek",
+   "schedules": [
+    {
+     "type": "advance",
+     "date": "2026-10-07",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "advance",
+     "date": "2026-10-14",
+     "open": "08:00",
+     "close": "20:00"
+    },
+    {
+     "type": "general",
+     "date": "2026-10-17",
+     "open": "08:00",
+     "close": "20:00"
+    }
+   ],
+   "notes": "Advance and election day"
+  }
+ ]
+}
