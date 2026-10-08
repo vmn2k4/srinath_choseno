@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Card, Badge } from "@/components/primitives";
 import PickShareReportButton from "@/components/features/PickShareReportButton";
 import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
+import VotingPlacesSection from "@/components/features/VotingPlacesSection";
 import PickShareCandidates from "@/components/features/PickShareCandidates";
 import { SITE_URL } from "@/lib/constants/site";
 import { joinNames, pickSharePath } from "@/lib/utils/pickShare";
@@ -91,7 +92,14 @@ export default async function PickSharePage({ params }: Props) {
       {/* Same vertical "Who's on your ballot?" rail used on the wall and
           candidacy pages: asks for the visitor's location and shows their
           districts + open races, else the Find Your District promo. */}
-      <div className="mt-8 lg:mt-0">
+      <div className="mt-8 lg:mt-0 space-y-6">
+        {/* Same voting-places panel as the race page; renders nothing when the
+            municipality has no published locations. */}
+        <VotingPlacesSection
+          mapShapeId={seat.map_shape_id}
+          electionDate={seat.elections?.election_date}
+          jurisdictionName={place || "your area"}
+        />
         <DistrictRacesBanner
           orientation="vertical"
           title="Who's on your ballot?"
