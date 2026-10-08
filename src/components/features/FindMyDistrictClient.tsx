@@ -19,6 +19,8 @@ import { useTranslation } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLocationGate } from "@/components/LocationRequiredGate";
 import type { RepresentationBranch } from "./RepresentationBranchTree";
+import VotingPlacesSection from "./VotingPlacesSection";
+import { getVotingPlaceDatesForShapes } from "@/lib/services/votingPlaces";
 import { useGuestLocation, getGuestLocation, setGuestLocation, type MatchedBoundary } from "@/lib/utils/guestLocation";
 import { REP_LIST_GATING_ENABLED } from "@/lib/constants/site";
 
@@ -69,6 +71,8 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
   const [seats, setSeats] = useState<DistrictSeat[]>([]);
+  // Boundaries (with an election date) that have published voting places.
+  const [votingDates, setVotingDates] = useState<{ map_shape_id: number; election_date: string }[]>([]);
   const [settingProfileLocation, setSettingProfileLocation] = useState(false);
   const [profileLocationSet, setProfileLocationSet] = useState(false);
   // Below md: if we already know the constituency, the map/search picker
@@ -80,6 +84,18 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
   // rather than GPS/address/pin -- shown as a notice, and never saved as the
   // visitor's remembered location.
   const [approxPlace, setApproxPlace] = useState<string | null | undefined>(undefined);
+  useEffect(() => {
+    const ids = (boundaries || []).map((b) => b.id);
+    let cancelled = false;
+    getVotingPlaceDatesForShapes(supabase, ids).then(({ data }) => {
+      if (!cancelled) setVotingDates(data || []);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boundaries]);
+
   // No location on file (no profile constituency, nothing remembered from a
   // previous visit) -> have the picker try GPS on load. Read from
   // localStorage in an effect (not render) to stay hydration-safe.
@@ -235,7 +251,7 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
       {/* Header — compact on mobile (title only, description hidden) so the
           functional search widget is reachable without scrolling past a
           marketing block; full hero treatment returns at sm: and up. */}
-      <header className="w-full max-w-7xl mx-auto px-4 pt-3 pb-1 sm:py-4">
+      <header className="w-full px-4 lg:px-8 pt-3 pb-1 sm:py-4">
         <div className="text-center space-y-1 sm:space-y-2 mb-3 sm:mb-6">
           <h1 className="font-display text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
             {t("findDistrict.title")}
@@ -249,7 +265,11 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
       {/* Main Layout - Two Column (Map + Boundaries) — two-up from md: so
           iPad portrait already gets both panels side by side instead of a
           long single-column scroll. */}
-      <section className="w-full max-w-7xl mx-auto px-4 pb-12">
+      {/* With polling places for the matched area, a sticky right-hand rail
+          (same panel as the race page) sits beside the results on wide
+          screens and stacks under them on smaller ones. */}
+      <div className="w-full px-4 lg:px-8 pb-12 xl:flex xl:items-start xl:gap-6">
+      <section className="min-w-0 flex-1">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
           {/* Left Column - Map. Below md, if we already resolved a
               constituency on mount, this starts collapsed behind a
@@ -416,6 +436,33 @@ export default function FindMyDistrictClient({ initialBoundaries = [] }: FindMyD
           </section>
         )}
       </section>
+
+      {!loading && boundaries && votingDates.length > 0 && (
+        <aside
+          id="polling-places"
+          aria-label="Your polling places"
+          className="xl:w-80 xl:shrink-0 xl:sticky xl:top-20 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto"
+        >
+          {votingDates.map((v) => {
+            const b = boundaries.find((x) => x.id === v.map_shape_id);
+            if (!b) return null;
+            return (
+              <VotingPlacesSection
+                key={`${v.map_shape_id}-${v.election_date}`}
+                mapShapeId={v.map_shape_id}
+                electionDate={v.election_date}
+                jurisdictionName={b.name}
+                initialOrigin={
+                  approxPlace === undefined && selectedLat !== undefined && selectedLng !== undefined
+                    ? { lat: selectedLat, lng: selectedLng }
+                    : null
+                }
+              />
+            );
+          })}
+        </aside>
+      )}
+      </div>
     </div>
   );
 }

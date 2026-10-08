@@ -28,6 +28,8 @@ export interface BlogPost {
   faqs: BlogFaq[];
   internalLinks: BlogInternalLink[];
   featured?: boolean;
+  /** Show the GPS-driven "your district" bar (DistrictRacesBanner) under the takeaways. */
+  showDistrictBanner?: boolean;
 }
 
 export type BlogCategory =

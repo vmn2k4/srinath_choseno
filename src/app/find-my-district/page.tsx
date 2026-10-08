@@ -7,8 +7,8 @@ import { SITE_URL } from "@/lib/constants/site";
 const BASE_URL = SITE_URL;
 
 const pageTitle = "Find Your District. Rate Every Politician in Your Area | Choseno";
-const pageDescription = "We research restaurants before eating, so let's do research before elections! Enter your address to find your polling district, see who holds office, and rate your representatives.";
-const keywords = "electoral district, find my district, rate politicians, elected officials, reviews, congressional district, state senate, city council, 2026 candidates, voter information, election";
+const pageDescription = "We research restaurants before eating, so let's do research before elections! Enter your address to find your polling district, see who holds office, rate your representatives, and find your polling booth.";
+const keywords = "find my polling booth, where to vote, electoral district, find my district, rate politicians, elected officials, reviews, congressional district, state senate, city council, 2026 candidates, voter information, election";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

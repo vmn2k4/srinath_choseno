@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { MapPin, Navigation, Clock } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { getVotingPlacesForShape, type VotingPlace, type VotingPlaceSchedule } from "@/lib/services/votingPlaces";
+import AddToCalendarMenu from "./AddToCalendarMenu";
 import { getGuestLocation } from "@/lib/utils/guestLocation";
 
 const INITIAL_COUNT = 5;
@@ -52,9 +53,12 @@ interface Props {
   mapShapeId: number | null | undefined;
   electionDate: string | null | undefined;
   jurisdictionName: string;
+  // A location the parent already has (e.g. the pin on Find My District);
+  // falls back to the visitor's remembered location.
+  initialOrigin?: { lat: number; lng: number } | null;
 }
 
-export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdictionName }: Props) {
+export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdictionName, initialOrigin }: Props) {
   const [places, setPlaces] = useState<VotingPlace[]>([]);
   const [origin, setOrigin] = useState<{ lat: number; lng: number } | null>(null);
   const [locating, setLocating] = useState(false);
@@ -78,11 +82,12 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
     // Reuse a location the visitor already shared elsewhere on the site;
     // never prompt for GPS on page load.
     const guest = getGuestLocation();
-    if (guest?.lat != null && guest?.lng != null) setOrigin({ lat: guest.lat, lng: guest.lng });
+    if (initialOrigin) setOrigin(initialOrigin);
+    else if (guest?.lat != null && guest?.lng != null) setOrigin({ lat: guest.lat, lng: guest.lng });
     return () => {
       cancelled = true;
     };
-  }, [mapShapeId, electionDate]);
+  }, [mapShapeId, electionDate, initialOrigin?.lat, initialOrigin?.lng]);
 
   const locate = () => {
     setGeoError("");
@@ -202,7 +207,14 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
             <li key={place.id} className="rounded-xl border border-border bg-surface p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="font-semibold text-text-main">{place.name}</p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-text-main hover:text-accent hover:underline"
+                  >
+                    {place.name}
+                  </a>
                   {place.address && <p className="text-sm text-text-secondary">{place.address}</p>}
                 </div>
                 {km != null && (
@@ -233,14 +245,29 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
                   )
               )}
               {place.notes && !GENERIC_NOTE.test(place.notes) && <p className="mt-2 text-xs text-text-muted">{place.notes}</p>}
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block text-sm font-medium text-accent hover:underline"
-              >
-                Get directions
-              </a>
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-accent hover:underline"
+                >
+                  Get directions
+                </a>
+                <AddToCalendarMenu
+                  options={schedules.map((sc) => ({
+                    label: `${scheduleLine(sc)} · ${sc.voting_type === "general" ? "Election day" : "Advance"}`,
+                    event: {
+                      title: `Vote: ${place.name}`,
+                      date: sc.vote_date,
+                      opensAt: sc.opens_at,
+                      closesAt: sc.closes_at,
+                      location: [place.name, place.address].filter(Boolean).join(", "),
+                      description: `${sc.voting_type === "general" ? "Election day" : "Advance voting"} at ${place.name} (${jurisdictionName}). Bring ID. Confirm hours with your local government. Find more at https://www.choseno.com/find-my-district`,
+                    },
+                  }))}
+                />
+              </div>
             </li>
           );
         })}

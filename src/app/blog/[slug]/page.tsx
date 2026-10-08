@@ -22,8 +22,26 @@ import { BLOG_CATEGORIES } from "@/lib/data/blogs/types";
 import { SITE_URL } from "@/lib/constants/site";
 import { Card, Badge, Button } from "@/components/primitives";
 import BlogCard from "@/components/features/BlogCard";
+import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 
 const BASE_URL = SITE_URL;
+
+// Minimal inline markdown for post bodies: **bold** and [text](url).
+function renderInline(text: string): React.ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).map((part, i) => {
+    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+    if (bold) return <strong key={i}>{bold[1]}</strong>;
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link) {
+      return (
+        <Link key={i} href={link[2]} className="font-semibold text-primary underline-offset-2 hover:underline">
+          {link[1]}
+        </Link>
+      );
+    }
+    return part;
+  });
+}
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -261,6 +279,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </ul>
           </div>
 
+          {post.showDistrictBanner && (
+            <DistrictRacesBanner
+              title="Your district and what's on your ballot"
+              description="Allow your location to see your district and the races you can vote in, or find your polling booth."
+            />
+          )}
+
           {/* Formatted Markdown Content */}
           <div className="space-y-6 text-text-main leading-relaxed">
             {post.contentMarkdown.split("\n\n").map((chunk, idx) => {
@@ -290,7 +315,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 return (
                   <ul key={idx} className="space-y-2 pl-4 list-disc marker:text-primary text-sm sm:text-base">
                     {listItems.map((item, itemIdx) => (
-                      <li key={itemIdx}>{item}</li>
+                      <li key={itemIdx}>{renderInline(item)}</li>
                     ))}
                   </ul>
                 );
@@ -300,7 +325,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 return (
                   <ol key={idx} className="space-y-2 pl-4 list-decimal marker:text-primary text-sm sm:text-base">
                     {listItems.map((item, itemIdx) => (
-                      <li key={itemIdx}>{item}</li>
+                      <li key={itemIdx}>{renderInline(item)}</li>
                     ))}
                   </ol>
                 );
@@ -311,7 +336,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     key={idx}
                     className="p-4 rounded-xl border-l-4 border-primary bg-surface/60 text-sm sm:text-base italic text-text-main/90"
                   >
-                    {trimmed.replace(/^>\s+/, "")}
+                    {renderInline(trimmed.replace(/^>\s+/, ""))}
                   </blockquote>
                 );
               }
@@ -320,7 +345,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               }
               return (
                 <p key={idx} className="text-sm sm:text-base text-text-main/90 leading-relaxed">
-                  {trimmed}
+                  {renderInline(trimmed)}
                 </p>
               );
             })}

@@ -44,3 +44,26 @@ export async function getVotingPlacesForShape(
     return res as { data: VotingPlace[] | null; error: unknown };
   });
 }
+
+// Which of these boundaries have published voting places, and for which
+// election date(s) — lets pages that only know a visitor's matched boundaries
+// (e.g. Find My District) decide what to render without loading every place.
+export async function getVotingPlaceDatesForShapes(supabase: Client, mapShapeIds: number[]) {
+  if (mapShapeIds.length === 0) return { data: [] as { map_shape_id: number; election_date: string }[], error: null };
+  const key = `votingPlaceDates:${[...mapShapeIds].sort((a, b) => a - b).join(",")}`;
+  return fetchWithCache(key, async () => {
+    const res = await (supabase as any)
+      .from("voting_places")
+      .select("map_shape_id, election_date")
+      .in("map_shape_id", mapShapeIds)
+      .gte("election_date", new Date().toISOString().slice(0, 10));
+    const seen = new Set<string>();
+    const rows = ((res.data as { map_shape_id: number; election_date: string }[]) || []).filter((r) => {
+      const k = `${r.map_shape_id}|${r.election_date}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+    return { data: rows, error: res.error as unknown };
+  });
+}

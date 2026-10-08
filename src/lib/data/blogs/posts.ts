@@ -5201,5 +5201,68 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
       }
     ],
     "featured": false
+  },
+  {
+      "slug": "find-your-polling-booth-advance-voting-dates",
+      "title": "Find Your Polling Booth: Every Advance Voting Place and Date for the 2026 BC Election",
+      "headline": "Find Your Polling Booth: Every Advance Voting Place and Date for the 2026 BC Election",
+      "excerpt": "Don't miss your vote. Choseno's find your polling booth tool lists voting places near you, advance voting dates and hours, and lets you add them to your calendar.",
+      "category": "voting",
+      "publishedAt": "2026-10-08T12:00:00.000Z",
+      "updatedAt": "2026-10-08T12:00:00.000Z",
+      "readingTimeMinutes": 4,
+      "primaryKeyword": "find my polling booth",
+      "secondaryKeywords": [
+          "where to vote BC",
+          "advance voting locations BC",
+          "BC municipal election polling places",
+          "early voting dates BC 2026",
+          "polling station near me"
+      ],
+      "metaTitle": "Find My Polling Booth: BC Advance Voting Places & Dates 2026",
+      "metaDescription": "Find your polling booth near you for the Oct 17, 2026 BC municipal election. See advance voting places, dates and hours, and add them to your calendar so you don't miss it.",
+      "takeaways": [
+          "Share your location on Find My District to see the closest polling booths, with advance voting and election day dates and hours.",
+          "Tap any date to add it to Google Calendar or download it for Apple and Outlook so you don't miss your vote."
+      ],
+      "contentMarkdown": "## Find your polling booth before you miss your chance to vote\n\nBC's general local election is on **Saturday, October 17, 2026**, and every city and town decides for itself where its **polling booths** are, which days **advance voting** runs, and what hours each place is open. That is why so many people end up searching \"where do I vote?\" the week of the election.\n\nChoseno's **find your polling booth** feature pulls those published voting places together in one spot. Enter your address or share your location on [Find My District](/find-my-district) and you will see your electoral district, the voting places in your municipality sorted by distance, and the dates and hours each one is open.\n\n---\n\n## What the polling booth finder shows you\n\n* **Closest voting places first**: share your location and the list sorts by distance, so the nearest booth is at the top.\n* **Advance voting and election day**: every place shows which days it is open, so you can pick the day that suits your schedule.\n* **Filter by date**: tap a date such as Sat, Oct 10 or Wed, Oct 14 to see only the places open that day.\n* **Add it to your calendar**: tap a date and hours on any booth to add it to Google Calendar, or download a calendar file for Apple Calendar and Outlook, with a reminder before you head out.\n* **Get directions**: tap the booth name or Get directions to open it in your maps app.\n\n---\n\n## How to find your polling booth in three steps\n\n1. **Open [Find My District](/find-my-district)** and allow your location, or type your address.\n2. **Scroll to \"Where to vote in your city\"** to see the closest places and filter by the day you want.\n3. **Tap a date to add it to your calendar** so advance voting does not slip past you.\n\n---\n\n## Where we have polling booth data\n\nChoseno has published voting places for over 100 BC municipalities for the October 17, 2026 election, including Vancouver, Surrey, Burnaby, Richmond, Kelowna, Victoria, Nanaimo, Kamloops and Abbotsford. Each local government publishes its own information, so some smaller towns have not posted locations yet. We keep adding places as they are announced.\n\nVoting places and hours can change, so check your local government's election page before you go. Voters also need acceptable ID, and you can register when you vote.\n\n---\n\n## Learn who is on your ballot too\n\nFinding your booth is only half of voting. The same page shows every race on your ballot and the candidates running in it, so you can read about them and rate them before you cast your vote. Use the bar below to see your district automatically from your location, then open any race on [Elections](/elections).\n\n> **Provincial election note**: the BC provincial election is on Saturday, October 24, 2026. Elections BC assigns provincial voting places by address and posts them on its Where to Vote page, so use that for your provincial polling place.\n\n---\n\n## Explore Verified Civic Tools on Choseno\n\n* **Find your polling booth and district**: start at [Find My District](/find-my-district).\n* **See the candidates in your area**: browse every race on [Elections](/elections).\n* **Read more voting guides**: more explainers are on the [Choseno blog](/blog).",
+      "faqs": [
+          {
+              "question": "How do I find my polling booth for the BC municipal election?",
+              "answer": "Open Choseno's Find My District page, allow your location or enter your address, and scroll to Where to vote. It lists the voting places in your municipality sorted by distance, with advance voting and election day dates and hours."
+          },
+          {
+              "question": "When is advance voting in BC for the 2026 local election?",
+              "answer": "General voting day is Saturday, October 17, 2026. Each local government sets its own advance voting days, which are mostly in the two weeks before, so the dates differ by city. Choseno shows the published days for each place."
+          },
+          {
+              "question": "Can I add my voting date to my calendar?",
+              "answer": "Yes. Tap the date and hours on any polling booth to add it to Google Calendar, or download a calendar file for Apple Calendar and Outlook. The event includes the address and a reminder."
+          },
+          {
+              "question": "Do I have to vote at the closest polling booth?",
+              "answer": "In most BC municipalities you can vote at any voting place in your municipality. A few, such as Richmond, assign an election day place by address, and the notes on each place say so."
+          },
+          {
+              "question": "Are the polling booth locations and hours confirmed?",
+              "answer": "They come from each local government's published election pages and can change, so confirm with your local government before you go. Smaller towns may not have posted locations yet."
+          }
+      ],
+      "internalLinks": [
+          {
+              "title": "Find My Polling Booth & District",
+              "url": "/find-my-district",
+              "description": "Share your location to see the closest polling booths and everyone on your ballot.",
+              "badge": "Start here"
+          },
+          {
+              "title": "Elections & Races",
+              "url": "/elections",
+              "description": "Browse every race and candidate running in your area.",
+              "badge": "Explore"
+          }
+      ],
+      "featured": true,
+      "showDistrictBanner": true
   }
 ];
