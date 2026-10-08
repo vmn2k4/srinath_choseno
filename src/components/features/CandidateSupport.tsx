@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/primitives";
@@ -31,6 +31,8 @@ export interface SupportApi {
   counts: Map<string, number>;
   mine: Set<string>;
   toggle: (c: SupportCandidate) => void;
+  // Reflect supports added elsewhere (e.g. the share dialog) without a refetch.
+  markSupported: (profileIds: string[]) => void;
 }
 
 // State + handlers for a set of politician profile ids.
@@ -42,6 +44,10 @@ export function useCandidateSupport(profileIds: string[]): SupportApi {
   const [anonymousSupportEnabled, setAnonymousSupportEnabled] = useState(false);
   const [counts, setCounts] = useState<Map<string, number>>(new Map());
   const [mine, setMine] = useState<Set<string>>(new Set());
+  const mineRef = useRef(mine);
+  useEffect(() => {
+    mineRef.current = mine;
+  }, [mine]);
 
   // Supporter counts: same batched RPC the seat page's Results poll uses.
   useEffect(() => {
@@ -126,7 +132,18 @@ export function useCandidateSupport(profileIds: string[]): SupportApi {
     }
   };
 
-  return { counts, mine, toggle };
+  const markSupported = (ids: string[]) => {
+    const fresh = ids.filter((id) => !mineRef.current.has(id));
+    if (fresh.length === 0) return;
+    setMine((prev) => new Set([...prev, ...fresh]));
+    setCounts((prev) => {
+      const next = new Map(prev);
+      fresh.forEach((id) => next.set(id, (next.get(id) ?? 0) + 1));
+      return next;
+    });
+  };
+
+  return { counts, mine, toggle, markSupported };
 }
 
 export function SupportControl({ c, support }: { c: SupportCandidate; support: SupportApi }) {

@@ -107,7 +107,13 @@ export default function PickShareCandidates({
       </Card>
 
       {open && (
-        <PickShareDialog seat={seat} roster={roster} initialPickedIds={initialPicked} onClose={() => setOpen(false)} />
+        <PickShareDialog
+          seat={seat}
+          roster={roster}
+          initialPickedIds={initialPicked}
+          onEngagementAdded={(r) => support.markSupported(r.supportedProfileIds)}
+          onClose={() => setOpen(false)}
+        />
       )}
     </>
   );

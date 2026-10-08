@@ -1405,6 +1405,7 @@ export default function ElectionSeatPageClient({
                   mySupportedPoliticianIds={mySupportedPoliticianIds}
                   onToggleSupport={handleToggleSupport}
                   onRatingSubmitted={handleRatingSubmitted}
+                  onSupportsAdded={(ids) => setMySupportedPoliticianIds((prev) => new Set([...prev, ...ids]))}
                 />
               )}
 

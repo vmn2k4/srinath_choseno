@@ -50,6 +50,7 @@ export default function ElectionResultsPanel({
   mySupportedPoliticianIds,
   onToggleSupport,
   onRatingSubmitted,
+  onSupportsAdded,
 }: {
   seat: any;
   candidates: CandidateRow[];
@@ -61,6 +62,9 @@ export default function ElectionResultsPanel({
   // caller can re-fetch that one politician's fresh avg/count (same pattern
   // as NewsArticleLinkedPoliticians' loadEngagementFor).
   onRatingSubmitted?: (politicianId: string) => void;
+  // Fires with politician ids the viewer now supports because of a "Share my
+  // picks" share, so the caller can update its own supported-set.
+  onSupportsAdded?: (politicianIds: string[]) => void;
 }) {
   // Which candidate's inline "rate their performance" panel is expanded --
   // at most one at a time, same as every other PoliticianInlineRating
@@ -487,8 +491,15 @@ export default function ElectionResultsPanel({
       {showPickShare && seat?.id && (
         <PickShareDialog
           seat={seat}
-          roster={rows.map((r) => ({ id: r.candidate.id, name: r.name, avatarUrl: r.avatarUrl || null, partyName: r.partyName }))}
+          roster={rows.map((r) => ({ id: r.candidate.id, name: r.name, avatarUrl: r.avatarUrl || null, partyName: r.partyName, profileId: r.candidate.profiles?.id ?? null }))}
           initialPickedIds={rows.filter((r) => r.candidate.profiles?.id && mySupportedPoliticianIds?.has(r.candidate.profiles.id)).map((r) => r.candidate.id)}
+          onEngagementAdded={(result) => {
+            // Reflect the share's supports on this page, then refetch each
+            // affected politician's counts/stars (same refetch the inline
+            // rating panel uses after a rating).
+            onSupportsAdded?.(result.supportedProfileIds);
+            [...new Set([...result.supportedProfileIds, ...result.ratedProfileIds])].forEach((id) => onRatingSubmitted?.(id));
+          }}
           onClose={() => setShowPickShare(false)}
         />
       )}

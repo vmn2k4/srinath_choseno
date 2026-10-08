@@ -2,10 +2,17 @@
 
 import { useState } from "react";
 import { Check, Heart } from "lucide-react";
-import { Modal, Button, Avatar, Input, Textarea, Alert } from "@/components/primitives";
+import { Modal, Button, Avatar, Input, Textarea, Alert, Checkbox } from "@/components/primitives";
+import { useAuth } from "@/contexts/AuthContext";
 import ShareMenu, { type ShareData } from "./ShareMenu";
 import { createClient } from "@/lib/supabase/client";
-import { createRacePickShare, PICK_SHARE_NOTE_MAX, PICK_SHARE_NAME_MAX } from "@/lib/services/pickShares";
+import {
+  createRacePickShare,
+  applyPickShareEngagement,
+  PICK_SHARE_NOTE_MAX,
+  PICK_SHARE_NAME_MAX,
+  type PickShareEngagementResult,
+} from "@/lib/services/pickShares";
 import { getOrCreateAnonSupporterId } from "@/lib/utils/anonSupporter";
 import { trackShare } from "@/lib/analytics/events";
 import { SITE_URL } from "@/lib/constants/site";
@@ -32,11 +39,15 @@ export default function PickShareDialog({
   seat,
   roster,
   initialPickedIds = [],
+  onEngagementAdded,
   onClose,
 }: {
   seat: { id: string; role_title?: string | null; map_shapes?: { name?: string | null } | null };
   roster: PickRosterCandidate[];
   initialPickedIds?: string[];
+  // Fired after a share also added supports/reviews, so the page behind the
+  // dialog can reflect them without a refetch.
+  onEngagementAdded?: (result: PickShareEngagementResult) => void;
   onClose: () => void;
 }) {
   const [picked, setPicked] = useState<string[]>(initialPickedIds);
@@ -48,6 +59,12 @@ export default function PickShareDialog({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [code, setCode] = useState<string | null>(null);
+  // Connect the share to Choseno's engagement data: add the sharer's support
+  // for each pick, and post each message as a 5-star review (signed-in only).
+  // Both default on and are spelled out in the form, never silent.
+  const { user } = useAuth();
+  const [alsoSupport, setAlsoSupport] = useState(true);
+  const [alsoReview, setAlsoReview] = useState(true);
 
   const roleTitle = seat.role_title || "this race";
   const place = seat.map_shapes?.name || "";
@@ -82,6 +99,30 @@ export default function PickShareDialog({
     }
     trackShare("race_pick_share_created", data);
     setCode(data);
+
+    // Best-effort follow-ups, deliberately SILENT: the share already exists, so
+    // nothing here may block it or show the user an error. A logged-out visitor
+    // simply gets no review (the form already says so), and someone who already
+    // supported/reviewed a candidate (e.g. sharing a second time) just has those
+    // writes quietly refused or de-duplicated -- no alert either way.
+    try {
+      const hasNote = picked.some((id) => (notes[id] || "").trim());
+      if (alsoSupport || (alsoReview && user && hasNote)) {
+        const result = await applyPickShareEngagement(createClient(), {
+          picks: picked.map((id) => ({
+            profileId: roster.find((c) => c.id === id)?.profileId,
+            note: notes[id],
+          })),
+          userId: user?.id,
+          anonId: getOrCreateAnonSupporterId(),
+          support: alsoSupport,
+          review: alsoReview,
+        });
+        if (result.supportedProfileIds.length > 0 || result.ratedProfileIds.length > 0) onEngagementAdded?.(result);
+      }
+    } catch {
+      // ignore
+    }
   }
 
   const firstNote = picked.map((id) => (notes[id] || "").trim()).find(Boolean);
@@ -134,7 +175,6 @@ export default function PickShareDialog({
             You&apos;re backing <strong className="text-text-main">{joinNames(pickedNames)}</strong>. This is how your link
             will look when friends see it:
           </p>
-
           {/* WhatsApp-style link preview mock. Deliberately uses WhatsApp's own
               colours (an imitation of a third-party UI, not our theme) and the
               real generated OG image, so what you see is what they get. */}
@@ -278,6 +318,34 @@ export default function PickShareDialog({
               onChange={(e) => setName(e.target.value)}
               placeholder="Shown as “Sam is backing…”"
             />
+          </div>
+
+          <div className="space-y-2 rounded-xl border border-border-light/40 bg-surface/20 p-3">
+            <Checkbox
+              id="pick-share-support"
+              checked={alsoSupport}
+              onChange={(e) => setAlsoSupport(e.target.checked)}
+              label={<span className="font-semibold text-text-main">Also add my support for these candidates</span>}
+            />
+            {user ? (
+              <Checkbox
+                id="pick-share-review"
+                checked={alsoReview}
+                onChange={(e) => setAlsoReview(e.target.checked)}
+                label={
+                  <span>
+                    <span className="font-semibold text-text-main">Post my messages as 5-star reviews</span>
+                    <span className="block text-[11px] text-text-muted">
+                      Each message you wrote appears on that candidate&apos;s reviews, under your anonymous Choseno name.
+                    </span>
+                  </span>
+                }
+              />
+            ) : (
+              <p className="text-[11px] text-text-muted">
+                Sign in to also post your messages as 5-star reviews on each candidate&apos;s page.
+              </p>
+            )}
           </div>
 
           <p className="text-[11px] text-text-muted">

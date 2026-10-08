@@ -1,6 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { isDevEnvironment } from "@/lib/utils/environment";
+import { addSupport, addAnonymousSupport } from "@/lib/services/politicianWall";
+import { upsertPoliticianRating } from "@/lib/services/ratings";
 
 type Client = SupabaseClient<Database>;
 
@@ -85,4 +87,70 @@ export async function isRacePickShareLive(supabase: Client, code: string) {
     .is("removed_at", null)
     .maybeSingle();
   return Boolean(data);
+}
+
+export type PickShareEngagementResult = {
+  // politician profile ids the sharer now supports / reviewed because of this share
+  supportedProfileIds: string[];
+  ratedProfileIds: string[];
+  // reviews the rating RPC refused (already reviewed within 6 months, self-rating, ...)
+  reviewsSkipped: number;
+};
+
+// Connects a share to the rest of Choseno's engagement data. Best-effort and
+// idempotent -- the share itself is already created, so nothing here may
+// throw or block it:
+//  - support: same writes as the Support button (signed-in, or anonymous when
+//    the admin kill switch allows). Already supporting counts as success.
+//  - review: a 5-star rating whose comment is the sharer's message for that
+//    candidate. Signed-in only (ratings are tied to an account), and only for
+//    picks that have a message. upsert_politician_rating enforces the
+//    6-month cooldown and no-self-rating, so an existing recent rating is
+//    never overwritten -- those picks are just counted as skipped.
+export async function applyPickShareEngagement(
+  supabase: Client,
+  args: {
+    picks: { profileId?: string | null; note?: string }[];
+    userId?: string | null;
+    anonId?: string | null;
+    support: boolean;
+    review: boolean;
+  }
+): Promise<PickShareEngagementResult> {
+  const result: PickShareEngagementResult = { supportedProfileIds: [], ratedProfileIds: [], reviewsSkipped: 0 };
+
+  await Promise.all(
+    args.picks.map(async (pick) => {
+      const id = pick.profileId;
+      if (!id) return;
+
+      if (args.support) {
+        try {
+          if (args.userId) {
+            const { error } = await addSupport(supabase, id, args.userId);
+            // 23505 = already supports this politician
+            if (!error || (error as { code?: string }).code === "23505") result.supportedProfileIds.push(id);
+          } else if (args.anonId) {
+            const { error } = await addAnonymousSupport(supabase, id, args.anonId);
+            if (!error) result.supportedProfileIds.push(id);
+          }
+        } catch {
+          // ignore: support is a bonus, the share already exists
+        }
+      }
+
+      const note = pick.note?.trim();
+      if (args.review && args.userId && note) {
+        try {
+          const { error } = await upsertPoliticianRating(supabase, id, 5, note);
+          if (error) result.reviewsSkipped += 1;
+          else result.ratedProfileIds.push(id);
+        } catch {
+          result.reviewsSkipped += 1;
+        }
+      }
+    })
+  );
+
+  return result;
 }
