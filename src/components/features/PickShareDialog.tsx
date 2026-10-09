@@ -9,6 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 import {
   createRacePickShare,
   applyPickShareEngagement,
+  postPickShareToWalls,
   PICK_SHARE_NOTE_MAX,
   PICK_SHARE_NAME_MAX,
   type PickShareEngagementResult,
@@ -99,6 +100,14 @@ export default function PickShareDialog({
     }
     trackShare("race_pick_share_created", data);
     setCode(data);
+
+    // Each message also becomes a post on that candidate's wall (server-side,
+    // owner-checked). Silent like the follow-ups below.
+    try {
+      await postPickShareToWalls(createClient(), data, getOrCreateAnonSupporterId());
+    } catch {
+      // ignore
+    }
 
     // Best-effort follow-ups, deliberately SILENT: the share already exists, so
     // nothing here may block it or show the user an error. A logged-out visitor
@@ -349,8 +358,8 @@ export default function PickShareDialog({
           </div>
 
           <p className="text-[11px] text-text-muted">
-            Your picks are your personal opinion and are shown publicly on a shareable page. Choseno doesn&apos;t endorse
-            candidates.
+            Your picks are your personal opinion and are shown publicly on a shareable page, and your messages are posted
+            on each candidate&apos;s wall. Choseno doesn&apos;t endorse candidates.
           </p>
 
           {error && <Alert tone="danger">{error}</Alert>}

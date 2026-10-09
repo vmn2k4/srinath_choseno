@@ -154,3 +154,13 @@ export async function applyPickShareEngagement(
 
   return result;
 }
+
+// Posts each message on a just-created share onto that candidate's wall (see
+// 20261009000000_pick_share_wall_posts.sql). Owner-checked and idempotent
+// server-side; returns how many wall posts were created.
+export async function postPickShareToWalls(supabase: Client, code: string, anonId?: string | null) {
+  return (supabase as any).rpc("post_pick_share_messages_to_walls", {
+    p_code: code,
+    p_anon_id: anonId || null,
+  }) as Promise<{ data: number | null; error: { message: string } | null }>;
+}
