@@ -2,6 +2,7 @@ import { cache } from "react";
 import { createPublicClient } from "@/lib/supabase/public";
 import { getSeatById, getCandidatesBySeatIds } from "@/lib/services/elections";
 import { getRacePickShareByCode } from "@/lib/services/pickShares";
+import { getVotingPlacesForShape } from "@/lib/services/votingPlaces";
 import { toPickRoster, splitRoster } from "@/lib/utils/pickShare";
 
 // generateMetadata, the page body and the OG image all need the same share +
@@ -27,3 +28,31 @@ export const loadPickShare = cache(async (code: string) => {
   if (picked.length === 0) return null;
   return { share, seat: seat as any, picked, others };
 });
+
+// Election day + advance-voting dates for the share card. Kept out of
+// loadPickShare so the page itself doesn't pay for this query. Best-effort: a
+// failure just means the card omits the dates.
+export async function loadVotingInfo(seat: {
+  map_shape_id?: number | null;
+  elections?: { election_date?: string | null } | null;
+}) {
+  const electionDate = seat.elections?.election_date ?? null;
+  let advanceDates: string[] = [];
+  let hasPlaces = false;
+  if (seat.map_shape_id && electionDate) {
+    try {
+      const { data } = await getVotingPlacesForShape(createPublicClient(), seat.map_shape_id, electionDate);
+      hasPlaces = (data?.length || 0) > 0;
+      advanceDates = [
+        ...new Set(
+          (data || []).flatMap((p) =>
+            p.voting_place_schedules.filter((s) => s.voting_type === "advance").map((s) => s.vote_date)
+          )
+        ),
+      ].sort();
+    } catch {
+      // omit
+    }
+  }
+  return { electionDate, advanceDates, hasPlaces };
+}

@@ -54,3 +54,28 @@ export function joinNames(names: string[]): string {
 export function pickSharePath(code: string): string {
   return `/p/${code}`;
 }
+
+// "2026-10-17" -> "Sat, Oct 17". Parses the parts directly (new Date("YYYY-MM-DD")
+// is UTC and can shift a day).
+export function formatElectionDay(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+// ["2026-10-07","2026-10-10","2026-10-14"] -> "Oct 7, 10 & 14". Same-month days
+// share one month label; different months are joined with " · ".
+export function formatDateList(isoDates: string[]): string {
+  const byMonth = new Map<string, number[]>();
+  for (const iso of [...isoDates].sort()) {
+    const [y, m, d] = iso.split("-").map(Number);
+    const label = new Date(y, m - 1, 1).toLocaleDateString("en-US", { month: "short" });
+    byMonth.set(label, [...(byMonth.get(label) || []), d]);
+  }
+  return [...byMonth.entries()]
+    .map(([month, days]) => {
+      const list =
+        days.length === 1 ? String(days[0]) : `${days.slice(0, -1).join(", ")} & ${days[days.length - 1]}`;
+      return `${month} ${list}`;
+    })
+    .join(" · ");
+}
