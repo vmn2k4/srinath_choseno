@@ -26,7 +26,13 @@ export interface RosterCandidate {
 export interface RosterSeat {
   id: string;
   role_title: string;
-  map_shapes?: { name?: string; properties?: unknown } | null;
+  map_shapes?: {
+    id?: number;
+    name?: string;
+    properties?: unknown;
+    boundary_type?: string | null;
+    country?: string | null;
+  } | null;
 }
 
 type Embedded<T> = T | T[] | null | undefined;

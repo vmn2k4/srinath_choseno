@@ -33,11 +33,3 @@ export const loadElection = cache(async (electionSlug: string) => {
     seats: (seats || []) as unknown as RosterSeat[],
   };
 });
-
-export const STATUS_LABELS: Record<string, string> = {
-  draft: "Draft",
-  nominations_open: "Nominations open",
-  nominations_closed: "Nominations closed",
-  active: "Voting open",
-  completed: "Completed",
-};

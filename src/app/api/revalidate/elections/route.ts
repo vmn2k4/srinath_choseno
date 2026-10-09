@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
   revalidatePath("/elections");
   revalidatePath("/elections/[boundarySlug]", "page");
   revalidatePath("/elections/e/[electionSlug]", "page");
+  revalidatePath("/elections/e/[electionSlug]/who-is-running", "page");
   revalidatePath("/elections/e/[electionSlug]/party/[partySlug]", "page");
   revalidatePath("/elections/seat/[seatId]", "page");
   revalidatePath("/elections/seat/[seatId]/candidate/[candidateId]", "page");

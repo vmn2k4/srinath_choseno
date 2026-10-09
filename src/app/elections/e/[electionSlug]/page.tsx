@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CalendarDays, Landmark, Users, Vote } from "lucide-react";
-import { Card, Badge, EmptyState } from "@/components/primitives";
+import { Card, EmptyState } from "@/components/primitives";
 import ElectionPartyCard from "@/components/features/ElectionPartyCard";
 import ElectionBreadcrumb from "@/components/features/ElectionBreadcrumb";
 import ElectionResearchLinks from "@/components/features/ElectionResearchLinks";
@@ -15,9 +15,10 @@ import { buildSeatSlug } from "@/lib/utils/slugs";
 import { withProvince } from "@/lib/utils/regionLabel";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getProvinceNamesForShapes } from "@/lib/services/boundaries";
-import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath } from "@/lib/utils/electionPartySeo";
+import { clip, formatElectionDate, hubFacts, hubJsonLd, hubPath, partyPath, ridingsPath } from "@/lib/utils/electionPartySeo";
+import { areaNounForSeats } from "@/lib/utils/electionRidingsSeo";
 import { SITE_URL } from "@/lib/constants/site";
-import { loadElection, STATUS_LABELS } from "./loadElection";
+import { loadElection } from "./loadElection";
 
 export const revalidate = 86400; // daily; /api/revalidate/elections refreshes sooner when the roster changes
 
@@ -90,10 +91,9 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
 
       <Card variant="hero" padding="lg" as="header">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <Badge tone="primary">{STATUS_LABELS[election.status] || election.status}</Badge>
           {date && (
-            <span className="inline-flex items-center gap-1.5 text-sm text-text-muted">
-              <CalendarDays size={14} /> <time dateTime={election.election_date || undefined}>{date}</time>
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-secondary">
+              <CalendarDays size={14} /> Election day: <time dateTime={election.election_date || undefined}>{date}</time>
             </span>
           )}
         </div>
@@ -101,6 +101,13 @@ export default async function ElectionPartiesPage({ params }: PageProps) {
           {election.name}: parties &amp; candidates
         </h1>
         <p className="mt-3 max-w-3xl text-text-secondary leading-relaxed">{summary}</p>
+        {roster.length > 0 && (
+          <p className="mt-3 text-sm">
+            <Link href={ridingsPath(election)} className="font-semibold text-primary hover:underline">
+              Who&apos;s running in my {areaNounForSeats(seats).singular}? See every candidate by {areaNounForSeats(seats).singular} →
+            </Link>
+          </p>
+        )}
         <dl className="mt-6 grid grid-cols-3 gap-4 max-w-xl">
           {[
             { icon: Users, label: "Candidates", value: roster.length },

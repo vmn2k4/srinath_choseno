@@ -37,6 +37,7 @@ export const DISTRICT_BANNER_NEWS_SLUGS = [
   "why-people-oppose-david-eby-bc-election-2026",
   "why-people-support-lorne-doerkson-bc-election-2026",
   "why-people-oppose-lorne-doerkson-bc-election-2026",
+  "bc-election-2026-most-discussed-this-week",
 ];
 
 // Time-sensitive election coverage: the sitemap pins these at top priority

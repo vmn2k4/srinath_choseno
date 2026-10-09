@@ -5,7 +5,7 @@ import { getActiveSeats, getCandidatesBySeatIds, getElectionCandidatesWithParty 
 import { fetchAllPages } from "@/lib/utils/fetchAllPages";
 import { withRetry } from "@/lib/utils/withRetry";
 import { summarizeParties, toRosterCandidates } from "@/lib/utils/electionParties";
-import { hubPath, partyPath } from "@/lib/utils/electionPartySeo";
+import { hubPath, partyPath, ridingsPath } from "@/lib/utils/electionPartySeo";
 import { getAllBlogPosts } from "@/lib/services/blogs";
 import { buildSeatSlug, buildCandidateSlug, buildBoundarySlug } from "@/lib/utils/slugs";
 import { categoryToSlug } from "@/lib/utils/newsTaxonomy";
@@ -149,6 +149,8 @@ async function buildSitemap(): Promise<MetadataRoute.Sitemap> {
     const parties = summarizeParties(toRosterCandidates(rows));
     electionPartyRoutes.push(
       { url: `${baseUrl}${hubPath(e)}`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 0.9 },
+      // "Who's running in my riding": riding-by-riding table, one per election that has candidates.
+      { url: `${baseUrl}${ridingsPath(e)}`, lastModified: new Date(), changeFrequency: "daily" as const, priority: 1.0 },
       ...parties.map((p) => ({
         url: `${baseUrl}${partyPath(e, p)}`,
         lastModified: new Date(),

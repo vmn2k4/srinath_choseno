@@ -2525,3 +2525,26 @@ Built so a crawler gets the whole page, not a shell:
 - **Crawl graph**: visible breadcrumbs, rival-party chips, and an "Other parties" link list on
   every party page. Unknown/draft elections and unknown parties return `noindex`; an election
   with zero candidates is `noindex, follow`.
+
+## 2026-10-09: "Who's running in my riding" page for every election (`/elections/e/[election]/who-is-running`)
+
+Every election gets a riding-by-riding table of candidates and parties, with no per-election
+setup: it is a dynamic route that reads the same cached `loadElection()` as the hub, so a new
+election's page exists as soon as the election has candidates.
+
+- **Route**: `src/app/elections/e/[electionSlug]/who-is-running/page.tsx` (Server Component, ISR
+  `revalidate = 86400`, `generateStaticParams() => []`, no `searchParams`). `ridingsPath()` in
+  `electionPartySeo.ts` builds the URL. The hub links to it from its header, `sitemap.ts` lists it
+  at priority 1.0 for every election that has candidates, and `/api/revalidate/elections` refreshes it.
+- **Title/noun derived from the data**: `areaNounForSeats()` in `src/lib/utils/electionRidingsSeo.ts`
+  picks the word for the election's seats (Canada provincial/federal -> "riding", USA -> "district",
+  ward / school district / municipality otherwise), so the title reads "Who's Running in My Riding?
+  2026 BC Provincial Election". The same file builds the description, FAQ and JSON-LD
+  (`BreadcrumbList`, `CollectionPage` with up to 100 races, `FAQPage`). `RosterSeat.map_shapes` gained
+  optional `id`, `boundary_type` and `country` (already returned by `getElectionSeatsByElectionId`).
+- **UI**: `RidingCandidatesTable` -- a real `<table>`, fully expanded in the HTML, one row per race
+  (a "Race" column appears only when an election has more than one role title), candidates sorted by
+  surname with a party-colored label, each name linking to the candidate page and each riding to its
+  race page; A-Z jump links when there are more than six initial letters. No candidates -> `noindex, follow`.
+- **Weight**: a 500-race election (US midterms) renders ~2 MB in dev (RSC payload included, roughly
+  10x smaller gzipped). If a future election is much bigger, split the table by state/province.

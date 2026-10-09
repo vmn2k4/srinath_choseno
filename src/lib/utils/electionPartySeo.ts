@@ -46,6 +46,8 @@ function joinNames(names: string[], max: number): string {
 }
 
 export const hubPath = (e: ElectionLite) => `/elections/e/${buildElectionSlug(e)}`;
+/** "Who is running in my riding" page for an election (riding-by-riding table). */
+export const ridingsPath = (e: ElectionLite) => `${hubPath(e)}/who-is-running`;
 export const partyPath = (e: ElectionLite, p: { id: number | null; name: string }) =>
   `${hubPath(e)}/party/${buildPartySlug({ id: p.id, name: p.name })}`;
 
@@ -85,6 +87,10 @@ export function hubFacts(election: ElectionLite, parties: PartySummary[], total:
     {
       q: `How many candidates are running in the ${election.name}?`,
       a: `${plural(total, "candidate")} are running${races ? ` across ${plural(races, "race")}` : ""}${date ? `, with voting on ${date}` : ""}.`,
+    },
+    {
+      q: `Who is running in my riding, ward or district in the ${election.name}?`,
+      a: `Every race in the ${election.name} is listed below by riding, ward or district, each linking to its candidates. To see only the races on your ballot, enter your address in Choseno's find your district tool.`,
     },
   ];
   return { summary: summary.trim(), faqs };

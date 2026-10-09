@@ -1,5 +1,9 @@
 import { Metadata } from "next";
 import FindMyDistrictClient from "@/components/features/FindMyDistrictClient";
+import FindMyDistrictGuide from "@/components/features/FindMyDistrictGuide";
+import JsonLdScript from "@/components/features/JsonLdScript";
+import { faqPage } from "@/lib/utils/electionPartySeo";
+import { findMyDistrictFaqs } from "@/lib/utils/findMyDistrictSeo";
 import { createClient } from "@/lib/supabase/server";
 import { getUserBoundaryMemberships } from "@/lib/services/profile";
 import { SITE_URL } from "@/lib/constants/site";
@@ -121,7 +125,9 @@ export default async function FindMyDistrictPage() {
           __html: JSON.stringify(schemaData),
         }}
       />
+      <JsonLdScript data={faqPage(findMyDistrictFaqs())} />
       <FindMyDistrictClient initialBoundaries={initialBoundaries} />
+      <FindMyDistrictGuide />
     </>
   );
 }

@@ -773,9 +773,6 @@ export default function ElectionSeatPageClient({
         {/* Header Card */}
         <Card padding="md" className="mb-6 flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2.5 min-w-0 flex-wrap">
-              <Badge tone="amber" shape="pill" icon={<Vote size={12} />}>
-                {seat.elections?.status?.replace("_", " ") || "Active"}
-              </Badge>
               <h2 className="text-lg font-bold text-text-main tracking-tight truncate">
                 {seatAreaName ? `${seat.role_title} of ${seatAreaName}` : seat.role_title}
               </h2>
@@ -796,7 +793,10 @@ export default function ElectionSeatPageClient({
                 <MapPin size={13} className="text-accent" /> {seat.map_shapes?.name}
               </span>
               <span className="flex items-center gap-1" title={seat.elections?.election_date}>
-                <Calendar size={13} className="text-accent" /> {seat.elections?.election_date}
+                <Calendar size={13} className="text-accent" /> Election day:{" "}
+                {seat.elections?.election_date
+                  ? new Date(`${seat.elections.election_date}T12:00:00`).toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" })
+                  : ""}
               </span>
               <span
                 className="flex items-center gap-1"
