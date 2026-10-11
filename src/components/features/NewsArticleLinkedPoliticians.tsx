@@ -19,8 +19,6 @@ export interface LinkedPolitician {
     avatar_url?: string | null;
     wall_slug?: string | null;
     political_target_role?: string | null;
-    contact_email?: string | null;
-    contact_phone?: string | null;
   } | null;
 }
 

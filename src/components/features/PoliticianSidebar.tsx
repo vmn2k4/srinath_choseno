@@ -43,8 +43,6 @@ interface OfficeHolderItem {
   full_name: string;
   source_url: string | null;
   photo_url: string | null;
-  contact_email: string | null;
-  contact_phone: string | null;
   linked_profile_id: string | null;
   map_shapes?: { id: number; name: string; boundary_type: string; country: string } | null;
   election_role_types?: { role_title: string; role_key: string } | null;

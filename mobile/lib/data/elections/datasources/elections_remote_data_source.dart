@@ -25,11 +25,11 @@ import '../../../core/config/app_environment.dart';
 
 const _officeHolderColumns = '''
   id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
-  is_current, term_ended_at, contact_email, contact_phone, linked_profile_id,
+  is_current, term_ended_at, linked_profile_id,
   map_shapes(id, name, boundary_type, country),
   election_role_types(role_title, role_key, description),
   political_parties(name),
-  profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))
+  profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, source_url, wall_slug))
 ''';
 
 class ElectionsRemoteDataSource {

@@ -371,8 +371,7 @@ export async function upsertPoliticianProfile(
   // who just edited their bio/education/contact info sees it reflected on
   // their own candidacy wall right away instead of within the 10min TTL.
   invalidateCache(`politician_profile:${userId}`);
-  const result = await supabase.from("politician_profiles").upsert({
-    id: userId,
+  const row = {
     wall_slug: wallSlug,
     target_boundary_id: targetBoundaryId ?? fallbackBoundaryId,
     target_boundary_name: targetBoundaryName,
@@ -386,7 +385,13 @@ export async function upsertPoliticianProfile(
     contact_phone: contactPhone || null,
     source_url: sourceUrl || null,
     updated_at: new Date().toISOString(),
-  });
+  };
+  // update-then-insert instead of .upsert(): ON CONFLICT DO UPDATE reads
+  // EXCLUDED.contact_*, which needs column SELECT -- revoked for
+  // anon/authenticated (see 20261010000001). A plain UPDATE only needs UPDATE.
+  const updated = await supabase.from("politician_profiles").update(row).eq("id", userId).select("id");
+  if (updated.error || (updated.data && updated.data.length > 0)) return updated;
+  const result = await supabase.from("politician_profiles").insert({ id: userId, ...row });
   return result;
 }
 
@@ -440,18 +445,31 @@ export async function getPoliticianProfile(supabase: Client, politicianId: strin
     () =>
       supabase
         .from("politician_profiles")
-        .select("education, hometown, bio, avatar_url, contact_email, contact_phone, source_url, political_parties(id, name)")
+        .select("education, hometown, bio, avatar_url, source_url, political_parties(id, name)")
         .eq("id", politicianId)
         .maybeSingle(),
     10 * 60 * 1000
   );
 }
 
+// Contact email/phone are admin-only (anon/authenticated lost column SELECT on
+// politician_profiles -- see 20261010000001). This RPC returns rows for site
+// admins, and only the caller's own row for anyone else. merged=true adds the
+// office_holders / same-name-profile fallback the wall pages used to apply.
+export type PoliticianContact = { profile_id: string; contact_email: string | null; contact_phone: string | null };
+export async function getPoliticianContacts(supabase: Client, profileIds: string[], merged = false) {
+  if (!profileIds.length) return { data: [] as PoliticianContact[], error: null };
+  return (supabase.rpc as any)("get_politician_contacts", {
+    p_profile_ids: profileIds,
+    p_merged: merged,
+  }) as Promise<{ data: PoliticianContact[] | null; error: { message: string } | null }>;
+}
+
 // politician_profiles — full self-view including target_boundary + party id (ProfilePage).
 export async function getPoliticianProfileFull(supabase: Client, userId: string) {
   return supabase
     .from("politician_profiles")
-    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(id, name), education, hometown, bio, avatar_url, contact_email, contact_phone, source_url")
+    .select("target_boundary_id, target_boundary_name, political_target_role, political_party_id, political_parties(id, name), education, hometown, bio, avatar_url, source_url")
     .eq("id", userId)
     .maybeSingle();
 }

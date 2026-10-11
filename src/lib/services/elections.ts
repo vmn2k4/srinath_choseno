@@ -214,19 +214,19 @@ async function enrichOfficeHolders(supabase: Client, holders: any[]) {
   if (!holders || !holders.length) return holders;
 
   const missingNames = holders
-    .filter((h) => !h.photo_url || !h.contact_email || !h.contact_phone || !h.source_url)
+    .filter((h) => !h.photo_url || !h.source_url)
     .map((h) => h.full_name?.trim())
     .filter(Boolean);
 
   const nameToContact = new Map<
     string,
-    { photo_url?: string; email?: string; phone?: string; source?: string }
+    { photo_url?: string; source?: string }
   >();
 
   if (missingNames.length > 0) {
     const { data: profMatches } = await supabase
       .from("profiles")
-      .select("full_name, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url)")
+      .select("full_name, politician_profiles(photo_url, avatar_url, source_url)")
       .in("full_name", missingNames);
 
     (profMatches || []).forEach((p: any) => {
@@ -237,8 +237,6 @@ async function enrichOfficeHolders(supabase: Client, holders: any[]) {
       if (!nameToContact.has(norm)) {
         nameToContact.set(norm, {
           photo_url: photo || undefined,
-          email: pp.contact_email || undefined,
-          phone: pp.contact_phone || undefined,
           source: pp.source_url || undefined,
         });
       }
@@ -258,16 +256,6 @@ async function enrichOfficeHolders(supabase: Client, holders: any[]) {
         linkedPP?.avatar_url ||
         fallback?.photo_url ||
         null,
-      contact_email:
-        h.contact_email ||
-        linkedPP?.contact_email ||
-        fallback?.email ||
-        null,
-      contact_phone:
-        h.contact_phone ||
-        linkedPP?.contact_phone ||
-        fallback?.phone ||
-        null,
       source_url:
         h.source_url ||
         linkedPP?.source_url ||
@@ -284,11 +272,11 @@ export async function getOfficeHoldersForShape(supabase: Client, mapShapeId: num
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        is_current, term_ended_at,
-       contact_email, contact_phone, linked_profile_id,
+       linked_profile_id,
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key, description),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, source_url, wall_slug))`
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("is_current", true);
@@ -322,14 +310,12 @@ type OfficeHolderRow = {
   bio?: string | null;
   source_url?: string | null;
   photo_url?: string | null;
-  contact_email?: string | null;
-  contact_phone?: string | null;
   map_shapes?: { id?: number; name?: string; boundary_type?: string } | null;
   election_role_types?: { role_title?: string; role_key?: string; description?: string | null } | null;
   political_parties?: { name?: string } | null;
   profiles?: {
     current_ghost_id?: string | null;
-    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; contact_email?: string | null; contact_phone?: string | null; source_url?: string | null; wall_slug?: string | null } | null;
+    politician_profiles?: { photo_url?: string | null; avatar_url?: string | null; source_url?: string | null; wall_slug?: string | null } | null;
   } | null;
 };
 
@@ -371,8 +357,6 @@ function toNode(row: OfficeHolderRow) {
     // RepresentationBranchTree's use of this field).
     wall_slug: pp?.wall_slug || null,
     boundary_name: row.map_shapes?.name || null,
-    contact_email: row.contact_email || pp?.contact_email || null,
-    contact_phone: row.contact_phone || pp?.contact_phone || null,
     source_url: row.source_url || pp?.source_url || null,
   };
 }
@@ -442,11 +426,11 @@ export async function getOfficeHoldersForShapes(
     .select(
       `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        is_current, term_ended_at,
-       contact_email, contact_phone, linked_profile_id,
+       linked_profile_id,
        map_shapes(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url, wall_slug))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, source_url, wall_slug))`
     )
     .in("map_shape_id", ids)
     .eq("is_current", true);
@@ -466,11 +450,11 @@ export async function getFeaturedOfficeHolders(
     .select(
       `id, map_shape_id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        is_current, term_ended_at,
-       contact_email, contact_phone, linked_profile_id,
+       linked_profile_id,
        map_shapes!inner(id, name, boundary_type, country),
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, source_url))`
     )
     .eq("is_current", true)
     .order("updated_at", { ascending: false })
@@ -537,10 +521,10 @@ export async function getOfficeHolderByRole(
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        is_current, term_ended_at,
-       contact_email, contact_phone, linked_profile_id,
+       linked_profile_id,
        election_role_types(role_title, role_key),
        political_parties(name),
-       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, contact_email, contact_phone, source_url))`
+       profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id, politician_profiles(photo_url, avatar_url, source_url))`
     )
     .eq("map_shape_id", Number(mapShapeId))
     .eq("election_role_type_id", electionRoleTypeId)
@@ -554,30 +538,35 @@ export async function getOfficeHolderByRole(
   return res;
 }
 
-export async function getOfficeHolder(
+// Contact email/phone are admin-only (column SELECT is revoked from
+// anon/authenticated -- see 20261010000001), so they come from a SECURITY
+// DEFINER RPC that returns nothing for non-admins. Any filter may be omitted.
+export async function getOfficeHolderContacts(
   supabase: Client,
-  mapShapeId: number | string,
-  electionRoleTypeId: string
+  filters: { ids?: string[]; linkedProfileIds?: string[]; names?: string[] }
 ) {
-  return supabase
-    .from("office_holders")
-    .select("*")
-    .eq("map_shape_id", Number(mapShapeId))
-    .eq("election_role_type_id", electionRoleTypeId)
-    .maybeSingle();
+  return (supabase.rpc as any)("admin_get_office_holder_contacts", {
+    p_ids: filters.ids ?? null,
+    p_linked_profile_ids: filters.linkedProfileIds ?? null,
+    p_names: filters.names ?? null,
+  }) as Promise<{
+    data: { id: string; linked_profile_id: string | null; full_name: string; contact_email: string | null; contact_phone: string | null }[] | null;
+    error: { message: string } | null;
+  }>;
 }
 
-// Looks up just the contact fields for a single office holder by id — used by
-// the admin Campaign tab's "search to add recipient" flow (search_politicians
-// _and_officeholders doesn't return contact_email/contact_phone since that
-// RPC also serves the public nav-bar search).
+// Single office holder by id -- used by the admin Campaign tab's "search to
+// add recipient" flow (search_politicians_and_officeholders doesn't return
+// contact fields since that RPC also serves the public nav-bar search).
 export async function getOfficeHolderContact(supabase: Client, officeHolderId: string) {
-  return supabase
-    .from("office_holders")
-    .select("contact_email, contact_phone")
-    .eq("id", officeHolderId)
-    .maybeSingle();
+  const { data, error } = await getOfficeHolderContacts(supabase, { ids: [officeHolderId] });
+  return { data: data?.[0] ?? null, error };
 }
+
+// Every office_holders column except contact_email/contact_phone, which anon
+// and authenticated can no longer SELECT (even in a write's RETURNING).
+const OFFICE_HOLDER_COLUMNS =
+  "id, map_shape_id, election_role_type_id, full_name, political_party_id, bio, source_url, photo_url, holding_since, updated_by, updated_at, linked_profile_id, is_current, term_ended_at";
 
 export async function upsertOfficeHolder(
   supabase: Client,
@@ -596,38 +585,42 @@ export async function upsertOfficeHolder(
   },
   updatedBy: string
 ) {
-  return supabase
+  const row = {
+    map_shape_id: Number(fields.mapShapeId),
+    election_role_type_id: fields.electionRoleTypeId,
+    full_name: fields.fullName,
+    political_party_id: fields.politicalPartyId ?? null,
+    bio: fields.bio ?? null,
+    source_url: fields.sourceUrl ?? null,
+    photo_url: fields.photoUrl ?? null,
+    holding_since: fields.holdingSince ?? null,
+    contact_email: fields.contactEmail ?? null,
+    contact_phone: fields.contactPhone ?? null,
+    linked_profile_id: fields.linkedProfileId ?? null,
+    is_current: true,
+    term_ended_at: null,
+    updated_by: updatedBy,
+    updated_at: new Date().toISOString(),
+  } as any;
+
+  // Manual upsert on the live unique key (map_shape_id, election_role_type_id,
+  // full_name) -- 3 columns, not the 2-column one the original table
+  // definition declared; see 20260816000000_office_holder_term_lifecycle.sql.
+  // Done as select-then-update/insert rather than .upsert() because ON
+  // CONFLICT DO UPDATE reads EXCLUDED.contact_*, which needs column SELECT
+  // that anon/authenticated no longer have (see 20261010000001).
+  const { data: existing, error: lookupError } = await supabase
     .from("office_holders")
-    .upsert(
-      {
-        map_shape_id: Number(fields.mapShapeId),
-        election_role_type_id: fields.electionRoleTypeId,
-        full_name: fields.fullName,
-        political_party_id: fields.politicalPartyId ?? null,
-        bio: fields.bio ?? null,
-        source_url: fields.sourceUrl ?? null,
-        photo_url: fields.photoUrl ?? null,
-        holding_since: fields.holdingSince ?? null,
-        contact_email: fields.contactEmail ?? null,
-        contact_phone: fields.contactPhone ?? null,
-        linked_profile_id: fields.linkedProfileId ?? null,
-        is_current: true,
-        term_ended_at: null,
-        updated_by: updatedBy,
-        updated_at: new Date().toISOString(),
-      } as any,
-      // Must match the live unique constraint exactly -- it's 3 columns
-      // (map_shape_id, election_role_type_id, full_name), not the 2-column
-      // one the original table definition declared; see the note in
-      // 20260816000000_office_holder_term_lifecycle.sql. The narrower
-      // 2-column target here would have made Postgres reject every upsert
-      // for a seat that already has any current row (councillors sharing a
-      // map_shape_id + role always do) with "no unique or exclusion
-      // constraint matching the ON CONFLICT specification".
-      { onConflict: "map_shape_id,election_role_type_id,full_name" }
-    )
-    .select()
-    .single();
+    .select("id")
+    .eq("map_shape_id", row.map_shape_id)
+    .eq("election_role_type_id", row.election_role_type_id)
+    .eq("full_name", row.full_name)
+    .maybeSingle();
+  if (lookupError) return { data: null, error: lookupError } as any;
+
+  return existing
+    ? supabase.from("office_holders").update(row).eq("id", existing.id).select(OFFICE_HOLDER_COLUMNS).single()
+    : supabase.from("office_holders").insert(row).select(OFFICE_HOLDER_COLUMNS).single();
 }
 
 /**
@@ -653,7 +646,7 @@ export async function retireOfficeHolder(
       updated_at: new Date().toISOString(),
     } as any)
     .eq("id", officeHolderId)
-    .select()
+    .select(OFFICE_HOLDER_COLUMNS)
     .single();
 }
 
@@ -685,7 +678,7 @@ export async function getOfficeHoldersByShapeAndRole(
     .select(
       `id, election_role_type_id, full_name, bio, source_url, photo_url, holding_since,
        is_current, term_ended_at,
-       contact_email, contact_phone, linked_profile_id,
+       linked_profile_id,
        election_role_types(role_title, role_key),
        political_parties(name),
        profiles!office_holders_linked_profile_id_fkey(id, full_name, current_ghost_id)`
@@ -970,7 +963,7 @@ export async function getCandidatesBySeatIds(supabase: Client, seatIds: string[]
   // candidate fetch -- same reasoning as the political_parties(name) widen
   // above, just for the results/roster view instead of the party badge.
   const columns =
-    "id, statement, seat_id, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, contact_email, contact_phone, wall_slug, bio, political_parties(id, name)))";
+    "id, statement, seat_id, intro_video_url, nomination_filed, added_by_election_admin_id, claimed_at, profiles!election_candidates_politician_id_fkey!inner(id, full_name, current_ghost_id, politician_profiles(avatar_url, wall_slug, bio, political_parties(id, name)))";
 
   let query = supabase.from("election_candidates").select(columns).in("seat_id", resolvedIds);
   if (!isDevEnvironment()) query = query.eq("profiles.is_test", false);

@@ -159,8 +159,6 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         ...(p.constituency
           ? { worksFor: { "@type": "GovernmentOrganization", name: jobTitle ? `${jobTitle} — ${p.constituency}` : p.constituency } }
           : {}),
-        ...(pp?.contact_phone ? { telephone: pp.contact_phone } : {}),
-        ...(pp?.contact_email ? { email: pp.contact_email } : {}),
         ...(wallUrl ? { url: wallUrl } : {}),
       };
     });

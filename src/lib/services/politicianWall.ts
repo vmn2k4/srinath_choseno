@@ -14,7 +14,7 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
   const { data: ohMatches } = await supabase
     .from("office_holders")
     .select(
-      "linked_profile_id, map_shape_id, contact_email, contact_phone, source_url, photo_url, holding_since, is_current, term_ended_at, election_role_types(role_title), map_shapes(name, boundary_type)"
+      "linked_profile_id, map_shape_id, source_url, photo_url, holding_since, is_current, term_ended_at, election_role_types(role_title), map_shapes(name, boundary_type)"
     )
     .or(`linked_profile_id.eq.${profileData.id},full_name.ilike."${escapedName}"`);
 
@@ -73,32 +73,24 @@ async function enrichProfileWithContactFallback(supabase: Client, profileData: a
     // Prefer a current row's contact/photo details over a former one's when
     // both exist (e.g. name collision across two different seats).
     const preferred = currentMatches.length > 0 ? currentMatches : ohMatches;
-    const emailMatch = preferred.find((m) => m.contact_email)?.contact_email;
-    const phoneMatch = preferred.find((m) => m.contact_phone)?.contact_phone;
     const sourceMatch = preferred.find((m) => m.source_url)?.source_url;
     const photoMatch = preferred.find((m) => m.photo_url)?.photo_url;
 
-    if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
-    if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
     if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
     if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
   }
 
-  if (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url) {
+  if (!pp.source_url || !pp.photo_url) {
     const { data: siblingProfiles } = await supabase
       .from("profiles")
-      .select("politician_profiles(contact_email, contact_phone, source_url, photo_url, avatar_url)")
+      .select("politician_profiles(source_url, photo_url, avatar_url)")
       .ilike("full_name", profileData.full_name);
 
     if (siblingProfiles && siblingProfiles.length > 0) {
       const sibs = siblingProfiles.map((s: any) => s.politician_profiles).filter(Boolean);
-      const emailMatch = sibs.find((s: any) => s.contact_email)?.contact_email;
-      const phoneMatch = sibs.find((s: any) => s.contact_phone)?.contact_phone;
       const sourceMatch = sibs.find((s: any) => s.source_url)?.source_url;
       const photoMatch = sibs.find((s: any) => s.photo_url || s.avatar_url)?.photo_url || sibs.find((s: any) => s.avatar_url)?.avatar_url;
 
-      if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
-      if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
       if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
       if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
     }
@@ -127,8 +119,6 @@ export async function getWallOwnerProfile(supabase: Client, ghostId: string) {
          political_party_id,
          bio,
          avatar_url,
-         contact_email,
-         contact_phone,
          photo_url,
          source_url,
          holding_since,
@@ -172,8 +162,6 @@ export async function getWallOwnerProfileBySlug(supabase: Client, wallSlug: stri
          political_party_id,
          bio,
          avatar_url,
-         contact_email,
-         contact_phone,
          photo_url,
          source_url,
          holding_since,
@@ -572,24 +560,20 @@ export async function getSEOProfileSummary(supabase: Client, ghostId: string) {
     }
   }
 
-  // Fallback: If contact details or photo are missing on this specific profile,
+  // Fallback: If source link or photo are missing on this specific profile,
   // attempt resolution from matching office_holders for the same politician name
   if (owner && owner.full_name) {
     const pp = owner.politician_profiles as any;
-    if (pp && (!pp.contact_email || !pp.contact_phone || !pp.source_url || !pp.photo_url)) {
+    if (pp && (!pp.source_url || !pp.photo_url)) {
       const { data: ohMatches } = await supabase
         .from("office_holders")
-        .select("contact_email, contact_phone, source_url, photo_url")
+        .select("source_url, photo_url")
         .ilike("full_name", owner.full_name);
 
       if (ohMatches && ohMatches.length > 0) {
-        const emailMatch = ohMatches.find((m) => m.contact_email)?.contact_email;
-        const phoneMatch = ohMatches.find((m) => m.contact_phone)?.contact_phone;
         const sourceMatch = ohMatches.find((m) => m.source_url)?.source_url;
         const photoMatch = ohMatches.find((m) => m.photo_url)?.photo_url;
 
-        if (!pp.contact_email && emailMatch) pp.contact_email = emailMatch;
-        if (!pp.contact_phone && phoneMatch) pp.contact_phone = phoneMatch;
         if (!pp.source_url && sourceMatch) pp.source_url = sourceMatch;
         if (!pp.photo_url && photoMatch) pp.photo_url = photoMatch;
       }

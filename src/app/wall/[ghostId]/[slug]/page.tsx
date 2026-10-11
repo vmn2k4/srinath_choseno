@@ -168,12 +168,6 @@ export default async function WallSlugPage({ params }: WallSlugPageProps) {
             jobTitle: roleTitle,
             url: `${BASE_URL}/wall/${canonicalWallSlug}`,
             image: owner.politician_profiles?.photo_url || owner.politician_profiles?.avatar_url || undefined,
-            ...(owner.politician_profiles?.contact_phone && {
-              telephone: owner.politician_profiles.contact_phone,
-            }),
-            ...(owner.politician_profiles?.contact_email && {
-              email: owner.politician_profiles.contact_email,
-            }),
             ...(owner.politician_profiles?.source_url && {
               sameAs: [owner.politician_profiles.source_url],
             }),

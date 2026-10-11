@@ -221,7 +221,7 @@ export async function getPublishedNewsArticles(
   } = {}
 ): Promise<{ data: NewsArticle[] | null; error: PostgrestError | null; count?: number | null }> {
   const politicianJoin = opts.withPoliticianDetails
-    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
+    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url)))"
     : "news_article_politicians(politician_id, profiles(id, full_name))";
 
   let q = supabase
@@ -305,7 +305,7 @@ export async function getPublishedNewsArticlesByEngagement(
   if (rows.length === 0) return { data: [], error: null, count: 0 };
 
   const politicianJoin = opts.withPoliticianDetails
-    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
+    ? "news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url)))"
     : "news_article_politicians(politician_id, profiles(id, full_name))";
 
   const { data: articles, error } = await supabase
@@ -332,7 +332,7 @@ export async function getNewsArticleBySlug(
   return supabase
     .from("news_articles")
     .select(
-      "*, news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url, contact_email, contact_phone)))"
+      "*, news_article_politicians(politician_id, profiles(id, full_name, designation, constituency, current_ghost_id, politician_profiles(wall_slug, political_target_role, photo_url, avatar_url)))"
     )
     .eq("slug", slug)
     .eq("status", "published")

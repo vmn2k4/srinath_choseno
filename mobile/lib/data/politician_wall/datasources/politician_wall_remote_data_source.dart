@@ -15,7 +15,7 @@ const _profileColumns = '''
   id, current_ghost_id, full_name, role, constituency, country,
   politician_profiles (
     wall_slug, political_target_role, target_boundary_name, target_boundary_id, target_boundary_type,
-    political_party_id, bio, avatar_url, contact_email, contact_phone, photo_url, source_url, holding_since,
+    political_party_id, bio, avatar_url, photo_url, source_url, holding_since,
     political_parties ( name )
   )
 ''';

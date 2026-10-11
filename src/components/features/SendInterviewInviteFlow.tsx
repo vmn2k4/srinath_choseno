@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Modal from "@/components/primitives/Modal";
 import { Card, Button, Input, Avatar, Spinner } from "@/components/primitives";
 import { searchPoliticians } from "@/lib/services/politicians";
+import { getPoliticianContacts } from "@/lib/services/profile";
 import { addUnregisteredCandidate, inviteCandidateToClaim } from "@/lib/services/elections";
 import { getOrCreatePoliticalParty } from "@/lib/services/politicalParties";
 import { createClient } from "@/lib/supabase/client";
@@ -22,7 +23,7 @@ interface SearchResult {
 
 interface ExistingCandidate {
   id: string;
-  profiles?: { full_name?: string; politician_profiles?: { contact_email?: string | null } | { contact_email?: string | null }[] | null } | null;
+  profiles?: { id?: string; full_name?: string } | null;
 }
 
 // Search-and-invite flow: search anyone on Choseno (politicians +
@@ -92,12 +93,16 @@ export default function SendInterviewInviteFlow({
   const findExistingCandidate = (fullName: string) =>
     existingCandidates.find((c) => c.profiles?.full_name?.trim().toLowerCase() === fullName.trim().toLowerCase());
 
-  const selectPerson = (person: SearchResult) => {
+  const selectPerson = async (person: SearchResult) => {
     setSelected(person);
     setStatus("");
-    const existing = findExistingCandidate(person.full_name);
-    const pp = existing?.profiles?.politician_profiles;
-    const existingEmail = Array.isArray(pp) ? pp[0]?.contact_email : pp?.contact_email;
+    setEmail("");
+    setEmailOnFile(false);
+    // Contact fields are admin-only in the DB -- looked up through an RPC.
+    const profileId = findExistingCandidate(person.full_name)?.profiles?.id || person.politician_profile_id;
+    if (!profileId) return;
+    const { data } = await getPoliticianContacts(supabase, [profileId], true);
+    const existingEmail = data?.[0]?.contact_email;
     setEmail(existingEmail || "");
     setEmailOnFile(Boolean(existingEmail));
   };

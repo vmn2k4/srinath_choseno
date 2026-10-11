@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, ExternalLink, UserCheck, ArrowRight, Flag } from "lucide-react";
+import { ExternalLink, UserCheck, ArrowRight, Flag } from "lucide-react";
 import { Avatar, Badge, Button, Card } from "@/components/primitives";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import ReportDialog from "./ReportDialog";
@@ -20,8 +20,6 @@ export interface BranchHolderNode {
   ghost_id: string | null;
   wall_slug?: string | null;
   boundary_name: string | null;
-  contact_email?: string | null;
-  contact_phone?: string | null;
   source_url?: string | null;
 }
 
@@ -120,16 +118,6 @@ function NodeCard({ node, emphasized, onReport }: { node: BranchHolderNode; emph
       {node.boundary_name && <p className="text-[11px] text-text-darker truncate">{node.boundary_name}</p>}
 
       <div className="flex items-center gap-3 pt-1 text-[11px] text-text-muted flex-wrap">
-        {node.contact_email && (
-          <a href={`mailto:${node.contact_email}`} className="flex items-center gap-1 hover:text-primary transition-colors">
-            <Mail size={11} /> Email
-          </a>
-        )}
-        {node.contact_phone && (
-          <a href={`tel:${node.contact_phone}`} className="flex items-center gap-1 hover:text-primary transition-colors">
-            <Phone size={11} /> Call
-          </a>
-        )}
         {node.source_url && (
           <a
             href={node.source_url}

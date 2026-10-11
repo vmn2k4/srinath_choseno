@@ -27,7 +27,7 @@ import {
   CheckCircle2,
   Star,
 } from "lucide-react";
-import { getOwnProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
+import { getOwnProfile, getPoliticianContacts, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import {
   getWallOwnerProfile,
   getSupportStatus,
@@ -94,8 +94,6 @@ interface WallOwnerRecord {
     target_boundary_name?: string;
     bio?: string;
     avatar_url?: string;
-    contact_email?: string | null;
-    contact_phone?: string | null;
     photo_url?: string | null;
     source_url?: string | null;
     holding_since?: string | null;
@@ -157,11 +155,29 @@ export default function PoliticianWallClient({
   sidebar,
 }: PoliticianWallClientProps) {
   const supabase = createClient();
-  const { user } = useAuth();
+  const { user, profile: authProfile } = useAuth();
+  const isAdmin = authProfile?.role === "admin";
   const router = useRouter();
 
   const trackedGhostViewRef = React.useRef<string | null>(null);
   const [wallOwner, setWallOwner] = useState<WallOwnerRecord | null>(initialWallOwner);
+  // Contact email/phone are admin-only in the DB; fetched via RPC (empty for
+  // everyone else) rather than riding along on the wall owner's profile.
+  const [adminContact, setAdminContact] = useState<{ contact_email: string | null; contact_phone: string | null } | null>(null);
+  const wallOwnerId = wallOwner?.id;
+  useEffect(() => {
+    if (!isAdmin || !wallOwnerId) {
+      setAdminContact(null);
+      return;
+    }
+    let cancelled = false;
+    getPoliticianContacts(supabase, [wallOwnerId], true).then(({ data }) => {
+      if (!cancelled) setAdminContact(data?.[0] ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAdmin, wallOwnerId, supabase]);
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
   const [viewerShapeIds, setViewerShapeIds] = useState<number[]>([]);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
@@ -564,8 +580,6 @@ export default function PoliticianWallClient({
               ...ownerRecord,
               politician_profiles: {
                 ...newPP,
-                contact_email: newPP?.contact_email || prevPP?.contact_email || null,
-                contact_phone: newPP?.contact_phone || prevPP?.contact_phone || null,
                 source_url: newPP?.source_url || prevPP?.source_url || null,
                 photo_url: newPP?.photo_url || prevPP?.photo_url || null,
                 holding_since: newPP?.holding_since || prevPP?.holding_since || null,
@@ -1062,26 +1076,26 @@ export default function PoliticianWallClient({
                   full labeled-pill form here, and the action buttons move
                   back out to their own right-aligned column below. */}
               <div className="flex flex-wrap items-center gap-1.5 lg:gap-2 mt-1.5 lg:mt-2">
-                {wallOwner?.politician_profiles?.contact_email && (
+                {isAdmin && adminContact?.contact_email && (
                   <a
-                    href={`mailto:${wallOwner.politician_profiles.contact_email}`}
-                    title={wallOwner.politician_profiles.contact_email}
+                    href={`mailto:${adminContact.contact_email}`}
+                    title={adminContact.contact_email}
                     className="inline-flex items-center justify-center gap-1.5 w-7 h-7 lg:w-auto lg:h-auto lg:px-2.5 lg:py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-full lg:rounded-lg transition-colors shrink-0"
                   >
                     <Mail size={13} className="shrink-0" />
                     <span className="hidden lg:inline truncate max-w-[220px]">
-                      {wallOwner.politician_profiles.contact_email}
+                      {adminContact.contact_email}
                     </span>
                   </a>
                 )}
-                {wallOwner?.politician_profiles?.contact_phone && (
+                {isAdmin && adminContact?.contact_phone && (
                   <a
-                    href={`tel:${wallOwner.politician_profiles.contact_phone}`}
-                    title={wallOwner.politician_profiles.contact_phone}
+                    href={`tel:${adminContact.contact_phone}`}
+                    title={adminContact.contact_phone}
                     className="inline-flex items-center justify-center gap-1.5 w-7 h-7 lg:w-auto lg:h-auto lg:px-2.5 lg:py-1.5 text-xs font-medium text-primary hover:text-primary-light bg-primary/10 hover:bg-primary/15 rounded-full lg:rounded-lg transition-colors shrink-0"
                   >
                     <Phone size={13} className="shrink-0" />
-                    <span className="hidden lg:inline">{wallOwner.politician_profiles.contact_phone}</span>
+                    <span className="hidden lg:inline">{adminContact.contact_phone}</span>
                   </a>
                 )}
                 {wallOwner?.politician_profiles?.source_url && (
@@ -1099,8 +1113,8 @@ export default function PoliticianWallClient({
 
                 {/* Thin divider between contact links and action icons so
                     the merged mobile row still reads as two groups. */}
-                {(wallOwner?.politician_profiles?.contact_email ||
-                  wallOwner?.politician_profiles?.contact_phone ||
+                {((isAdmin && adminContact?.contact_email) ||
+                  (isAdmin && adminContact?.contact_phone) ||
                   wallOwner?.politician_profiles?.source_url) && (
                   <span className="w-px h-4 bg-border lg:hidden shrink-0" />
                 )}

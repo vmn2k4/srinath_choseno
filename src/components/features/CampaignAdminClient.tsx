@@ -42,7 +42,7 @@ import {
 } from "@/lib/services/campaigns";
 import { searchPoliticians } from "@/lib/services/politicians";
 import { getOfficeHolderContact } from "@/lib/services/elections";
-import { getPoliticianProfile } from "@/lib/services/profile";
+import { getPoliticianContacts } from "@/lib/services/profile";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
 import {
   CAMPAIGN_TEMPLATE_PRESETS,
@@ -910,8 +910,8 @@ export default function CampaignAdminClient() {
         const { data } = await getOfficeHolderContact(supabase, result.office_holder_id);
         email = data?.contact_email || "";
       } else if (result.politician_profile_id) {
-        const { data } = await getPoliticianProfile(supabase, result.politician_profile_id);
-        email = (data as { contact_email?: string | null } | null)?.contact_email || "";
+        const { data } = await getPoliticianContacts(supabase, [result.politician_profile_id], true);
+        email = data?.[0]?.contact_email || "";
       }
 
       const name = result.full_name;

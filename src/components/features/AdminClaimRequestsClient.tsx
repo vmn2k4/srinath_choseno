@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { createClient } from "@/lib/supabase/client";
 import { reviewCandidacyClaim } from "@/lib/services/elections";
+import { getPoliticianContacts } from "@/lib/services/profile";
 import {
   Card,
   Button,
@@ -116,7 +117,7 @@ export default function AdminClaimRequestsClient() {
         seat_id,
         profiles!election_candidates_politician_id_fkey (
           id, full_name, current_ghost_id,
-          politician_profiles ( wall_slug, political_target_role, target_boundary_name, contact_email, contact_phone, source_url )
+          politician_profiles ( wall_slug, political_target_role, target_boundary_name, source_url )
         ),
         election_seats (
           id, role_title,
@@ -135,7 +136,7 @@ export default function AdminClaimRequestsClient() {
       .from("profiles")
       .select(`
         id, full_name, current_ghost_id,
-        politician_profiles ( wall_slug, political_target_role, target_boundary_name, contact_email, contact_phone, source_url )
+        politician_profiles ( wall_slug, political_target_role, target_boundary_name, source_url )
       `)
       .in("id", candidateIds);
 
@@ -155,7 +156,7 @@ export default function AdminClaimRequestsClient() {
       officeHolderQueries.push(
         supabase
           .from("office_holders")
-          .select("linked_profile_id, full_name, contact_email, contact_phone, source_url")
+          .select("linked_profile_id, full_name, source_url")
           .in("linked_profile_id", candidateIds),
       );
     }
@@ -163,11 +164,18 @@ export default function AdminClaimRequestsClient() {
       officeHolderQueries.push(
         supabase
           .from("office_holders")
-          .select("linked_profile_id, full_name, contact_email, contact_phone, source_url")
+          .select("linked_profile_id, full_name, source_url")
           .in("full_name", profileNames),
       );
     }
     const officeHolderResults = await Promise.all(officeHolderQueries);
+    // Admin-only contact details (own row, else office_holders / same-name fallback).
+    const { data: contactRows } = await getPoliticianContacts(
+      supabase,
+      Array.from(new Set([...candidateIds, ...(candidateRows || []).map((c: any) => c.profiles?.id).filter(Boolean)])) as string[],
+      true,
+    );
+    const contactByProfile = new Map((contactRows || []).map((c) => [c.profile_id, c]));
     const officeHolderMap = new Map<string, any>();
     officeHolderResults.forEach(({ data }) => {
       (data || []).forEach((holder: any) => {
@@ -201,8 +209,8 @@ export default function AdminClaimRequestsClient() {
         roleTitle = seat?.role_title || polProf?.political_target_role || roleTitle;
         boundaryName = shape?.name || polProf?.target_boundary_name || boundaryName;
         wallSlug = polProf?.wall_slug || prof?.current_ghost_id || null;
-        officialContactEmail = polProf?.contact_email || officeHolder?.contact_email || null;
-        officialContactPhone = polProf?.contact_phone || officeHolder?.contact_phone || null;
+        officialContactEmail = contactByProfile.get(prof?.id)?.contact_email || null;
+        officialContactPhone = contactByProfile.get(prof?.id)?.contact_phone || null;
         officialSourceUrl = polProf?.source_url || officeHolder?.source_url || null;
       } else {
         const prof = profileMap.get(req.candidate_id);
@@ -214,8 +222,8 @@ export default function AdminClaimRequestsClient() {
           roleTitle = polProf?.political_target_role || roleTitle;
           boundaryName = polProf?.target_boundary_name || boundaryName;
           wallSlug = polProf?.wall_slug || prof.current_ghost_id || null;
-          officialContactEmail = polProf?.contact_email || officeHolder?.contact_email || null;
-          officialContactPhone = polProf?.contact_phone || officeHolder?.contact_phone || null;
+          officialContactEmail = contactByProfile.get(prof.id)?.contact_email || null;
+          officialContactPhone = contactByProfile.get(prof.id)?.contact_phone || null;
           officialSourceUrl = polProf?.source_url || officeHolder?.source_url || null;
         }
       }

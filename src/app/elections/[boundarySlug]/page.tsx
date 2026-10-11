@@ -406,9 +406,7 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
         name: `Who is the ${b.top.role_title} of ${topJurisdiction}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${topHolderClause(b.top, districtName)}.${
-            b.top.contact_email ? ` They can be contacted at ${b.top.contact_email}.` : ""
-          }`,
+          text: `${topHolderClause(b.top, districtName)}.`,
         },
       });
     }
@@ -660,19 +658,6 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
                           <span className="text-text-muted">Currently:</span>
                           <span className="font-semibold text-text-main">{h.full_name}</span>
                           {h.boundary_name && <span className="text-text-muted">({h.boundary_name})</span>}
-                          {h.contact_email && (
-                            <a
-                              href={`mailto:${h.contact_email}`}
-                              className="text-primary hover:underline"
-                            >
-                              {h.contact_email}
-                            </a>
-                          )}
-                          {h.contact_phone && (
-                            <a href={`tel:${h.contact_phone}`} className="text-primary hover:underline">
-                              {h.contact_phone}
-                            </a>
-                          )}
                         </div>
                       ))}
                     </div>

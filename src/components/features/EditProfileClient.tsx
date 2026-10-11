@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   getOwnProfile,
   getPoliticianProfileFull,
+  getPoliticianContacts,
   getLatestUserLocation,
   getUserBoundaryMemberships,
   upsertProfileCore,
@@ -90,8 +91,11 @@ export default function EditProfileClient() {
         setAvatarUrl(pd?.avatar_url || "");
         setPoliticalTargetRole(pd?.political_target_role || "");
         setTargetBoundaryId(pd?.target_boundary_id ?? null);
-        setContactEmail(pd?.contact_email || "");
-        setContactPhone(pd?.contact_phone || "");
+        // Contact fields are admin-only in the DB; a politician reads back
+        // only their own through this RPC.
+        const { data: contactRows } = await getPoliticianContacts(supabase, [user.id]);
+        setContactEmail(contactRows?.[0]?.contact_email || "");
+        setContactPhone(contactRows?.[0]?.contact_phone || "");
         setSourceUrl(pd?.source_url || "");
       }
 

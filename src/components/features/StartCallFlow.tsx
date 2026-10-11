@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Modal from "@/components/primitives/Modal";
 import { Card, Button, Input, Avatar, Spinner } from "@/components/primitives";
 import { searchPoliticians } from "@/lib/services/politicians";
+import { getPoliticianContacts } from "@/lib/services/profile";
 import { addUnregisteredCandidate } from "@/lib/services/elections";
 import { getOrCreatePoliticalParty } from "@/lib/services/politicalParties";
 import { startCandidateCall } from "@/lib/services/calls";
@@ -23,10 +24,7 @@ interface SearchResult {
 
 interface ExistingCandidate {
   id: string;
-  profiles?: {
-    full_name?: string;
-    politician_profiles?: { contact_email?: string | null; contact_phone?: string | null } | { contact_email?: string | null; contact_phone?: string | null }[] | null;
-  } | null;
+  profiles?: { id?: string; full_name?: string } | null;
 }
 
 // Same search-and-select shape as SendInterviewInviteFlow (this and that
@@ -76,12 +74,17 @@ export default function StartCallFlow({
   const findExistingCandidate = (fullName: string) =>
     existingCandidates.find((c) => c.profiles?.full_name?.trim().toLowerCase() === fullName.trim().toLowerCase());
 
-  const selectPerson = (person: SearchResult) => {
+  const selectPerson = async (person: SearchResult) => {
     setSelected(person);
     setStatus("");
-    const existing = findExistingCandidate(person.full_name);
-    const pp = existing?.profiles?.politician_profiles;
-    const record = Array.isArray(pp) ? pp[0] : pp;
+    setPhone("");
+    setPhoneOnFile(false);
+    setEmail("");
+    // Contact fields are admin-only in the DB -- looked up through an RPC.
+    const profileId = findExistingCandidate(person.full_name)?.profiles?.id || person.politician_profile_id;
+    if (!profileId) return;
+    const { data } = await getPoliticianContacts(supabase, [profileId], true);
+    const record = data?.[0];
     setPhone(record?.contact_phone || "");
     setPhoneOnFile(Boolean(record?.contact_phone));
     setEmail(record?.contact_email || "");

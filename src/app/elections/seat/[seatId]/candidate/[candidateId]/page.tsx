@@ -199,8 +199,6 @@ function buildPersonSchema(
     // person has claimed/filled out a profile) -- so a page about someone
     // running for office can also answer "how do I contact this
     // candidate", not just who they are.
-    ...(p?.contact_phone ? { telephone: p.contact_phone } : {}),
-    ...(p?.contact_email ? { email: p.contact_email } : {}),
     ...(districtName
       ? {
           affiliation: {

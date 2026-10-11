@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AdminSubNav from "./AdminSubNav";
 import { getCountries, listBoundaryTypes, searchMapShapesByName } from "@/lib/services/boundaries";
-import { getElectionRoleTypes, getOfficeHoldersForShape, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, cancelOfficeholderClaim, getOfficeholderWallClaims, listRecentOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, previewOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
+import { getElectionRoleTypes, getOfficeHoldersForShape, getOfficeHolderContacts, upsertOfficeHolder, removeOfficeHolder, inviteOfficeholderToClaim, resendOfficeholderClaim, cancelOfficeholderClaim, getOfficeholderWallClaims, listRecentOfficeholderWallClaims, mergeOfficeholderWallClaim, reverseOfficeholderWallClaim, rejectOfficeholderWallClaim, previewOfficeholderWallClaim, listPendingSelfRequestedOfficeholderClaims } from "@/lib/services/elections";
 import { getPoliticalParties } from "@/lib/services/politicalParties";
 import { adminGetProfileById } from "@/lib/services/profile";
 import { UserCheck, Search, Save, Trash2, X, Link2, Mail, Inbox, Newspaper } from "lucide-react";
@@ -311,8 +311,16 @@ export default function OfficeHoldersAdminClient() {
     ]);
     setRoleTypes((roles as RoleType[] | null) || []);
     const byRole: Record<string, Holder> = {};
-    ((existingHolders as Holder[] | null) || []).forEach((h) => {
-      byRole[h.election_role_type_id] = h;
+    const loadedHolders = (existingHolders as Holder[] | null) || [];
+    // Contact fields are admin-only and no longer part of the public select.
+    const { data: contactRows } = await getOfficeHolderContacts(supabase, { ids: loadedHolders.map((h) => h.id) });
+    const contactById = new Map((contactRows || []).map((c) => [c.id, c]));
+    loadedHolders.forEach((h) => {
+      byRole[h.election_role_type_id] = {
+        ...h,
+        contact_email: contactById.get(h.id)?.contact_email ?? null,
+        contact_phone: contactById.get(h.id)?.contact_phone ?? null,
+      };
     });
     setHolders(byRole);
     const claimEntries = await Promise.all(
@@ -382,7 +390,14 @@ export default function OfficeHoldersAdminClient() {
       setStatus("Error: " + error.message);
       return;
     }
-    setHolders((prev) => ({ ...prev, [role.id]: (data as unknown) as Holder }));
+    setHolders((prev) => ({
+      ...prev,
+      [role.id]: {
+        ...((data as unknown) as Holder),
+        contact_email: form.contactEmail.trim() || null,
+        contact_phone: form.contactPhone.trim() || null,
+      },
+    }));
     setEditingRoleId(null);
   };
 

@@ -25,7 +25,7 @@ import {
   updateNominationFiled,
   requestCandidacyClaim,
 } from "@/lib/services/elections";
-import { getOwnProfile, getPoliticianProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
+import { getOwnProfile, getPoliticianContacts, getPoliticianProfile, getUserBoundaryShapeIds } from "@/lib/services/profile";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import PoliticianInlineRating from "./PoliticianInlineRating";
 import { uploadPostImage, createComment, hydratePoliticianAuthors, hydratePostMentions, voteOnPost } from "@/lib/services/feed";
@@ -89,8 +89,6 @@ interface CandidateRecord {
   hometown?: string;
   education?: string;
   bio?: string;
-  contact_phone?: string;
-  contact_email?: string;
   source_url?: string;
   statement?: string;
   intro_video_url?: string;
@@ -195,7 +193,11 @@ export default function CandidacyWall({
   sidebar,
 }: CandidacyWallProps) {
   const supabase = createClient();
-  const { user, loading: authLoading } = useAuth();
+  const { user, profile: authProfile, loading: authLoading } = useAuth();
+  const isAdmin = authProfile?.role === "admin";
+  // Contact email/phone are admin-only in the DB, so they're fetched through
+  // an RPC (empty for anyone else) rather than riding along on the profile.
+  const [adminContact, setAdminContact] = useState<{ contact_email: string | null; contact_phone: string | null } | null>(null);
   const router = useRouter();
 
   const [profile, setProfile] = useState<{ id: string; current_ghost_id: string; country?: string | null } | null>(null);
@@ -206,6 +208,20 @@ export default function CandidacyWall({
   // record's id. The slug is only valid as input to getPublicCandidateById.
   const realCandidateId = candidate?.id ?? candidateId;
   const [candidateProfile, setCandidateProfile] = useState<any>(initialCandidateProfile);
+  const contactProfileId = candidate?.politician_id;
+  useEffect(() => {
+    if (!isAdmin || !contactProfileId) {
+      setAdminContact(null);
+      return;
+    }
+    let cancelled = false;
+    getPoliticianContacts(supabase, [contactProfileId], true).then(({ data }) => {
+      if (!cancelled) setAdminContact(data?.[0] ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAdmin, contactProfileId, supabase]);
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>(initialAnswers);
   const [posts, setPosts] = useState<PostWithComments[]>(initialPosts);
   const [loading, setLoading] = useState(!initialCandidate);
@@ -1109,22 +1125,22 @@ export default function CandidacyWall({
                   {candidate.education || candidateProfile?.education}
                 </span>
               )}
-              {(candidate.contact_phone || candidateProfile?.contact_phone) && (
+              {isAdmin && adminContact?.contact_phone && (
                 <a
-                  href={`tel:${candidate.contact_phone || candidateProfile?.contact_phone}`}
+                  href={`tel:${adminContact?.contact_phone}`}
                   className="flex items-center gap-1.5 hover:text-accent hover:underline"
                 >
                   <Phone size={14} className="text-text-muted shrink-0" />
-                  {candidate.contact_phone || candidateProfile?.contact_phone}
+                  {adminContact?.contact_phone}
                 </a>
               )}
-              {(candidate.contact_email || candidateProfile?.contact_email) && (
+              {isAdmin && adminContact?.contact_email && (
                 <a
-                  href={`mailto:${candidate.contact_email || candidateProfile?.contact_email}`}
+                  href={`mailto:${adminContact?.contact_email}`}
                   className="flex items-center gap-1.5 hover:text-accent hover:underline break-all"
                 >
                   <Mail size={14} className="text-text-muted shrink-0" />
-                  {candidate.contact_email || candidateProfile?.contact_email}
+                  {adminContact?.contact_email}
                 </a>
               )}
             </div>

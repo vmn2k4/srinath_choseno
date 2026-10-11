@@ -63,3 +63,7 @@ This service layer is not itself portable to a future Flutter/Dart client — Da
 - [x] Boundaries/Admin domain
 - [x] Feed domain
 - [x] Profile/Auth/Onboarding domain
+
+## Contact email / phone are admin-only
+
+`contact_email` / `contact_phone` on `politician_profiles` and `office_holders` have SELECT revoked from `anon`/`authenticated` (migration `20261010000001`). Never name them in a client select, never use `*`/`.select()` returning those tables, and never `.upsert()` them (ON CONFLICT DO UPDATE reads `EXCLUDED.*`) -- use update-then-insert. Read them through `getPoliticianContacts` (`profile.ts`, RPC `get_politician_contacts`: admins any profile, everyone else only their own) or `getOfficeHolderContacts` (`elections.ts`, admin only). A column added to either table later needs an explicit `GRANT SELECT (col) ... TO anon, authenticated`.
