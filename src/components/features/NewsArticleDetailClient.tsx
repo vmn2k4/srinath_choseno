@@ -69,6 +69,7 @@ interface NewsArticleDetailClientProps {
   isBreaking: boolean;
   readingTime: number;
   displayDate: string | null;
+  updatedDate?: string | null;
   ogImageUrl?: string;
   relatedArticles?: NewsArticle[];
 }
@@ -80,6 +81,7 @@ export default function NewsArticleDetailClient({
   isBreaking,
   readingTime,
   displayDate,
+  updatedDate,
   ogImageUrl,
   relatedArticles = [],
 }: NewsArticleDetailClientProps) {
@@ -602,6 +604,11 @@ export default function NewsArticleDetailClient({
             {displayDate && (
               <span className="flex items-center gap-1">
                 <Calendar size={12} /> {displayDate}
+              </span>
+            )}
+            {updatedDate && (
+              <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                Updated {updatedDate}
               </span>
             )}
             <span className="flex items-center gap-1">

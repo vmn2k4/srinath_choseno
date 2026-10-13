@@ -138,6 +138,14 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         day: "numeric",
       })
     : null;
+  // Shown beside the publish date only when the article was meaningfully
+  // revised afterwards, so a developing story reads as current, not stale.
+  const publishedMs = new Date(article.published_at || article.created_at || 0).getTime();
+  const updatedMs = new Date(article.updated_at || 0).getTime();
+  const updatedDate =
+    updatedMs - publishedMs > 24 * 60 * 60 * 1000
+      ? new Date(updatedMs).toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" })
+      : null;
   const ogImageUrl = `${SITE_URL}/news/${slug}/opengraph-image`;
 
   // Politicians tagged on this article -- surfaced as schema.org `mentions`
@@ -242,6 +250,7 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
         isBreaking={isBreaking}
         readingTime={readingTime}
         displayDate={displayDate}
+        updatedDate={updatedDate}
         ogImageUrl={ogImageUrl}
         relatedArticles={(relatedArticles ?? []) as NewsArticle[]}
       />

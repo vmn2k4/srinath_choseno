@@ -84,7 +84,7 @@ async function buildSitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articleRoutes: MetadataRoute.Sitemap = (articles || []).map((a) => ({
     url: `${baseUrl}/news/${a.slug}`,
-    lastModified: a.published_at ? new Date(a.published_at) : new Date(),
+    lastModified: a.updated_at || a.published_at ? new Date((a.updated_at || a.published_at) as string) : new Date(),
     changeFrequency: PRIORITY_NEWS_SLUGS.includes(a.slug) ? "daily" : "weekly",
     priority: PRIORITY_NEWS_SLUGS.includes(a.slug) ? 1 : newsPriority(a.published_at),
     // Same image-sitemap extension as news-sitemap.xml -- hero_image_url when

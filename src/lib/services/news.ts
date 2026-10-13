@@ -227,7 +227,7 @@ export async function getPublishedNewsArticles(
   let q = supabase
     .from("news_articles")
     .select(
-      `id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, viral_score, created_at, ${politicianJoin}`,
+      `id, slug, headline, summary, category, country, province, status, published_at, event_date, latitude, longitude, impact_area, hero_image_url, content, viral_score, created_at, updated_at, ${politicianJoin}`,
       opts.withCount ? { count: "exact" } : undefined
     )
     .eq("status", "published")
