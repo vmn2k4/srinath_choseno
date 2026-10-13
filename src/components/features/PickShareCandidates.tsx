@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { Card, Avatar, Button } from "@/components/primitives";
 import PickShareDialog from "./PickShareDialog";
 import { SupportControl, useCandidateSupport } from "./CandidateSupport";
+import { buildCandidateSlug } from "@/lib/utils/slugs";
 import type { PickedCandidate, PickRosterCandidate } from "@/lib/utils/pickShare";
 
 // The candidate cards on a shared-picks page: who the sharer supports, then
@@ -15,11 +17,13 @@ import type { PickedCandidate, PickRosterCandidate } from "@/lib/utils/pickShare
 export default function PickShareCandidates({
   seat,
   authorName,
+  seatSlug,
   picked,
   others,
 }: {
   seat: { id: string; role_title?: string | null; map_shapes?: { name?: string | null } | null };
   authorName: string;
+  seatSlug: string;
   picked: PickedCandidate[];
   others: PickRosterCandidate[];
 }) {
@@ -31,6 +35,9 @@ export default function PickShareCandidates({
     [roster]
   );
   const support = useCandidateSupport(profileIds);
+
+  const profileHref = (c: PickRosterCandidate) =>
+    `/elections/seat/${seatSlug}/candidate/${buildCandidateSlug({ id: c.id, profiles: { full_name: c.name } })}`;
 
   const start = (ids: string[]) => {
     setInitialPicked(ids);
@@ -47,9 +54,13 @@ export default function PickShareCandidates({
               key={c.id}
               className="flex items-start gap-3 rounded-xl border border-primary/40 bg-primary/5 p-3"
             >
-              <Avatar src={c.avatarUrl} name={c.name} size="md" />
+              <Link href={profileHref(c)} className="shrink-0">
+                <Avatar src={c.avatarUrl} name={c.name} size="md" />
+              </Link>
               <div className="min-w-0 flex-1">
-                <p className="font-bold text-text-main truncate">{c.name}</p>
+                <Link href={profileHref(c)} className="block font-bold text-text-main truncate hover:text-primary hover:underline">
+                  {c.name}
+                </Link>
                 {c.partyName && <p className="text-xs text-text-muted truncate">{c.partyName}</p>}
                 {c.note && <p className="mt-1 text-sm italic text-text-main">“{c.note}”</p>}
               </div>
@@ -85,9 +96,13 @@ export default function PickShareCandidates({
                   key={c.id}
                   className="flex items-center gap-3 rounded-xl border border-border-light/40 bg-surface/20 p-2.5"
                 >
-                  <Avatar src={c.avatarUrl} name={c.name} size="sm" />
+                  <Link href={profileHref(c)} className="shrink-0">
+                    <Avatar src={c.avatarUrl} name={c.name} size="sm" />
+                  </Link>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-text-main truncate">{c.name}</p>
+                    <Link href={profileHref(c)} className="block text-sm font-bold text-text-main truncate hover:text-primary hover:underline">
+                      {c.name}
+                    </Link>
                     {c.partyName && <p className="text-xs text-text-muted truncate">{c.partyName}</p>}
                   </div>
                   <SupportControl c={c} support={support} />

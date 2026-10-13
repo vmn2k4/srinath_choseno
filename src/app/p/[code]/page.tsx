@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Card, Badge } from "@/components/primitives";
 import PickShareReportButton from "@/components/features/PickShareReportButton";
@@ -6,6 +7,7 @@ import DistrictRacesBanner from "@/components/features/DistrictRacesBanner";
 import VotingPlacesSection from "@/components/features/VotingPlacesSection";
 import PickShareCandidates from "@/components/features/PickShareCandidates";
 import { SITE_URL } from "@/lib/constants/site";
+import { buildSeatSlug } from "@/lib/utils/slugs";
 import { joinNames, pickSharePath } from "@/lib/utils/pickShare";
 import { loadPickShare } from "./loadPickShare";
 
@@ -53,10 +55,14 @@ export default async function PickSharePage({ params }: Props) {
   const { share, seat, picked, others } = data;
   const author = share.authorLabel || "A Choseno voter";
   const place = seat.map_shapes?.name;
+  const seatSlug = buildSeatSlug(seat);
+  const raceHref = `/elections/seat/${seatSlug}`;
 
   return (
-    <div className="w-full max-w-5xl mx-auto animate-fade-in pb-20 px-4 lg:grid lg:grid-cols-[1fr_340px] lg:gap-8 lg:items-start">
-      <div className="min-w-0 space-y-5">
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8">
+      {/* Header and ballot lookup side by side on desktop so the ballot bar is
+          visible without scrolling past the candidate list. */}
+      <div className="mb-5 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-5 lg:items-start">
       <Card variant="hero" padding="lg" as="header">
         <Badge tone="primary">Shared picks</Badge>
         <h1 className="mt-3 font-display text-3xl sm:text-4xl font-bold text-text-main leading-tight">
@@ -67,16 +73,31 @@ export default async function PickSharePage({ params }: Props) {
           {seat.role_title}
           {place ? ` · ${place}` : ""}
         </Badge>
+        <div className="mt-3">
+          <Link href={raceHref} className="text-sm font-semibold text-primary hover:underline">
+            View the full race &rarr;
+          </Link>
+        </div>
         {share.note && (
           <blockquote className="mt-4 border-l-4 border-primary pl-4 text-lg italic text-text-main">
             “{share.note}”
           </blockquote>
         )}
       </Card>
-
+        <div>
+        <DistrictRacesBanner
+          orientation="horizontal"
+          title="Who's on your ballot?"
+          description="Find your district to see every race you can vote in and the candidates running in it."
+        />
+        </div>
+      </div>
+      <div className="lg:grid lg:grid-cols-[1fr_340px] lg:gap-8 lg:items-start">
+      <div className="min-w-0 space-y-5">
       <PickShareCandidates
         seat={{ id: seat.id, role_title: seat.role_title, map_shapes: { name: seat.map_shapes?.name } }}
         authorName={author}
+        seatSlug={seatSlug}
         picked={picked}
         others={others}
       />
@@ -89,9 +110,6 @@ export default async function PickSharePage({ params }: Props) {
       </div>
       </div>
 
-      {/* Same vertical "Who's on your ballot?" rail used on the wall and
-          candidacy pages: asks for the visitor's location and shows their
-          districts + open races, else the Find Your District promo. */}
       <div className="mt-8 lg:mt-0 space-y-6">
         {/* Same voting-places panel as the race page; renders nothing when the
             municipality has no published locations. */}
@@ -100,11 +118,7 @@ export default async function PickSharePage({ params }: Props) {
           electionDate={seat.elections?.election_date}
           jurisdictionName={place || "your area"}
         />
-        <DistrictRacesBanner
-          orientation="vertical"
-          title="Who's on your ballot?"
-          description="Find your district to see every race you can vote in and the candidates running in it."
-        />
+      </div>
       </div>
     </div>
   );
