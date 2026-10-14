@@ -1,3 +1,4 @@
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -86,21 +87,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Edit profile · ${titles[formState.step]}',
-          style: ChosenoTypography.body(
-            color: palette.textMain,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
-        leading: formState.step > 0
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: controller.previousStep,
-              )
-            : null,
+      appBar: DetailAppBar(
+        title: 'Edit profile',
+        subtitle: titles[formState.step],
+        onBack: formState.step > 0 ? controller.previousStep : null,
       ),
       body: SafeArea(
         child: !formState.loaded

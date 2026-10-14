@@ -10,6 +10,7 @@
 // Submit follows the same gates as the server's
 // `submit_candidate_application` RPC: an intro video and every required
 // question answered (a ranking counts only when every option is ranked).
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -63,7 +64,7 @@ class CandidateApplicationScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Candidate application')),
+      appBar: const DetailAppBar(title: 'Candidate application'),
       body: dataAsync.when(
         data: (state) {
           final questions = [...state.questions]

@@ -3,6 +3,7 @@
 // "not worth building a CMS-backed version of these for a v1." No data
 // layer at all — every one of these renders static, hardcoded copy on
 // web too.
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
@@ -55,7 +56,7 @@ class StaticContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(page.title)),
+      appBar: DetailAppBar(title: page.title),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ChosenoSpacing.lg),

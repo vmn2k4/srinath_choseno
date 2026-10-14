@@ -4,6 +4,8 @@
 // (Candidate Interview tab, anonymous support, Nominate Yourself). The
 // Seat Administrator panel below is the self-service half of §4.I.5 only
 // — see seat_admin_providers.dart's header comment for what isn't ported.
+import '../../../common/widgets/screen_header.dart';
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,12 +35,14 @@ class SeatDetailScreen extends ConsumerWidget {
     final dataAsync = ref.watch(seatDetailControllerProvider(seatId));
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: DetailAppBar(
+        title: dataAsync.value?.seat.roleTitle ?? 'Race',
+        subtitle: dataAsync.value?.seat.boundaryName,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.share_outlined),
+          HeaderIconButton(
+            icon: Icons.ios_share_rounded,
             tooltip: 'Share',
-            onPressed: () => shareChosenoLink('/elections/seat/$seatId'),
+            onTap: () => shareChosenoLink('/elections/seat/$seatId'),
           ),
         ],
       ),
@@ -60,39 +64,63 @@ class SeatDetailScreen extends ConsumerWidget {
               children: [
                 AppCard(
                   variant: AppCardVariant.hero,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                  child: Row(
                     children: [
-                      Text(
-                        data.seat.roleTitle,
-                        style: ChosenoTypography.display(
-                          color: palette.textMain,
-                          fontSize: 22,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'ELECTION DAY',
+                              style: ChosenoTypography.body(
+                                color: palette.textMuted,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 11,
+                              ).copyWith(letterSpacing: 0.8),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              dateLabel ?? 'Date to be announced',
+                              style: ChosenoTypography.display(
+                                color: palette.textMain,
+                                fontSize: 22,
+                              ),
+                            ),
+                            if (data.seat.electionDate != null &&
+                                _countdown(data.seat.electionDate!).isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: AppBadge(
+                                  label: _countdown(
+                                    data.seat.electionDate!,
+                                  ).replaceFirst(' · ', ''),
+                                  tone: AppBadgeTone.primary,
+                                  size: AppBadgeSize.xs,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                      if (data.seat.boundaryName != null)
-                        Text(
-                          data.seat.boundaryName!,
-                          style: ChosenoTypography.body(
-                            color: palette.textMuted,
-                            fontSize: 13,
+                      Column(
+                        children: [
+                          Text(
+                            '${data.candidates.length}',
+                            style: ChosenoTypography.display(
+                              color: palette.primary,
+                              fontSize: 30,
+                            ),
                           ),
-                        ),
-                      if (dateLabel != null)
-                        Text(
-                          'Election Day: $dateLabel${_countdown(data.seat.electionDate!)}',
-                          style: ChosenoTypography.body(
-                            color: palette.textMuted,
-                            fontSize: 13,
+                          Text(
+                            data.candidates.length == 1
+                                ? 'candidate'
+                                : 'candidates',
+                            style: ChosenoTypography.body(
+                              color: palette.textMuted,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                      Text(
-                        '${data.candidates.length} candidate${data.candidates.length == 1 ? '' : 's'}',
-                        style: ChosenoTypography.body(
-                          color: palette.textMuted,
-                          fontSize: 13,
-                        ),
+                        ],
                       ),
                     ],
                   ),

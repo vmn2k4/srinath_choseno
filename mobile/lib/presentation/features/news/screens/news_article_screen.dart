@@ -4,6 +4,8 @@
 // pulling in a rendering dependency before any screen needs it. The
 // comment thread (anonymous, Ghost-ID, sign-in to post — same RPC as
 // Feed's) is not yet ported either.
+import '../../../common/widgets/screen_header.dart';
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -29,12 +31,13 @@ class NewsArticleScreen extends ConsumerWidget {
     final articleAsync = ref.watch(newsArticleBySlugProvider(slug));
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: DetailAppBar(
+        title: 'News',
         actions: [
-          IconButton(
-            icon: const Icon(Icons.share_outlined),
+          HeaderIconButton(
+            icon: Icons.ios_share_rounded,
             tooltip: 'Share',
-            onPressed: () => shareChosenoLink('/news/$slug'),
+            onTap: () => shareChosenoLink('/news/$slug'),
           ),
         ],
       ),

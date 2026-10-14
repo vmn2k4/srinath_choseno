@@ -1,6 +1,7 @@
 // Screen F from docs/FLUTTER_MOBILE_APP_GUIDE.md §4.F (parent repo) —
 // Politician only. See my_elections_providers.dart's header comment for
 // what's not yet ported.
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -88,7 +89,7 @@ class MyElectionsScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Elections')),
+      appBar: const DetailAppBar(title: 'My Elections'),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(myCandidaciesProvider);

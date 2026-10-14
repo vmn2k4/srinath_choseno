@@ -223,6 +223,27 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(_controlRadius),
         ),
       ),
+      // Filters / segmented choices (day filter, appearance, district
+      // chips): quiet by default, brand-tinted when selected — Material's
+      // default selected fill is the accent colour, which clashes.
+      chipTheme: ChipThemeData(
+        backgroundColor: palette.surface,
+        selectedColor: palette.primary.withValues(alpha: 0.18),
+        side: BorderSide(color: palette.border),
+        checkmarkColor: palette.primary,
+        labelStyle: ChosenoTypography.body(
+          color: palette.textSecondary,
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
+        ),
+        secondaryLabelStyle: ChosenoTypography.body(
+          color: palette.primary,
+          fontWeight: FontWeight.w700,
+          fontSize: 13,
+        ),
+        shape: const StadiumBorder(),
+        showCheckmark: false,
+      ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: palette.surface,
         height: 68,

@@ -454,33 +454,62 @@ abstract final class ChosenoSpacing {
 /// this class only owns the drop-shadow + top-edge-highlight half of the
 /// recipe, which is pure geometry/color and belongs in the token file.
 abstract final class ChosenoShadows {
-  static List<BoxShadow> elevatedMd(ChosenoPalette palette) => [
-    // Tighter and lighter than the web's 30px blur: this repeats on every
-    // card in a scrolling list, and on a near-black canvas a wide soft
-    // shadow is invisible anyway — it only costs frame time.
-    const BoxShadow(
-      color: Color(0x59000000),
-      blurRadius: 16,
-      offset: Offset(0, 6),
-      spreadRadius: -2,
-    ),
-  ];
+  /// Light palettes get soft, low-opacity shadows — the heavy black ones
+  /// tuned for the dark canvas turn white cards into muddy grey slabs.
+  static List<BoxShadow> elevatedMd(ChosenoPalette palette) => palette.isLight
+      ? const [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 12,
+            offset: Offset(0, 4),
+            spreadRadius: -2,
+          ),
+        ]
+      : const [
+          // Tighter and lighter than the web's 30px blur: this repeats on
+          // every card in a scrolling list, and on a near-black canvas a
+          // wide soft shadow is invisible anyway — it only costs frame time.
+          BoxShadow(
+            color: Color(0x59000000),
+            blurRadius: 16,
+            offset: Offset(0, 6),
+            spreadRadius: -2,
+          ),
+        ];
 
-  static List<BoxShadow> elevatedLg(ChosenoPalette palette) => const [
-    BoxShadow(
-      color: Color(0x80000000),
-      blurRadius: 40,
-      offset: Offset(0, 14),
-      spreadRadius: -6,
-    ),
-  ];
+  static List<BoxShadow> elevatedLg(ChosenoPalette palette) => palette.isLight
+      ? const [
+          BoxShadow(
+            color: Color(0x1F000000),
+            blurRadius: 24,
+            offset: Offset(0, 10),
+            spreadRadius: -6,
+          ),
+        ]
+      : const [
+          BoxShadow(
+            color: Color(0x80000000),
+            blurRadius: 40,
+            offset: Offset(0, 14),
+            spreadRadius: -6,
+          ),
+        ];
 
-  static List<BoxShadow> elevatedXl(ChosenoPalette palette) => const [
-    BoxShadow(
-      color: Color(0x8C000000),
-      blurRadius: 70,
-      offset: Offset(0, 24),
-      spreadRadius: -10,
-    ),
-  ];
+  static List<BoxShadow> elevatedXl(ChosenoPalette palette) => palette.isLight
+      ? const [
+          BoxShadow(
+            color: Color(0x26000000),
+            blurRadius: 40,
+            offset: Offset(0, 16),
+            spreadRadius: -8,
+          ),
+        ]
+      : const [
+          BoxShadow(
+            color: Color(0x8C000000),
+            blurRadius: 70,
+            offset: Offset(0, 24),
+            spreadRadius: -10,
+          ),
+        ];
 }

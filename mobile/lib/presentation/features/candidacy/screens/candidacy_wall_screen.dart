@@ -8,6 +8,7 @@
 // (Flow B only — see candidacy_providers.dart) below covers what a
 // visitor most needs to decide who to support, and what an unclaimed
 // candidate needs to take ownership of their page.
+import '../../../common/widgets/detail_app_bar.dart';
 import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,7 +35,10 @@ class CandidacyWallScreen extends ConsumerWidget {
     final dataAsync = ref.watch(candidacyWallProvider(candidateId));
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: DetailAppBar(
+        title: dataAsync.value?.detail.fullName ?? 'Candidate',
+        subtitle: dataAsync.value?.detail.roleTitle,
+      ),
       body: dataAsync.when(
         data: (data) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -185,32 +189,34 @@ class _ProfileCard extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: ChosenoSpacing.xs),
-            Text(
-              detail.bio!,
+            _ExpandableText(
+              text: detail.bio!,
               style: ChosenoTypography.body(
                 color: palette.textMuted,
                 fontSize: 13,
+                height: 1.5,
               ),
             ),
           ],
           const SizedBox(height: ChosenoSpacing.md),
+          isSupportingAsync.when(
+            data: (isSupporting) => AppButton(
+              label: isSupporting ? 'Supported' : 'Support',
+              icon: isSupporting ? Icons.favorite : Icons.favorite_border,
+              variant: isSupporting
+                  ? AppButtonVariant.primary
+                  : AppButtonVariant.outline,
+              tone: AppButtonTone.success,
+              onPressed: () =>
+                  ref.read(wallSupportControllerProvider.notifier).toggle(),
+            ),
+            loading: () => const LoadingIndicator(size: 16),
+            error: (_, _) => const SizedBox.shrink(),
+          ),
+          const SizedBox(height: ChosenoSpacing.xs),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isSupportingAsync.when(
-                data: (isSupporting) => AppButton(
-                  label: isSupporting ? 'Supported' : 'Support',
-                  icon: isSupporting ? Icons.favorite : Icons.favorite_border,
-                  variant: isSupporting
-                      ? AppButtonVariant.primary
-                      : AppButtonVariant.outline,
-                  tone: AppButtonTone.success,
-                  onPressed: () =>
-                      ref.read(wallSupportControllerProvider.notifier).toggle(),
-                ),
-                loading: () => const LoadingIndicator(size: 16),
-                error: (_, _) => const SizedBox.shrink(),
-              ),
-              const SizedBox(width: ChosenoSpacing.sm),
               supporterCountAsync.when(
                 data: (count) => Text(
                   '$count supporter${count == 1 ? '' : 's'}',
@@ -222,12 +228,11 @@ class _ProfileCard extends ConsumerWidget {
                 loading: () => const SizedBox.shrink(),
                 error: (_, _) => const SizedBox.shrink(),
               ),
-              const Spacer(),
               if (detail.wallSlug != null)
                 TextButton(
                   onPressed: () =>
                       context.push(AppRoutes.wall(detail.wallSlug!)),
-                  child: const Text('View Wall'),
+                  child: const Text('View wall'),
                 ),
             ],
           ),
@@ -567,5 +572,62 @@ class _AnswerValue extends StatelessWidget {
           style: ChosenoTypography.body(color: palette.textMain, fontSize: 14),
         );
     }
+  }
+}
+
+/// Long text clamped to a few lines with a Read more / Show less toggle —
+/// bios on the web run to full paragraphs plus link lists.
+class _ExpandableText extends StatefulWidget {
+  const _ExpandableText({required this.text, required this.style});
+
+  final String text;
+  final TextStyle style;
+
+  @override
+  State<_ExpandableText> createState() => _ExpandableTextState();
+}
+
+class _ExpandableTextState extends State<_ExpandableText> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final painter = TextPainter(
+          text: TextSpan(text: widget.text, style: widget.style),
+          maxLines: 4,
+          textDirection: TextDirection.ltr,
+        )..layout(maxWidth: constraints.maxWidth);
+        final overflows = painter.didExceedMaxLines;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.text,
+              style: widget.style,
+              maxLines: _expanded ? null : 4,
+              overflow: _expanded ? TextOverflow.visible : TextOverflow.ellipsis,
+            ),
+            if (overflows)
+              GestureDetector(
+                onTap: () => setState(() => _expanded = !_expanded),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: ChosenoSpacing.xs),
+                  child: Text(
+                    _expanded ? 'Show less' : 'Read more',
+                    style: ChosenoTypography.body(
+                      color: palette.primary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
   }
 }

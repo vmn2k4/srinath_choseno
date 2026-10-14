@@ -76,25 +76,32 @@ class AppCard extends StatelessWidget {
         ? 10.0
         : 16.0;
 
+    // The fill and the gradient are layered (colour underneath, gradient
+    // wash on top): a BoxDecoration that has a gradient ignores its `color`,
+    // which left cards translucent and let the drop shadow show through.
     final surface = Container(
-      padding: padding,
       decoration: BoxDecoration(
         color: palette.surfaceElevated,
         borderRadius: radius,
         border: Border.all(color: palette.borderLight),
-        gradient: variant == AppCardVariant.hero
-            ? ChosenoGradients.wash(palette)
-            : LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  palette.glassHighlight.withValues(alpha: 0.05),
-                  Colors.transparent,
-                ],
-                stops: const [0.0, 0.08],
-              ),
       ),
-      child: child,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          gradient: variant == AppCardVariant.hero
+              ? ChosenoGradients.wash(palette)
+              : LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    palette.glassHighlight.withValues(alpha: 0.05),
+                    palette.glassHighlight.withValues(alpha: 0),
+                  ],
+                  stops: const [0.0, 0.08],
+                ),
+        ),
+        child: Padding(padding: padding, child: child),
+      ),
     );
 
     final content = ClipRRect(

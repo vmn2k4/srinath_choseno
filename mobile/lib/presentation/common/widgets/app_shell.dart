@@ -51,7 +51,7 @@ import '../../features/profile/providers/profile_providers.dart';
 /// Extra bottom padding a shell screen's scrollable content should add so
 /// its last item clears the floating bottom nav bar instead of sitting
 /// permanently underneath it.
-const double kBottomNavClearance = 88;
+const double kBottomNavClearance = 96;
 
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.navigationShell});
@@ -111,7 +111,7 @@ class AppShell extends ConsumerWidget {
             child: NavigationBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
               selectedIndex: _visualIndexForBranch(
                 navigationShell.currentIndex,
                 myWallSlug != null,

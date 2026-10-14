@@ -122,7 +122,7 @@ class _DistrictRacesBannerState extends ConsumerState<DistrictRacesBanner> {
     if (_boundaries.isEmpty) {
       return AppCard(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               children: [
@@ -160,21 +160,16 @@ class _DistrictRacesBannerState extends ConsumerState<DistrictRacesBanner> {
                 ),
               ),
             const SizedBox(height: ChosenoSpacing.sm),
-            Wrap(
-              spacing: ChosenoSpacing.sm,
-              children: [
-                AppButton(
-                  label: _locating ? 'Locating…' : 'Use my location',
-                  icon: Icons.my_location,
-                  loading: _locating,
-                  onPressed: _locating ? null : _locate,
-                ),
-                AppButton(
-                  label: 'Find my district',
-                  variant: AppButtonVariant.outline,
-                  onPressed: () => context.go(AppRoutes.findMyDistrict),
-                ),
-              ],
+            AppButton(
+              label: _locating ? 'Locating…' : 'Use my location',
+              icon: Icons.my_location,
+              loading: _locating,
+              onPressed: _locating ? null : _locate,
+            ),
+            AppButton(
+              label: 'Find my district',
+              variant: AppButtonVariant.text,
+              onPressed: () => context.go(AppRoutes.findMyDistrict),
             ),
           ],
         ),

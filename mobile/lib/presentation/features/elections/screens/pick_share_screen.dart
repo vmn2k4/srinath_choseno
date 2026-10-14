@@ -2,6 +2,7 @@
 // their per-candidate messages), everyone else in the race with Support /
 // Pick actions, the race's voting places, and a Report link. Reuses the race
 // screen's data controller so Support behaves identically.
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +29,7 @@ class PickShareScreen extends ConsumerWidget {
     final palette = ChosenoTheme.of(context);
     final shareAsync = ref.watch(pickShareProvider(code));
     return Scaffold(
-      appBar: AppBar(title: const Text('Shared picks')),
+      appBar: const DetailAppBar(title: 'Shared picks'),
       body: shareAsync.when(
         data: (share) => share == null
             ? const EmptyState(

@@ -4,6 +4,8 @@
 // not yet ported: the composer (createWallPost), the owner-only View
 // Supporters dashboard + realtime subscription, the QR-code share popover,
 // and the News-mentions sub-page (§4.A.9's second half).
+import '../../../common/widgets/screen_header.dart';
+import '../../../common/widgets/detail_app_bar.dart';
 import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../common/widgets/app_shell.dart' show kBottomNavClearance;
 import '../../../../domain/politician_wall/entities/politician_wall_profile.dart';
 import '../../../../domain/posts/entities/post.dart';
+import '../../auth/providers/auth_providers.dart';
 import '../providers/politician_wall_providers.dart';
 
 class PoliticianWallScreen extends ConsumerStatefulWidget {
@@ -73,17 +76,28 @@ class _PoliticianWallScreenState extends ConsumerState<PoliticianWallScreen> {
     );
 
     if (widget.isTab) {
-      return Scaffold(body: SafeArea(bottom: false, child: body));
+      return Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              const ScreenHeader(title: 'My Wall'),
+              Expanded(child: body),
+            ],
+          ),
+        ),
+      );
     }
     final profile = profileAsync.value;
     return Scaffold(
-      appBar: AppBar(
+      appBar: DetailAppBar(
+        title: profile?.fullName,
         actions: [
           if (profile != null)
-            IconButton(
-              icon: const Icon(Icons.share_outlined),
+            HeaderIconButton(
+              icon: Icons.ios_share_rounded,
               tooltip: 'Share',
-              onPressed: () => shareChosenoLink(
+              onTap: () => shareChosenoLink(
                 AppRoutes.wall(profile.wallSlug ?? profile.currentGhostId),
               ),
             ),
@@ -217,28 +231,31 @@ class _WallBody extends ConsumerWidget {
                   error: (_, _) => const SizedBox.shrink(),
                 ),
                 const SizedBox(height: ChosenoSpacing.md),
-                isSupportingAsync.when(
-                  data: (isSupporting) => SizedBox(
-                    width: double.infinity,
-                    child: AppButton(
-                      label: isSupporting ? 'Supported' : 'Support',
-                      icon: isSupporting
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      variant: isSupporting
-                          ? AppButtonVariant.primary
-                          : AppButtonVariant.outline,
-                      onPressed: () {
-                        AppHaptics.tap();
-                        ref
-                            .read(wallSupportControllerProvider.notifier)
-                            .toggle();
-                      },
+                // You can't support yourself — the button is for visitors.
+                if (!isTab &&
+                    ref.watch(authStateChangesProvider).value?.id != profile.id)
+                  isSupportingAsync.when(
+                    data: (isSupporting) => SizedBox(
+                      width: double.infinity,
+                      child: AppButton(
+                        label: isSupporting ? 'Supported' : 'Support',
+                        icon: isSupporting
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        variant: isSupporting
+                            ? AppButtonVariant.primary
+                            : AppButtonVariant.outline,
+                        onPressed: () {
+                          AppHaptics.tap();
+                          ref
+                              .read(wallSupportControllerProvider.notifier)
+                              .toggle();
+                        },
+                      ),
                     ),
+                    loading: () => const AppButton(label: '', loading: true),
+                    error: (_, _) => const SizedBox.shrink(),
                   ),
-                  loading: () => const AppButton(label: '', loading: true),
-                  error: (_, _) => const SizedBox.shrink(),
-                ),
                 if (profile.contactEmail != null ||
                     profile.contactPhone != null ||
                     profile.sourceUrl != null) ...[

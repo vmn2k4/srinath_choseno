@@ -2,6 +2,7 @@
 // (`/elections/<boundary-slug>`): every race with its date, countdown and
 // candidate count. Mobile counterpart of the web's election hub and
 // per-place pages.
+import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,7 +39,7 @@ class RaceListScreen extends ConsumerWidget {
         ? ref.watch(seatsForElectionProvider(electionId!))
         : ref.watch(seatsForShapeProvider(shapeId!));
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: DetailAppBar(title: title),
       body: seats.when(
         data: (rows) {
           if (rows.isEmpty) {
