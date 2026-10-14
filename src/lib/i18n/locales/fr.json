@@ -28,10 +28,10 @@
     "byCitizen": "par un citoyen ordinaire —"
   },
   "home": {
-    "badge": "Les Réseaux Sociaux de la Politique",
+    "badge": "Sachez qui est sur votre bulletin",
     "titleMain": "Les réseaux sociaux,",
     "titleSub": "conçus pour la politique.",
-    "subtitle": "Suivez les candidats et les élus de votre circonscription, découvrez leur position sur chaque enjeu et participez à la conversation avec de vrais voisins — de façon anonyme, respectueuse et sans bruit partisan. Voter est votre devoir, faites-le en connaissance de cause.",
+    "subtitle": "Évaluez vos politiciens, discutez-en avec de vrais voisins et découvrez qui se présente dans votre circonscription ou votre quartier. De façon anonyme, respectueuse et sans bruit partisan.",
     "scopedTo": "Conversations de votre secteur sur",
     "citizenCta": "Inscrivez-vous Gratuitement",
     "candidateCta": "Je me Présente",
@@ -47,8 +47,8 @@
       "quote": "\"Conçu pour les citoyens — propulsé pour une vraie démocratie.\"",
       "line1": "Dites ce que vous pensez vraiment. Anonymement. Sans débat, sans trolls, sans que vos amis le voient. Votre vrai nom reste privé, et votre opinion compte autant que celle de chacun.",
       "line2": "Nous collectons des opinions, pas des conversations. Pas d'influenceurs, pas de bruit — juste des gens qui partagent ce qu'ils pensent vraiment. C'est comme ça que le changement se fait.",
-      "cardTitle": "Démonstration Complète du Produit",
-      "cardSubtitle": "Regardez notre démonstration complète pour découvrir toutes les fonctionnalités de Choseno en action"
+      "cardTitle": "Découvrez ce qu'est Choseno",
+      "cardSubtitle": "Un aperçu rapide du fonctionnement de Choseno"
     },
     "countries": {
       "badge": "Désormais disponible dans 3 pays — D'autres arrivent bientôt",
