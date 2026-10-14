@@ -65,6 +65,14 @@ class LocationPickerMap extends StatefulWidget {
 }
 
 class _LocationPickerMapState extends State<LocationPickerMap> {
+  void _zoomBy(double delta) {
+    final cam = _controller.camera;
+    _controller.move(
+      cam.center,
+      (cam.zoom + delta).clamp(cam.minZoom ?? 3, cam.maxZoom ?? 18),
+    );
+  }
+
   final _controller = MapController();
 
   @override
@@ -150,10 +158,21 @@ class _LocationPickerMapState extends State<LocationPickerMap> {
                 ),
               ],
             ),
+            // Zoom controls (Leaflet's + / − on the web), top-right so they
+            // never sit under the thumb or the attribution.
+            Positioned(
+              right: ChosenoSpacing.sm,
+              top: ChosenoSpacing.sm,
+              child: _ZoomControls(
+                onZoomIn: () => _zoomBy(1),
+                onZoomOut: () => _zoomBy(-1),
+              ),
+            ),
             if (point == null)
               Positioned(
                 left: ChosenoSpacing.md,
-                right: ChosenoSpacing.md,
+                // Leave room for the zoom controls on the right.
+                right: 44 + ChosenoSpacing.sm * 2,
                 top: ChosenoSpacing.md,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -188,6 +207,56 @@ class _LocationPickerMapState extends State<LocationPickerMap> {
               ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Compact + / − stack: one 44pt-wide rounded surface, hairline divider, each
+/// half a full touch target.
+class _ZoomControls extends StatelessWidget {
+  const _ZoomControls({required this.onZoomIn, required this.onZoomOut});
+
+  final VoidCallback onZoomIn;
+  final VoidCallback onZoomOut;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    Widget button(IconData icon, String label, VoidCallback onTap) {
+      return Semantics(
+        button: true,
+        label: label,
+        excludeSemantics: true,
+        child: InkWell(
+          onTap: () {
+            AppHaptics.select();
+            onTap();
+          },
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Icon(icon, size: 22, color: palette.textMain),
+          ),
+        ),
+      );
+    }
+
+    return Material(
+      color: palette.surface,
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(ChosenoRadii.sm + 2),
+        side: BorderSide(color: palette.border),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          button(Icons.add, 'Zoom in', onZoomIn),
+          Divider(height: 1, thickness: 1, color: palette.border),
+          button(Icons.remove, 'Zoom out', onZoomOut),
+        ],
       ),
     );
   }

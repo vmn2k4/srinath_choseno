@@ -348,7 +348,8 @@ class _Picker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AddressSearchField(
-          onSelected: (s) => controller.pickPoint(s.lat, s.lng),
+          onSelected: (s) =>
+              controller.pickPoint(s.lat, s.lng, fromMap: true),
         ),
         const SizedBox(height: ChosenoSpacing.md),
         LocationPickerMap(
@@ -360,8 +361,9 @@ class _Picker extends StatelessWidget {
               controller.pickPoint(p.latitude, p.longitude, fromMap: true),
         ),
         const SizedBox(height: ChosenoSpacing.md),
-        // Side by side. "Set as my location" only exists after a tap on the
-        // map — a search hit or GPS fix is just a lookup.
+        // Side by side. "Set as mine" appears after a deliberate pick — a tap on
+        // the map or a searched place — never for the saved districts that
+        // load on open, and not for a GPS fix.
         Row(
           children: [
             Expanded(

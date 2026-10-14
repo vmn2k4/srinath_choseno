@@ -55,8 +55,8 @@ class FindMyDistrictState {
   /// while the screen is still showing the account's saved districts.
   final double? pointLat;
 
-  /// True only when the point came from the user tapping the map — the one
-  /// case where "Set as my location" is offered.
+  /// True when the point was chosen deliberately — a map tap or a searched
+  /// place — which is when "Set as my location" is offered.
   final bool pointFromMap;
   final double? pointLng;
   final bool lookingUp;
