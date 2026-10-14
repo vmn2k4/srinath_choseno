@@ -3,6 +3,7 @@
 // avatar display/upload, rotation-history line ("Rotated N times, last on
 // <date>" — that history isn't tracked by any RPC ported so far), and the
 // Admin locked-message branch (irrelevant — this app has no Admin role).
+import '../../../../core/errors/app_failure.dart';
 import '../../../../core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,6 +57,21 @@ class ProfileScreen extends ConsumerWidget {
     final palette = ChosenoTheme.of(context);
     final profileAsync = ref.watch(ownProfileProvider);
     final membershipsAsync = ref.watch(userBoundaryMembershipsProvider);
+
+    // A failed role switch used to fail silently — say why.
+    ref.listen(switchRoleControllerProvider, (_, next) {
+      if (next is AsyncError) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                "Couldn't switch account type: ${next.error is AppFailure ? (next.error as AppFailure).message : next.error}",
+              ),
+            ),
+          );
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -187,14 +203,6 @@ class ProfileScreen extends ConsumerWidget {
                                 variant: AppButtonVariant.outline,
                                 onPressed: () =>
                                     context.push(AppRoutes.myElections),
-                              ),
-                              const SizedBox(height: ChosenoSpacing.sm + 2),
-                              AppButton(
-                                label: 'Switch to citizen account',
-                                variant: AppButtonVariant.text,
-                                onPressed: () => ref
-                                    .read(switchRoleControllerProvider.notifier)
-                                    .switchTo(UserRole.normal),
                               ),
                             ],
                           ),
