@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronUp, ChevronDown, X, AlertCircle, Play } from "lucide-react";
 import Modal from "@/components/primitives/Modal";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import type { StoryPost } from "./StoryStrip";
 
@@ -28,6 +29,7 @@ export default function PitchViewerModal({
   const touchStartY = useRef<number | null>(null);
 
   const post = posts[index];
+  const youTubeId = parseYouTubeId(post?.video_url);
 
   const goTo = (next: number) => {
     if (next < 0 || next >= posts.length) return;
@@ -104,6 +106,15 @@ export default function PitchViewerModal({
                 This video recording file is missing or no longer exists in Supabase storage.
               </p>
             </div>
+          ) : youTubeId ? (
+            <iframe
+              key={post.id}
+              className="absolute inset-0 w-full h-full border-0"
+              src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1`}
+              title="Video pitch"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           ) : (
             <button
               type="button"

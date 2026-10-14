@@ -1,5 +1,6 @@
 import { Video } from "lucide-react";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 
 export default function MediaThumbnail({
   url,
@@ -25,6 +26,7 @@ export default function MediaThumbnail({
 }) {
   const normalized = normalizeMediaUrl(url);
   const isLandscape = variant === "landscape";
+  const youTubeId = type === "video" ? parseYouTubeId(url) : null;
 
   return (
     <button
@@ -52,11 +54,21 @@ export default function MediaThumbnail({
         </>
       ) : (
         <>
-          <video
-            src={normalized}
-            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-            preload="metadata"
-          />
+          {youTubeId ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`}
+              alt=""
+              className="w-full h-full object-cover scale-[1.8] opacity-90 group-hover:opacity-100 transition-opacity"
+              loading="lazy"
+            />
+          ) : (
+            <video
+              src={normalized}
+              className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+              preload="metadata"
+            />
+          )}
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
             <div className="w-10 h-10 rounded-full bg-black/60 border border-white/30 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Video size={20} className="text-white" />

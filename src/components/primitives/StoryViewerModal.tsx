@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 import { AlertCircle, X } from "lucide-react";
 
 export default function StoryViewerModal({
@@ -19,7 +20,8 @@ export default function StoryViewerModal({
   if (!url) return null;
 
   const normalized = normalizeMediaUrl(url);
-  const isVideo = type ? type === "video" : isLikelyVideoUrl(normalized);
+  const youTubeId = parseYouTubeId(url);
+  const isVideo = youTubeId ? true : type ? type === "video" : isLikelyVideoUrl(normalized);
 
   return (
     <Modal overlayClassName="bg-black/95 backdrop-blur-md" zIndexClassName="z-modal" onOverlayClick={onClose}>
@@ -48,14 +50,24 @@ export default function StoryViewerModal({
             className="relative rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10 flex items-center justify-center"
             style={{ aspectRatio: "9 / 16", height: "min(85vh, 800px)", maxWidth: "95vw" }}
           >
-            <video
-              src={normalized}
-              controls
-              autoPlay
-              playsInline
-              onError={() => setHasError(true)}
-              className="w-full h-full object-cover bg-black"
-            />
+            {youTubeId ? (
+              <iframe
+                className="absolute inset-0 w-full h-full border-0"
+                src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1`}
+                title="Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                src={normalized}
+                controls
+                autoPlay
+                playsInline
+                onError={() => setHasError(true)}
+                className="w-full h-full object-cover bg-black"
+              />
+            )}
           </div>
         ) : (
           /* Image Preview Modal */

@@ -25,6 +25,7 @@ import PostCard, { PostWithComments } from "./PostCard";
 import StoryStrip, { StoryPost } from "./StoryStrip";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import PitchViewerModal from "./PitchViewerModal";
+import { parseYouTubeId, youTubeWatchUrl } from "@/lib/utils/youtube";
 // Only needed when a grouped "Full Interview" story entry is tapped, so it's
 // loaded on demand rather than in the main feed bundle.
 const PlayInterviewReel = dynamic(() => import("./PlayInterviewReel"), { ssr: false });
@@ -146,6 +147,9 @@ export default function FeedPageClient() {
 
   const [showVideoRecorder, setShowVideoRecorder] = useState(false);
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
+  const [videoMode, setVideoMode] = useState<"upload" | "youtube">("upload");
+  const [youTubeInput, setYouTubeInput] = useState("");
+  const [youTubeError, setYouTubeError] = useState<string | null>(null);
   const [mediaPreview, setMediaPreview] = useState<{ url: string; type: "image" | "video" } | null>(null);
 
   // Composer starts collapsed to a single tap-to-expand row (app-style —
@@ -287,24 +291,12 @@ export default function FeedPageClient() {
         });
       });
 
-    if (profile?.country) {
-      pills.push({
-        key: "country",
-        districtName: profile.country,
-        divisionType: "Country",
-        filterType: "country",
-      });
-    }
-
-    pills.push({
-      key: "international",
-      districtName: "Global",
-      divisionType: "International",
-      filterType: "international",
-    });
+    // Canada (country) and Global (international) pills are hidden for now:
+    // not all content belongs in them, so what they show should be decided
+    // by engagement. The query branches in loadFeedPosts are kept for later.
 
     return pills;
-  }, [memberships, profile?.country]);
+  }, [memberships]);
 
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
@@ -482,6 +474,8 @@ export default function FeedPageClient() {
       setImageError(null);
       setUploadedVideoUrl(null);
       setShowVideoRecorder(false);
+      setYouTubeInput("");
+      setYouTubeError(null);
       setComposerOpen(false);
       await loadFeedPosts();
     } catch (err: any) {
@@ -880,12 +874,64 @@ export default function FeedPageClient() {
                     )}
 
                     {isPolitician && showVideoRecorder && !uploadedVideoUrl && (
-                      <VideoRecorder
-                        onVideoUploaded={(url) => {
-                          setUploadedVideoUrl(url);
-                          setShowVideoRecorder(false);
-                        }}
-                      />
+                      <div className="space-y-2">
+                        <div className="flex gap-1.5">
+                          {(["upload", "youtube"] as const).map((m) => (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setVideoMode(m)}
+                              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border cursor-pointer ${
+                                videoMode === m
+                                  ? "border-primary bg-primary/10 text-primary-light"
+                                  : "border-border-light text-text-secondary"
+                              }`}
+                            >
+                              {m === "upload" ? "Record / Upload" : "YouTube link"}
+                            </button>
+                          ))}
+                        </div>
+                        {videoMode === "upload" ? (
+                          <VideoRecorder
+                            onVideoUploaded={(url) => {
+                              setUploadedVideoUrl(url);
+                              setShowVideoRecorder(false);
+                            }}
+                          />
+                        ) : (
+                          <div className="space-y-1">
+                            <div className="flex gap-1.5">
+                              <input
+                                type="url"
+                                value={youTubeInput}
+                                onChange={(e) => {
+                                  setYouTubeInput(e.target.value);
+                                  setYouTubeError(null);
+                                }}
+                                placeholder="Paste a YouTube video link"
+                                className="flex-1 min-w-0 rounded-lg border border-border-light bg-surface px-2.5 py-1.5 text-xs"
+                              />
+                              <Button
+                                size="sm"
+                                type="button"
+                                onClick={() => {
+                                  const id = parseYouTubeId(youTubeInput);
+                                  if (!id) {
+                                    setYouTubeError("Enter a valid YouTube video link");
+                                    return;
+                                  }
+                                  setUploadedVideoUrl(youTubeWatchUrl(id));
+                                  setYouTubeInput("");
+                                  setShowVideoRecorder(false);
+                                }}
+                              >
+                                Add
+                              </Button>
+                            </div>
+                            {youTubeError && <p className="text-danger-light text-xs">{youTubeError}</p>}
+                          </div>
+                        )}
+                      </div>
                     )}
 
                     <div className="flex items-center justify-between pt-2">

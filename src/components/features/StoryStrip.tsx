@@ -1,6 +1,7 @@
 import { Video } from "lucide-react";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
+import { parseYouTubeId } from "@/lib/utils/youtube";
 
 export type StoryPost = {
   id: string;
@@ -51,12 +52,21 @@ export default function StoryStrip({
               className="flex flex-col items-center min-w-[100px] group"
             >
               <div className="w-[100px] h-[150px] rounded-xl border-2 border-primary/50 group-hover:border-primary p-0.5 relative overflow-hidden bg-surface-hover shrink-0 transition-all group-hover:scale-105 shadow-lg">
-                <video
-                  src={normalizeMediaUrl(post.video_url) || undefined}
-                  className="w-full h-full rounded-lg object-cover"
-                  muted
-                  preload="metadata"
-                />
+                {parseYouTubeId(post.video_url) ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={`https://i.ytimg.com/vi/${parseYouTubeId(post.video_url)}/hqdefault.jpg`}
+                    alt=""
+                    className="w-full h-full rounded-lg object-cover scale-[1.8]"
+                  />
+                ) : (
+                  <video
+                    src={normalizeMediaUrl(post.video_url) || undefined}
+                    className="w-full h-full rounded-lg object-cover"
+                    muted
+                    preload="metadata"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent rounded-lg transition-opacity group-hover:opacity-80" />
                 {post.candidateId && post.answerCount ? (
                   <div className="absolute top-1.5 right-1.5 bg-primary text-text-on-primary text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow">
