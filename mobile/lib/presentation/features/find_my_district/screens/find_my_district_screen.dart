@@ -19,7 +19,7 @@ import '../../../common/widgets/screen_header.dart';
 import '../../location/widgets/address_search_field.dart';
 import '../../location/widgets/location_picker_map.dart';
 import '../providers/find_my_district_providers.dart';
-import '../widgets/branch_holder_card.dart';
+import '../widgets/representation_tree.dart';
 import '../../elections/providers/election_directory_providers.dart';
 import '../../elections/widgets/voting_places_section.dart';
 
@@ -109,70 +109,11 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                             child: LoadingIndicator(),
                           ),
                         )
-                      else ...[
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              _BranchTab(
-                                label: 'All',
-                                selected: state.activeBranchKey == 'all',
-                                onTap: () => controller.selectBranchTab('all'),
-                              ),
-                              ...state.branches.map(
-                                (b) => _BranchTab(
-                                  label: b.label,
-                                  selected: state.activeBranchKey == b.key,
-                                  onTap: () =>
-                                      controller.selectBranchTab(b.key),
-                                ),
-                              ),
-                            ],
-                          ),
+                      else
+                        RepresentationTree(
+                          branches: state.branches,
+                          onOpen: (node) => _openWall(context, node),
                         ),
-                        const SizedBox(height: ChosenoSpacing.lg),
-                        for (final branch in state.visibleBranches) ...[
-                          if (branch.districtName != null)
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: ChosenoSpacing.sm,
-                              ),
-                              child: Text(
-                                '${branch.label} · ${branch.districtName}'
-                                    .toUpperCase(),
-                                style: ChosenoTypography.body(
-                                  color: palette.textTertiary,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 11,
-                                ).copyWith(letterSpacing: 0.8),
-                              ),
-                            ),
-                          if (branch.top != null)
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: ChosenoSpacing.sm + 2,
-                              ),
-                              child: BranchHolderCard(
-                                node: branch.top!,
-                                emphasized: true,
-                                onViewWall: () =>
-                                    _openWall(context, branch.top!),
-                              ),
-                            ),
-                          ...branch.bottom.map(
-                            (node) => Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: ChosenoSpacing.sm + 2,
-                              ),
-                              child: BranchHolderCard(
-                                node: node,
-                                onViewWall: () => _openWall(context, node),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: ChosenoSpacing.md),
-                        ],
-                      ],
                     ],
                     // Boundary names stay out of the way until asked for.
                     if (!state.lookingUp && state.boundaries.isNotEmpty) ...[
@@ -432,42 +373,6 @@ class _ErrorNote extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _BranchTab extends StatelessWidget {
-  const _BranchTab({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = ChosenoTheme.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(right: ChosenoSpacing.sm),
-      child: ChoiceChip(
-        label: Text(label),
-        selected: selected,
-        onSelected: (_) => onTap(),
-        showCheckmark: false,
-        selectedColor: palette.primary,
-        labelStyle: ChosenoTypography.body(
-          color: selected ? palette.textOnPrimary : palette.textMain,
-          fontWeight: FontWeight.w600,
-          fontSize: 13,
-        ),
-        backgroundColor: palette.surfaceHover,
-        side: BorderSide.none,
-        shape: const StadiumBorder(),
-        padding: const EdgeInsets.symmetric(horizontal: ChosenoSpacing.sm),
       ),
     );
   }
