@@ -311,7 +311,7 @@ class _SharePicksSheetState extends ConsumerState<SharePicksSheet> {
         ],
         const SizedBox(height: ChosenoSpacing.sm),
         AppTextField(
-          label: 'Your name (optional — first name or nickname)',
+          label: 'Your first name (optional)',
           controller: _nameController,
           maxLength: _nameMax,
         ),
