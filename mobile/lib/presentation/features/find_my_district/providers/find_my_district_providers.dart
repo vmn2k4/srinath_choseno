@@ -35,6 +35,7 @@ class FindMyDistrictState {
     this.seatsLoading = false,
     this.activeBranchKey = 'all',
     this.pointLat,
+    this.pointFromMap = false,
     this.pointLng,
     this.lookingUp = false,
     this.savingMyLocation = false,
@@ -53,6 +54,10 @@ class FindMyDistrictState {
   /// The point the user last picked (map tap / search hit / GPS) — null
   /// while the screen is still showing the account's saved districts.
   final double? pointLat;
+
+  /// True only when the point came from the user tapping the map — the one
+  /// case where "Set as my location" is offered.
+  final bool pointFromMap;
   final double? pointLng;
   final bool lookingUp;
   final bool savingMyLocation;
@@ -75,6 +80,7 @@ class FindMyDistrictState {
     bool? seatsLoading,
     String? activeBranchKey,
     double? pointLat,
+    bool? pointFromMap,
     double? pointLng,
     bool? lookingUp,
     bool? savingMyLocation,
@@ -92,6 +98,7 @@ class FindMyDistrictState {
       seatsLoading: seatsLoading ?? this.seatsLoading,
       activeBranchKey: activeBranchKey ?? this.activeBranchKey,
       pointLat: pointLat ?? this.pointLat,
+      pointFromMap: pointFromMap ?? this.pointFromMap,
       pointLng: pointLng ?? this.pointLng,
       lookingUp: lookingUp ?? this.lookingUp,
       savingMyLocation: savingMyLocation ?? this.savingMyLocation,
@@ -123,8 +130,9 @@ class FindMyDistrictController extends Notifier<FindMyDistrictState> {
 
   /// A map tap, address-search hit, or GPS fix — looks up every boundary
   /// the point falls in and rebuilds seats + representatives from them.
-  Future<void> pickPoint(double lat, double lng) async {
+  Future<void> pickPoint(double lat, double lng, {bool fromMap = false}) async {
     state = state.copyWith(
+      pointFromMap: fromMap,
       pointLat: lat,
       pointLng: lng,
       lookingUp: true,

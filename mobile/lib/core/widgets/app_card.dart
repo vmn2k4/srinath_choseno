@@ -52,8 +52,8 @@ class AppCard extends StatelessWidget {
         this.padding ??
         EdgeInsets.all(
           variant == AppCardVariant.row
-              ? ChosenoSpacing.md
-              : ChosenoSpacing.md + 4,
+              ? ChosenoSpacing.sm + 4
+              : ChosenoSpacing.md,
         );
 
     if (variant == AppCardVariant.dashed) {

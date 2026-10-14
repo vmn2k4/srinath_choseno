@@ -69,21 +69,24 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                     kBottomNavClearance + ChosenoSpacing.lg,
                   ),
                   children: [
-                    SectionHeader(
-                      icon: Icons.my_location,
-                      title: 'Find your district',
-                      subtitle:
-                          'Every electoral boundary covering a spot — who represents it and what is on the ballot.',
-                      trailing: state.boundaries.isNotEmpty
-                          ? AppButton(
-                              label: pickerOpen ? 'Hide map' : 'Change',
-                              variant: AppButtonVariant.text,
-                              onPressed: () =>
-                                  setState(() => _pickerOpen = !pickerOpen),
-                            )
-                          : null,
-                    ),
-                    const SizedBox(height: ChosenoSpacing.lg),
+                    // No page heading: the tab header already says "District".
+                    // With boundaries on screen, their heading carries the map
+                    // toggle (icon, right) — tap it to expand / fold the map.
+                    if (state.boundaries.isNotEmpty) ...[
+                      SectionHeader(
+                        icon: Icons.layers_outlined,
+                        title: 'Your boundaries (${state.boundaries.length})',
+                        trailing: HeaderIconButton(
+                          icon: pickerOpen
+                              ? Icons.expand_less_rounded
+                              : Icons.edit_location_alt_outlined,
+                          tooltip: pickerOpen ? 'Hide map' : 'Change location',
+                          onTap: () =>
+                              setState(() => _pickerOpen = !pickerOpen),
+                        ),
+                      ),
+                      const SizedBox(height: ChosenoSpacing.md),
+                    ],
                     AnimatedSize(
                       duration: const Duration(milliseconds: 240),
                       curve: Curves.easeOutCubic,
@@ -92,68 +95,40 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                           ? _Picker(state: state, controller: controller)
                           : const SizedBox(width: double.infinity),
                     ),
-                    if (state.hasPoint &&
-                        !state.lookingUp &&
-                        state.boundaries.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.md),
-                      AppButton(
-                        label: state.myLocationSaved
-                            ? 'Saved as your location'
-                            : 'Set as my location',
-                        icon: state.myLocationSaved
-                            ? Icons.check_circle
-                            : Icons.push_pin_outlined,
-                        variant: state.myLocationSaved
-                            ? AppButtonVariant.outline
-                            : AppButtonVariant.primary,
-                        loading: state.savingMyLocation,
-                        onPressed:
-                            state.myLocationSaved || state.savingMyLocation
-                            ? null
-                            : controller.setAsMyLocation,
-                      ),
-                    ],
                     if (state.lookingUp) ...[
-                      const SizedBox(height: ChosenoSpacing.xl),
+                      const SizedBox(height: ChosenoSpacing.lg),
                       const Center(child: LoadingIndicator()),
                     ] else if (state.locationError != null) ...[
                       const SizedBox(height: ChosenoSpacing.md),
                       _ErrorNote(message: state.locationError!),
                     ],
                     if (!state.lookingUp && state.boundaries.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.xl),
-                      SectionHeader(
-                        icon: Icons.layers_outlined,
-                        title: 'Your boundaries',
-                        subtitle:
-                            '${state.boundaries.length} found at this location',
-                      ),
                       const SizedBox(height: ChosenoSpacing.md),
                       for (final b in state.boundaries)
                         Padding(
                           padding: const EdgeInsets.only(
-                            bottom: ChosenoSpacing.sm + 2,
+                            bottom: ChosenoSpacing.xs + 2,
                           ),
                           child: AppCard(
                             variant: AppCardVariant.row,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: ChosenoSpacing.md,
-                              vertical: ChosenoSpacing.md,
+                              horizontal: ChosenoSpacing.sm + 4,
+                              vertical: ChosenoSpacing.sm + 2,
                             ),
                             child: Row(
                               children: [
                                 Container(
-                                  width: 40,
-                                  height: 40,
+                                  width: 32,
+                                  height: 32,
                                   decoration: BoxDecoration(
                                     color: palette.primary.withValues(
                                       alpha: 0.12,
                                     ),
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
                                     Icons.layers_outlined,
-                                    size: 20,
+                                    size: 17,
                                     color: palette.primary,
                                   ),
                                 ),
@@ -169,8 +144,8 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                                         overflow: TextOverflow.ellipsis,
                                         style: ChosenoTypography.body(
                                           color: palette.textMain,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       const SizedBox(height: 2),
@@ -194,7 +169,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                         ),
                     ],
                     if (state.seatsLoading || state.seats.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.xl),
+                      const SizedBox(height: ChosenoSpacing.lg),
                       const SectionHeader(
                         icon: Icons.auto_awesome,
                         title: 'Races in your area',
@@ -225,7 +200,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                     ],
                     ..._votingPlaces(ref, state),
                     if (state.branchesLoading || state.branches.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.xl),
+                      const SizedBox(height: ChosenoSpacing.lg),
                       const SectionHeader(
                         icon: Icons.account_tree_outlined,
                         title: 'Chain of representation',
@@ -329,7 +304,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
     final dates = ref.watch(votingPlaceDatesProvider(ids.join(','))).value;
     if (dates == null || dates.isEmpty) return const [];
     return [
-      const SizedBox(height: ChosenoSpacing.xl),
+      const SizedBox(height: ChosenoSpacing.lg),
       for (final v in dates)
         if (state.boundaries.any((b) => b.id == v.shapeId))
           VotingPlacesSection(
@@ -381,15 +356,44 @@ class _Picker extends StatelessWidget {
           point: state.hasPoint
               ? LatLng(state.pointLat!, state.pointLng!)
               : null,
-          onPick: (p) => controller.pickPoint(p.latitude, p.longitude),
+          onPick: (p) =>
+              controller.pickPoint(p.latitude, p.longitude, fromMap: true),
         ),
         const SizedBox(height: ChosenoSpacing.md),
-        AppButton(
-          label: 'Use my current location',
-          icon: Icons.my_location,
-          variant: AppButtonVariant.outline,
-          loading: state.locating,
-          onPressed: state.locating ? null : controller.detectLocation,
+        // Side by side. "Set as my location" only exists after a tap on the
+        // map — a search hit or GPS fix is just a lookup.
+        Row(
+          children: [
+            Expanded(
+              child: AppButton(
+                label: 'Use GPS',
+                icon: Icons.my_location,
+                variant: AppButtonVariant.outline,
+                loading: state.locating,
+                onPressed: state.locating ? null : controller.detectLocation,
+              ),
+            ),
+            if (state.pointFromMap &&
+                !state.lookingUp &&
+                state.boundaries.isNotEmpty) ...[
+              const SizedBox(width: ChosenoSpacing.sm),
+              Expanded(
+                child: AppButton(
+                  label: state.myLocationSaved ? 'Saved' : 'Set as mine',
+                  icon: state.myLocationSaved
+                      ? Icons.check_circle
+                      : Icons.push_pin_outlined,
+                  variant: state.myLocationSaved
+                      ? AppButtonVariant.outline
+                      : AppButtonVariant.primary,
+                  loading: state.savingMyLocation,
+                  onPressed: state.myLocationSaved || state.savingMyLocation
+                      ? null
+                      : controller.setAsMyLocation,
+                ),
+              ),
+            ],
+          ],
         ),
       ],
     );

@@ -30,15 +30,15 @@ class SectionHeader extends StatelessWidget {
       children: [
         if (icon != null) ...[
           Container(
-            width: 40,
-            height: 40,
+            width: 30,
+            height: 30,
             decoration: BoxDecoration(
-              color: palette.primary.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(14),
+              color: palette.primary.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, size: 20, color: palette.primary),
+            child: Icon(icon, size: 17, color: palette.primary),
           ),
-          const SizedBox(width: ChosenoSpacing.md),
+          const SizedBox(width: ChosenoSpacing.sm + 2),
         ],
         Expanded(
           child: Column(
@@ -49,17 +49,19 @@ class SectionHeader extends StatelessWidget {
                 title,
                 style: ChosenoTypography.display(
                   color: palette.textMain,
-                  fontSize: 22,
+                  fontSize: 18,
                 ),
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 2),
                 Text(
                   subtitle!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: ChosenoTypography.body(
                     color: palette.textMuted,
-                    fontSize: 13,
-                    height: 1.35,
+                    fontSize: 12,
+                    height: 1.3,
                   ),
                 ),
               ],
