@@ -8,6 +8,7 @@ import CandidacyWall from "./CandidacyWall";
 import ElectionResultsPanel from "./ElectionResultsPanel";
 import ElectionInterviewTab from "./ElectionInterviewTab";
 import PlayInterviewReel from "./PlayInterviewReel";
+import SeatPitchGallery from "./SeatPitchGallery";
 import SendInterviewInviteFlow from "./SendInterviewInviteFlow";
 import dynamic from "next/dynamic";
 import { parseYouTubeId } from "@/lib/utils/youtube";
@@ -246,6 +247,44 @@ export default function ElectionSeatPageClient({
   // points into one feature — see docs/VIRTUAL_INTERVIEW_SYSTEM.md Gap 3 UI).
   const [candidateIdsWithVideo, setCandidateIdsWithVideo] = useState<Set<string>>(new Set());
   const [reelForCandidate, setReelForCandidate] = useState<{ id: string; name: string } | null>(null);
+  const [showPitchGallery, setShowPitchGallery] = useState(false);
+
+  const pitchCandidates = candidates
+    .filter((c) => c.intro_video_url)
+    .map((c) => {
+      const pol = c.profiles?.politician_profiles;
+      const polEntry = Array.isArray(pol) ? pol[0] : pol;
+      const party = polEntry?.political_parties;
+      return {
+        id: c.id as string,
+        name: (c.display_name || c.profiles?.full_name || "Candidate") as string,
+        avatarUrl: polEntry?.avatar_url as string | null | undefined,
+        partyName: (c.party_name || (Array.isArray(party) ? party[0]?.name : party?.name) || null) as string | null,
+        videoUrl: c.intro_video_url as string,
+      };
+    });
+  const pitchCount = pitchCandidates.length;
+
+  // Auto-open the gallery a few seconds after landing, once per visitor per
+  // race. Skipped on direct candidate links (those visitors came for one
+  // person) and remembered via localStorage once shown.
+  useEffect(() => {
+    if (pitchCount === 0 || !seat?.id || typeof window === "undefined") return;
+    if (initialCandidateId || /\/candidate\//.test(window.location.pathname)) return;
+    const key = `choseno_pitch_gallery_seen_${seat.id}`;
+    try {
+      if (window.localStorage.getItem(key)) return;
+    } catch {
+      return;
+    }
+    const t = window.setTimeout(() => {
+      setShowPitchGallery(true);
+      try {
+        window.localStorage.setItem(key, "1");
+      } catch {}
+    }, 4000);
+    return () => window.clearTimeout(t);
+  }, [pitchCount, seat?.id, initialCandidateId]);
 
   // True only for the very first fetchAll() call, and only when the server
   // already handed us seat+candidates via initialSeat/initialCandidates --
@@ -1326,6 +1365,16 @@ export default function ElectionSeatPageClient({
                   same function either way), so nothing is lost by dropping
                   the roster from this strip. */}
               <div className="flex flex-wrap gap-1.5 mb-5">
+                {pitchCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowPitchGallery(true)}
+                    className="flex items-center gap-1.5 shrink-0 px-3 py-1.5 rounded-full border border-primary/50 bg-primary/10 text-sm font-semibold text-text-main hover:bg-primary/20 transition-colors cursor-pointer"
+                  >
+                    <span className="text-sm leading-none">▶</span>
+                    Watch pitches ({pitchCount})
+                  </button>
+                )}
                 <div
                   role="button"
                   tabIndex={0}
@@ -1539,6 +1588,23 @@ export default function ElectionSeatPageClient({
           </Card>
         )}
       </div>
+
+      {showPitchGallery && pitchCount > 0 && (
+        <SeatPitchGallery
+          candidates={pitchCandidates}
+          totalCandidates={candidates.length}
+          onClose={() => setShowPitchGallery(false)}
+          onViewAll={() => {
+            setShowPitchGallery(false);
+            goToResults();
+          }}
+          onSelectCandidate={(id) => {
+            const c = candidates.find((x) => x.id === id);
+            setShowPitchGallery(false);
+            if (c) handleSelectCandidate(c);
+          }}
+        />
+      )}
 
       {reelForCandidate && (
         <PlayInterviewReel
