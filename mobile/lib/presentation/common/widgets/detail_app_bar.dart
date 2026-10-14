@@ -17,7 +17,7 @@ import '../../../core/theme/theme_config.dart';
 import 'brand_title.dart';
 import 'screen_header.dart';
 
-const double _kBarHeight = 64;
+const double _kBarHeight = 56;
 
 class DetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DetailAppBar({

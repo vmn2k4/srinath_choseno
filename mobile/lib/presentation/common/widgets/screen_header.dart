@@ -74,7 +74,7 @@ class ScreenHeader extends ConsumerWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: titleInset + ChosenoSpacing.sm,
               ),
-              child: BrandTitle(title: title, titleSize: 21),
+              child: BrandTitle(title: title, titleSize: 19),
             ),
             Row(
               children: [
