@@ -8,6 +8,8 @@
 // Not ported: the anonymous rep-list preview cap
 // (ANON_REP_PREVIEW_LIMIT/REP_LIST_GATING_ENABLED) — this app is
 // signed-in only, see docs/FLUTTER_MOBILE_APP_GUIDE.md §4.A.1/§4.A.10.
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -142,6 +144,21 @@ class FindMyDistrictController extends Notifier<FindMyDistrictState> {
           locationError: boundaries.isEmpty
               ? 'No configured boundaries cover this location yet.'
               : null,
+        );
+        unawaited(
+          ref
+              .read(electionsRepositoryProvider)
+              .logDistrictLookup(
+                source: 'find_my_district',
+                method: 'unknown',
+                boundaryCount: boundaries
+                    .where(
+                      (b) => !(b.boundaryType ?? '').toLowerCase().contains(
+                        'polling',
+                      ),
+                    )
+                    .length,
+              ),
         );
         await _resolveBranchesAndSeats(boundaries);
       },

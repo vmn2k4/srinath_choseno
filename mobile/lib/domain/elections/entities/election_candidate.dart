@@ -14,6 +14,7 @@ class ElectionCandidate {
     this.wallSlug,
     this.partyName,
     this.bio,
+    this.introVideoUrl,
   });
 
   final String id;
@@ -23,4 +24,7 @@ class ElectionCandidate {
   final String? wallSlug;
   final String? partyName;
   final String? bio;
+
+  /// `election_candidates.intro_video_url` — the candidate's pitch video.
+  final String? introVideoUrl;
 }

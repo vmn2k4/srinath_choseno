@@ -21,6 +21,8 @@ import '../../presentation/features/candidacy/screens/candidate_application_scre
 import '../../presentation/features/auth/screens/sign_in_screen.dart';
 import '../../presentation/features/boundaries/providers/boundaries_providers.dart';
 import '../../presentation/features/elections/screens/elections_list_screen.dart';
+import '../../presentation/features/elections/screens/pick_share_screen.dart';
+import '../../presentation/features/elections/screens/race_list_screen.dart';
 import '../../presentation/features/elections/screens/seat_detail_screen.dart';
 import '../../presentation/features/feed/screens/feed_screen.dart';
 import '../../presentation/features/find_my_district/screens/find_my_district_screen.dart';
@@ -61,6 +63,14 @@ abstract final class AppRoutes {
   static String wall(String wallIdOrSlug) => '/wall/$wallIdOrSlug';
 
   static String seat(String seatId) => '/elections/seat/$seatId';
+
+  static String electionHub(String electionId, {String? name}) =>
+      '/elections/e/$electionId${name != null ? '?name=${Uri.encodeComponent(name)}' : ''}';
+
+  static String place(int shapeId, {String? name}) =>
+      '/elections/place-$shapeId${name != null ? '?name=${Uri.encodeComponent(name)}' : ''}';
+
+  static String pickShare(String code) => '/p/$code';
 
   static String candidacy(String candidateId) => '/candidacy/$candidateId';
 
@@ -270,6 +280,41 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ),
           ),
         ],
+      ),
+      // Election hub: `/elections/e/<name>-<uuid>` (web's slug shape — only
+      // the trailing UUID matters).
+      GoRoute(
+        path: '/elections/e/:electionSlug',
+        builder: (context, state) {
+          final slug = state.pathParameters['electionSlug']!;
+          final id = RegExp(
+            r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+          ).stringMatch(slug);
+          return RaceListScreen.election(
+            electionId: id ?? slug,
+            title: state.uri.queryParameters['name'] ?? 'Election',
+          );
+        },
+      ),
+      // Per-place page: `/elections/<name>-<shapeId>`. Registered after the
+      // `/elections/seat/...` and `/elections/e/...` routes above.
+      GoRoute(
+        path: '/elections/:boundarySlug',
+        builder: (context, state) {
+          final slug = state.pathParameters['boundarySlug']!;
+          final id = int.tryParse(RegExp(r'(\d+)$').stringMatch(slug) ?? '');
+          if (id == null) return const ElectionsListScreen();
+          return RaceListScreen.place(
+            shapeId: id,
+            title: state.uri.queryParameters['name'] ?? 'Who\'s running here',
+          );
+        },
+      ),
+      // Shared-picks page (`/p/<code>`).
+      GoRoute(
+        path: '/p/:code',
+        builder: (context, state) =>
+            PickShareScreen(code: state.pathParameters['code']!),
       ),
       GoRoute(
         path: '/candidacy/:candidateId',

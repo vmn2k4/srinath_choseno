@@ -13,6 +13,7 @@ class ElectionSeatSummary {
     this.electionName,
     this.electionDate,
     this.candidateCount = 0,
+    this.boundaryType,
   });
 
   final String id;
@@ -21,4 +22,5 @@ class ElectionSeatSummary {
   final String? electionName;
   final DateTime? electionDate;
   final int candidateCount;
+  final String? boundaryType;
 }

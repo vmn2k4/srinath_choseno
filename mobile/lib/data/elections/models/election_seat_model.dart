@@ -10,6 +10,7 @@ import '../../../domain/elections/entities/my_candidacy.dart';
 import '../../../domain/elections/entities/my_election_admin_application.dart';
 import '../../../domain/elections/entities/politician_engagement.dart';
 import '../../../domain/elections/entities/seat_admin_status.dart';
+import '../../../domain/elections/entities/voting_place.dart';
 
 extension ElectionSeatMapper on Map<String, dynamic> {
   ElectionSeat toElectionSeat() {
@@ -22,6 +23,7 @@ extension ElectionSeatMapper on Map<String, dynamic> {
       boundaryName: shape?['name'] as String?,
       electionName: election?['name'] as String?,
       electionDate: dateStr != null ? DateTime.tryParse(dateStr) : null,
+      mapShapeId: (this['map_shape_id'] as num?)?.toInt(),
     );
   }
 }
@@ -39,6 +41,7 @@ extension ElectionCandidateMapper on Map<String, dynamic> {
       wallSlug: pp?['wall_slug'] as String?,
       partyName: party?['name'] as String?,
       bio: pp?['bio'] as String?,
+      introVideoUrl: this['intro_video_url'] as String?,
     );
   }
 }
@@ -239,6 +242,33 @@ extension PoliticianEngagementMapper on Map<String, dynamic> {
       avgRating: (this['avg_rating'] as num?)?.toDouble() ?? 0,
       ratingCount: (this['rating_count'] as num?)?.toInt() ?? 0,
       commentCount: (this['comment_count'] as num?)?.toInt() ?? 0,
+    );
+  }
+}
+
+extension VotingPlaceMapper on Map<String, dynamic> {
+  VotingPlace toVotingPlace() {
+    final schedules = (this['voting_place_schedules'] as List<dynamic>? ?? [])
+        .cast<Map<String, dynamic>>()
+        .map(
+          (s) => VotingPlaceSchedule(
+            votingType: s['voting_type'] as String? ?? 'general',
+            voteDate: s['vote_date'] as String,
+            opensAt: s['opens_at'] as String?,
+            closesAt: s['closes_at'] as String?,
+            notes: s['notes'] as String?,
+          ),
+        )
+        .toList();
+    return VotingPlace(
+      id: this['id'] as String,
+      name: this['name'] as String? ?? 'Voting place',
+      address: this['address'] as String?,
+      lat: (this['lat'] as num?)?.toDouble(),
+      lng: (this['lng'] as num?)?.toDouble(),
+      notes: this['notes'] as String?,
+      lastCheckedAt: this['last_checked_at'] as String? ?? '',
+      schedules: schedules,
     );
   }
 }

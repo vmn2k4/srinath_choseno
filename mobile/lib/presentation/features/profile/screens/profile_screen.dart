@@ -3,6 +3,7 @@
 // avatar display/upload, rotation-history line ("Rotated N times, last on
 // <date>" — that history isn't tracked by any RPC ported so far), and the
 // Admin locked-message branch (irrelevant — this app has no Admin role).
+import '../../../../core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -279,6 +280,8 @@ class ProfileScreen extends ConsumerWidget {
                         ),
                       ],
                       const SizedBox(height: ChosenoSpacing.lg),
+                      const _AppearanceCard(),
+                      const SizedBox(height: ChosenoSpacing.lg),
                       AppButton(
                         label: 'Sign out',
                         variant: AppButtonVariant.outline,
@@ -345,6 +348,50 @@ class _LegalLink extends StatelessWidget {
           color: palette.textMuted,
           fontSize: 12,
         ).copyWith(decoration: TextDecoration.underline),
+      ),
+    );
+  }
+}
+
+/// Appearance picker — Midnight Pulse (dark, default) or the website's
+/// Warm orange light theme. Persisted by [ThemeController].
+class _AppearanceCard extends ConsumerWidget {
+  const _AppearanceCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ChosenoTheme.of(context);
+    final current = ref.watch(themeControllerProvider);
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Appearance',
+            style: ChosenoTypography.body(
+              color: palette.textMain,
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+            ),
+          ),
+          const SizedBox(height: ChosenoSpacing.sm),
+          Wrap(
+            spacing: ChosenoSpacing.sm,
+            children: [
+              for (final t in AppThemeChoice.values)
+                ChoiceChip(
+                  avatar: CircleAvatar(
+                    backgroundColor: t.palette.primary,
+                    radius: 7,
+                  ),
+                  label: Text('${t.label} · ${t.mode}'),
+                  selected: current == t,
+                  onSelected: (_) =>
+                      ref.read(themeControllerProvider.notifier).select(t),
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }

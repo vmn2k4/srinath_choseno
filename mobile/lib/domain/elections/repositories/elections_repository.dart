@@ -8,6 +8,8 @@ import '../entities/candidate_answer_draft.dart';
 import '../entities/candidate_application.dart';
 import '../entities/editable_question.dart';
 import '../entities/election_candidate.dart';
+import '../entities/election_directory_entry.dart';
+import '../entities/pick_share.dart';
 import '../entities/election_seat.dart';
 import '../entities/election_seat_summary.dart';
 import '../entities/my_candidacy.dart';
@@ -15,6 +17,7 @@ import '../entities/my_election_admin_application.dart';
 import '../entities/politician_engagement.dart';
 import '../entities/representation_branch.dart';
 import '../entities/seat_admin_status.dart';
+import '../entities/voting_place.dart';
 
 abstract interface class ElectionsRepository {
   /// My Elections' "My Candidacies" section (§4.F) — every seat this
@@ -41,6 +44,58 @@ abstract interface class ElectionsRepository {
   Future<Result<ElectionSeat>> getSeatById(String seatId);
 
   Future<Result<List<ElectionCandidate>>> getCandidatesForSeat(String seatId);
+
+  /// "Share my picks": creates a shareable `/p/<code>` page for the
+  /// caller's picks in a race and returns the code. Each pick may carry a
+  /// short "why I support them" note (max 140 chars, no links).
+  Future<Result<String>> createRacePickShare({
+    required String seatId,
+    required List<({String candidateId, String note})> picks,
+    String? authorLabel,
+  });
+
+  /// Best-effort follow-up to [createRacePickShare]: posts each note on the
+  /// candidate's wall. Returns ok even if nothing was posted.
+  Future<Result<void>> postPickShareToWalls(String code);
+
+  /// Live elections with race/candidate counts and each one's top places
+  /// ("Browse every election").
+  Future<Result<List<ElectionDirectoryEntry>>> getElectionDirectory();
+
+  /// Every race in one election, with candidate counts.
+  Future<Result<List<ElectionSeatSummary>>> getSeatsForElection(
+    String electionId,
+  );
+
+  /// Which of these boundaries have upcoming voting places, and for which
+  /// election date (`YYYY-MM-DD`).
+  Future<Result<List<({int shapeId, String electionDate})>>>
+  getVotingPlaceDates(List<int> shapeIds);
+
+  /// Analytics, fire-and-forget (never fails).
+  Future<void> logDistrictLookup({
+    required String source,
+    required String method,
+    required int boundaryCount,
+  });
+
+  Future<void> logDistrictBannerClick({
+    required String targetType,
+    required String targetId,
+  });
+
+  /// The `/p/<code>` shared-picks page; ok(null) when removed / not found.
+  Future<Result<PickShare?>> getPickShareByCode(String code);
+
+  Future<Result<void>> reportPickShare(String code);
+
+  /// Public-read voting places (with their per-day hours) for a
+  /// municipality on a given election date (`YYYY-MM-DD`). Empty when none
+  /// have been loaded for that boundary.
+  Future<Result<List<VotingPlace>>> getVotingPlacesForShape(
+    int mapShapeId,
+    String electionDate,
+  );
 
   /// Candidacy Wall's profile card (§4.A.8) — real UUID lookup only, same
   /// simplification as [getSeatById] (this app's navigation only ever

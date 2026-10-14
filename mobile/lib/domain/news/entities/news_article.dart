@@ -20,6 +20,7 @@ class NewsArticle {
     this.heroImageUrl,
     this.publishedAt,
     this.eventDate,
+    this.updatedAt,
     this.body,
     this.readingTimeMinutes,
     this.isBreakingNews = false,
@@ -35,10 +36,19 @@ class NewsArticle {
   final String? heroImageUrl;
   final DateTime? publishedAt;
   final DateTime? eventDate;
+  final DateTime? updatedAt;
   final String? body;
   final int? readingTimeMinutes;
   final bool isBreakingNews;
   final List<TaggedPolitician> taggedPoliticians;
+
+  /// True when the article was revised more than a day after it went live —
+  /// the same threshold the web header uses for its "Updated" label.
+  bool get wasUpdated {
+    final u = updatedAt;
+    final p = publishedAt ?? createdAt;
+    return u != null && u.difference(p) > const Duration(days: 1);
+  }
 
   /// Whichever date the card should actually show — the real-world event
   /// date when known, falling back to when it went live on Choseno. Same

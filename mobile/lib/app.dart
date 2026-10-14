@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/router/deep_link_service.dart';
 import 'core/theme/app_theme.dart';
-import 'core/theme/theme_config.dart';
+import 'core/theme/theme_controller.dart';
 
 class ChosenoApp extends ConsumerStatefulWidget {
   const ChosenoApp({super.key});
@@ -30,7 +30,7 @@ class _ChosenoAppState extends ConsumerState<ChosenoApp> {
     return MaterialApp.router(
       title: 'Choseno',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.build(ChosenoPalette.pulse),
+      theme: AppTheme.build(ref.watch(themeControllerProvider).palette),
       routerConfig: router,
     );
   }

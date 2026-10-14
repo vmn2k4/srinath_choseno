@@ -17,6 +17,8 @@ import '../../../domain/elections/entities/candidate_answer_draft.dart';
 import '../../../domain/elections/entities/candidate_application.dart';
 import '../../../domain/elections/entities/editable_question.dart';
 import '../../../domain/elections/entities/election_candidate.dart';
+import '../../../domain/elections/entities/election_directory_entry.dart';
+import '../../../domain/elections/entities/pick_share.dart';
 import '../../../domain/elections/entities/election_seat.dart';
 import '../../../domain/elections/entities/election_seat_summary.dart';
 import '../../../domain/elections/entities/my_candidacy.dart';
@@ -24,6 +26,7 @@ import '../../../domain/elections/entities/my_election_admin_application.dart';
 import '../../../domain/elections/entities/politician_engagement.dart';
 import '../../../domain/elections/entities/representation_branch.dart';
 import '../../../domain/elections/entities/seat_admin_status.dart';
+import '../../../domain/elections/entities/voting_place.dart';
 import '../../../domain/elections/repositories/elections_repository.dart';
 import '../datasources/elections_remote_data_source.dart';
 import '../models/branch_holder_node_model.dart';
@@ -144,6 +147,208 @@ class ElectionsRepositoryImpl implements ElectionsRepository {
         rows
             .cast<Map<String, dynamic>>()
             .map((r) => r.toElectionCandidate())
+            .toList(),
+      );
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<String>> createRacePickShare({
+    required String seatId,
+    required List<({String candidateId, String note})> picks,
+    String? authorLabel,
+  }) async {
+    try {
+      final code = await _remote.createRacePickShare(
+        seatId: seatId,
+        picks: picks,
+        authorLabel: authorLabel,
+      );
+      return Result.ok(code);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<void>> postPickShareToWalls(String code) async {
+    try {
+      await _remote.postPickShareToWalls(code);
+      return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<List<ElectionDirectoryEntry>>> getElectionDirectory() async {
+    try {
+      final rows = (await _remote.getPublicElectionDirectory())
+          .cast<Map<String, dynamic>>();
+      final placeRows = (await _remote.getPublicElectionPlaces())
+          .cast<Map<String, dynamic>>();
+      final placesByElection = <String, List<ElectionPlace>>{};
+      for (final p in placeRows) {
+        placesByElection
+            .putIfAbsent(p['election_id'] as String, () => [])
+            .add(
+              ElectionPlace(
+                shapeId: (p['shape_id'] as num).toInt(),
+                name: p['place_name'] as String? ?? '',
+                candidateCount: (p['candidate_count'] as num?)?.toInt() ?? 0,
+              ),
+            );
+      }
+      return Result.ok([
+        for (final r in rows)
+          ElectionDirectoryEntry(
+            id: r['election_id'] as String,
+            name: r['election_name'] as String? ?? 'Election',
+            electionDate: DateTime.tryParse(
+              r['election_date'] as String? ?? '',
+            ),
+            seatCount: (r['seat_count'] as num?)?.toInt() ?? 0,
+            candidateCount: (r['candidate_count'] as num?)?.toInt() ?? 0,
+            places: placesByElection[r['election_id']] ?? const [],
+          ),
+      ]);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<List<ElectionSeatSummary>>> getSeatsForElection(
+    String electionId,
+  ) async {
+    try {
+      final seatRows = (await _remote.getSeatsForElection(
+        electionId,
+      )).cast<Map<String, dynamic>>();
+      final counts = await _candidateCounts(
+        seatRows.map((r) => r['id'] as String).toList(),
+      );
+      return Result.ok([
+        for (final r in seatRows)
+          r.toElectionSeatSummary(candidateCount: counts[r['id']] ?? 0),
+      ]);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<List<({int shapeId, String electionDate})>>>
+  getVotingPlaceDates(List<int> shapeIds) async {
+    try {
+      final rows = (await _remote.getVotingPlaceDatesForShapes(
+        shapeIds,
+      )).cast<Map<String, dynamic>>();
+      final seen = <String>{};
+      final out = <({int shapeId, String electionDate})>[];
+      for (final r in rows) {
+        final id = (r['map_shape_id'] as num).toInt();
+        final date = r['election_date'] as String;
+        if (seen.add('$id|$date')) out.add((shapeId: id, electionDate: date));
+      }
+      return Result.ok(out);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<void> logDistrictLookup({
+    required String source,
+    required String method,
+    required int boundaryCount,
+  }) => _remote.logDistrictLookup(
+    source: source,
+    method: method,
+    boundaryCount: boundaryCount,
+    page: '/mobile/$source',
+  );
+
+  @override
+  Future<void> logDistrictBannerClick({
+    required String targetType,
+    required String targetId,
+  }) => _remote.logDistrictBannerClick(
+    targetType: targetType,
+    targetId: targetId,
+    page: '/mobile/district_banner',
+  );
+
+  @override
+  Future<Result<PickShare?>> getPickShareByCode(String code) async {
+    try {
+      final row = await _remote.getRacePickShareByCode(code);
+      if (row == null) return const Result.ok(null);
+      return Result.ok(
+        PickShare(
+          code: row['code'] as String,
+          seatId: row['seat_id'] as String,
+          note: row['note'] as String?,
+          authorLabel: row['author_label'] as String?,
+          picks: [
+            for (final p
+                in (row['picks'] as List<dynamic>).cast<Map<String, dynamic>>())
+              PickShareEntry(
+                candidateId: p['candidate_id'] as String,
+                note: (p['note'] as String?)?.isEmpty == true
+                    ? null
+                    : p['note'] as String?,
+              ),
+          ],
+        ),
+      );
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<void>> reportPickShare(String code) async {
+    try {
+      await _remote.reportRacePickShare(code);
+      return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<List<VotingPlace>>> getVotingPlacesForShape(
+    int mapShapeId,
+    String electionDate,
+  ) async {
+    try {
+      final rows = await _remote.getVotingPlacesForShape(
+        mapShapeId,
+        electionDate,
+      );
+      return Result.ok(
+        rows
+            .cast<Map<String, dynamic>>()
+            .map((r) => r.toVotingPlace())
             .toList(),
       );
     } on supabase.PostgrestException catch (e) {

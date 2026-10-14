@@ -14,6 +14,7 @@ import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../providers/news_polls_providers.dart';
 import '../providers/news_providers.dart';
+import '../widgets/news_article_body.dart';
 import '../widgets/news_article_polls_section.dart';
 import '../widgets/news_article_tagged_politicians_section.dart';
 
@@ -46,7 +47,9 @@ class NewsArticleScreen extends ConsumerWidget {
           // every build, same convention as PoliticianWallScreen/
           // CandidacyWallScreen's own postFrameCallback load() calls.
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            ref.read(newsArticlePollsControllerProvider.notifier).load(article.id);
+            ref
+                .read(newsArticlePollsControllerProvider.notifier)
+                .load(article.id);
           });
           return ListView(
             padding: const EdgeInsets.fromLTRB(
@@ -110,7 +113,9 @@ class NewsArticleScreen extends ConsumerWidget {
               if (dateLabel != null) ...[
                 const SizedBox(height: ChosenoSpacing.md),
                 Text(
-                  dateLabel,
+                  article.wasUpdated
+                      ? '$dateLabel · Updated ${DateFormat.yMMMd().format(article.updatedAt!)}'
+                      : dateLabel,
                   style: ChosenoTypography.body(
                     color: palette.textMuted,
                     fontSize: 13,
@@ -126,15 +131,7 @@ class NewsArticleScreen extends ConsumerWidget {
               // "rivers" of whitespace, which reads worse than a plain
               // ragged-right edge. Same choice Apple News/Medium/etc. make
               // for body copy at phone widths.
-              if (article.body != null)
-                Text(
-                  article.body!,
-                  style: ChosenoTypography.body(
-                    color: palette.textMain,
-                    fontSize: 17,
-                    height: 1.65,
-                  ),
-                ),
+              if (article.body != null) NewsArticleBody(body: article.body!),
               NewsArticleTaggedPoliticiansSection(
                 politicians: article.taggedPoliticians,
                 newsArticleId: article.id,

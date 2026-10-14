@@ -8,7 +8,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const _articleColumns =
-    'id, slug, headline, summary, category, country, province, status, published_at, event_date, hero_image_url, content, created_at';
+    'id, slug, headline, summary, category, country, province, status, published_at, event_date, hero_image_url, content, created_at, updated_at';
 
 class NewsRemoteDataSource {
   const NewsRemoteDataSource(this._client);

@@ -95,7 +95,7 @@ class ElectionsRemoteDataSource {
     return _client
         .from('election_seats')
         .select(
-          'id, role_title, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)',
+          'id, role_title, map_shape_id, map_shapes(name, boundary_type, country), elections(id, name, election_date, status)',
         )
         .eq('id', seatId)
         .single();
@@ -108,7 +108,7 @@ class ElectionsRemoteDataSource {
     var query = _client
         .from('election_candidates')
         .select(
-          'id, statement, seat_id, profiles!election_candidates_politician_id_fkey!inner(id, full_name, politician_profiles(avatar_url, wall_slug, bio, political_parties(name)))',
+          'id, statement, seat_id, intro_video_url, profiles!election_candidates_politician_id_fkey!inner(id, full_name, politician_profiles(avatar_url, wall_slug, bio, political_parties(name)))',
         )
         .eq('seat_id', seatId);
     if (!AppEnvironment.isDev) query = query.eq('profiles.is_test', false);
@@ -127,6 +127,149 @@ class ElectionsRemoteDataSource {
       },
     );
   }
+
+  /// Port of `getVotingPlacesForShape` (src/lib/services/votingPlaces.ts).
+  Future<List<dynamic>> getVotingPlacesForShape(
+    int mapShapeId,
+    String electionDate,
+  ) {
+    return _client
+        .from('voting_places')
+        .select(
+          'id, name, address, lat, lng, notes, last_checked_at, voting_place_schedules(voting_type, vote_date, opens_at, closes_at, notes)',
+        )
+        .eq('map_shape_id', mapShapeId)
+        .eq('election_date', electionDate)
+        .order('name');
+  }
+
+  /// RPC `create_race_pick_share` — returns the share's short code. The
+  /// server enforces that picks belong to the seat, note length / no links,
+  /// and rate limits.
+  Future<String> createRacePickShare({
+    required String seatId,
+    required List<({String candidateId, String note})> picks,
+    String? authorLabel,
+  }) async {
+    final code = await _client.rpc(
+      'create_race_pick_share',
+      params: {
+        'p_seat_id': seatId,
+        'p_candidate_ids': picks.map((p) => p.candidateId).toList(),
+        'p_note': null,
+        'p_pick_notes': picks.map((p) => p.note).toList(),
+        'p_author_label': (authorLabel ?? '').isEmpty ? null : authorLabel,
+        'p_anon_id': null,
+        'p_is_test': AppEnvironment.isDev,
+      },
+    );
+    return code as String;
+  }
+
+  /// RPC `post_pick_share_messages_to_walls` — posts each pick's message on
+  /// that candidate's wall (owner-checked, idempotent).
+  Future<void> postPickShareToWalls(String code) => _client.rpc(
+    'post_pick_share_messages_to_walls',
+    params: {'p_code': code},
+  );
+
+  Future<List<dynamic>> getPublicElectionDirectory() => _client
+      .rpc('get_public_election_directory')
+      .then((r) => r as List<dynamic>);
+
+  Future<List<dynamic>> getPublicElectionPlaces({int perElection = 8}) =>
+      _client
+          .rpc(
+            'get_public_election_places',
+            params: {'p_per_election': perElection},
+          )
+          .then((r) => r as List<dynamic>);
+
+  Future<List<dynamic>> getSeatsForElection(String electionId) {
+    return _client
+        .from('election_seats')
+        .select(
+          'id, role_title, map_shape_id, map_shapes(id, name, boundary_type, properties), elections!inner(id, name, election_date, status)',
+        )
+        .eq('election_id', electionId)
+        .order('role_title');
+  }
+
+  /// Port of `getVotingPlaceDatesForShapes` — which boundaries have
+  /// published voting places for an upcoming election.
+  Future<List<dynamic>> getVotingPlaceDatesForShapes(List<int> shapeIds) {
+    if (shapeIds.isEmpty) return Future.value(const []);
+    final today = DateTime.now().toIso8601String().substring(0, 10);
+    return _client
+        .from('voting_places')
+        .select('map_shape_id, election_date')
+        .inFilter('map_shape_id', shapeIds)
+        .gte('election_date', today);
+  }
+
+  /// Fire-and-forget analytics RPCs (see district_lookups migration). Never
+  /// throw: a logging failure must not degrade the user's results.
+  Future<void> logDistrictLookup({
+    required String source,
+    required String method,
+    required int boundaryCount,
+    String? page,
+  }) async {
+    try {
+      await _client.rpc(
+        'log_district_lookup',
+        params: {
+          'p_source': source,
+          'p_method': method,
+          'p_found': boundaryCount > 0,
+          'p_boundary_count': boundaryCount,
+          'p_visitor_id': _client.auth.currentUser?.id,
+          'p_page': page,
+          'p_is_test': AppEnvironment.isDev,
+        },
+      );
+    } catch (_) {}
+  }
+
+  Future<void> logDistrictBannerClick({
+    required String targetType,
+    required String targetId,
+    String? page,
+  }) async {
+    try {
+      await _client.rpc(
+        'log_district_banner_click',
+        params: {
+          'p_target_type': targetType,
+          'p_target_id': targetId,
+          'p_visitor_id': _client.auth.currentUser?.id,
+          'p_page': page,
+          'p_is_test': AppEnvironment.isDev,
+        },
+      );
+    } catch (_) {}
+  }
+
+  /// Explicit columns: the table's identity/abuse columns aren't granted to
+  /// anon/authenticated.
+  Future<Map<String, dynamic>?> getRacePickShareByCode(String code) async {
+    final share = await _client
+        .from('race_pick_shares')
+        .select('id, code, seat_id, note, author_label, created_at')
+        .eq('code', code)
+        .isFilter('removed_at', null)
+        .maybeSingle();
+    if (share == null) return null;
+    final picks = await _client
+        .from('race_pick_share_picks')
+        .select('candidate_id, position, note')
+        .eq('share_id', share['id'] as String)
+        .order('position', ascending: true);
+    return {...share, 'picks': picks};
+  }
+
+  Future<void> reportRacePickShare(String code) =>
+      _client.rpc('report_race_pick_share', params: {'p_code': code});
 
   Future<List<dynamic>> getMyCandidacies(String profileId) {
     return _client

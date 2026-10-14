@@ -17,6 +17,7 @@ class AppTextField extends StatelessWidget {
     this.errorText,
     this.onChanged,
     this.maxLines = 1,
+    this.maxLength,
   });
 
   final String label;
@@ -26,9 +27,11 @@ class AppTextField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final String? errorText;
   final ValueChanged<String>? onChanged;
+
   /// >1 turns this into a Textarea.jsx-equivalent multi-line field (e.g. a
   /// rating comment) — still the same shared decoration/theme, just taller.
   final int maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class AppTextField extends StatelessWidget {
       autofillHints: autofillHints,
       onChanged: onChanged,
       maxLines: maxLines,
+      maxLength: maxLength,
       decoration: InputDecoration(labelText: label, errorText: errorText),
     );
   }

@@ -79,9 +79,9 @@ abstract final class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: palette.isLight ? Brightness.light : Brightness.dark,
       scaffoldBackgroundColor: palette.background,
-      colorScheme: ColorScheme.dark(
+      colorScheme: (palette.isLight ? ColorScheme.light : ColorScheme.dark)(
         primary: palette.primary,
         onPrimary: palette.textOnPrimary,
         secondary: palette.accent,

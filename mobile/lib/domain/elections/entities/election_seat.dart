@@ -10,6 +10,7 @@ class ElectionSeat {
     this.boundaryName,
     this.electionName,
     this.electionDate,
+    this.mapShapeId,
   });
 
   final String id;
@@ -17,4 +18,8 @@ class ElectionSeat {
   final String? boundaryName;
   final String? electionName;
   final DateTime? electionDate;
+
+  /// `election_seats.map_shape_id` — the municipality/riding the seat
+  /// belongs to; keys the voting-places lookup.
+  final int? mapShapeId;
 }

@@ -18,6 +18,9 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/election_candidate.dart';
 import '../providers/seat_admin_providers.dart';
 import '../providers/seat_detail_providers.dart';
+import '../widgets/pitch_gallery_sheet.dart';
+import '../widgets/share_picks_sheet.dart';
+import '../widgets/voting_places_section.dart';
 
 class SeatDetailScreen extends ConsumerWidget {
   const SeatDetailScreen({super.key, required this.seatId});
@@ -78,7 +81,7 @@ class SeatDetailScreen extends ConsumerWidget {
                         ),
                       if (dateLabel != null)
                         Text(
-                          'Election Day: $dateLabel',
+                          'Election Day: $dateLabel${_countdown(data.seat.electionDate!)}',
                           style: ChosenoTypography.body(
                             color: palette.textMuted,
                             fontSize: 13,
@@ -94,6 +97,36 @@ class SeatDetailScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
+                if (data.candidates.any(
+                  (c) => (c.introVideoUrl ?? '').trim().isNotEmpty,
+                )) ...[
+                  const SizedBox(height: ChosenoSpacing.md),
+                  AppButton(
+                    label: 'Watch candidate pitches',
+                    icon: Icons.play_circle_outline,
+                    onPressed: () => showPitchGallery(
+                      context,
+                      candidates: data.candidates,
+                      onSelectCandidate: (c) =>
+                          context.push(AppRoutes.candidacy(c.id)),
+                    ),
+                  ),
+                ],
+                if (data.candidates.isNotEmpty) ...[
+                  const SizedBox(height: ChosenoSpacing.sm),
+                  AppButton(
+                    label: 'Share my picks',
+                    icon: Icons.ios_share,
+                    variant: AppButtonVariant.outline,
+                    onPressed: () => showSharePicksSheet(
+                      context,
+                      seatId: seatId,
+                      roleTitle: data.seat.roleTitle,
+                      place: data.seat.boundaryName,
+                      candidates: data.candidates,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: ChosenoSpacing.xl),
                 const SectionHeader(
                   icon: Icons.trending_up,
@@ -164,6 +197,13 @@ class SeatDetailScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: ChosenoSpacing.lg),
+                if (data.seat.mapShapeId != null &&
+                    data.seat.electionDate != null)
+                  VotingPlacesSection(
+                    mapShapeId: data.seat.mapShapeId!,
+                    electionDate: data.seat.electionDate!,
+                    jurisdictionName: data.seat.boundaryName ?? 'your area',
+                  ),
                 _SeatAdminPanel(seatId: seatId),
               ],
             ),
@@ -178,6 +218,21 @@ class SeatDetailScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// " · Today" / " · Tomorrow" / " · in N days" (web race cards show a
+  /// countdown beside the date); empty once the day has passed.
+  String _countdown(DateTime electionDate) {
+    final now = DateTime.now();
+    final days = DateTime(
+      electionDate.year,
+      electionDate.month,
+      electionDate.day,
+    ).difference(DateTime(now.year, now.month, now.day)).inDays;
+    if (days < 0) return '';
+    if (days == 0) return ' · Today';
+    if (days == 1) return ' · Tomorrow';
+    return ' · in $days days';
   }
 
   double _pct(SeatDetailData data, String politicianId) {

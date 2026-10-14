@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -17,6 +18,7 @@ import '../../../common/widgets/app_shell.dart';
 import '../../../common/widgets/screen_header.dart';
 import '../../find_my_district/widgets/election_seat_card.dart';
 import '../../location/widgets/change_location_sheet.dart';
+import '../providers/election_directory_providers.dart';
 import '../providers/elections_scope_providers.dart';
 
 class ElectionsListScreen extends ConsumerWidget {
@@ -123,6 +125,8 @@ class ElectionsListScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: ChosenoSpacing.xl),
+                    const _ElectionDirectory(),
                   ],
                 ),
               ),
@@ -130,6 +134,114 @@ class ElectionsListScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// "Browse every election" + "who's running by place" — port of
+/// ElectionDirectoryCards.tsx. Taps open the election hub / place page.
+class _ElectionDirectory extends ConsumerWidget {
+  const _ElectionDirectory();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ChosenoTheme.of(context);
+    final elections = ref.watch(electionDirectoryProvider).value;
+    if (elections == null || elections.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SectionHeader(
+          icon: Icons.account_balance_outlined,
+          title: 'Browse every election',
+          subtitle:
+              'Open an election to see its races and every candidate running.',
+        ),
+        const SizedBox(height: ChosenoSpacing.md),
+        for (final e in elections)
+          Padding(
+            padding: const EdgeInsets.only(bottom: ChosenoSpacing.sm + 2),
+            child: AppCard(
+              variant: AppCardVariant.row,
+              onTap: e.candidateCount > 0
+                  ? () =>
+                        context.push(AppRoutes.electionHub(e.id, name: e.name))
+                  : null,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (e.electionDate != null)
+                          Text(
+                            DateFormat.yMMMd().format(e.electionDate!),
+                            style: ChosenoTypography.body(
+                              color: palette.textMuted,
+                              fontSize: 12,
+                            ),
+                          ),
+                        Text(
+                          e.name,
+                          style: ChosenoTypography.body(
+                            color: palette.textMain,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          e.candidateCount > 0
+                              ? '${e.candidateCount} candidates · ${e.seatCount} races'
+                              : 'Candidate list coming soon',
+                          style: ChosenoTypography.body(
+                            color: palette.textMuted,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (e.candidateCount > 0)
+                    Icon(Icons.chevron_right, color: palette.textMuted),
+                ],
+              ),
+            ),
+          ),
+        if (elections.any((e) => e.places.isNotEmpty)) ...[
+          const SizedBox(height: ChosenoSpacing.md),
+          const SectionHeader(
+            icon: Icons.place_outlined,
+            title: "Browse who's running by place",
+            subtitle: 'Jump straight to the places with the most candidates.',
+          ),
+          const SizedBox(height: ChosenoSpacing.sm),
+          for (final e in elections.where((e) => e.places.isNotEmpty)) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: ChosenoSpacing.xs),
+              child: Text(
+                e.name,
+                style: ChosenoTypography.body(
+                  color: palette.textSecondary,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            Wrap(
+              spacing: ChosenoSpacing.xs + 2,
+              runSpacing: ChosenoSpacing.xs + 2,
+              children: [
+                for (final p in e.places)
+                  ActionChip(
+                    label: Text('${p.name}  ${p.candidateCount}'),
+                    onPressed: () =>
+                        context.push(AppRoutes.place(p.shapeId, name: p.name)),
+                  ),
+              ],
+            ),
+          ],
+        ],
+      ],
     );
   }
 }

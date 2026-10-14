@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
+import '../../../../core/utils/election_countdown.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/election_seat_summary.dart';
 
@@ -52,12 +53,25 @@ class ElectionSeatCard extends StatelessWidget {
                     ),
                   ),
                 if (dateLabel != null)
-                  Text(
-                    dateLabel,
-                    style: ChosenoTypography.body(
-                      color: palette.textMuted,
-                      fontSize: 12,
-                    ),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: ChosenoSpacing.xs + 2,
+                    children: [
+                      Text(
+                        dateLabel,
+                        style: ChosenoTypography.body(
+                          color: palette.textMain,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                        ),
+                      ),
+                      if (electionCountdown(seat.electionDate) != null)
+                        AppBadge(
+                          label: electionCountdown(seat.electionDate)!,
+                          tone: AppBadgeTone.primary,
+                          size: AppBadgeSize.xs2,
+                        ),
+                    ],
                   ),
               ],
             ),

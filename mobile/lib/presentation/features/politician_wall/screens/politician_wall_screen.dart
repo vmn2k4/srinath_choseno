@@ -4,6 +4,7 @@
 // not yet ported: the composer (createWallPost), the owner-only View
 // Supporters dashboard + realtime subscription, the QR-code share popover,
 // and the News-mentions sub-page (§4.A.9's second half).
+import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -275,6 +276,8 @@ class _WallBody extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: ChosenoSpacing.lg),
+          const DistrictRacesBanner(),
           if (profile.bio != null && profile.bio!.trim().isNotEmpty) ...[
             const SizedBox(height: ChosenoSpacing.lg),
             AppCard(

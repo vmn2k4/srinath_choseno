@@ -43,7 +43,8 @@ List<TaggedPolitician> _parseTaggedPoliticians(dynamic rows) {
           id: profile['id'] as String,
           fullName: profile['full_name'] as String,
           photoUrl: (pp?['photo_url'] ?? pp?['avatar_url']) as String?,
-          wallSlug: (pp?['wall_slug'] ?? profile['current_ghost_id']) as String?,
+          wallSlug:
+              (pp?['wall_slug'] ?? profile['current_ghost_id']) as String?,
         );
       })
       .toList();
@@ -68,10 +69,13 @@ extension NewsArticleMapper on Map<String, dynamic> {
       heroImageUrl: this['hero_image_url'] as String?,
       publishedAt: publishedAt,
       eventDate: eventDateStr != null ? DateTime.tryParse(eventDateStr) : null,
+      updatedAt: DateTime.tryParse(this['updated_at'] as String? ?? ''),
       body: content?['body'] as String?,
       readingTimeMinutes: (content?['readingTimeMinutes'] as num?)?.toInt(),
       isBreakingNews: _isBreakingNewsActive(content, publishedAt),
-      taggedPoliticians: _parseTaggedPoliticians(this['news_article_politicians']),
+      taggedPoliticians: _parseTaggedPoliticians(
+        this['news_article_politicians'],
+      ),
     );
   }
 }

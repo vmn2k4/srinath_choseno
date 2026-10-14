@@ -13,6 +13,7 @@ extension ElectionSeatSummaryMapper on Map<String, dynamic> {
       electionName: election?['name'] as String?,
       electionDate: dateStr != null ? DateTime.tryParse(dateStr) : null,
       candidateCount: candidateCount,
+      boundaryType: shape?['boundary_type'] as String?,
     );
   }
 }

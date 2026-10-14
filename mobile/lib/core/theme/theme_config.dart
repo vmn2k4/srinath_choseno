@@ -208,6 +208,49 @@ class ChosenoPalette extends ThemeExtension<ChosenoPalette> {
     glassHighlight: Color(0xFFFFFFFF),
   );
 
+  /// The website's "Warm orange" light theme (globals.css
+  /// `[data-theme="warm-orange"]`): cream canvas, white cards, orange brand,
+  /// sky-blue accent. Opt-in from Profile → Appearance; "Midnight Pulse"
+  /// stays the default.
+  static const warmOrange = ChosenoPalette(
+    background: Color(0xFFFFF9F4),
+    surface: Color(0xFFFFFFFF),
+    surfaceHover: Color(0xFFFFF0E4),
+    surfaceActive: Color(0xFFFDE2CC),
+    surfaceElevated: Color(0xFFFFF3E8),
+    border: Color(0xFFF9D9C0),
+    borderLight: Color(0x1F1F2937), // slate @ 12%
+    textMain: Color(0xFF1C1917),
+    textSecondary: Color(0xFF292524),
+    textTertiary: Color(0xFF44403C),
+    textMuted: Color(0xFF57534E),
+    textDark: Color(0xFF78716C),
+    textDarker: Color(0xFFF0DCCB),
+    primary: Color(0xFFEA580C),
+    primaryHover: Color(0xFFC2410C),
+    primaryLight: Color(0xFFC2410C),
+    primaryLighter: Color(0xFFFDBA74),
+    primaryGlow: Color(0xFFF97316), // gradient end
+    accent: Color(0xFF0284C7),
+    accentHover: Color(0xFF0369A1),
+    danger: Color(0xFFDC2626),
+    dangerLight: Color(0xFF991B1B),
+    dangerLighter: Color(0xFFFCA5A5),
+    warning: Color(0xFFB45309),
+    warningLight: Color(0xFF92400E),
+    caution: Color(0xFFEA580C),
+    cautionLight: Color(0xFFFB923C),
+    success: Color(0xFF16A34A),
+    successLight: Color(0xFF15803D),
+    textOnPrimary: Color(0xFFFFFFFF),
+    overlay: Color(0x40000000),
+    overlayHeavy: Color(0xF2000000),
+    glassHighlight: Color(0xFFFFFFFF),
+  );
+
+  /// True for the light palettes — drives the Material brightness.
+  bool get isLight => background.computeLuminance() > 0.5;
+
   @override
   ChosenoPalette copyWith({
     Color? background,

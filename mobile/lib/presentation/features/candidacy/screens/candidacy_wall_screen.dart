@@ -8,6 +8,7 @@
 // (Flow B only — see candidacy_providers.dart) below covers what a
 // visitor most needs to decide who to support, and what an unclaimed
 // candidate needs to take ownership of their page.
+import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +58,8 @@ class CandidacyWallScreen extends ConsumerWidget {
                   const SizedBox(height: ChosenoSpacing.md),
                   _ClaimCandidacyCard(candidateId: candidateId),
                 ],
+                const SizedBox(height: ChosenoSpacing.lg),
+                const DistrictRacesBanner(),
                 const SizedBox(height: ChosenoSpacing.lg),
                 if (data.answers.isNotEmpty) ...[
                   const SectionHeader(
