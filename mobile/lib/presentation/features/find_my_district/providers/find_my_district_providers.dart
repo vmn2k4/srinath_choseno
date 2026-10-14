@@ -116,6 +116,16 @@ class FindMyDistrictController extends Notifier<FindMyDistrictState> {
 
   bool _loadedAccount = false;
 
+  /// Pull-to-refresh: drop whatever was looked up and go back to the
+  /// account's saved districts. (This used to run a GPS lookup, which
+  /// silently swapped the screen to wherever the device was.)
+  Future<void> reloadFromAccount() async {
+    ref.invalidate(accountDistrictsProvider);
+    state = const FindMyDistrictState();
+    _loadedAccount = false;
+    await loadFromAccount();
+  }
+
   /// Seeds the screen with the account's saved districts, once — the web's
   /// `initialBoundaries`, so a returning user lands on their results
   /// instead of an empty "where are you?" prompt.

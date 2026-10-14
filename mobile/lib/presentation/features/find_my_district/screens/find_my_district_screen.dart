@@ -58,7 +58,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
             const ScreenHeader(title: 'Representatives'),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: controller.detectLocation,
+                onRefresh: controller.reloadFromAccount,
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(
                     ChosenoSpacing.lg,
