@@ -1,6 +1,7 @@
 // Feed's tab model + controller. Ports the shape of FeedPageClient.tsx's
 // tab system (docs/FLUTTER_MOBILE_APP_GUIDE.md §4.D in the parent repo) —
-// one tab per boundary membership + Country + International — but NOT
+// one tab per boundary membership (Country + International are hidden, as
+// on the website) — but NOT
 // yet: the "All Feeds" master tab with secondary boundary-type filter
 // chips, the active-election banner, or the video-pitch composer. The
 // composer here is text-only (see the screen's own header comment).
@@ -96,8 +97,11 @@ class FeedController extends AsyncNotifier<FeedState> {
     // membership-table order rather than guessing a rank.
     final tabs = <FeedTab>[
       ...memberships.map((m) => MembershipTab(m.shapeId, m.name)),
-      if (profile?.country != null) CountryTab(profile!.country!),
-      const InternationalTab(),
+      // Country and International tabs are hidden, matching the website
+      // (FeedPageClient.tsx): not all content belongs in them, so what they
+      // show should be decided by engagement first. CountryTab /
+      // InternationalTab and their fetch branches below are kept for when
+      // they return — re-add them here.
     ];
 
     if (tabs.isEmpty) return FeedState(tabs: tabs, selectedIndex: 0);
