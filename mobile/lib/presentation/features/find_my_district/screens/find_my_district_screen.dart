@@ -92,6 +92,27 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                           ? _Picker(state: state, controller: controller)
                           : const SizedBox(width: double.infinity),
                     ),
+                    if (state.hasPoint &&
+                        !state.lookingUp &&
+                        state.boundaries.isNotEmpty) ...[
+                      const SizedBox(height: ChosenoSpacing.md),
+                      AppButton(
+                        label: state.myLocationSaved
+                            ? 'Saved as your location'
+                            : 'Set as my location',
+                        icon: state.myLocationSaved
+                            ? Icons.check_circle
+                            : Icons.push_pin_outlined,
+                        variant: state.myLocationSaved
+                            ? AppButtonVariant.outline
+                            : AppButtonVariant.primary,
+                        loading: state.savingMyLocation,
+                        onPressed:
+                            state.myLocationSaved || state.savingMyLocation
+                            ? null
+                            : controller.setAsMyLocation,
+                      ),
+                    ],
                     if (state.lookingUp) ...[
                       const SizedBox(height: ChosenoSpacing.xl),
                       const Center(child: LoadingIndicator()),
@@ -107,25 +128,6 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                         subtitle:
                             '${state.boundaries.length} found at this location',
                       ),
-                      if (state.hasPoint) ...[
-                        const SizedBox(height: ChosenoSpacing.md),
-                        AppButton(
-                          label: state.myLocationSaved
-                              ? 'Saved as your location'
-                              : 'Set as my location',
-                          icon: state.myLocationSaved
-                              ? Icons.check_circle
-                              : Icons.push_pin_outlined,
-                          variant: state.myLocationSaved
-                              ? AppButtonVariant.outline
-                              : AppButtonVariant.primary,
-                          loading: state.savingMyLocation,
-                          onPressed:
-                              state.myLocationSaved || state.savingMyLocation
-                              ? null
-                              : controller.setAsMyLocation,
-                        ),
-                      ],
                       const SizedBox(height: ChosenoSpacing.md),
                       for (final b in state.boundaries)
                         Padding(
