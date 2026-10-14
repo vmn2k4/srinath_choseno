@@ -67,7 +67,9 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "us house district lookup",
       "find my congressperson",
-      "us congressional district map"
+      "us congressional district map",
+      "who is running for congress in my district",
+      "who are the candidates for congress in my district"
     ],
     "metaTitle": "What Congressional District Am I In? US District Lookup | Choseno",
     "metaDescription": "Confused about your US congressional district? Learn how redistricting affected your district lines and identify your current Representative in the House.",
@@ -119,10 +121,15 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "who is my mp",
       "elections canada riding lookup",
-      "federal electoral districts canada"
+      "federal electoral districts canada",
+      "who is my mp by postal code",
+      "find my riding",
+      "which riding am i in",
+      "who is the mp for my area",
+      "find my riding canada"
     ],
-    "metaTitle": "Find My Federal Riding Canada: MP Lookup & District Map | Choseno",
-    "metaDescription": "Easily find your Canadian federal riding and current Member of Parliament. Explore riding boundaries, demographic trends, and officeholder contact info.",
+    "metaTitle": "Find My Riding in Canada: Who Is My MP by Postal Code? | Choseno",
+    "metaDescription": "Which riding am I in? Find your federal riding and who your MP is by address or postal code, plus how provincial ridings (MLA/MPP) differ.",
     "takeaways": [
       "Canada is divided into 343 federal electoral districts, commonly known as ridings.",
       "Your Member of Parliament (MP) represents you in the House of Commons regardless of your party affiliation."
@@ -223,10 +230,16 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "what is an mpp in ontario",
       "difference between mp and mla in canada",
-      "mna quebec meaning"
+      "mna quebec meaning",
+      "who is my mpp",
+      "who is my mla",
+      "who is my mp and mla",
+      "find my riding ontario",
+      "find my riding alberta",
+      "find my riding bc"
     ],
     "metaTitle": "MP vs MLA vs MPP: Canadian Political Titles Explained | Choseno",
-    "metaDescription": "Confused by MP, MLA, MPP, and MHA? Here is the definitive breakdown of Canadian legislative titles, provincial jurisdictions, and how your representation works.",
+    "metaDescription": "Who is my MP, MLA or MPP? Learn what each title means, which level of government each represents, and how to find yours by address.",
     "takeaways": [
       "MPs serve in Ottawa federally, while MLAs, MPPs (Ontario), MNAs (Quebec), and MHAs (Newfoundland) serve in provincial legislatures.",
       "Provincial representatives hold primary constitutional authority over hospitals, schools, and highways."
@@ -275,7 +288,9 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "ward councillor lookup",
       "at large vs ward voting",
-      "how municipal wards work"
+      "how municipal wards work",
+      "who is running for local elections in my area",
+      "bc municipal election candidates"
     ],
     "metaTitle": "What Is a City Ward? Municipal Representation Explained | Choseno",
     "metaDescription": "Discover what city wards are, how municipal boundaries divide local representation, and why ward councillors are your most direct line to city hall.",
@@ -1107,10 +1122,14 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "review elected officials",
       "politician approval rating",
-      "public political reviews"
+      "public political reviews",
+      "rate my politicians",
+      "politician ratings",
+      "candidate track record",
+      "rate politicians"
     ],
-    "metaTitle": "Can You Rate and Review Your Elected Officials? The Future of Public Politician Scores | Choseno Guide",
-    "metaDescription": "Comprehensive guide to rate my politician. Learn practical steps, jurisdictional powers, and how to take civic action on Choseno.",
+    "metaTitle": "Rate My Politicians: Can You Review Elected Officials? | Choseno",
+    "metaDescription": "Can you rate your politicians like a restaurant? How public politician ratings work, what they measure, and how to rate your MP, MLA or councillor on Choseno.",
     "takeaways": [
       "Choseno introduces transparent 1-5 star constituent ratings with 6-month cooldowns.",
       "Public feedback creates persistent accountability between election cycles."
@@ -1575,10 +1594,14 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "vetting school board candidates",
       "evaluating city council candidates",
-      "voter guide local elections"
+      "voter guide local elections",
+      "who to vote for",
+      "how to figure out who to vote for",
+      "help with who to vote for",
+      "who is running in my riding"
     ],
     "metaTitle": "How to Vet Local Election Candidates in 15 Minutes (Even With Zero Media Coverage) | Choseno Guide",
-    "metaDescription": "Comprehensive guide to how to research local candidates. Learn practical steps, jurisdictional powers, and how to take civic action on Choseno.",
+    "metaDescription": "Not sure who to vote for? A 15-minute method to research local candidates, even with no media coverage, and decide who to vote for in your riding or ward.",
     "takeaways": [
       "Check donor filings, local endorsements, and past civic committee attendance.",
       "Read candidate questionnaire responses on non-partisan civic platforms."
@@ -1731,10 +1754,15 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "non partisan candidate comparison",
       "side by side election comparison",
-      "objective voter guide"
+      "objective voter guide",
+      "compare election candidates",
+      "candidate comparison tool",
+      "compare two candidates",
+      "political candidate comparison website",
+      "candidate track record"
     ],
-    "metaTitle": "How to Compare Political Candidates Fairly Without Partisan Bias | Choseno Guide",
-    "metaDescription": "Comprehensive guide to how to compare political candidates. Learn practical steps, jurisdictional powers, and how to take civic action on Choseno.",
+    "metaTitle": "How to Compare Election Candidates Fairly: A Side-by-Side Guide | Choseno",
+    "metaDescription": "A practical way to compare election candidates side by side: what to check, how to avoid bias, and how Choseno lets you compare two candidates in your riding.",
     "takeaways": [
       "Focus on policy track records and concrete voting actions rather than rhetoric.",
       "Evaluate candidates on identical criteria: budget experience, endorsements, and constituent accessibility."
@@ -1939,10 +1967,12 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
     "secondaryKeywords": [
       "judicial election voter guide",
       "voting for sheriff",
-      "non partisan ballot positions research"
+      "non partisan ballot positions research",
+      "who to vote for",
+      "help with who to vote for"
     ],
-    "metaTitle": "Deciding Down-Ballot | Choseno Guide",
-    "metaDescription": "Comprehensive guide to how to research down ballot candidates. Learn practical steps, jurisdictional powers, and how to take civic action on Choseno.",
+    "metaTitle": "How to Research Down-Ballot Candidates: Judges, Sheriffs & More | Choseno",
+    "metaDescription": "Not sure who to vote for further down the ballot? How to research judges, sheriffs and other low-profile races before you vote.",
     "takeaways": [
       "Bar association evaluations provide objective peer reviews for elected judges.",
       "Down-ballot officials frequently hold more daily authority over your liberty than congress."
@@ -5264,5 +5294,113 @@ export const ALL_BLOG_POSTS: BlogPost[] = [
       ],
       "featured": true,
       "showDistrictBanner": true
-  }
+  },
+  {
+    "slug": "how-to-figure-out-who-to-vote-for",
+    "title": "How to Figure Out Who to Vote For: A Practical Guide for Any Election",
+    "headline": "How to Figure Out Who to Vote For: A Practical Guide for Any Election",
+    "excerpt": "Not sure who to vote for? A step-by-step way to find the candidates on your ballot, compare them, and decide, from federal races down to city council.",
+    "category": "voting",
+    "publishedAt": "2026-10-14T12:00:00.000Z",
+    "updatedAt": "2026-10-14T12:00:00.000Z",
+    "readingTimeMinutes": 6,
+    "primaryKeyword": "who to vote for",
+    "secondaryKeywords": [
+      "how to figure out who to vote for",
+      "help with who to vote for",
+      "who to vote for app",
+      "who is running in my riding",
+      "compare election candidates"
+    ],
+    "metaTitle": "Who to Vote For: How to Decide in 5 Steps | Choseno",
+    "metaDescription": "Not sure who to vote for? Find the candidates on your ballot, compare them side by side, check their records and ratings, and decide in five steps.",
+    "takeaways": [
+      "Start with your own ballot: find your riding, ward or district first, so you only research races you can actually vote in.",
+      "Compare candidates on the same questions, and check record and ratings, not just campaign slogans."
+    ],
+    "contentMarkdown": "## Start with the ballot you actually have\n\nMost advice on **who to vote for** starts with ideology. A better first step is practical: find out which races are on *your* ballot. A single address can sit in a federal riding, a provincial riding, a municipal ward and a school district at once, and each has its own candidates.\n\nUse Choseno's [find your district tool](/find-my-district) to enter your address or postal code and see every race that applies to you.\n\n## Step 1: List the candidates in each race\n\nOpen each race and write down who is running and for which party, or whether they are independent. For a quick overview of an entire election, browse the [elections and races directory](/elections).\n\n## Step 2: Compare candidates on the same questions\n\nComparing candidates is fairer when you hold them to the same questions. Read each candidate's statement and look for specifics: what they would do, in which role, and with what budget or authority. Our guide on [how to compare candidates fairly](/blog/how-to-compare-candidates-fairly-without-bias) covers this in more detail.\n\n## Step 3: Check the role's real powers\n\nLocal and provincial roles decide different things. A city councillor does not set healthcare policy, and an MP does not run your school board. Judge each candidate against what the job can actually deliver.\n\n## Step 4: Look at track record and ratings\n\nFor incumbents, look at what they did in office. For everyone, read voter ratings and feedback from people in the same riding or ward. Choseno shows public ratings so you can see how constituents rate the people who represent them.\n\n## Step 5: Decide, and confirm the logistics\n\nChoseno does not endorse candidates; the decision is yours. Before voting day, confirm your voting place, hours and ID rules with your official election authority.\n\n## Short on time?\n\nOur [15-minute method for researching local candidates](/blog/how-to-research-local-candidates-15-minutes) works even when there is little media coverage.",
+    "faqs": [
+      {
+        "question": "How do I figure out who to vote for?",
+        "answer": "Find the races on your ballot, list the candidates, compare them on the same questions, check the powers of the role and any track record or ratings, then decide. Choseno helps with the first four steps and does not endorse candidates."
+      },
+      {
+        "question": "Is there an app or website that tells me who to vote for?",
+        "answer": "Choseno does not tell you who to vote for. It shows you who is running in your riding, ward or district, lets you compare candidates side by side and read voter ratings so you can decide for yourself."
+      },
+      {
+        "question": "How do I find who is running in my riding?",
+        "answer": "Enter your address or postal code in Choseno's find your district tool. It lists the federal, provincial and municipal races on your ballot and the candidates in each."
+      }
+    ],
+    "internalLinks": [
+      {
+        "title": "Find My District",
+        "url": "/find-my-district",
+        "description": "See every race on your ballot by address or postal code.",
+        "badge": "Interactive Tool"
+      },
+      {
+        "title": "Election Explorer",
+        "url": "/elections",
+        "description": "Browse 2026 elections, races and candidates.",
+        "badge": "Elections"
+      }
+    ],
+    "featured": false
+  },
+  {
+    "slug": "bc-municipal-election-2026-candidates-dates-guide",
+    "title": "BC Municipal Election 2026: Candidates, Dates and How to Find Your Race",
+    "headline": "BC Municipal Election 2026: Candidates, Dates and How to Find Your Race",
+    "excerpt": "The 2026 B.C. municipal elections are on Saturday, October 17, 2026. Here is how to find the candidates in your city and what each local role decides.",
+    "category": "municipal",
+    "publishedAt": "2026-10-14T12:00:00.000Z",
+    "updatedAt": "2026-10-14T12:00:00.000Z",
+    "readingTimeMinutes": 6,
+    "primaryKeyword": "bc municipal election 2026",
+    "secondaryKeywords": [
+      "bc municipal election candidates",
+      "bc municipal election dates",
+      "municipal election bc",
+      "victoria municipal election candidates",
+      "kamloops municipal election candidates"
+    ],
+    "metaTitle": "BC Municipal Election 2026: Candidates & Dates | Choseno",
+    "metaDescription": "BC municipal elections are on October 17, 2026. Find mayor, council and school trustee candidates for your city and see what each local role decides.",
+    "takeaways": [
+      "Municipal elections in B.C. are held on Saturday, October 17, 2026, separately from the provincial election.",
+      "Find your city's mayor, council and school trustee candidates on Choseno, then check Elections BC and your municipality for voting rules."
+    ],
+    "contentMarkdown": "## When is the BC municipal election?\n\nMunicipal elections in B.C. are held on **Saturday, October 17, 2026**. They are a separate vote from the 2026 provincial election, and each local government sets its own voting places and some of its rules, so check your municipality's website for details.\n\n## Who is on a municipal ballot?\n\nDepending on where you live, your ballot can include a **mayor**, **city or town councillors** (elected at large or by ward), **school board trustees**, and regional district or other local roles.\n\n## How to find the candidates in your city\n\nOpen Choseno's [elections and races directory](/elections) and choose your city, or enter your address in the [find your district tool](/find-my-district) to see only the races on your ballot. Each race page lists the candidates, their party or slate where they have one, and, for many B.C. municipalities, the advance and election-day voting places.\n\n## Independent candidates\n\nMany B.C. municipal candidates run as independents or with local slates rather than provincial parties, so a candidate's name and statement matter more than a party label. Read each statement and compare candidates on the same questions.\n\n## What local roles decide\n\nCouncils decide on local bylaws, zoning, property taxes and municipal services. School trustees oversee the school district budget and policy. Our guide on [what a city ward is](/blog/what-is-a-city-ward-municipal-representation) explains how ward representation works.\n\n## Official information\n\nChoseno is independent. For voting rules, ID, places and results, use Elections BC guidance and your municipality's election office.",
+    "faqs": [
+      {
+        "question": "When is the BC municipal election in 2026?",
+        "answer": "Municipal elections in B.C. are on Saturday, October 17, 2026, separate from the 2026 provincial election."
+      },
+      {
+        "question": "How do I find the candidates in my BC city?",
+        "answer": "Choose your city in Choseno's elections directory or enter your address in the find your district tool to see the mayor, council and school trustee races on your ballot and the candidates in each."
+      },
+      {
+        "question": "Where can I find official BC municipal election results?",
+        "answer": "Official results come from your municipality's election office. Choseno is independent and shows candidates and race information, so use your municipality's website for official results."
+      }
+    ],
+    "internalLinks": [
+      {
+        "title": "Find My District",
+        "url": "/find-my-district",
+        "description": "See the municipal races on your ballot.",
+        "badge": "Interactive Tool"
+      },
+      {
+        "title": "Election Explorer",
+        "url": "/elections",
+        "description": "Browse BC 2026 races and candidates.",
+        "badge": "Elections"
+      }
+    ],
+    "featured": false
+  },
 ];

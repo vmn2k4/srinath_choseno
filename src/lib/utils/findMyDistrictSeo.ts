@@ -20,6 +20,22 @@ export function findMyDistrictFaqs(): Faq[] {
       a: "Enter your address, use your device's location or click the map in the finder above. Choseno matches you to every federal, provincial or state, and municipal boundary you live in, then lists the races and candidates for each. It's free and needs no login.",
     },
     {
+      q: "How do I find my riding in BC, Alberta or Ontario?",
+      a: "Enter your address or postal code in the finder above and Choseno shows your federal and provincial riding together, plus your ward or municipality. For the official boundary lookup, use Elections BC, Elections Alberta or Elections Ontario.",
+    },
+    {
+      q: "Which riding am I in, and who is the MP for my area?",
+      a: "Your federal riding elects your MP and your provincial riding elects your MLA (MPP in Ontario). Search your address or postal code above to see both ridings and who currently holds each seat.",
+    },
+    {
+      q: "Who is my MP, MLA or MPP?",
+      a: "Your MP represents your federal riding, and your MLA (MPP in Ontario) represents your provincial riding. Enter your address or postal code in the finder above and Choseno shows who holds each seat, plus your councillor or mayor, with a profile you can rate and review.",
+    },
+    {
+      q: "Who is running for Congress in my district?",
+      a: "Enter your address in the finder above to see your U.S. congressional district and the candidates running in it, alongside your state and local races.",
+    },
+    {
       q: "When is the 2026 BC provincial election?",
       a: "Final voting day is Saturday, October 24, 2026, and advance voting runs October 16 to 21, 2026, according to Elections BC. Municipal elections in B.C. are a separate vote on Saturday, October 17, 2026.",
     },

@@ -11,6 +11,7 @@ import {
   getCandidatesBySeatIds,
   resolveRepresentationBranch,
 } from "@/lib/services/elections";
+import FaqSection from "@/components/features/FaqSection";
 import BoundaryDirectoryClient from "@/components/features/BoundaryDirectoryClient";
 import type { BranchHolderNode, RepresentationBranch } from "@/components/features/RepresentationBranchTree";
 import { buildBoundarySlug, buildSeatSlug, buildCandidateSlug, extractShapeIdFromSlug } from "@/lib/utils/slugs";
@@ -18,6 +19,7 @@ import { buildRaceDescription, partyShort, shortDate } from "@/lib/utils/seatRac
 import { withProvince } from "@/lib/utils/regionLabel";
 import { Card, Badge } from "@/components/primitives";
 import { SITE_URL } from "@/lib/constants/site";
+import type { Faq } from "@/lib/utils/electionPartySeo";
 
 const BASE_URL = SITE_URL;
 
@@ -443,6 +445,27 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
     });
   }
 
+  // Voter-intent questions, rendered visibly below and added to the same
+  // FAQPage markup so the schema never contains an answer visitors can't see.
+  const voterFaqs: Faq[] = [
+    {
+      q: `Who is running in ${placeName}?`,
+      a:
+        totalActiveCandidates > 0
+          ? `${totalActiveCandidates} candidate${totalActiveCandidates === 1 ? " is" : "s are"} running across ${seatRows.length} race${
+              seatRows.length === 1 ? "" : "s"
+            } in ${placeName} in the 2026 election cycle. Open a race on this page to see every candidate and their party.`
+          : `No candidates are listed yet for ${placeName}. Candidates appear on Choseno as nominations are confirmed.`,
+    },
+    {
+      q: `Who should I vote for in ${placeName}?`,
+      a: `Choseno does not endorse candidates. Open each race for ${placeName}, compare the candidates' parties, statements and voter ratings, and rate your current representatives, then decide for yourself.`,
+    },
+  ];
+  for (const f of voterFaqs) {
+    faqEntities.push({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } });
+  }
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -668,6 +691,10 @@ export default async function BoundaryDirectoryPage({ params, searchParams }: Pa
           </div>
         </div>
       )}
+
+      <div className="pt-6">
+        <FaqSection faqs={voterFaqs} heading={`${placeName}: who is running and who to vote for`} />
+      </div>
     </div>
   );
 }

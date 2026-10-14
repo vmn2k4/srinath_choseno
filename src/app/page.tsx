@@ -17,9 +17,9 @@ const BASE_URL = SITE_URL;
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Choseno — Know Who's On Your Ballot | 2026 Candidates & Politician Reviews",
+  title: "Who's Running in My Riding or Ward? 2026 Candidates | Choseno",
   description:
-    "Know who's on your ballot. Find every candidate running in your district, then rate and review your representatives — like Google Reviews, but for democracy.",
+    "Find who's running in your riding, ward or district and who your MP, MLA or councillor is. Compare election candidates and rate your politicians — like Google Reviews, but for democracy.",
   alternates: { canonical: BASE_URL },
   openGraph: {
     title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",

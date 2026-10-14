@@ -92,7 +92,21 @@ export function hubFacts(election: ElectionLite, parties: PartySummary[], total:
       q: `Who is running in my riding, ward or district in the ${election.name}?`,
       a: `Every race in the ${election.name} is listed below by riding, ward or district, each linking to its candidates. To see only the races on your ballot, enter your address in Choseno's find your district tool.`,
     },
+    {
+      q: `Who should I vote for in the ${election.name}?`,
+      a: `Choseno does not endorse candidates. Find the races on your ballot, then compare each candidate's party, statement and voter ratings before you decide${date ? `; voting is on ${date}` : ""}.`,
+    },
+    {
+      q: `How can I compare candidates in the ${election.name}?`,
+      a: `Open any race in the ${election.name} to see its candidates side by side, with party, statement and voter ratings. You can also rate your current representatives on Choseno.`,
+    },
   ];
+  if (date) {
+    faqs.push({
+      q: `When is the ${election.name}?`,
+      a: `Voting in the ${election.name} is on ${date}. Check your official election authority for advance voting, voting hours and ID rules.`,
+    });
+  }
   return { summary: summary.trim(), faqs };
 }
 

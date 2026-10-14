@@ -26,6 +26,8 @@ export interface RaceFacts {
   incumbent?: RaceIncumbent | null;
 }
 
+import type { Faq } from "@/lib/utils/electionPartySeo";
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -230,4 +232,41 @@ export function buildCandidateTitle(f: Pick<CandidateFacts, "name" | "roleTitle"
     [`${f.name} — ${where}${f.roleTitle} Candidate 2026 | Choseno`, `${f.name} — ${f.roleTitle} Candidate 2026 | Choseno`, `${f.name} — 2026 Candidate | Choseno`],
     max
   );
+}
+
+/**
+ * Voter-intent Q&A for a seat page ("who is my MP/MLA/councillor", "who should
+ * I vote for", "how do I compare candidates"). Every answer is built from this
+ * seat's own incumbent, candidates and date, and the page renders the same
+ * list as visible FAQ and as FAQPage JSON-LD.
+ */
+export function buildVoterFaqs(f: RaceFacts): Faq[] {
+  const faqs: Faq[] = [];
+  const place = f.boundaryName;
+  const n = f.candidates.length;
+  const date = longDate(f.electionDate);
+
+  if (f.incumbent) {
+    const since = dateParts(f.incumbent.since)?.y;
+    const party = partyShort(f.incumbent.party);
+    faqs.push({
+      q: `Who is my ${f.roleTitle} in ${place}?`,
+      a: `The current ${f.roleTitle} for ${place} is ${f.incumbent.name}${party ? ` (${party})` : ""}${since ? `, in office since ${since}` : ""}. You can rate and review ${f.incumbent.name} on Choseno.`,
+    });
+  }
+
+  faqs.push({
+    q: `Who should I vote for as ${f.roleTitle} in ${place}?`,
+    a:
+      n > 0
+        ? `Choseno does not endorse candidates. ${n === 1 ? "One candidate is" : `${n} candidates are`} listed for ${f.roleTitle} in ${place}: ${listNames(f.candidates.map(label))}. Read each candidate's statement and voter ratings on this page, compare them side by side, then decide${date ? ` before voting on ${date}` : ""}.`
+        : `Choseno does not endorse candidates. No candidates are listed yet for ${f.roleTitle} in ${place}; check back as nominations are confirmed, then compare their statements and voter ratings on this page.`,
+  });
+
+  faqs.push({
+    q: `How do I compare the ${f.roleTitle} candidates in ${place}?`,
+    a: `Open each candidate on this page to see their party, statement and voter ratings, and compare two candidates for the ${f.roleTitle} race in ${place} before you vote. To see only the races on your own ballot, enter your address in Choseno's find your district tool.`,
+  });
+
+  return faqs;
 }

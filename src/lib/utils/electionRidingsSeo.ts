@@ -101,6 +101,14 @@ export function ridingsFacts(
       a: `Search your address or use your device's location in Choseno's find your district tool. It matches you to every boundary you live in at once, with no login needed. You can also look for your ${noun.singular} by name in the table above.`,
     },
   ];
+  faqs.push({
+    q: `Which ${noun.singular} am I in, and who is my representative?`,
+    a: `Enter your address or postal code in Choseno's find your district tool to see your ${noun.singular} and who currently holds the seat, whether that is your MP, MLA, MPP, councillor or congressional representative.`,
+  });
+  faqs.push({
+    q: `Who should I vote for in my ${noun.singular}?`,
+    a: `Choseno does not endorse candidates. Find your ${noun.singular} in the table above, open the race, and compare each candidate's party, statement and voter ratings before you vote.`,
+  });
   if (date) {
     faqs.push({
       q: `When is the ${election.name}?`,

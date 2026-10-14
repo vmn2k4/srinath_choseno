@@ -1,11 +1,12 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import FaqSection from "@/components/features/FaqSection";
 import ElectionSeatPageClient from "@/components/features/ElectionSeatPageClient";
 import VotingPlacesSection from "@/components/features/VotingPlacesSection";
 import { createPublicClient } from "@/lib/supabase/publicServer";
 import { getSeatById, getCandidatesBySeatIds, getOfficeHoldersForShape } from "@/lib/services/elections";
-import { buildRaceDescription, buildRaceParagraphs, buildRaceTitle, buildCandidateTitle, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
+import { buildRaceDescription, buildRaceParagraphs, buildRaceTitle, buildCandidateTitle, buildVoterFaqs, longDate, type RaceFacts } from "@/lib/utils/seatRaceSeo";
 import { getPoliticianEngagementSummaries } from "@/lib/services/ratings";
 import { getProvinceNameForShape } from "@/lib/services/boundaries";
 import { withProvince } from "@/lib/utils/regionLabel";
@@ -263,6 +264,8 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
     .map((c) => c.display_name || c.profiles?.full_name)
     .filter(Boolean);
 
+  const voterFaqs = seat ? buildVoterFaqs(toRaceFacts(seat, candList, incumbentRow, placeName)) : [];
+
   const jsonLd = seat
     ? [
         {
@@ -346,6 +349,11 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
                     : `Community support data for ${roleTitle} candidates in ${boundaryName} is not yet available on Choseno — support totals appear once constituents start following candidates.`,
               },
             },
+            ...voterFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
           ],
         },
         {
@@ -463,6 +471,11 @@ export default async function ElectionSeatPage({ params }: SeatPageProps) {
             <p key={i}>{para}</p>
           ))}
         </section>
+      )}
+      {seat && voterFaqs.length > 0 && (
+        <div className="px-4 lg:px-8 pb-16 max-w-4xl">
+          <FaqSection faqs={voterFaqs} heading={`${roleTitle} in ${boundaryName}: who to vote for and who represents you`} />
+        </div>
       )}
     </>
   );

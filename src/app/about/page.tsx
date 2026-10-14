@@ -7,12 +7,12 @@ const BASE_URL = SITE_URL;
 export const metadata: Metadata = {
   title: "About Choseno — Independent Hyperlocal Civic Platform",
   description:
-    "Choseno connects citizens and candidates inside real electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
+    "Choseno is an independent, non-partisan site to compare election candidates, rate your politicians and see who's running in your riding, ward or district.",
   alternates: { canonical: `${BASE_URL}/about` },
   openGraph: {
     title: "About Choseno — Independent Hyperlocal Civic Platform",
     description:
-      "Choseno connects citizens and candidates inside real electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
+      "Choseno is an independent, non-partisan site to compare election candidates, rate your politicians and see who's running in your riding, ward or district.",
     url: `${BASE_URL}/about`,
     siteName: SITE_NAME,
     type: "website",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About Choseno — Independent Hyperlocal Civic Platform",
     description:
-      "Choseno connects citizens and candidates inside real electoral boundaries — an anonymous, hyperlocal civic network free of party influence.",
+      "Choseno is an independent, non-partisan site to compare election candidates, rate your politicians and see who's running in your riding, ward or district.",
     images: [`${BASE_URL}/og-about.jpg`],
   },
 };

@@ -99,6 +99,14 @@ export function buildElectionsIndexFaqs(cards: ElectionCardData[]): Faq[] {
       a: "They all name the area that elects one representative. \"Constituency\" is the general term. \"Riding\" is the Canadian word for a federal or provincial constituency. A \"ward\" is usually a subdivision of a city or town that elects a councillor, and \"district\" is common in the United States (congressional and school districts) and is also used in Canada.",
     },
     {
+      q: "Who should I vote for, and how do I compare election candidates?",
+      a: "Choseno does not endorse candidates. Find your riding, ward or district with the finder above, open each race on your ballot, and compare the candidates' parties, statements and voter ratings side by side before you vote.",
+    },
+    {
+      q: "Can I rate my politicians on Choseno?",
+      a: "Yes. Every candidate and current office holder has a profile where verified local residents can rate and review them, so you can see politician ratings from the people they represent.",
+    },
+    {
       q: "Where do the candidate lists come from?",
       a: "Choseno compiles candidate lists from public election sources, including official candidate filings where they are published, and updates them as nominations change. Always confirm with your official election authority before you vote.",
     }

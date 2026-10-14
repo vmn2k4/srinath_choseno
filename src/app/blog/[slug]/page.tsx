@@ -72,7 +72,7 @@ export async function generateMetadata({
   const ogImageUrl = `${BASE_URL}/blog/${slug}/opengraph-image`;
 
   return {
-    title: `${post.metaTitle} | Choseno`,
+    title: /\|\s*Choseno/.test(post.metaTitle) ? post.metaTitle : `${post.metaTitle} | Choseno`,
     description: post.metaDescription,
     keywords: [post.primaryKeyword, ...post.secondaryKeywords],
     alternates: {
