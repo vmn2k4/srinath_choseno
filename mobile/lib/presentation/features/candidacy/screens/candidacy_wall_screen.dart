@@ -8,8 +8,8 @@
 // (Flow B only — see candidacy_providers.dart) below covers what a
 // visitor most needs to decide who to support, and what an unclaimed
 // candidate needs to take ownership of their page.
+import '../../../../core/widgets/expandable_text.dart';
 import '../../../common/widgets/detail_app_bar.dart';
-import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -63,7 +63,7 @@ class CandidacyWallScreen extends ConsumerWidget {
                   _ClaimCandidacyCard(candidateId: candidateId),
                 ],
                 const SizedBox(height: ChosenoSpacing.lg),
-                const DistrictRacesBanner(),
+
                 const SizedBox(height: ChosenoSpacing.lg),
                 if (data.answers.isNotEmpty) ...[
                   const SectionHeader(
@@ -189,7 +189,7 @@ class _ProfileCard extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: ChosenoSpacing.xs),
-            _ExpandableText(
+            ExpandableText(
               text: detail.bio!,
               style: ChosenoTypography.body(
                 color: palette.textMuted,
@@ -572,62 +572,5 @@ class _AnswerValue extends StatelessWidget {
           style: ChosenoTypography.body(color: palette.textMain, fontSize: 14),
         );
     }
-  }
-}
-
-/// Long text clamped to a few lines with a Read more / Show less toggle —
-/// bios on the web run to full paragraphs plus link lists.
-class _ExpandableText extends StatefulWidget {
-  const _ExpandableText({required this.text, required this.style});
-
-  final String text;
-  final TextStyle style;
-
-  @override
-  State<_ExpandableText> createState() => _ExpandableTextState();
-}
-
-class _ExpandableTextState extends State<_ExpandableText> {
-  bool _expanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = ChosenoTheme.of(context);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final painter = TextPainter(
-          text: TextSpan(text: widget.text, style: widget.style),
-          maxLines: 4,
-          textDirection: TextDirection.ltr,
-        )..layout(maxWidth: constraints.maxWidth);
-        final overflows = painter.didExceedMaxLines;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.text,
-              style: widget.style,
-              maxLines: _expanded ? null : 4,
-              overflow: _expanded ? TextOverflow.visible : TextOverflow.ellipsis,
-            ),
-            if (overflows)
-              GestureDetector(
-                onTap: () => setState(() => _expanded = !_expanded),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: ChosenoSpacing.xs),
-                  child: Text(
-                    _expanded ? 'Show less' : 'Read more',
-                    style: ChosenoTypography.body(
-                      color: palette.primary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        );
-      },
-    );
   }
 }

@@ -120,6 +120,21 @@ class PoliticianWallRepositoryImpl implements PoliticianWallRepository {
   }
 
   @override
+  Future<Result<void>> createWallPost(
+    String wallGhostId,
+    String content,
+  ) async {
+    try {
+      await _remote.createWallPost(wallGhostId, content);
+      return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
   Future<Result<List<Post>>> getWallPosts(
     String ghostId, {
     int limit = 20,

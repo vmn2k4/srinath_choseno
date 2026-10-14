@@ -4,9 +4,11 @@
 // not yet ported: the composer (createWallPost), the owner-only View
 // Supporters dashboard + realtime subscription, the QR-code share popover,
 // and the News-mentions sub-page (§4.A.9's second half).
+import '../../../../core/widgets/expandable_text.dart';
+import '../widgets/wall_composer.dart';
+import '../widgets/wall_post_tile.dart';
 import '../../../common/widgets/screen_header.dart';
 import '../../../common/widgets/detail_app_bar.dart';
-import '../../elections/widgets/district_races_banner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +22,6 @@ import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../common/widgets/app_shell.dart' show kBottomNavClearance;
 import '../../../../domain/politician_wall/entities/politician_wall_profile.dart';
-import '../../../../domain/posts/entities/post.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/politician_wall_providers.dart';
 
@@ -144,190 +145,175 @@ class _WallBody extends ConsumerWidget {
         ),
         children: [
           AppCard(
-            variant: AppCardVariant.hero,
-            padding: const EdgeInsets.all(ChosenoSpacing.lg),
+            padding: const EdgeInsets.all(ChosenoSpacing.md),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                AppAvatar(
-                  imageUrl: profile.displayPhotoUrl,
-                  fallbackText: profile.fullName,
-                  radius: 36,
-                ),
-                const SizedBox(height: ChosenoSpacing.md),
-                Text(
-                  profile.fullName,
-                  textAlign: TextAlign.center,
-                  style: ChosenoTypography.display(
-                    color: palette.textMain,
-                    fontSize: 32,
-                    height: 1.1,
-                  ),
-                ),
-                const SizedBox(height: ChosenoSpacing.sm),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: ChosenoSpacing.sm,
-                  runSpacing: ChosenoSpacing.xs,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (profile.politicalTargetRole != null)
-                      AppBadge(
-                        label: profile.politicalTargetRole!.trim(),
-                        tone: AppBadgeTone.primary,
-                      ),
-                    if (profile.partyName != null)
-                      AppBadge(
-                        label: profile.partyName!,
-                        tone: AppBadgeTone.neutral,
-                      ),
-                  ],
-                ),
-                if (profile.targetBoundaryName != null) ...[
-                  const SizedBox(height: ChosenoSpacing.md),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.place_outlined,
-                        size: 16,
-                        color: palette.textMuted,
-                      ),
-                      const SizedBox(width: 4),
-                      Flexible(
-                        child: Text(
-                          profile.targetBoundaryName!,
-                          textAlign: TextAlign.center,
-                          style: ChosenoTypography.body(
-                            color: palette.textMuted,
-                            fontSize: 13,
+                    AppAvatar(
+                      imageUrl: profile.displayPhotoUrl,
+                      fallbackText: profile.fullName,
+                      radius: 28,
+                    ),
+                    const SizedBox(width: ChosenoSpacing.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            profile.fullName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: ChosenoTypography.display(
+                              color: palette.textMain,
+                              fontSize: 22,
+                              height: 1.15,
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-                const SizedBox(height: ChosenoSpacing.lg),
-                supporterCountAsync.when(
-                  data: (count) => Column(
-                    children: [
-                      Text(
-                        '$count',
-                        style: ChosenoTypography.display(
-                          color: palette.primary,
-                          fontSize: 34,
-                        ),
-                      ),
-                      Text(
-                        count == 1 ? 'supporter' : 'supporters',
-                        style: ChosenoTypography.body(
-                          color: palette.textMuted,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                  loading: () => const SizedBox(height: 56),
-                  error: (_, _) => const SizedBox.shrink(),
-                ),
-                const SizedBox(height: ChosenoSpacing.md),
-                // You can't support yourself — the button is for visitors.
-                if (!isTab &&
-                    ref.watch(authStateChangesProvider).value?.id != profile.id)
-                  isSupportingAsync.when(
-                    data: (isSupporting) => SizedBox(
-                      width: double.infinity,
-                      child: AppButton(
-                        label: isSupporting ? 'Supported' : 'Support',
-                        icon: isSupporting
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        variant: isSupporting
-                            ? AppButtonVariant.primary
-                            : AppButtonVariant.outline,
-                        onPressed: () {
-                          AppHaptics.tap();
-                          ref
-                              .read(wallSupportControllerProvider.notifier)
-                              .toggle();
-                        },
+                          const SizedBox(height: 2),
+                          Text(
+                            [
+                              if (profile.politicalTargetRole != null)
+                                profile.politicalTargetRole!.trim(),
+                              if (profile.partyName != null) profile.partyName!,
+                            ].join(' · '),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: ChosenoTypography.body(
+                              color: palette.textSecondary,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                          ),
+                          if (profile.targetBoundaryName != null)
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.place_outlined,
+                                  size: 13,
+                                  color: palette.textMuted,
+                                ),
+                                const SizedBox(width: 2),
+                                Flexible(
+                                  child: Text(
+                                    profile.targetBoundaryName!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: ChosenoTypography.body(
+                                      color: palette.textMuted,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
                       ),
                     ),
-                    loading: () => const AppButton(label: '', loading: true),
-                    error: (_, _) => const SizedBox.shrink(),
-                  ),
-                if (profile.contactEmail != null ||
-                    profile.contactPhone != null ||
-                    profile.sourceUrl != null) ...[
-                  const SizedBox(height: ChosenoSpacing.sm),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: ChosenoSpacing.sm,
-                    children: [
-                      if (profile.contactEmail != null)
-                        AppButton(
-                          label: 'Email',
-                          variant: AppButtonVariant.text,
-                          icon: Icons.mail_outline,
-                          onPressed: () =>
-                              _launch('mailto:${profile.contactEmail}'),
+                  ],
+                ),
+                const SizedBox(height: ChosenoSpacing.sm + 2),
+                Row(
+                  children: [
+                    supporterCountAsync.when(
+                      data: (count) => Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '$count',
+                              style: ChosenoTypography.body(
+                                color: palette.primary,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextSpan(
+                              text: count == 1 ? ' supporter' : ' supporters',
+                              style: ChosenoTypography.body(
+                                color: palette.textMuted,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
                         ),
-                      if (profile.contactPhone != null)
-                        AppButton(
-                          label: 'Call',
-                          variant: AppButtonVariant.text,
-                          icon: Icons.call_outlined,
-                          onPressed: () =>
-                              _launch('tel:${profile.contactPhone}'),
-                        ),
-                      if (profile.sourceUrl != null)
-                        AppButton(
-                          label: 'Official',
-                          variant: AppButtonVariant.text,
-                          icon: Icons.open_in_new,
-                          onPressed: () => _launch(profile.sourceUrl!),
-                        ),
+                      ),
+                      loading: () => const SizedBox.shrink(),
+                      error: (_, _) => const SizedBox.shrink(),
+                    ),
+                    const Spacer(),
+                    if (profile.sourceUrl != null)
+                      HeaderIconButton(
+                        icon: Icons.open_in_new,
+                        tooltip: 'Official page',
+                        onTap: () => _launch(profile.sourceUrl!),
+                      ),
+                    if (profile.contactEmail != null) ...[
+                      const SizedBox(width: ChosenoSpacing.xs),
+                      HeaderIconButton(
+                        icon: Icons.mail_outline,
+                        tooltip: 'Email',
+                        onTap: () => _launch('mailto:${profile.contactEmail}'),
+                      ),
                     ],
+                    if (profile.contactPhone != null) ...[
+                      const SizedBox(width: ChosenoSpacing.xs),
+                      HeaderIconButton(
+                        icon: Icons.call_outlined,
+                        tooltip: 'Call',
+                        onTap: () => _launch('tel:${profile.contactPhone}'),
+                      ),
+                    ],
+                    // You can't support yourself — the button is for visitors.
+                    if (!isTab &&
+                        ref.watch(authStateChangesProvider).value?.id !=
+                            profile.id) ...[
+                      const SizedBox(width: ChosenoSpacing.sm),
+                      isSupportingAsync.when(
+                        data: (isSupporting) => AppButton(
+                          label: isSupporting ? 'Supported' : 'Support',
+                          icon: isSupporting
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          variant: isSupporting
+                              ? AppButtonVariant.primary
+                              : AppButtonVariant.outline,
+                          onPressed: () {
+                            AppHaptics.tap();
+                            ref
+                                .read(wallSupportControllerProvider.notifier)
+                                .toggle();
+                          },
+                        ),
+                        loading: () =>
+                            const AppButton(label: '', loading: true),
+                        error: (_, _) => const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
+                ),
+                if (profile.bio != null && profile.bio!.trim().isNotEmpty) ...[
+                  const SizedBox(height: ChosenoSpacing.sm),
+                  ExpandableText(
+                    text: profile.bio!.trim(),
+                    maxLines: 2,
+                    style: ChosenoTypography.body(
+                      color: palette.textSecondary,
+                      fontSize: 13,
+                      height: 1.45,
+                    ),
                   ),
                 ],
               ],
             ),
           ),
-          const SizedBox(height: ChosenoSpacing.lg),
-          const DistrictRacesBanner(),
-          if (profile.bio != null && profile.bio!.trim().isNotEmpty) ...[
-            const SizedBox(height: ChosenoSpacing.lg),
-            AppCard(
-              padding: const EdgeInsets.all(ChosenoSpacing.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'About',
-                    style: ChosenoTypography.body(
-                      color: palette.textMain,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: ChosenoSpacing.sm),
-                  Text(
-                    profile.bio!,
-                    style: ChosenoTypography.body(
-                      color: palette.textSecondary,
-                      fontSize: 15,
-                      height: 1.55,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          const SizedBox(height: ChosenoSpacing.xl),
-          const SectionHeader(
-            icon: Icons.forum_outlined,
-            title: 'Posts',
-            subtitle: 'What people are saying on this wall.',
+          const SizedBox(height: ChosenoSpacing.sm + 2),
+          WallComposer(
+            wallGhostId: profile.currentGhostId,
+            ownerName: profile.fullName,
           ),
           const SizedBox(height: ChosenoSpacing.md),
           postsAsync.when(
@@ -344,7 +330,7 @@ class _WallBody extends ConsumerWidget {
                             padding: const EdgeInsets.only(
                               bottom: ChosenoSpacing.md,
                             ),
-                            child: _PostTile(post: p),
+                            child: WallPostTile(post: p),
                           ),
                         )
                         .toList(),
@@ -357,50 +343,6 @@ class _WallBody extends ConsumerWidget {
               'Could not load posts.',
               style: ChosenoTypography.body(color: palette.danger),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PostTile extends StatelessWidget {
-  const _PostTile({required this.post});
-  final Post post;
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = ChosenoTheme.of(context);
-    return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            post.content,
-            style: ChosenoTypography.body(
-              color: palette.textMain,
-              fontSize: 16,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: ChosenoSpacing.md),
-          Row(
-            children: [
-              Icon(
-                Icons.mode_comment_outlined,
-                size: 13,
-                color: palette.textMuted,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${post.commentCount}',
-                style: ChosenoTypography.body(
-                  color: palette.textMuted,
-                  fontSize: 12,
-                ),
-              ),
-            ],
           ),
         ],
       ),

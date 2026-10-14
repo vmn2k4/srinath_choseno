@@ -28,6 +28,11 @@ abstract interface class PoliticianWallRepository {
     required String supporterId,
   });
 
+  /// RPC `create_wall_post` — posts on this politician's wall (identified by
+  /// their current ghost id). A different RPC from the Feed's `create_post`
+  /// (exempt from the politician daily-post limit); never merge the two.
+  Future<Result<void>> createWallPost(String wallGhostId, String content);
+
   Future<Result<List<Post>>> getWallPosts(
     String ghostId, {
     int limit = 20,

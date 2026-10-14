@@ -169,6 +169,17 @@ class PoliticianWallRemoteDataSource {
         .eq('supporter_id', supporterId);
   }
 
+  Future<void> createWallPost(String wallGhostId, String content) {
+    return _client.rpc(
+      'create_wall_post',
+      params: {
+        'p_content': content,
+        'p_wall_ghost_id': wallGhostId,
+        'p_is_test': AppEnvironment.isDev,
+      },
+    );
+  }
+
   Future<List<dynamic>> getWallPosts(
     String ghostId, {
     required int limit,
@@ -176,7 +187,9 @@ class PoliticianWallRemoteDataSource {
   }) {
     var query = _client
         .from('posts')
-        .select('*, comments(id)')
+        .select(
+          '*, comments(id, ghost_id, content, created_at), news_articles(slug, event_date, published_at)',
+        )
         .or('ghost_id.eq.$ghostId,wall_ghost_id.eq.$ghostId');
     if (!AppEnvironment.isDev) query = query.eq('is_test', false);
     return query

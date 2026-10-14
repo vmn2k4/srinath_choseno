@@ -20,6 +20,13 @@ class Post {
     this.likesCount = 0,
     this.dislikesCount = 0,
     this.comments = const [],
+    this.newsArticleSlug,
+    this.newsDate,
+    this.isNews = false,
+    this.linkUrl,
+    this.linkTitle,
+    this.linkDescription,
+    this.linkImage,
   });
 
   final String id;
@@ -31,6 +38,18 @@ class Post {
   final int likesCount;
   final int dislikesCount;
   final List<Comment> comments;
+
+  /// A news article mirrored into this wall as a post (`news_article_id`):
+  /// shown with a "News" header, the article's image and a link to it.
+  final bool isNews;
+  final String? newsArticleSlug;
+  final DateTime? newsDate;
+
+  /// `link_metadata` saved with the post (a pasted link's preview card).
+  final String? linkUrl;
+  final String? linkTitle;
+  final String? linkDescription;
+  final String? linkImage;
 
   int get commentCount => comments.length;
   int get engagementScore => likesCount + comments.length;
@@ -50,6 +69,13 @@ class Post {
       likesCount: likesCount ?? this.likesCount,
       dislikesCount: dislikesCount ?? this.dislikesCount,
       comments: comments ?? this.comments,
+      newsArticleSlug: newsArticleSlug,
+      newsDate: newsDate,
+      isNews: isNews,
+      linkUrl: linkUrl,
+      linkTitle: linkTitle,
+      linkDescription: linkDescription,
+      linkImage: linkImage,
     );
   }
 }
