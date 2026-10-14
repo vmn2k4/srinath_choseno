@@ -39,6 +39,7 @@ extension PostMapper on Map<String, dynamic> {
       comments: comments,
       isNews: this['news_article_id'] != null,
       newsArticleSlug: article?['slug'] as String?,
+      newsImageUrl: article?['hero_image_url'] as String?,
       newsDate: newsDateStr != null ? DateTime.tryParse(newsDateStr) : null,
       linkUrl: meta?['url'] as String?,
       linkTitle: meta?['title'] as String?,

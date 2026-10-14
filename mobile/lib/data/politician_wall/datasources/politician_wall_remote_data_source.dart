@@ -188,7 +188,7 @@ class PoliticianWallRemoteDataSource {
     var query = _client
         .from('posts')
         .select(
-          '*, comments(id, ghost_id, content, created_at), news_articles(slug, event_date, published_at)',
+          '*, comments(id, ghost_id, content, created_at), news_articles(slug, event_date, published_at, hero_image_url)',
         )
         .or('ghost_id.eq.$ghostId,wall_ghost_id.eq.$ghostId');
     if (!AppEnvironment.isDev) query = query.eq('is_test', false);

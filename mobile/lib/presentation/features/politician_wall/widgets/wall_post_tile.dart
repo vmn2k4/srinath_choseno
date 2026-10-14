@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../core/config/site_config.dart';
+import '../../../../core/config/env_config.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
@@ -132,12 +132,17 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
     final palette = ChosenoTheme.of(context);
     final post = widget.post;
     final slug = post.newsArticleSlug;
-    // Most articles never got a stored hero image; the site renders one on
-    // demand at /news/<slug>/opengraph-image — same fallback as the web.
+    // The mirrored post often has no image of its own; use the article's hero image, then its generated
+    // share card in public storage. (The site's own on-demand
+    // /news/<slug>/opengraph-image route can't be used here: Vercel's bot
+    // protection answers non-browser clients with a challenge, so the app
+    // would only ever get an HTTP 429.) If that card is missing too, the
+    // image collapses rather than leaving a blank box.
     final imageUrl =
         post.imageUrl ??
+        post.newsImageUrl ??
         (post.isNews && slug != null
-            ? '${SiteConfig.siteUrl}/news/$slug/opengraph-image'
+            ? '${EnvConfig.supabaseUrl}/storage/v1/object/public/news-images/og-cards/$slug.png'
             : null);
     final content = _decodeEntities(post.content);
     final parts = post.isNews && content.contains('\n\n')

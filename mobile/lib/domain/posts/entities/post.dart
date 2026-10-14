@@ -22,6 +22,7 @@ class Post {
     this.comments = const [],
     this.newsArticleSlug,
     this.newsDate,
+    this.newsImageUrl,
     this.isNews = false,
     this.linkUrl,
     this.linkTitle,
@@ -44,6 +45,10 @@ class Post {
   final bool isNews;
   final String? newsArticleSlug;
   final DateTime? newsDate;
+
+  /// The article's own `hero_image_url` — used when the mirrored post row
+  /// has no `image_url` of its own.
+  final String? newsImageUrl;
 
   /// `link_metadata` saved with the post (a pasted link's preview card).
   final String? linkUrl;
@@ -71,6 +76,7 @@ class Post {
       comments: comments ?? this.comments,
       newsArticleSlug: newsArticleSlug,
       newsDate: newsDate,
+      newsImageUrl: newsImageUrl,
       isNews: isNews,
       linkUrl: linkUrl,
       linkTitle: linkTitle,
