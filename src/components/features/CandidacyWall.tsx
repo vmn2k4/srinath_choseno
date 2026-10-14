@@ -110,7 +110,7 @@ interface CandidateRecord {
   election_seats?: {
     role_title?: string;
     map_shapes?: { name?: string } | null;
-    elections?: { id?: string; name?: string } | null;
+    elections?: { id?: string; name?: string; status?: string } | null;
   } | null;
 }
 
@@ -1011,11 +1011,14 @@ export default function CandidacyWall({
                   <span className="text-accent flex items-center gap-1 font-semibold">
                     <CheckCircle2 size={14} /> Papers Filed
                   </span>
-                ) : (
+                ) : !["nominations_closed", "active", "closed"].includes(
+                    candidate.election_seats?.elections?.status ?? ""
+                  ) ? (
+                  // Once nominations close, "pending" is meaningless -- hide it.
                   <span className="text-text-muted flex items-center gap-1">
                     <Circle size={14} /> Nomination Pending
                   </span>
-                )}
+                ) : null}
               </div>
 
               {isOwner && (

@@ -70,7 +70,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   // sitemap.ts, news-sitemap.xml/route.ts, and the JSON-LD `image` field
   // below. This is the one that actually matters for social cards: it's
   // what X/Twitter/Facebook's crawlers read as og:image / twitter:image.
-  const ogImageUrl = article.hero_image_url || `${SITE_URL}/news/${slug}/opengraph-image`;
+  const ogImageUrl =
+    content?.shareImageUrl || article.hero_image_url || `${SITE_URL}/news/${slug}/opengraph-image`;
 
   return {
     title: `${title} | Choseno Civic News`,

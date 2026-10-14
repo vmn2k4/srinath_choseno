@@ -59,6 +59,10 @@ export interface NewsArticleContent {
   body?: string; // Markdown
   heroImageAlt?: string;
   heroImageCaption?: string;
+  // 1.91:1 (1200x630) image for og:image / twitter:image. When set it wins over
+  // hero_image_url for link previews only; the on-page hero is unchanged. Use it
+  // when hero_image_url is an infographic that isn't share-card shaped.
+  shareImageUrl?: string;
   tags?: string[];
   breakingNews?: boolean;
   author?: {
