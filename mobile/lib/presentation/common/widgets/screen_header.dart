@@ -31,6 +31,7 @@ import '../../../core/utils/haptics.dart';
 import '../../../core/widgets/app_avatar.dart';
 import '../../../core/widgets/pressable.dart';
 import '../../features/profile/providers/profile_providers.dart';
+import 'brand_title.dart';
 
 /// Diameter shared by every circular control in the header, so the avatar,
 /// search and action buttons line up as one row.
@@ -56,7 +57,6 @@ class ScreenHeader extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final palette = ChosenoTheme.of(context);
     final avatarUrl = ref.watch(ownProfileProvider).value?.politicianAvatarUrl;
 
     // Room for two controls (2 × 40 + 8 gap) on each side of the title, so
@@ -74,16 +74,7 @@ class ScreenHeader extends ConsumerWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: titleInset + ChosenoSpacing.sm,
               ),
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: ChosenoTypography.display(
-                  color: palette.textMain,
-                  fontSize: 21,
-                ),
-              ),
+              child: BrandTitle(title: title, titleSize: 21),
             ),
             Row(
               children: [

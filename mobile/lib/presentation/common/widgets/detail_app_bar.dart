@@ -13,11 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/app_router.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/theme_config.dart';
+import 'brand_title.dart';
 import 'screen_header.dart';
 
-const double _kBarHeight = 56;
+const double _kBarHeight = 64;
 
 class DetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DetailAppBar({
@@ -51,7 +51,6 @@ class DetailAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final palette = ChosenoTheme.of(context);
     // Same inset on both sides keeps the title optically centred whether
     // there are zero, one or two trailing actions.
     final slots = actions.isEmpty ? 1 : actions.length;
@@ -66,37 +65,10 @@ class DetailAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              if (title != null)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: sideInset),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        title!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: ChosenoTypography.body(
-                          color: palette.textMain,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 17,
-                        ),
-                      ),
-                      if (subtitle != null)
-                        Text(
-                          subtitle!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: ChosenoTypography.body(
-                            color: palette.textMuted,
-                            fontSize: 12,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: sideInset),
+                child: BrandTitle(title: title ?? '', subtitle: subtitle),
+              ),
               Row(
                 children: [
                   HeaderIconButton(
