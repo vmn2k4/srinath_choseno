@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'theme_config.dart';
 
 enum AppThemeChoice {
+  clean('Clean', 'Light'),
   pulse('Midnight Pulse', 'Dark'),
   warmOrange('Warm orange', 'Light');
 
@@ -17,12 +18,14 @@ enum AppThemeChoice {
   final String mode;
 
   ChosenoPalette get palette => switch (this) {
+    AppThemeChoice.clean => ChosenoPalette.clean,
     AppThemeChoice.pulse => ChosenoPalette.pulse,
     AppThemeChoice.warmOrange => ChosenoPalette.warmOrange,
   };
 }
 
-const _storageKey = 'choseno_theme';
+// v2: the default changed to Clean, so earlier saved choices are ignored once.
+const _storageKey = 'choseno_theme_v2';
 
 class ThemeController extends Notifier<AppThemeChoice> {
   final _storage = const FlutterSecureStorage();
@@ -30,7 +33,7 @@ class ThemeController extends Notifier<AppThemeChoice> {
   @override
   AppThemeChoice build() {
     _restore();
-    return AppThemeChoice.pulse;
+    return AppThemeChoice.clean;
   }
 
   Future<void> _restore() async {

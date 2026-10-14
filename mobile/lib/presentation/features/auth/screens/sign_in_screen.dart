@@ -107,14 +107,19 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         gradient: ChosenoGradients.primary(palette),
-                        borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
-                          BoxShadow(
-                            color: palette.primary.withValues(alpha: 0.35),
-                            blurRadius: 32,
-                            offset: const Offset(0, 12),
-                          ),
-                        ],
+                        borderRadius: BorderRadius.circular(ChosenoRadii.dialog + 4),
+                        // Flat on light themes; the glow is a dark-theme touch.
+                        boxShadow: palette.isLight
+                            ? null
+                            : [
+                                BoxShadow(
+                                  color: palette.primary.withValues(
+                                    alpha: 0.35,
+                                  ),
+                                  blurRadius: 32,
+                                  offset: const Offset(0, 12),
+                                ),
+                              ],
                       ),
                       child: Text(
                         'C',

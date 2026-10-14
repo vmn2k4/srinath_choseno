@@ -167,6 +167,47 @@ class ChosenoPalette extends ThemeExtension<ChosenoPalette> {
   /// The mobile app's own palette — deliberately NOT the website's. The
   /// web palette (pale olive on maroon-black, translucent glass, cool-grey
   /// text) reads muted and low-contrast on a phone held at arm's length.
+  /// "Clean" — the default. Follows the InspoAI UI tokens: white canvas,
+  /// near-black text, one blue (#2563EB) for everything interactive, hairline
+  /// grey borders and no decorative gradients or glows. Green / amber / red
+  /// are reserved for success / warning / error meaning only. Flat by design:
+  /// cards are white with a 1px border, not shadowed (see ChosenoShadows).
+  static const clean = ChosenoPalette(
+    background: Color(0xFFFFFFFF),
+    surface: Color(0xFFFFFFFF),
+    surfaceHover: Color(0xFFF8FAFC),
+    surfaceActive: Color(0xFFF1F5F9),
+    surfaceElevated: Color(0xFFFFFFFF),
+    border: Color(0xFFE5E7EB),
+    borderLight: Color(0xFFE5E7EB),
+    textMain: Color(0xFF111827),
+    textSecondary: Color(0xFF334155),
+    textTertiary: Color(0xFF475569),
+    textMuted: Color(0xFF64748B),
+    textDark: Color(0xFF94A3B8),
+    textDarker: Color(0xFFCBD5E1),
+    primary: Color(0xFF2563EB),
+    primaryHover: Color(0xFF1D4ED8),
+    primaryLight: Color(0xFF1D4ED8),
+    primaryLighter: Color(0xFFBFDBFE),
+    primaryGlow: Color(0xFF2563EB), // == primary: no gradient
+    accent: Color(0xFF1D4ED8),
+    accentHover: Color(0xFF1E40AF),
+    danger: Color(0xFFDC2626),
+    dangerLight: Color(0xFF991B1B),
+    dangerLighter: Color(0xFFFEE2E2),
+    warning: Color(0xFFD97706),
+    warningLight: Color(0xFF92400E),
+    caution: Color(0xFFD97706),
+    cautionLight: Color(0xFFFEF3C7),
+    success: Color(0xFF059669),
+    successLight: Color(0xFF047857),
+    textOnPrimary: Color(0xFFFFFFFF),
+    overlay: Color(0x40000000),
+    overlayHeavy: Color(0xF2000000),
+    glassHighlight: Color(0xFFFFFFFF),
+  );
+
   /// "Midnight Pulse" is built for a handheld screen: a near-black ink
   /// canvas, solid (fast, no-blur) surfaces stepped up in clear increments,
   /// an electric violet→orchid brand gradient that pops on dark, and a
@@ -386,31 +427,37 @@ abstract final class ChosenoGradients {
   );
 }
 
-/// Font family tokens. Real Google Fonts via the `google_fonts` package.
+/// Font tokens. Inter (via `google_fonts`) for headings and body alike.
+/// (Older note, kept for history: the first mobile theme paired Plus
+/// Jakarta Sans headlines with Inter body.)
 /// Mobile deliberately differs from the website here: the web's condensed
 /// "Big Shoulders Display" headline face is a signage look that reads small
 /// and stiff on a phone; headlines here use Plus Jakarta Sans (a modern,
 /// friendly geometric sans) and body copy uses Inter, the most legible UI
 /// face at small sizes.
 abstract final class ChosenoTypography {
-  /// Headlines and big numbers. Sizes passed by call sites were tuned for a
-  /// condensed face, so they're scaled down slightly here to keep the same
-  /// visual weight in a wider one.
+  /// InspoAI scale: semibold (600) is the heaviest weight used — hierarchy
+  /// comes from size, colour and spacing, not from making everything bold.
+  /// Call sites still ask for w700/w800; they are capped here, centrally.
+  static FontWeight _cap(FontWeight w) =>
+      w.value > FontWeight.w600.value ? FontWeight.w600 : w;
+
+  /// Page titles and section headings. Inter, semibold, slightly tightened.
   static TextStyle display({
     required Color color,
     double fontSize = 28,
-    FontWeight fontWeight = FontWeight.w800,
+    FontWeight fontWeight = FontWeight.w600,
     double? height,
-  }) => GoogleFonts.plusJakartaSans(
+  }) => GoogleFonts.inter(
     color: color,
-    fontSize: fontSize * 0.88,
-    fontWeight: fontWeight == FontWeight.w700 ? FontWeight.w800 : fontWeight,
-    height: height,
-    letterSpacing: -0.4,
+    fontSize: fontSize * 0.92,
+    fontWeight: _cap(fontWeight),
+    height: height ?? 1.25,
+    letterSpacing: -0.3,
   );
 
   /// Body copy, labels, buttons, form fields — everything that isn't a
-  /// headline.
+  /// heading.
   static TextStyle body({
     required Color color,
     double fontSize = 15,
@@ -419,7 +466,7 @@ abstract final class ChosenoTypography {
   }) => GoogleFonts.inter(
     color: color,
     fontSize: fontSize,
-    fontWeight: fontWeight,
+    fontWeight: _cap(fontWeight),
     height: height,
   );
 }
@@ -427,7 +474,10 @@ abstract final class ChosenoTypography {
 /// Corner-radius tokens — DESIGN.md's Shapes section: 24px cards, 8px small
 /// controls, fully round for pills/avatars (never for a card).
 abstract final class ChosenoRadii {
-  static const double card = 24;
+  static const double card = 14;
+  static const double dialog = 16;
+  static const double control = 10; // buttons
+  static const double input = 8;
   static const double sm = 8;
   static const double full = 9999;
 }
@@ -457,14 +507,7 @@ abstract final class ChosenoShadows {
   /// Light palettes get soft, low-opacity shadows — the heavy black ones
   /// tuned for the dark canvas turn white cards into muddy grey slabs.
   static List<BoxShadow> elevatedMd(ChosenoPalette palette) => palette.isLight
-      ? const [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 12,
-            offset: Offset(0, 4),
-            spreadRadius: -2,
-          ),
-        ]
+      ? const <BoxShadow>[] // flat: border only
       : const [
           // Tighter and lighter than the web's 30px blur: this repeats on
           // every card in a scrolling list, and on a near-black canvas a
@@ -478,14 +521,7 @@ abstract final class ChosenoShadows {
         ];
 
   static List<BoxShadow> elevatedLg(ChosenoPalette palette) => palette.isLight
-      ? const [
-          BoxShadow(
-            color: Color(0x1F000000),
-            blurRadius: 24,
-            offset: Offset(0, 10),
-            spreadRadius: -6,
-          ),
-        ]
+      ? const <BoxShadow>[] // flat: border only
       : const [
           BoxShadow(
             color: Color(0x80000000),

@@ -111,7 +111,7 @@ class AppShell extends ConsumerWidget {
             child: NavigationBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               selectedIndex: _visualIndexForBranch(
                 navigationShell.currentIndex,
                 myWallSlug != null,

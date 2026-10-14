@@ -14,7 +14,7 @@ import 'theme_config.dart';
 /// Corner radius for buttons and inputs — rounder than the website's 8px
 /// small-control radius on purpose: on a touch screen a 52pt-tall control
 /// with a soft 16pt corner reads (and taps) as a native control.
-const double _controlRadius = 16;
+const double _controlRadius = ChosenoRadii.control;
 
 abstract final class ChosenoTheme {
   static ChosenoPalette of(BuildContext context) {
@@ -127,7 +127,7 @@ abstract final class AppTheme {
             fontWeight: FontWeight.w700,
           ),
           elevation: 0,
-          minimumSize: const Size(64, 52),
+          minimumSize: const Size(64, 48),
           padding: const EdgeInsets.symmetric(
             horizontal: ChosenoSpacing.lg,
             vertical: ChosenoSpacing.md,
@@ -141,7 +141,7 @@ abstract final class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: palette.primary,
           side: BorderSide(color: palette.primary, width: 1.5),
-          minimumSize: const Size(64, 52),
+          minimumSize: const Size(64, 48),
           textStyle: ChosenoTypography.body(
             color: palette.primary,
             fontWeight: FontWeight.w700,
@@ -174,19 +174,19 @@ abstract final class AppTheme {
           vertical: ChosenoSpacing.md + 2,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_controlRadius),
+          borderRadius: BorderRadius.circular(ChosenoRadii.input),
           borderSide: BorderSide(color: palette.borderLight),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_controlRadius),
+          borderRadius: BorderRadius.circular(ChosenoRadii.input),
           borderSide: BorderSide(color: palette.borderLight),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_controlRadius),
+          borderRadius: BorderRadius.circular(ChosenoRadii.input),
           borderSide: BorderSide(color: palette.primary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_controlRadius),
+          borderRadius: BorderRadius.circular(ChosenoRadii.input),
           borderSide: BorderSide(color: palette.danger),
         ),
       ),
@@ -196,14 +196,14 @@ abstract final class AppTheme {
         showDragHandle: true,
         dragHandleColor: palette.border,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(ChosenoRadii.dialog)),
         ),
       ),
       dialogTheme: DialogThemeData(
         backgroundColor: palette.surfaceElevated,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ChosenoRadii.card),
+          borderRadius: BorderRadius.circular(ChosenoRadii.dialog),
         ),
         titleTextStyle: ChosenoTypography.display(
           color: palette.textMain,
@@ -228,7 +228,9 @@ abstract final class AppTheme {
       // default selected fill is the accent colour, which clashes.
       chipTheme: ChipThemeData(
         backgroundColor: palette.surface,
-        selectedColor: palette.primary.withValues(alpha: 0.18),
+        selectedColor: palette.primary.withValues(
+          alpha: palette.isLight ? 0.10 : 0.18,
+        ),
         side: BorderSide(color: palette.border),
         checkmarkColor: palette.primary,
         labelStyle: ChosenoTypography.body(
@@ -247,7 +249,9 @@ abstract final class AppTheme {
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: palette.surface,
         height: 68,
-        indicatorColor: palette.primary.withValues(alpha: 0.18),
+        indicatorColor: palette.primary.withValues(
+          alpha: palette.isLight ? 0.10 : 0.18,
+        ),
         surfaceTintColor: Colors.transparent,
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => ChosenoTypography.body(

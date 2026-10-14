@@ -53,25 +53,36 @@ class AppBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     final color = _color(palette);
+    // Amber / green at their fill shades are below 4.5:1 as small text on a
+    // light background, so light themes use the darker "-Light" shade for the
+    // label (the tint and border keep the semantic colour).
+    final textColor = palette.isLight
+        ? switch (tone) {
+            AppBadgeTone.warning ||
+            AppBadgeTone.caution => palette.warningLight,
+            AppBadgeTone.success => palette.successLight,
+            _ => color,
+          }
+        : color;
     final fontSize = size == AppBadgeSize.xs2
-        ? 9.0
-        : (size == AppBadgeSize.xs ? 10.0 : 12.0);
+        ? 10.0
+        : (size == AppBadgeSize.xs ? 11.0 : 12.0);
     final vPad = size == AppBadgeSize.xs2 ? 1.0 : 3.0;
     final hPad = size == AppBadgeSize.xs2 ? 6.0 : 9.0;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: hPad, vertical: vPad),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
+        color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(ChosenoRadii.full),
-        border: Border.all(color: color.withValues(alpha: 0.4)),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
       ),
       child: Text(
         label,
-        style: TextStyle(
-          color: color,
+        style: ChosenoTypography.body(
+          color: textColor,
           fontSize: fontSize,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

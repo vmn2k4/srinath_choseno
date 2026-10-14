@@ -88,7 +88,9 @@ class AppCard extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: radius,
-          gradient: variant == AppCardVariant.hero
+          gradient: palette.isLight
+              ? null
+              : variant == AppCardVariant.hero
               ? ChosenoGradients.wash(palette)
               : LinearGradient(
                   begin: Alignment.topCenter,

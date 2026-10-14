@@ -120,7 +120,7 @@ class AppButton extends StatelessWidget {
           onPressed: loading ? null : onPressed,
           style: OutlinedButton.styleFrom(
             foregroundColor: color,
-            side: BorderSide(color: color, width: 1.5),
+            side: BorderSide(color: color, width: 1),
           ),
           child: child,
         );
@@ -157,16 +157,17 @@ class _GradientButton extends StatelessWidget {
               AppHaptics.tap();
               onPressed!();
             },
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(ChosenoRadii.control),
       child: Opacity(
         opacity: enabled ? 1 : 0.45,
         child: Container(
-          constraints: const BoxConstraints(minHeight: 52, minWidth: 64),
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 64),
           padding: const EdgeInsets.symmetric(horizontal: ChosenoSpacing.lg),
           decoration: BoxDecoration(
             gradient: ChosenoGradients.primary(palette),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: enabled
+            borderRadius: BorderRadius.circular(ChosenoRadii.control),
+            // The coloured glow only belongs to gradient (dark) themes.
+            boxShadow: enabled && !palette.isLight
                 ? [
                     BoxShadow(
                       color: palette.primary.withValues(alpha: 0.38),
