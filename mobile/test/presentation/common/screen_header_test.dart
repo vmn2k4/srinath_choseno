@@ -49,7 +49,11 @@ void main() {
   ) async {
     await _pump(tester);
 
-    expect(find.text('News'), findsOneWidget);
+    // Brand and screen name share one line: "Choseno - News".
+    expect(
+      find.text('Choseno - News', findRichText: true),
+      findsOneWidget,
+    );
     expect(find.bySemanticsLabel('Search'), findsOneWidget);
     expect(find.bySemanticsLabel('Profile'), findsOneWidget);
     expect(find.text('C'), findsOneWidget);
