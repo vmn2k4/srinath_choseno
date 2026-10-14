@@ -20,7 +20,6 @@ import '../../location/widgets/address_search_field.dart';
 import '../../location/widgets/location_picker_map.dart';
 import '../providers/find_my_district_providers.dart';
 import '../widgets/branch_holder_card.dart';
-import '../widgets/election_seat_card.dart';
 import '../../elections/providers/election_directory_providers.dart';
 import '../../elections/widgets/voting_places_section.dart';
 
@@ -34,6 +33,7 @@ class FindMyDistrictScreen extends ConsumerStatefulWidget {
 
 class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
   bool? _pickerOpen;
+  bool _boundariesOpen = false;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const ScreenHeader(title: 'District'),
+            const ScreenHeader(title: 'Representatives'),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: controller.detectLocation,
@@ -69,13 +69,12 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                     kBottomNavClearance + ChosenoSpacing.lg,
                   ),
                   children: [
-                    // No page heading: the tab header already says "District".
-                    // With boundaries on screen, their heading carries the map
-                    // toggle (icon, right) — tap it to expand / fold the map.
+                    // Top row: where these representatives are for. The icon
+                    // opens / folds the map to change the location.
                     if (state.boundaries.isNotEmpty) ...[
                       SectionHeader(
-                        icon: Icons.layers_outlined,
-                        title: 'Your boundaries (${state.boundaries.length})',
+                        icon: Icons.account_tree_outlined,
+                        title: 'Your representatives',
                         trailing: HeaderIconButton(
                           icon: pickerOpen
                               ? Icons.expand_less_rounded
@@ -102,111 +101,7 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                       const SizedBox(height: ChosenoSpacing.md),
                       _ErrorNote(message: state.locationError!),
                     ],
-                    if (!state.lookingUp && state.boundaries.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.md),
-                      for (final b in state.boundaries)
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: ChosenoSpacing.xs + 2,
-                          ),
-                          child: AppCard(
-                            variant: AppCardVariant.row,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: ChosenoSpacing.sm + 4,
-                              vertical: ChosenoSpacing.sm + 2,
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 32,
-                                  height: 32,
-                                  decoration: BoxDecoration(
-                                    color: palette.primary.withValues(
-                                      alpha: 0.12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Icon(
-                                    Icons.layers_outlined,
-                                    size: 17,
-                                    color: palette.primary,
-                                  ),
-                                ),
-                                const SizedBox(width: ChosenoSpacing.md),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        b.name,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: ChosenoTypography.body(
-                                          color: palette.textMain,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        [
-                                          if (b.boundaryType != null)
-                                            b.boundaryType!,
-                                          if (b.country != null) b.country!,
-                                        ].join(' · '),
-                                        style: ChosenoTypography.body(
-                                          color: palette.textMuted,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
-                    if (state.seatsLoading || state.seats.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.lg),
-                      const SectionHeader(
-                        icon: Icons.auto_awesome,
-                        title: 'Races in your area',
-                        subtitle:
-                            'Open seats and candidates in these boundaries.',
-                      ),
-                      const SizedBox(height: ChosenoSpacing.md),
-                      if (state.seatsLoading)
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(ChosenoSpacing.lg),
-                            child: LoadingIndicator(),
-                          ),
-                        )
-                      else
-                        ...state.seats.map(
-                          (seat) => Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: ChosenoSpacing.sm + 2,
-                            ),
-                            child: ElectionSeatCard(
-                              seat: seat,
-                              onTap: () =>
-                                  context.push(AppRoutes.seat(seat.id)),
-                            ),
-                          ),
-                        ),
-                    ],
-                    ..._votingPlaces(ref, state),
                     if (state.branchesLoading || state.branches.isNotEmpty) ...[
-                      const SizedBox(height: ChosenoSpacing.lg),
-                      const SectionHeader(
-                        icon: Icons.account_tree_outlined,
-                        title: 'Chain of representation',
-                        subtitle: 'The people who hold office for you.',
-                      ),
-                      const SizedBox(height: ChosenoSpacing.md),
                       if (state.branchesLoading)
                         const Center(
                           child: Padding(
@@ -279,6 +174,113 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                         ],
                       ],
                     ],
+                    // Boundary names stay out of the way until asked for.
+                    if (!state.lookingUp && state.boundaries.isNotEmpty) ...[
+                      const SizedBox(height: ChosenoSpacing.sm),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(ChosenoRadii.sm),
+                        onTap: () =>
+                            setState(() => _boundariesOpen = !_boundariesOpen),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: ChosenoSpacing.sm,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.layers_outlined,
+                                size: 18,
+                                color: palette.primary,
+                              ),
+                              const SizedBox(width: ChosenoSpacing.sm),
+                              Expanded(
+                                child: Text(
+                                  'Your boundaries (${state.boundaries.length})',
+                                  style: ChosenoTypography.body(
+                                    color: palette.textMain,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                _boundariesOpen
+                                    ? Icons.expand_less_rounded
+                                    : Icons.expand_more_rounded,
+                                color: palette.textMuted,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      if (_boundariesOpen) ...[
+                        const SizedBox(height: ChosenoSpacing.xs),
+                        for (final b in state.boundaries)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: ChosenoSpacing.xs + 2,
+                            ),
+                            child: AppCard(
+                              variant: AppCardVariant.row,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: ChosenoSpacing.sm + 4,
+                                vertical: ChosenoSpacing.sm + 2,
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 32,
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      color: palette.primary.withValues(
+                                        alpha: 0.12,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Icon(
+                                      Icons.layers_outlined,
+                                      size: 17,
+                                      color: palette.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: ChosenoSpacing.md),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          b.name,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: ChosenoTypography.body(
+                                            color: palette.textMain,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          [
+                                            if (b.boundaryType != null)
+                                              b.boundaryType!,
+                                            if (b.country != null) b.country!,
+                                          ].join(' · '),
+                                          style: ChosenoTypography.body(
+                                            color: palette.textMuted,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ],
+                    ..._votingPlaces(ref, state),
                   ],
                 ),
               ),
@@ -348,8 +350,7 @@ class _Picker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AddressSearchField(
-          onSelected: (s) =>
-              controller.pickPoint(s.lat, s.lng, fromMap: true),
+          onSelected: (s) => controller.pickPoint(s.lat, s.lng, fromMap: true),
         ),
         const SizedBox(height: ChosenoSpacing.md),
         LocationPickerMap(

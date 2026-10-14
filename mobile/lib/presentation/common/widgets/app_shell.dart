@@ -133,7 +133,7 @@ class AppShell extends ConsumerWidget {
                 const NavigationDestination(
                   icon: Icon(Icons.my_location_outlined),
                   selectedIcon: Icon(Icons.my_location),
-                  label: 'District',
+                  label: 'Reps',
                 ),
                 const NavigationDestination(
                   icon: Icon(Icons.how_to_vote_outlined),

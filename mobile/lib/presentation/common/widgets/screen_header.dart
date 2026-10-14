@@ -59,10 +59,6 @@ class ScreenHeader extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final avatarUrl = ref.watch(ownProfileProvider).value?.politicianAvatarUrl;
 
-    // Room for two controls (2 × 40 + 8 gap) on each side of the title, so
-    // it stays optically centred and never runs into either cluster.
-    const titleInset = _kHeaderControlSize * 2 + ChosenoSpacing.sm;
-
     return SizedBox(
       height: preferredSize.height,
       child: Padding(
@@ -70,11 +66,24 @@ class ScreenHeader extends ConsumerWidget implements PreferredSizeWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
+            // Title sits right after the avatar + search buttons (not centred)
+            // so long names like "Representatives" fit on one line.
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: titleInset + ChosenoSpacing.sm,
+              padding: EdgeInsets.only(
+                left: _kHeaderControlSize * 2 + ChosenoSpacing.sm * 2,
+                right: actions.isEmpty
+                    ? 0
+                    : actions.length *
+                          (_kHeaderControlSize + ChosenoSpacing.sm),
               ),
-              child: BrandTitle(title: title, titleSize: 19),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: BrandTitle(title: title, titleSize: 19),
+                ),
+              ),
             ),
             Row(
               children: [
