@@ -20,8 +20,6 @@ import '../../location/widgets/address_search_field.dart';
 import '../../location/widgets/location_picker_map.dart';
 import '../providers/find_my_district_providers.dart';
 import '../widgets/representation_tree.dart';
-import '../../elections/providers/election_directory_providers.dart';
-import '../../elections/widgets/voting_places_section.dart';
 
 class FindMyDistrictScreen extends ConsumerStatefulWidget {
   const FindMyDistrictScreen({super.key});
@@ -221,7 +219,6 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                           ),
                       ],
                     ],
-                    ..._votingPlaces(ref, state),
                   ],
                 ),
               ),
@@ -230,38 +227,6 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
         ),
       ),
     );
-  }
-
-  /// Polling places for any matched municipality that has them published
-  /// (same panel as the race page; renders nothing otherwise).
-  List<Widget> _votingPlaces(WidgetRef ref, FindMyDistrictState state) {
-    if (state.lookingUp || state.boundaries.isEmpty) return const [];
-    final ids =
-        state.boundaries
-            .where(
-              (b) => !(b.boundaryType ?? '').toLowerCase().contains('polling'),
-            )
-            .map((b) => b.id)
-            .toList()
-          ..sort();
-    final dates = ref.watch(votingPlaceDatesProvider(ids.join(','))).value;
-    if (dates == null || dates.isEmpty) return const [];
-    return [
-      const SizedBox(height: ChosenoSpacing.lg),
-      for (final v in dates)
-        if (state.boundaries.any((b) => b.id == v.shapeId))
-          VotingPlacesSection(
-            key: ValueKey('${v.shapeId}-${v.electionDate}'),
-            mapShapeId: v.shapeId,
-            electionDate: DateTime.parse(v.electionDate),
-            jurisdictionName: state.boundaries
-                .firstWhere((b) => b.id == v.shapeId)
-                .name,
-            initialOrigin: state.hasPoint
-                ? (lat: state.pointLat!, lng: state.pointLng!)
-                : null,
-          ),
-    ];
   }
 
   void _openWall(BuildContext context, BranchHolderNode node) {
