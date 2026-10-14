@@ -334,9 +334,14 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
             </Reveal>
 
             <Reveal mode="mount" delay={300}>
+              <div className="mt-6 sm:mt-8">
+                <RoleSplitCta align="start" />
+              </div>
+            </Reveal>
+            <Reveal mode="mount" delay={400}>
               {/* On mobile, hide the label to save space; just show the boundary pill.
                   On sm+, show the full "Conversations scoped to [Boundary]" */}
-              <div className="mt-8 sm:mt-9 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
+              <div className="mt-6 sm:mt-7 hidden sm:flex items-center justify-center lg:justify-start gap-3 text-base text-text-muted">
                 <span className="font-medium text-text-main/80">{t("home.scopedTo")}</span>
                 <CyclingBoundaryPill levels={BOUNDARY_LEVELS} />
               </div>
@@ -347,11 +352,6 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
               </div>
             </Reveal>
 
-            <Reveal mode="mount" delay={400}>
-              <div className="mt-4 sm:mt-12">
-                <RoleSplitCta align="start" />
-              </div>
-            </Reveal>
           </div>
 
           {/* Right — compact "find your district" widget. Floats idly, tilts

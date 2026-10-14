@@ -1,18 +1,81 @@
 "use client";
 
-import { useState } from "react";
-import { Play, X, Compass } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Play, X, Compass, Maximize2 } from "lucide-react";
 import { Reveal, SectionOrbs } from "@/components/features/home/HomeMotion";
 import { useTranslation } from "@/contexts/LanguageContext";
 
 const YOUTUBE_VIDEO_ID = "sBldUnN2Mm8";
 
+const EMBED_SRC = `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1&controls=0&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0`;
+
+// YouTube always draws its title/channel bar at the top of the embed and hides it
+// for nobody. The iframe is made 96px taller above and below the overflow-hidden
+// frame that holds it; the 9:16 video letterboxes into the middle, so the title,
+// Shorts badge and captions land in the clipped bars and the whole video stays
+// visible, uncropped.
+function VideoFrame() {
+  return (
+    <iframe
+      className="absolute left-0 w-full border-0 top-[-96px] h-[calc(100%+192px)]"
+      src={EMBED_SRC}
+      title="What Choseno Is"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    />
+  );
+}
+
+// Popout player. Portaled to <body> because the section's reveal animation
+// uses transforms, which would otherwise trap a position:fixed overlay.
+function VideoLightbox({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-label="What Choseno is"
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/25 cursor-pointer"
+        aria-label="Close full screen video"
+      >
+        <X size={16} aria-hidden="true" />
+        Close
+      </button>
+      <div
+        className="relative aspect-[9/16] h-[min(92vh,calc(92vw*16/9))] overflow-hidden rounded-2xl bg-black shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <VideoFrame />
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 export default function HomeDemoVideo() {
   const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   return (
-    <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden" aria-label="Product Demo">
+    <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden" aria-label="What Choseno is">
       <SectionOrbs
         orbs={[
           { variant: "orb-a", range: [-100, 120], driftX: [0, 35, -20, 0], duration: 22 },
@@ -61,23 +124,7 @@ export default function HomeDemoVideo() {
           <div className="relative w-full glass-card elevation-3 p-1.5 sm:p-2.5">
             <div className="relative w-full aspect-[9/16] rounded-2xl overflow-hidden bg-surface border border-border-light/40 shadow-2xl">
               {isPlaying ? (
-                <>
-                  <iframe
-                    className="absolute inset-0 w-full h-full border-0"
-                    src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-                    title="Choseno Product Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                  <button
-                    onClick={() => setIsPlaying(false)}
-                    className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-elevated/90 hover:bg-surface-active text-text-main text-xs font-semibold backdrop-blur-md border border-border-light transition-colors shadow-lg cursor-pointer"
-                    aria-label="Close video preview"
-                  >
-                    <X size={14} />
-                    <span>Close</span>
-                  </button>
-                </>
+                <VideoFrame />
               ) : (
                 <button
                   type="button"
@@ -110,12 +157,12 @@ export default function HomeDemoVideo() {
                     </div>
 
                     <h3 className="mt-5 text-xl font-bold text-text-main tracking-tight">
-                      {t("home.demo.cardTitle", "Complete Product Demo")}
+                      {t("home.demo.cardTitle", "See What Choseno Is")}
                     </h3>
                     <p className="mt-2 text-sm text-text-muted max-w-[16rem] font-medium leading-relaxed">
                       {t(
                         "home.demo.cardSubtitle",
-                        "Watch our full demo to see all Choseno features in action"
+                        "A quick look at how Choseno works"
                       )}
                     </p>
                   </div>
@@ -123,6 +170,32 @@ export default function HomeDemoVideo() {
               )}
             </div>
           </div>
+          {isPlaying && (
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsPlaying(false);
+                  setIsFullscreen(true);
+                }}
+                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-active transition-colors cursor-pointer"
+                aria-label="Play video full screen"
+              >
+                <Maximize2 size={14} aria-hidden="true" />
+                <span>Full screen</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPlaying(false)}
+                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-text-muted hover:text-text-main hover:bg-surface-active transition-colors cursor-pointer"
+                aria-label="Close video preview"
+              >
+                <X size={14} aria-hidden="true" />
+                <span>Close video</span>
+              </button>
+            </div>
+          )}
+          {isFullscreen && <VideoLightbox onClose={() => setIsFullscreen(false)} />}
         </Reveal>
       </div>
     </section>
