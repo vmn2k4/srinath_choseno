@@ -1,7 +1,7 @@
 // Edit profile — ONE form for everyone (citizen and politician alike): your
-// name and your location. Photo, party, education, hometown and bio are not
+// name and your location. Party, education, hometown and bio are not
 // editable here (politicians keep whatever they already have — the save only
-// writes the fields this form changes). Location is a card that opens the map
+// writes the fields this form changes). Politicians can set a public photo. Location is a card that opens the map
 // on demand; Save is pinned at the bottom.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
+import '../../../../core/utils/avatar_picker.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/profile/entities/user_profile.dart';
 import '../../../common/widgets/detail_app_bar.dart';
@@ -73,6 +74,17 @@ class _EditFormState extends ConsumerState<_EditForm> {
     super.dispose();
   }
 
+  Future<void> _pickAvatar() async {
+    final controller = ref.read(editProfileControllerProvider.notifier);
+    final picked = await pickAvatarFromGallery();
+    if (picked == null) return;
+    if (picked.error != null) {
+      controller.setAvatarError(picked.error!);
+      return;
+    }
+    await controller.uploadAvatar(picked.photo!.bytes, picked.photo!.extension);
+  }
+
   Future<void> _save() async {
     final ok = await ref.read(editProfileControllerProvider.notifier).save();
     if (ok && mounted) Navigator.of(context).pop();
@@ -114,29 +126,74 @@ class _EditFormState extends ConsumerState<_EditForm> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: 52,
-                          height: 52,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: palette.primary.withValues(alpha: 0.12),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            initial,
-                            style: ChosenoTypography.display(
-                              color: palette.primary,
-                              fontSize: 24,
+                        if (isPolitician)
+                          // Politicians: tap to add / change the public photo.
+                          GestureDetector(
+                            onTap: s.uploadingAvatar ? null : _pickAvatar,
+                            child: Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                AppAvatar(
+                                  imageUrl: s.avatarUrl,
+                                  fallbackText: _name.text,
+                                  radius: 30,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: palette.primary,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: palette.surface,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: s.uploadingAvatar
+                                      ? SizedBox(
+                                          width: 12,
+                                          height: 12,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: palette.textOnPrimary,
+                                          ),
+                                        )
+                                      : Icon(
+                                          Icons.photo_camera,
+                                          size: 12,
+                                          color: palette.textOnPrimary,
+                                        ),
+                                ),
+                              ],
+                            ),
+                          )
+                        else
+                          Container(
+                            width: 52,
+                            height: 52,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: palette.primary.withValues(alpha: 0.12),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              initial,
+                              style: ChosenoTypography.display(
+                                color: palette.primary,
+                                fontSize: 24,
+                              ),
                             ),
                           ),
-                        ),
                         const SizedBox(width: ChosenoSpacing.md),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Your name',
+                                _name.text.trim().isEmpty
+                                    ? 'Your name'
+                                    : _name.text.trim(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: ChosenoTypography.display(
                                   color: palette.textMain,
                                   fontSize: 20,
@@ -165,10 +222,23 @@ class _EditFormState extends ConsumerState<_EditForm> {
                       },
                     ),
                     const SizedBox(height: ChosenoSpacing.sm),
+                    if (isPolitician && s.avatarError != null)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: ChosenoSpacing.xs + 2,
+                        ),
+                        child: Text(
+                          s.avatarError!,
+                          style: ChosenoTypography.body(
+                            color: palette.danger,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                     _Note(
                       icon: isPolitician ? Icons.public : Icons.shield_outlined,
                       text: isPolitician
-                          ? 'Shown on your public wall.'
+                          ? 'Your name and photo are shown on your public wall.'
                           : 'Posts stay tied to your anonymous Ghost ID, not this name.',
                     ),
                   ],
