@@ -36,6 +36,11 @@ class _AddressSearchFieldState extends ConsumerState<AddressSearchField> {
 
   void _onChanged(String value) {
     _debounce?.cancel();
+    _run(value, const Duration(milliseconds: 450));
+  }
+
+  void _run(String value, Duration delay) {
+    _debounce?.cancel();
     if (value.trim().length < 3) {
       setState(() {
         _suggestions = const [];
@@ -43,7 +48,7 @@ class _AddressSearchFieldState extends ConsumerState<AddressSearchField> {
       });
       return;
     }
-    _debounce = Timer(const Duration(milliseconds: 450), () async {
+    _debounce = Timer(delay, () async {
       setState(() => _searching = true);
       final result = await ref.read(geocodingRepositoryProvider).search(value);
       if (!mounted) return;
@@ -72,6 +77,7 @@ class _AddressSearchFieldState extends ConsumerState<AddressSearchField> {
         TextField(
           controller: _controller,
           onChanged: _onChanged,
+          onSubmitted: (v) => _run(v, Duration.zero),
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             hintText: 'Search an address, city or postal code',

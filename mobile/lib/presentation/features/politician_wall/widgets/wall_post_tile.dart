@@ -12,9 +12,13 @@ import '../../../../core/config/env_config.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/ghost_name.dart';
+import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/posts/entities/post.dart';
 import '../../../common/widgets/vote_pill.dart';
+import '../../../common/widgets/post_video_thumbnail.dart';
 import '../../../common/widgets/content_safety_sheets.dart';
 import '../../feed/providers/content_safety_providers.dart';
 import '../../feed/providers/feed_repository_providers.dart';
@@ -33,9 +37,21 @@ String _decodeEntities(String s) => s
     .replaceAll(RegExp(r' {2,}'), ' ');
 
 class WallPostTile extends ConsumerStatefulWidget {
-  const WallPostTile({super.key, required this.post});
+  const WallPostTile({
+    super.key,
+    required this.post,
+    this.initiallyExpanded = false,
+    this.commentBlockedMessage,
+  });
 
   final Post post;
+
+  /// Open with the comment thread showing (the single-post page).
+  final bool initiallyExpanded;
+
+  /// When set, shown in place of the comment box — the viewer can read the
+  /// conversation but isn't allowed to join it.
+  final String? commentBlockedMessage;
 
   @override
   ConsumerState<WallPostTile> createState() => _WallPostTileState();
@@ -49,7 +65,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
       (id: c.id, ghostId: c.ghostId, content: c.content),
   ];
   bool _hidden = false;
-  bool _expanded = false;
+  late bool _expanded = widget.initiallyExpanded;
   bool _sending = false;
   final _commentController = TextEditingController();
 
@@ -102,45 +118,14 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
   }
 
   Future<void> _menu(String type, String id, String ghostId) async {
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      showDragHandle: true,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.flag_outlined),
-              title: const Text('Report'),
-              onTap: () => Navigator.pop(ctx, 'report'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.block),
-              title: const Text('Block author'),
-              onTap: () => Navigator.pop(ctx, 'block'),
-            ),
-          ],
-        ),
-      ),
+    final hide = await showContentActionsSheet(
+      context,
+      ref,
+      targetType: type,
+      targetId: id,
+      ghostId: ghostId,
     );
-    if (choice == null || !mounted) return;
-    if (choice == 'report') {
-      final sent = await showReportSheet(
-        context,
-        ref,
-        targetType: type,
-        targetId: id,
-      );
-      if (sent && type == 'post' && mounted) setState(() => _hidden = true);
-    } else {
-      await confirmBlockAuthor(
-        context,
-        ref,
-        targetType: type,
-        targetId: id,
-        ghostId: ghostId,
-      );
-    }
+    if (hide && mounted) setState(() => _hidden = true);
   }
 
   Future<void> _open(String url) async {
@@ -234,7 +219,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                 )
               else
                 Text(
-                  'Ghost ${post.ghostId.substring(0, 6)}',
+                  post.author?.fullName ?? ghostDisplayName(post.ghostId),
                   style: ChosenoTypography.body(
                     color: palette.textSecondary,
                     fontWeight: FontWeight.w600,
@@ -258,7 +243,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                     padding: EdgeInsets.zero,
                     tooltip: 'Report or block',
                     icon: Icon(
-                      Icons.more_horiz,
+                      Icons.flag_outlined,
                       size: 20,
                       color: palette.textMuted,
                     ),
@@ -300,23 +285,18 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
               ),
             ),
           if (imageUrl != null)
-            _PostImage(
+            PostImage(
               url: imageUrl,
               aspectRatio: post.isNews ? 1200 / 630 : 4 / 3,
               onTap: () => _showImage(imageUrl),
             ),
           if (post.videoUrl != null) ...[
             const SizedBox(height: ChosenoSpacing.sm),
-            AppButton(
-              label: 'Watch video',
-              icon: Icons.play_circle_outline,
-              variant: AppButtonVariant.outline,
-              onPressed: () => _open(post.videoUrl!),
-            ),
+            PostVideoThumbnail(url: post.videoUrl!),
           ],
           if (post.linkUrl != null || inlineUrl != null) ...[
             const SizedBox(height: ChosenoSpacing.sm),
-            _LinkCard(
+            LinkCard(
               url: post.linkUrl ?? inlineUrl!,
               title: post.linkTitle,
               description: post.linkDescription,
@@ -328,9 +308,10 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
           Row(
             children: [
               VotePill(
-                score: _likes - _dislikes,
-                onUp: () => _vote(1),
-                onDown: () => _vote(-1),
+                likes: _likes,
+                dislikes: _dislikes,
+                onLike: () => _vote(1),
+                onDislike: () => _vote(-1),
               ),
               const SizedBox(width: ChosenoSpacing.sm),
               InkWell(
@@ -365,21 +346,27 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                   ),
                 ),
               ),
-              if (post.isNews && slug != null) ...[
-                const Spacer(),
+              const Spacer(),
+              if (post.isNews && slug != null)
                 TextButton.icon(
                   onPressed: () => context.push('/news/$slug'),
                   icon: const Icon(Icons.arrow_forward, size: 16),
                   label: const Text('Article'),
                 ),
-              ],
+              IconButton(
+                tooltip: 'Share this post',
+                icon: Icon(Icons.ios_share_outlined, color: palette.textMuted),
+                onPressed: () => shareChosenoLink(AppRoutes.post(post.id)),
+              ),
             ],
           ),
           if (_expanded) ...[
             const SizedBox(height: ChosenoSpacing.sm),
             Divider(color: palette.borderLight, height: 1),
             const SizedBox(height: ChosenoSpacing.sm),
-            for (final c in _comments.where((c) => !blocked.contains(c.ghostId)))
+            for (final c in _comments.where(
+              (c) => !blocked.contains(c.ghostId),
+            ))
               Padding(
                 padding: const EdgeInsets.only(bottom: ChosenoSpacing.sm + 2),
                 child: Column(
@@ -390,7 +377,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                         Text(
                           c.ghostId == 'you'
                               ? 'You'
-                              : 'Ghost ${c.ghostId.substring(0, 6)}',
+                              : ghostDisplayName(c.ghostId),
                           style: ChosenoTypography.body(
                             color: palette.textTertiary,
                             fontWeight: FontWeight.w600,
@@ -424,23 +411,40 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                   ],
                 ),
               ),
-            Row(
-              children: [
-                Expanded(
-                  child: AppTextField(
-                    label: 'Add a comment',
-                    controller: _commentController,
+            if (widget.commentBlockedMessage != null)
+              Container(
+                padding: const EdgeInsets.all(ChosenoSpacing.md),
+                decoration: BoxDecoration(
+                  color: palette.surfaceHover,
+                  borderRadius: BorderRadius.circular(ChosenoRadii.sm * 2),
+                ),
+                child: Text(
+                  widget.commentBlockedMessage!,
+                  style: ChosenoTypography.body(
+                    color: palette.textMuted,
+                    fontSize: 13,
+                    height: 1.4,
                   ),
                 ),
-                const SizedBox(width: ChosenoSpacing.sm),
-                AppButton.icon(
-                  icon: Icons.send_rounded,
-                  tone: AppButtonTone.primary,
-                  loading: _sending,
-                  onPressed: _sending ? null : _comment,
-                ),
-              ],
-            ),
+              )
+            else
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      label: 'Add a comment',
+                      controller: _commentController,
+                    ),
+                  ),
+                  const SizedBox(width: ChosenoSpacing.sm),
+                  AppButton.icon(
+                    icon: Icons.send_rounded,
+                    tone: AppButtonTone.primary,
+                    loading: _sending,
+                    onPressed: _sending ? null : _comment,
+                  ),
+                ],
+              ),
           ],
         ],
       ),
@@ -449,8 +453,9 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
 }
 
 /// A compact link card: image (if any), title, description, host.
-class _LinkCard extends StatelessWidget {
-  const _LinkCard({
+class LinkCard extends StatelessWidget {
+  const LinkCard({
+    super.key,
     required this.url,
     required this.onTap,
     this.title,
@@ -537,8 +542,9 @@ class _LinkCard extends StatelessWidget {
 /// The post's image. Collapses completely if it can't load (the on-demand
 /// article card is sometimes slow or unavailable) so a post never shows an
 /// empty grey box.
-class _PostImage extends StatefulWidget {
-  const _PostImage({
+class PostImage extends StatefulWidget {
+  const PostImage({
+    super.key,
     required this.url,
     required this.aspectRatio,
     required this.onTap,
@@ -549,10 +555,10 @@ class _PostImage extends StatefulWidget {
   final VoidCallback onTap;
 
   @override
-  State<_PostImage> createState() => _PostImageState();
+  State<PostImage> createState() => PostImageState();
 }
 
-class _PostImageState extends State<_PostImage> {
+class PostImageState extends State<PostImage> {
   bool _failed = false;
 
   @override

@@ -21,9 +21,12 @@ import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../common/widgets/app_shell.dart';
+import '../../../common/widgets/post_composer_sheet.dart';
 import '../../../common/widgets/screen_header.dart';
+import '../../profile/providers/profile_providers.dart';
+import '../../../../domain/profile/entities/user_profile.dart';
+import '../../../../domain/posts/entities/post_draft.dart';
 import '../providers/feed_providers.dart';
-import '../widgets/feed_composer.dart';
 import '../widgets/feed_post_tile.dart';
 
 class FeedScreen extends ConsumerStatefulWidget {
@@ -109,10 +112,35 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                     HeaderIconButton(
                       icon: Icons.edit_square,
                       tooltip: 'New post',
-                      onTap: () => showFeedComposeSheet(
-                        context,
-                        onSubmit: controller.submitPost,
-                      ),
+                      onTap: () {
+                        final me = ref.read(ownProfileProvider).value;
+                        if (me?.currentGhostId == null) return;
+                        showPostComposerSheet(
+                          context,
+                          hint:
+                              "What's happening in your constituency? Type @ to tag a politician",
+                          ghostId: me!.currentGhostId!,
+                          allowVideo: me.role == UserRole.politician,
+                          viewerCountry: me.country,
+                          targets: [
+                            for (final t
+                                in state.tabs.whereType<MembershipTab>())
+                              PostTarget(
+                                shapeId: t.shapeId,
+                                label: t.levelLabel == null
+                                    ? t.label
+                                    : '${t.label} · ${t.levelLabel}',
+                              ),
+                          ],
+                          initialTargetId:
+                              state.tabs[state.selectedIndex] is MembershipTab
+                              ? (state.tabs[state.selectedIndex]
+                                        as MembershipTab)
+                                    .shapeId
+                              : null,
+                          onSubmit: controller.submitPost,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -141,7 +169,26 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                   indicatorColor: palette.primary,
                   indicatorSize: TabBarIndicatorSize.label,
                   dividerColor: palette.borderLight,
-                  tabs: state.tabs.map((t) => Tab(text: t.label)).toList(),
+                  tabs: state.tabs.map((t) {
+                    final level = t is MembershipTab ? t.levelLabel : null;
+                    return Tab(
+                      height: 52,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(t.label),
+                          if (level != null)
+                            Text(
+                              level,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
                 Expanded(
                   child: TabBarView(

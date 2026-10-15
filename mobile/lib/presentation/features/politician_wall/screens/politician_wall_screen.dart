@@ -331,6 +331,7 @@ class _WallBody extends ConsumerWidget {
           const SizedBox(height: ChosenoSpacing.sm + 2),
           WallComposer(
             wallGhostId: profile.currentGhostId,
+            ownerId: profile.id,
             ownerName: profile.fullName,
           ),
           const SizedBox(height: ChosenoSpacing.md),

@@ -1,10 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 import '../../../core/errors/app_failure.dart';
 import '../../../core/errors/result.dart';
 import '../../../domain/feed/repositories/feed_repository.dart';
 import '../../../domain/posts/entities/post.dart';
+import '../../../domain/posts/entities/post_detail.dart';
+import '../../../domain/posts/entities/post_draft.dart';
 import '../../posts/models/post_model.dart';
+import '../../posts/politician_authors.dart';
 import '../datasources/feed_remote_data_source.dart';
 
 class FeedRepositoryImpl implements FeedRepository {
@@ -12,8 +17,16 @@ class FeedRepositoryImpl implements FeedRepository {
 
   final FeedRemoteDataSource _remote;
 
-  List<Post> _mapPosts(List<dynamic> rows) =>
-      rows.cast<Map<String, dynamic>>().map((r) => r.toPost()).toList();
+  Future<List<Post>> _mapPosts(List<dynamic> rows) async {
+    final posts = rows
+        .cast<Map<String, dynamic>>()
+        .map((r) => r.toPost())
+        .toList();
+    final authors = await _remote.getPoliticianAuthors(
+      posts.map((p) => p.ghostId),
+    );
+    return withAuthors(posts, authors);
+  }
 
   @override
   Future<Result<List<Post>>> getMembershipScopedPosts(
@@ -27,7 +40,7 @@ class FeedRepositoryImpl implements FeedRepository {
         limit: limit,
         offset: offset,
       );
-      return Result.ok(_mapPosts(rows));
+      return Result.ok(await _mapPosts(rows));
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
     } catch (_) {
@@ -47,7 +60,7 @@ class FeedRepositoryImpl implements FeedRepository {
         limit: limit,
         offset: offset,
       );
-      return Result.ok(_mapPosts(rows));
+      return Result.ok(await _mapPosts(rows));
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
     } catch (_) {
@@ -65,7 +78,7 @@ class FeedRepositoryImpl implements FeedRepository {
         limit: limit,
         offset: offset,
       );
-      return Result.ok(_mapPosts(rows));
+      return Result.ok(await _mapPosts(rows));
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
     } catch (_) {
@@ -74,10 +87,101 @@ class FeedRepositoryImpl implements FeedRepository {
   }
 
   @override
-  Future<Result<void>> createFeedPost(String content) async {
+  Future<Result<void>> createFeedPost(PostDraft draft) async {
     try {
-      await _remote.createFeedPost(content);
+      await _remote.createFeedPost(draft);
       return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadPostImage(
+    Uint8List bytes,
+    String fileExtension,
+    String ghostId,
+  ) async {
+    try {
+      return Result.ok(
+        await _remote.uploadPostImage(bytes, fileExtension, ghostId),
+      );
+    } on supabase.StorageException catch (e) {
+      return Result.err(ServerFailure(e.message));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<String>> uploadPostVideo(
+    Uint8List bytes,
+    String fileExtension,
+  ) async {
+    try {
+      return Result.ok(await _remote.uploadPostVideo(bytes, fileExtension));
+    } on supabase.StorageException catch (e) {
+      return Result.err(ServerFailure(e.message));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<List<TaggablePolitician>>> searchTaggablePoliticians(
+    String query, {
+    String? viewerCountry,
+  }) async {
+    try {
+      final rows = (await _remote.searchTaggablePoliticians(
+        query,
+      )).cast<Map<String, dynamic>>();
+      int tier(Map<String, dynamic> r) =>
+          viewerCountry != null && r['country'] == viewerCountry ? 0 : 1;
+      final sorted = [...rows]..sort((a, b) => tier(a).compareTo(tier(b)));
+      return Result.ok([
+        for (final r in sorted.take(8))
+          TaggablePolitician(
+            id: r['id'] as String,
+            fullName: r['full_name'] as String? ?? 'Politician',
+            photoUrl: _photo(r['politician_profiles']),
+          ),
+      ]);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  static String? _photo(dynamic pp) {
+    final m = pp is List ? (pp.isEmpty ? null : pp.first) : pp;
+    if (m is! Map) return null;
+    return (m['photo_url'] ?? m['avatar_url']) as String?;
+  }
+
+  @override
+  Future<Result<PostDetail?>> getPostDetail(String postId) async {
+    try {
+      final row = await _remote.getPostDetailRow(postId);
+      if (row == null) return const Result.ok(null);
+      final boundaries = (row['post_boundaries'] as List?) ?? const [];
+      final names = <String>{
+        for (final b in boundaries)
+          if ((b as Map)['map_shapes'] is Map &&
+              (b['map_shapes'] as Map)['name'] != null)
+            (b['map_shapes'] as Map)['name'] as String,
+      }.toList();
+      final canComment = await _remote.canCommentOnPost(postId);
+      return Result.ok(
+        PostDetail(
+          post: (await _mapPosts([row])).first,
+          areaNames: names,
+          canComment: canComment,
+        ),
+      );
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
     } catch (_) {

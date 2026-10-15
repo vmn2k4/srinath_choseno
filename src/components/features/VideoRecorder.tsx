@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Video, StopCircle, RefreshCw, Upload, FileVideo, ShieldAlert } from "lucide-react";
+import { compressVideo, pickMimeType, RECORDER_BITRATES } from "@/lib/utils/compressVideo";
 import { uploadVideo, getVideoPublicUrl, normalizeMediaUrl } from "@/lib/services/video";
 import { Button } from "@/components/primitives";
 import { createClient } from "@/lib/supabase/client";
@@ -19,6 +20,7 @@ export default function VideoRecorder({
   const [isRecording, setIsRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [compressProgress, setCompressProgress] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(maxDuration);
   const [cameraError, setCameraError] = useState<string | null>(null);
 
@@ -80,7 +82,10 @@ export default function VideoRecorder({
         videoPreviewRef.current.play();
       }
 
-      const mediaRecorder = new MediaRecorder(stream);
+      const mediaRecorder = new MediaRecorder(stream, {
+        ...RECORDER_BITRATES,
+        ...(pickMimeType() ? { mimeType: pickMimeType()! } : {}),
+      });
       mediaRecorderRef.current = mediaRecorder;
 
       mediaRecorder.ondataavailable = (e) => {
@@ -88,7 +93,9 @@ export default function VideoRecorder({
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "video/webm" });
+        const blob = new Blob(chunksRef.current, {
+          type: (mediaRecorder.mimeType || "video/webm").split(";")[0],
+        });
         setVideoBlob(blob);
         chunksRef.current = [];
 
@@ -168,11 +175,21 @@ export default function VideoRecorder({
 
   const [aspectWarning, setAspectWarning] = useState<string | null>(null);
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const picked = e.target.files?.[0];
+    e.target.value = "";
+    if (!picked) return;
+    // Big phone clips are fine to pick — they're downscaled below, and the
+    // 50MB cap applies to what actually gets uploaded.
+    if (picked.size > 300 * 1024 * 1024) {
+      alert("Video file is too large (300MB max)");
+      return;
+    }
+    setCompressProgress(0);
+    const file = (await compressVideo(picked, setCompressProgress)) as File;
+    setCompressProgress(null);
     if (file.size > 50 * 1024 * 1024) {
-      alert("Video file size must be less than 50MB");
+      alert("Video is still over 50MB after compression — try a shorter clip");
       return;
     }
     setAspectWarning(null);
@@ -214,7 +231,8 @@ export default function VideoRecorder({
     if (!videoBlob) return;
     setUploading(true);
     try {
-      const ext = (videoBlob as File).name?.split(".").pop() || "webm";
+      const ext =
+        (videoBlob as File).name?.split(".").pop() || (videoBlob.type === "video/mp4" ? "mp4" : "webm");
       const fileName = `video_${Date.now()}.${ext}`;
       const { error } = await uploadVideo(supabase, bucket, fileName, videoBlob);
       if (error) throw error;
@@ -285,6 +303,7 @@ export default function VideoRecorder({
               variant="outline"
               size="sm"
               onClick={() => fileInputRef.current?.click()}
+              disabled={compressProgress !== null}
               className="rounded-xl gap-1.5 text-xs"
             >
               <FileVideo size={14} />
@@ -324,6 +343,13 @@ export default function VideoRecorder({
               Upload & Attach
             </Button>
           </>
+        )}
+
+        {compressProgress !== null && (
+          <div className="flex items-center gap-2 text-primary-light font-medium px-3 py-1.5 bg-primary/10 rounded-xl text-xs">
+            <div className="w-3.5 h-3.5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            Optimizing video… {Math.round(compressProgress * 100)}%
+          </div>
         )}
 
         {uploading && (

@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
 import '../../../core/errors/result.dart';
 import '../../posts/entities/post.dart';
+import '../../posts/entities/post_detail.dart';
+import '../../posts/entities/post_draft.dart';
 
 abstract interface class FeedRepository {
   Future<Result<List<Post>>> getMembershipScopedPosts(
@@ -21,7 +25,25 @@ abstract interface class FeedRepository {
   /// and enforces the politician daily-post limit. Never merge with
   /// Politician Wall's `createWallPost` (a different RPC, exempt from that
   /// limit — see docs/FLUTTER_MOBILE_APP_GUIDE.md §6 in the parent repo).
-  Future<Result<void>> createFeedPost(String content);
+  Future<Result<void>> createFeedPost(PostDraft draft);
+
+  /// Storage upload to `post-images` (`posts/{ghostId}-{ts}.{ext}`) —
+  /// returns the public URL to pass in [PostDraft.imageUrl].
+  Future<Result<String>> uploadPostImage(
+    Uint8List bytes,
+    String fileExtension,
+    String ghostId,
+  );
+
+  /// Storage upload to `politician_videos` — returns the public URL to pass
+  /// in [PostDraft.videoUrl].
+  Future<Result<String>> uploadPostVideo(Uint8List bytes, String fileExtension);
+
+  /// @mention autocomplete: politicians whose name contains [query].
+  Future<Result<List<TaggablePolitician>>> searchTaggablePoliticians(
+    String query, {
+    String? viewerCountry,
+  });
 
   /// RPC `vote_on_post` — a toggle server-side (voting the same type again
   /// removes the vote). Returns the authoritative post-vote counts read
@@ -36,6 +58,10 @@ abstract interface class FeedRepository {
   /// rate limit. Direct inserts are blocked by RLS (§6's "comments are
   /// RPC-only, everywhere" gotcha) — never build a fallback around that.
   Future<Result<void>> createComment(String postId, String content);
+
+  /// One post (with comments, districts and the viewer's right to comment)
+  /// for the page a shared link opens. Null when it doesn't exist.
+  Future<Result<PostDetail?>> getPostDetail(String postId);
 
   /// RPC `report_content` — [targetType] is `post` or `comment`.
   Future<Result<void>> reportContent(

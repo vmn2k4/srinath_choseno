@@ -9,7 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/elections/entities/candidacy_detail.dart';
 import '../../../../domain/elections/entities/candidacy_question_answer.dart';
+import '../../../../domain/posts/entities/post.dart';
 import '../../elections/providers/elections_providers.dart';
+import '../../politician_wall/providers/politician_wall_providers.dart';
 
 @immutable
 class CandidacyWallData {
@@ -30,6 +32,18 @@ final candidacyWallProvider = FutureProvider.autoDispose
       final answers = answersResult.when(ok: (a) => a, err: (f) => throw f);
 
       return CandidacyWallData(detail: detail, answers: answers);
+    });
+
+/// The Candidacy Wall's post feed, keyed by (candidateId, politicianId).
+final candidacyPostsProvider = FutureProvider.autoDispose
+    .family<List<Post>, ({String candidateId, String politicianId})>((
+      ref,
+      key,
+    ) async {
+      final result = await ref
+          .watch(politicianWallRepositoryProvider)
+          .getCandidatePosts(key.candidateId, key.politicianId);
+      return result.when(ok: (p) => p, err: (f) => throw f);
     });
 
 @immutable

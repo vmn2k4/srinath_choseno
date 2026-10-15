@@ -109,7 +109,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         gradient: ChosenoGradients.primary(palette),
-                        borderRadius: BorderRadius.circular(ChosenoRadii.dialog + 4),
+                        borderRadius: BorderRadius.circular(
+                          ChosenoRadii.dialog + 4,
+                        ),
                         // Flat on light themes; the glow is a dark-theme touch.
                         boxShadow: palette.isLight
                             ? null
@@ -253,10 +255,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             ],
                           ),
                           const SizedBox(height: ChosenoSpacing.md),
-                          AppButton(
-                            label: 'Continue with Google',
-                            variant: AppButtonVariant.outline,
-                            tone: AppButtonTone.defaultTone,
+                          _GoogleButton(
                             onPressed: isLoading
                                 ? null
                                 : () => ref
@@ -292,6 +291,61 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     onPressed: isLoading
                         ? null
                         : () => setState(() => _isSignUp = !_isSignUp),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Google's branded sign-in button: white fill, Google's official "G" logo, dark
+/// label. Deliberately not an [AppButton] outline, whose muted tone reads as
+/// disabled.
+class _GoogleButton extends StatelessWidget {
+  const _GoogleButton({required this.onPressed});
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Continue with Google',
+      excludeSemantics: true,
+      child: Opacity(
+        opacity: onPressed == null ? 0.6 : 1,
+        child: Material(
+          color: Colors.white,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(ChosenoRadii.control),
+            side: const BorderSide(color: Color(0xFFDADCE0)),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onPressed,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/google_g.png',
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(width: ChosenoSpacing.sm + 2),
+                  Text(
+                    'Continue with Google',
+                    style: ChosenoTypography.body(
+                      color: const Color(0xFF3C4043),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
                   ),
                 ],
               ),

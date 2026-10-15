@@ -80,12 +80,15 @@ export async function createFeedPost(
     videoUrl,
     linkMetadata,
     mentionedPoliticianIds,
+    boundaryIds,
   }: {
     content: string;
     imageUrl?: string | null;
     videoUrl?: string | null;
     linkMetadata?: Json | null;
     mentionedPoliticianIds?: string[] | null;
+    /** Post only into these districts (must be ones the user belongs to); omit for all of them. */
+    boundaryIds?: number[] | null;
   }
 ) {
   const args: {
@@ -95,12 +98,14 @@ export async function createFeedPost(
     p_link_metadata?: Json;
     p_is_test: boolean;
     p_mentioned_politician_ids?: string[];
+    p_boundary_ids?: number[];
   } = { p_content: content, p_is_test: isDevEnvironment() };
 
   if (imageUrl) args.p_image_url = imageUrl;
   if (videoUrl) args.p_video_url = videoUrl;
   if (linkMetadata) args.p_link_metadata = linkMetadata;
   if (mentionedPoliticianIds && mentionedPoliticianIds.length > 0) args.p_mentioned_politician_ids = mentionedPoliticianIds;
+  if (boundaryIds && boundaryIds.length > 0) args.p_boundary_ids = boundaryIds;
 
   return supabase.rpc("create_post", args);
 }
@@ -248,4 +253,24 @@ export async function getActiveElectionsForUser(supabase: Client) {
 // outgoing ghost's civic_score contribution server-side before rotating.
 export async function burnGhostIdentityViaRpc(supabase: Client) {
   return supabase.rpc("burn_ghost_identity");
+}
+
+// One post with its comments + districts, for the shareable /post/[id] page.
+// posts/comments/post_boundaries are publicly readable (RLS), so this works
+// for signed-out visitors too.
+export async function getPostById(supabase: Client, postId: string) {
+  let query = supabase
+    .from("posts")
+    .select("*, comments(*), post_boundaries(map_shape_id, map_shapes(name, boundary_type)), news_articles(slug, event_date, published_at)")
+    .eq("id", postId);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query.maybeSingle();
+}
+
+// Whether the signed-in viewer may join this post's conversation (feed posts
+// are limited to people in one of the post's districts). Enforced again
+// inside create_comment().
+export async function canCommentOnPost(supabase: Client, postId: string) {
+  const { data, error } = await supabase.rpc("can_comment_on_post", { p_post_id: postId });
+  return { allowed: !error && data === true, error };
 }

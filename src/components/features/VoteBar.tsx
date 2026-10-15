@@ -1,4 +1,5 @@
 import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
+import PostShareButton from "./PostShareButton";
 
 // Extracted from FeedPage.jsx's inline action bar — the vote/comment-count
 // row below a Feed post. Not used by WallPostFeed (candidacy/wall posts
@@ -10,12 +11,14 @@ export default function VoteBar({
   commentsCount,
   onUpvote,
   onDownvote,
+  shareUrl,
 }: {
   likesCount: number;
   dislikesCount: number;
   commentsCount: number;
   onUpvote: () => void;
   onDownvote: () => void;
+  shareUrl?: string;
 }) {
   return (
     <div className="px-5 py-3 bg-surface/20 border-t border-border-light/20 flex items-center gap-5">
@@ -37,6 +40,7 @@ export default function VoteBar({
         <MessageSquare size={16} />
         <span>{commentsCount}</span>
       </div>
+      {shareUrl && <PostShareButton url={shareUrl} />}
     </div>
   );
 }

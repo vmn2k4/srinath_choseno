@@ -72,8 +72,10 @@
 	     (docs/FLUTTER_MOBILE_APP_GUIDE.md §4.G in the parent repo). Same
 	     "missing key crashes immediately" risk as the location key above. -->
 	<key>NSCameraUsageDescription</key>
-	<string>Choseno uses your camera to record a short video introduction for your candidate profile.</string>
+	<string>Choseno uses your camera to record a short video for your candidate profile or a post.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Choseno uses your microphone to record audio for your candidate video introduction.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choseno lets you attach a photo or video from your library to a post.</string>
 </dict>
 </plist>

@@ -31,9 +31,7 @@ Future<void> _pump(
         home: Scaffold(
           body: SafeArea(
             child: Column(
-              children: [
-                ScreenHeader(title: 'News', actions: actions),
-              ],
+              children: [ScreenHeader(title: 'News', actions: actions)],
             ),
           ),
         ),
@@ -50,10 +48,7 @@ void main() {
     await _pump(tester);
 
     // Brand and screen name share one line: "Choseno - News".
-    expect(
-      find.text('Choseno - News', findRichText: true),
-      findsOneWidget,
-    );
+    expect(find.text('Choseno - News', findRichText: true), findsOneWidget);
     expect(find.bySemanticsLabel('Search'), findsOneWidget);
     expect(find.bySemanticsLabel('Profile'), findsOneWidget);
     expect(find.text('C'), findsOneWidget);

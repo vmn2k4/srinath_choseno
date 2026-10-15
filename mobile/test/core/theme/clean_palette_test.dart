@@ -13,10 +13,13 @@ double _contrast(Color a, Color b) {
 void main() {
   const p = ChosenoPalette.clean;
 
-  test('Clean palette is light and flat (no gradient between primary ends)', () {
-    expect(p.isLight, isTrue);
-    expect(p.primaryGlow, p.primary);
-  });
+  test(
+    'Clean palette is light and flat (no gradient between primary ends)',
+    () {
+      expect(p.isLight, isTrue);
+      expect(p.primaryGlow, p.primary);
+    },
+  );
 
   test('Clean body text clears WCAG AA on its surfaces', () {
     for (final bg in [p.background, p.surface, p.surfaceHover]) {

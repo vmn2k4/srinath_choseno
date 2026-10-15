@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/utils/boundary_level.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
@@ -259,14 +260,23 @@ class _DistrictRacesBannerState extends ConsumerState<DistrictRacesBanner> {
             spacing: ChosenoSpacing.xs,
             runSpacing: ChosenoSpacing.xs,
             children: [
-              for (final b in _boundaries)
+              for (final b
+                  in [..._boundaries]..sort(
+                    (a, b) => boundaryTypeRank(
+                      a.boundaryType,
+                    ).compareTo(boundaryTypeRank(b.boundaryType)),
+                  ))
                 ActionChip(
                   avatar: Icon(
                     Icons.layers_outlined,
                     size: 14,
                     color: palette.primary,
                   ),
-                  label: Text(b.name),
+                  label: Text(
+                    boundaryLevelLabel(b.boundaryType) == null
+                        ? b.name
+                        : '${b.name} · ${boundaryLevelLabel(b.boundaryType)}',
+                  ),
                   onPressed: () {
                     unawaited(
                       repo.logDistrictBannerClick(

@@ -10,6 +10,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/config/app_environment.dart';
+import '../../../domain/posts/entities/post_draft.dart';
+import '../../../domain/posts/entities/post.dart';
+import '../../posts/politician_authors.dart';
 
 const _profileColumns = '''
   id, current_ghost_id, full_name, role, constituency, country,
@@ -169,13 +172,17 @@ class PoliticianWallRemoteDataSource {
         .eq('supporter_id', supporterId);
   }
 
-  Future<void> createWallPost(String wallGhostId, String content) {
+  Future<void> createWallPost(String wallGhostId, PostDraft draft) {
     return _client.rpc(
       'create_wall_post',
       params: {
-        'p_content': content,
+        'p_content': draft.content,
         'p_wall_ghost_id': wallGhostId,
         'p_is_test': AppEnvironment.isDev,
+        if (draft.imageUrl != null) 'p_image_url': draft.imageUrl,
+        if (draft.videoUrl != null) 'p_video_url': draft.videoUrl,
+        if (draft.mentionedPoliticianIds.isNotEmpty)
+          'p_mentioned_politician_ids': draft.mentionedPoliticianIds,
       },
     );
   }
@@ -195,5 +202,79 @@ class PoliticianWallRemoteDataSource {
     return query
         .order('created_at', ascending: false)
         .range(offset, offset + limit - 1);
+  }
+
+  /// A politician's current ghost id — the Candidacy Wall's posts include the
+  /// candidate's own wall posts alongside ones tagged to the candidacy.
+  Future<String?> getGhostIdForProfile(String profileId) async {
+    final row = await _client
+        .from('profiles')
+        .select('current_ghost_id')
+        .eq('id', profileId)
+        .maybeSingle();
+    return row?['current_ghost_id'] as String?;
+  }
+
+  /// Port of `getCandidatePosts` (src/lib/services/elections.ts).
+  Future<List<dynamic>> getCandidatePosts(
+    String candidateId,
+    String? ghostId, {
+    required int limit,
+  }) {
+    final filters = [
+      'election_candidate_id.eq.$candidateId',
+      if (ghostId != null) ...[
+        'ghost_id.eq.$ghostId',
+        'wall_ghost_id.eq.$ghostId',
+      ],
+    ];
+    var query = _client
+        .from('posts')
+        .select('*, comments(id, ghost_id, content, created_at)')
+        .or(filters.join(','));
+    if (!AppEnvironment.isDev) query = query.eq('is_test', false);
+    return query.order('created_at', ascending: false).limit(limit);
+  }
+
+  /// Port of `createCandidatePost` + `attachPostMentions` — a direct table
+  /// insert (the web's documented divergence from the post RPCs), then the
+  /// `attach_post_mentions` RPC for any @tags.
+  Future<void> createCandidatePost(
+    String candidateId,
+    String ghostId,
+    PostDraft draft,
+  ) async {
+    final row = await _client
+        .from('posts')
+        .insert({
+          'ghost_id': ghostId,
+          'content': draft.content,
+          'election_candidate_id': candidateId,
+          'image_url': draft.imageUrl,
+          'is_test': AppEnvironment.isDev,
+        })
+        .select('id')
+        .single();
+    if (draft.mentionedPoliticianIds.isNotEmpty) {
+      await _client.rpc(
+        'attach_post_mentions',
+        params: {
+          'p_post_id': row['id'],
+          'p_mentioned_ids': draft.mentionedPoliticianIds,
+        },
+      );
+    }
+  }
+
+  /// Real names for posts authored by politicians (see politician_authors.dart).
+  /// A failed lookup just leaves the anonymous label — never fails the feed.
+  Future<Map<String, PoliticianAuthor>> getPoliticianAuthors(
+    Iterable<String> ghostIds,
+  ) async {
+    try {
+      return await fetchPoliticianAuthors(_client, ghostIds);
+    } catch (_) {
+      return const {};
+    }
   }
 }

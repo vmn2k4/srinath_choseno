@@ -3,6 +3,7 @@
 // avatar display/upload, rotation-history line ("Rotated N times, last on
 // <date>" — that history isn't tracked by any RPC ported so far), and the
 // Admin locked-message branch (irrelevant — this app has no Admin role).
+import '../../../../core/utils/ghost_name.dart';
 import '../../../../core/errors/app_failure.dart';
 import '../../../../core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,7 @@ class ProfileScreen extends ConsumerWidget {
                                       ),
                                 child: Text(
                                   profile.currentGhostId != null
-                                      ? profile.currentGhostId!.substring(0, 8)
+                                      ? ghostDisplayName(profile.currentGhostId)
                                       : '—',
                                   style: ChosenoTypography.body(
                                     color: palette.textMain,

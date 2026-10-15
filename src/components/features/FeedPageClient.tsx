@@ -113,6 +113,8 @@ export default function FeedPageClient() {
   const [memberships, setMemberships] = useState<MembershipShape[]>([]);
   const [loadingMemberships, setLoadingMemberships] = useState(true);
   const [masterFilter, setMasterFilter] = useState<string>("all");
+  // Which district the composer posts into: "all" or a map_shape id.
+  const [postTarget, setPostTarget] = useState<string>("all");
   const [activeElections, setActiveElections] = useState<any[]>([]);
 
   const [posts, setPosts] = useState<PostWithComments[]>([]);
@@ -298,6 +300,12 @@ export default function FeedPageClient() {
     return pills;
   }, [memberships]);
 
+  // Default the composer's "Post to" to the district tab being viewed.
+  useEffect(() => {
+    const pill = filterPills.find((p) => p.key === masterFilter);
+    setPostTarget(pill?.filterType === "shape" && pill.shapeId != null ? String(pill.shapeId) : "all");
+  }, [masterFilter, filterPills]);
+
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
 
@@ -454,6 +462,7 @@ export default function FeedPageClient() {
         videoUrl: uploadedVideoUrl,
         linkMetadata,
         mentionedPoliticianIds,
+        boundaryIds: postTarget === "all" ? undefined : [Number(postTarget)],
       });
 
       if (error) throw error;
@@ -932,6 +941,27 @@ export default function FeedPageClient() {
                           </div>
                         )}
                       </div>
+                    )}
+
+                    {filterPills.length > 2 && (
+                      <label className="flex items-center gap-2 text-xs text-text-muted">
+                        <span className="shrink-0 font-semibold">Post to</span>
+                        <select
+                          value={postTarget}
+                          onChange={(e) => setPostTarget(e.target.value)}
+                          className="min-w-0 flex-1 rounded-lg border border-border-light/50 bg-surface px-2 py-1.5 text-xs text-text-main"
+                        >
+                          <option value="all">All my districts</option>
+                          {filterPills
+                            .filter((p) => p.filterType === "shape" && p.shapeId != null)
+                            .map((p) => (
+                              <option key={p.key} value={String(p.shapeId)}>
+                                {p.districtName}
+                                {p.divisionType ? ` · ${p.divisionType}` : ""}
+                              </option>
+                            ))}
+                        </select>
+                      </label>
                     )}
 
                     <div className="flex items-center justify-between pt-2">

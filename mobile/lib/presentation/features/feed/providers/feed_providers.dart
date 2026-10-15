@@ -13,7 +13,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/utils/boundary_level.dart';
 import '../../../../domain/posts/entities/post.dart';
+import '../../../../domain/posts/entities/post_draft.dart';
 import '../../../../domain/profile/entities/user_profile.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../profile/providers/profile_providers.dart';
@@ -25,8 +27,14 @@ sealed class FeedTab {
 }
 
 class MembershipTab extends FeedTab {
-  const MembershipTab(this.shapeId, super.label);
+  const MembershipTab(this.shapeId, super.label, {this.boundaryType});
   final int shapeId;
+  final String? boundaryType;
+
+  /// "Federal" / "Provincial" / "State" / "Municipal" (else the raw type) —
+  /// the second line under the district name, so two districts that share a
+  /// name (Surrey federal vs Surrey municipal) are told apart.
+  String? get levelLabel => boundaryLevelLabel(boundaryType);
 }
 
 class CountryTab extends FeedTab {
@@ -95,8 +103,23 @@ class FeedController extends AsyncNotifier<FeedState> {
     // has no boundary-specificity ranking ported yet (that's
     // `getBoundaryTypesForCountries` on web), so this keeps the raw
     // membership-table order rather than guessing a rank.
+    // Federal → provincial/state → municipal, polling divisions left out —
+    // same ordering and filter as the web's district pills.
+    final ordered =
+        memberships
+            .where(
+              (m) => !(m.boundaryType ?? '').toLowerCase().contains('polling'),
+            )
+            .toList()
+          ..sort(
+            (a, b) => boundaryTypeRank(
+              a.boundaryType,
+            ).compareTo(boundaryTypeRank(b.boundaryType)),
+          );
     final tabs = <FeedTab>[
-      ...memberships.map((m) => MembershipTab(m.shapeId, m.name)),
+      ...ordered.map(
+        (m) => MembershipTab(m.shapeId, m.name, boundaryType: m.boundaryType),
+      ),
       // Country and International tabs are hidden, matching the website
       // (FeedPageClient.tsx): not all content belongs in them, so what they
       // show should be decided by engagement first. CountryTab /
@@ -165,13 +188,16 @@ class FeedController extends AsyncNotifier<FeedState> {
     );
   }
 
-  Future<bool> submitPost(String content) async {
+  Future<bool> submitPost(PostDraft draft) async {
     final current = state.value;
-    if (current == null || content.trim().isEmpty) return false;
+    if (current == null ||
+        (draft.content.trim().isEmpty &&
+            draft.imageUrl == null &&
+            draft.videoUrl == null)) {
+      return false;
+    }
     state = AsyncData(current.copyWith(posting: true, clearPostError: true));
-    final result = await ref
-        .read(feedRepositoryProvider)
-        .createFeedPost(content.trim());
+    final result = await ref.read(feedRepositoryProvider).createFeedPost(draft);
     return result.when(
       ok: (_) async {
         final latest = state.value;

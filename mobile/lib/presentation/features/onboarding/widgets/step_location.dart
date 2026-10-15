@@ -64,6 +64,8 @@ class StepLocation extends StatelessWidget {
         const SizedBox(height: ChosenoSpacing.md),
         LocationPickerMap(
           height: 260,
+          onLocate: onDetect,
+          locating: locating,
           point: pointLat != null && pointLng != null
               ? LatLng(pointLat!, pointLng!)
               : null,

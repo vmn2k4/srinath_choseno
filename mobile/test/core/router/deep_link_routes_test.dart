@@ -21,11 +21,7 @@ void main() {
     ];
     for (final p in paths) {
       final matches = router.configuration.findMatch(Uri.parse(p));
-      expect(
-        matches.isError,
-        isFalse,
-        reason: '$p did not match any route',
-      );
+      expect(matches.isError, isFalse, reason: '$p did not match any route');
     }
   });
 }

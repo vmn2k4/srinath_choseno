@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/utils/video_compression.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
@@ -253,11 +254,10 @@ class _IntroVideoCard extends ConsumerWidget {
     );
     if (picked == null) return;
     AppHaptics.tap();
-    final bytes = await picked.readAsBytes();
-    final extension = picked.path.split('.').last;
+    final video = await compressVideoForUpload(picked.path);
     final success = await ref
         .read(candidateApplicationControllerProvider(candidateId).notifier)
-        .uploadIntroVideo(bytes, extension);
+        .uploadIntroVideo(video.bytes, video.extension);
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

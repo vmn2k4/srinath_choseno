@@ -28,6 +28,7 @@ class Post {
     this.linkTitle,
     this.linkDescription,
     this.linkImage,
+    this.author,
   });
 
   final String id;
@@ -56,6 +57,10 @@ class Post {
   final String? linkDescription;
   final String? linkImage;
 
+  /// Set when the post's author is a politician posting under their real
+  /// name (the website shows that instead of the anonymous ghost label).
+  final PoliticianAuthor? author;
+
   int get commentCount => comments.length;
   int get engagementScore => likesCount + comments.length;
 
@@ -63,6 +68,7 @@ class Post {
     int? likesCount,
     int? dislikesCount,
     List<Comment>? comments,
+    PoliticianAuthor? author,
   }) {
     return Post(
       id: id,
@@ -82,6 +88,16 @@ class Post {
       linkTitle: linkTitle,
       linkDescription: linkDescription,
       linkImage: linkImage,
+      author: author ?? this.author,
     );
   }
+}
+
+/// A politician's public identity, resolved from the ghost id on their posts.
+@immutable
+class PoliticianAuthor {
+  const PoliticianAuthor({required this.fullName, this.wallSlug});
+
+  final String fullName;
+  final String? wallSlug;
 }

@@ -122,7 +122,13 @@ class _ChangeLocationSheetState extends ConsumerState<_ChangeLocationSheet> {
               onSelected: (s) => _resolve(LatLng(s.lat, s.lng)),
             ),
             const SizedBox(height: ChosenoSpacing.md),
-            LocationPickerMap(height: 260, point: _point, onPick: _resolve),
+            LocationPickerMap(
+              height: 260,
+              point: _point,
+              onPick: _resolve,
+              onLocate: _useGps,
+              locating: _busy,
+            ),
             const SizedBox(height: ChosenoSpacing.md),
             AppButton(
               label: 'Use my current location',

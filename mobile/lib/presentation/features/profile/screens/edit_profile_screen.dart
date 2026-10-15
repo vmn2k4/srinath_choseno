@@ -320,6 +320,8 @@ class _EditFormState extends ConsumerState<_EditForm> {
                       const SizedBox(height: ChosenoSpacing.sm),
                       LocationPickerMap(
                         height: 220,
+                        onLocate: c.detectLocation,
+                        locating: s.locating,
                         point: s.lat != null && s.lng != null
                             ? LatLng(s.lat!, s.lng!)
                             : null,

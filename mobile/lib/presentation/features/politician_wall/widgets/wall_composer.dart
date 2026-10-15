@@ -1,164 +1,99 @@
 // "Write on this wall" — posts to a politician's wall via `create_wall_post`.
-// One collapsed row until tapped, so it costs a single line of screen space.
+// One collapsed row that opens the shared composer sheet (text, photo,
+// @tags; plus Video Pitch when the wall's owner is the one posting).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
-import '../../../../core/widgets/widgets.dart';
+import '../../../../domain/posts/entities/post_draft.dart';
 import '../../../common/widgets/content_safety_sheets.dart';
+import '../../../common/widgets/post_composer_sheet.dart';
+import '../../profile/providers/profile_providers.dart';
 import '../providers/politician_wall_providers.dart';
 
-const _maxLength = 1000;
-
-class WallComposer extends ConsumerStatefulWidget {
+class WallComposer extends ConsumerWidget {
   const WallComposer({
     super.key,
     required this.wallGhostId,
+    required this.ownerId,
     required this.ownerName,
   });
 
   final String wallGhostId;
+  final String ownerId;
   final String ownerName;
 
-  @override
-  ConsumerState<WallComposer> createState() => _WallComposerState();
-}
-
-class _WallComposerState extends ConsumerState<WallComposer> {
-  final _controller = TextEditingController();
-  bool _open = false;
-  bool _sending = false;
-  String? _error;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> _post() async {
-    final text = _controller.text.trim();
-    if (text.isEmpty || _sending) return;
+  Future<void> _open(BuildContext context, WidgetRef ref, bool isOwner) async {
+    final me = ref.read(ownProfileProvider).value;
+    if (me?.currentGhostId == null) return;
     if (!await ensureTermsAccepted(context)) return;
-    setState(() {
-      _sending = true;
-      _error = null;
-    });
-    final result = await ref
-        .read(politicianWallRepositoryProvider)
-        .createWallPost(widget.wallGhostId, text);
-    if (!mounted) return;
-    result.when(
-      ok: (_) {
-        AppHaptics.tap();
-        _controller.clear();
-        ref.invalidate(wallPostsProvider(widget.wallGhostId));
-        setState(() {
-          _sending = false;
-          _open = false;
-        });
+    if (!context.mounted) return;
+    final first = ownerName.split(' ').first;
+    await showPostComposerSheet(
+      context,
+      hint: isOwner
+          ? 'Post an update to your public wall… Type @ to tag a politician'
+          : 'Leave a post or message for $first… Type @ to tag a politician',
+      ghostId: me!.currentGhostId!,
+      allowVideo: isOwner,
+      viewerCountry: me.country,
+      onSubmit: (PostDraft draft) async {
+        final result = await ref
+            .read(politicianWallRepositoryProvider)
+            .createWallPost(wallGhostId, draft);
+        final ok = result.when(ok: (_) => true, err: (_) => false);
+        if (ok) {
+          AppHaptics.tap();
+          ref.invalidate(wallPostsProvider(wallGhostId));
+        }
+        return ok;
       },
-      err: (f) => setState(() {
-        _sending = false;
-        _error = f.message;
-      }),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final palette = ChosenoTheme.of(context);
-    final first = widget.ownerName.split(' ').first;
-
-    if (!_open) {
-      return InkWell(
-        borderRadius: BorderRadius.circular(ChosenoRadii.card),
-        onTap: () => setState(() => _open = true),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: ChosenoSpacing.md,
-            vertical: ChosenoSpacing.sm + 4,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(color: palette.borderLight),
-            borderRadius: BorderRadius.circular(ChosenoRadii.card),
-            color: palette.surfaceHover,
-          ),
-          child: Row(
-            children: [
-              Icon(Icons.edit_outlined, size: 18, color: palette.primary),
-              const SizedBox(width: ChosenoSpacing.sm),
-              Expanded(
-                child: Text(
-                  'Write on $first’s wall…',
-                  style: ChosenoTypography.body(
-                    color: palette.textMuted,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ],
-          ),
+    final first = ownerName.split(' ').first;
+    final me = ref.watch(ownProfileProvider).value;
+    final isOwner = me != null && me.id == ownerId;
+    return InkWell(
+      borderRadius: BorderRadius.circular(ChosenoRadii.card),
+      onTap: () => _open(context, ref, isOwner),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ChosenoSpacing.md,
+          vertical: ChosenoSpacing.sm + 4,
         ),
-      );
-    }
-
-    return AppCard(
-      padding: const EdgeInsets.all(ChosenoSpacing.sm + 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextField(
-            controller: _controller,
-            autofocus: true,
-            minLines: 2,
-            maxLines: 6,
-            maxLength: _maxLength,
-            decoration: InputDecoration(
-              hintText: 'Say something to $first — posts are anonymous',
-              counterText: '',
-            ),
-          ),
-          if (_error != null)
-            Padding(
-              padding: const EdgeInsets.only(top: ChosenoSpacing.xs),
+        decoration: BoxDecoration(
+          border: Border.all(color: palette.borderLight),
+          borderRadius: BorderRadius.circular(ChosenoRadii.card),
+          color: palette.surfaceHover,
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.edit_outlined, size: 18, color: palette.primary),
+            const SizedBox(width: ChosenoSpacing.sm),
+            Expanded(
               child: Text(
-                _error!,
+                isOwner
+                    ? 'Post an update to your public wall…'
+                    : 'Write on $first’s wall…',
                 style: ChosenoTypography.body(
-                  color: palette.danger,
-                  fontSize: 12,
+                  color: palette.textMuted,
+                  fontSize: 14,
                 ),
               ),
             ),
-          const SizedBox(height: ChosenoSpacing.sm),
-          Row(
-            children: [
-              Expanded(
-                child: AppButton(
-                  label: 'Cancel',
-                  variant: AppButtonVariant.outline,
-                  onPressed: _sending
-                      ? null
-                      : () => setState(() {
-                          _open = false;
-                          _error = null;
-                        }),
-                ),
-              ),
-              const SizedBox(width: ChosenoSpacing.sm),
-              Expanded(
-                child: AppButton(
-                  label: 'Post',
-                  icon: Icons.send_rounded,
-                  loading: _sending,
-                  onPressed: _sending ? null : _post,
-                ),
-              ),
+            Icon(Icons.image_outlined, size: 18, color: palette.textMuted),
+            if (isOwner) ...[
+              const SizedBox(width: ChosenoSpacing.xs),
+              Icon(Icons.videocam_outlined, size: 18, color: palette.textMuted),
             ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import '../../../core/errors/result.dart';
+import '../../posts/entities/post_draft.dart';
 import '../../posts/entities/post.dart';
 import '../entities/politician_wall_profile.dart';
 
@@ -31,7 +32,22 @@ abstract interface class PoliticianWallRepository {
   /// RPC `create_wall_post` — posts on this politician's wall (identified by
   /// their current ghost id). A different RPC from the Feed's `create_post`
   /// (exempt from the politician daily-post limit); never merge the two.
-  Future<Result<void>> createWallPost(String wallGhostId, String content);
+  Future<Result<void>> createWallPost(String wallGhostId, PostDraft draft);
+
+  /// The Candidacy Wall's post feed: posts tagged to the candidacy plus the
+  /// candidate's own wall posts.
+  Future<Result<List<Post>>> getCandidatePosts(
+    String candidateId,
+    String politicianId,
+  );
+
+  /// Direct insert on `posts` for a candidacy (+ `attach_post_mentions`).
+  /// Photo and @tags only — the web's Candidacy Wall has no video attach.
+  Future<Result<void>> createCandidatePost(
+    String candidateId,
+    String ghostId,
+    PostDraft draft,
+  );
 
   Future<Result<List<Post>>> getWallPosts(
     String ghostId, {

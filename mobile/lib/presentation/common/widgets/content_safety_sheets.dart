@@ -31,20 +31,30 @@ Future<bool> showReportSheet(
   final reason = await showModalBottomSheet<String>(
     context: context,
     showDragHandle: true,
+    // Scrollable and allowed to use the full height: on a short screen (or
+    // with the bottom nav showing) a fixed column overflowed and cut off the
+    // last reason.
+    isScrollControlled: true,
+    useSafeArea: true,
     builder: (ctx) => SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const ListTile(
-            title: Text(
-              'Report this content',
-              style: TextStyle(fontWeight: FontWeight.w600),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const ListTile(
+              title: Text(
+                'Report this content',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text('Why are you reporting it?'),
             ),
-            subtitle: Text('Why are you reporting it?'),
-          ),
-          for (final (key, label) in _reasons)
-            ListTile(title: Text(label), onTap: () => Navigator.pop(ctx, key)),
-        ],
+            for (final (key, label) in _reasons)
+              ListTile(
+                title: Text(label),
+                onTap: () => Navigator.pop(ctx, key),
+              ),
+          ],
+        ),
       ),
     ),
   );
@@ -143,4 +153,54 @@ Future<bool> ensureTermsAccepted(BuildContext context) async {
   if (agreed != true) return false;
   await TermsGate.accept();
   return true;
+}
+
+/// The "Report / Block author" sheet shared by every post and comment.
+/// Returns true when a *post* was reported (callers hide it right away).
+Future<bool> showContentActionsSheet(
+  BuildContext context,
+  WidgetRef ref, {
+  required String targetType,
+  required String targetId,
+  required String ghostId,
+}) async {
+  final choice = await showModalBottomSheet<String>(
+    context: context,
+    showDragHandle: true,
+    builder: (ctx) => SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.flag_outlined),
+            title: Text('Report this $targetType'),
+            onTap: () => Navigator.pop(ctx, 'report'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.block),
+            title: const Text('Block author'),
+            onTap: () => Navigator.pop(ctx, 'block'),
+          ),
+        ],
+      ),
+    ),
+  );
+  if (choice == null || !context.mounted) return false;
+  if (choice == 'report') {
+    final sent = await showReportSheet(
+      context,
+      ref,
+      targetType: targetType,
+      targetId: targetId,
+    );
+    return sent && targetType == 'post';
+  }
+  await confirmBlockAuthor(
+    context,
+    ref,
+    targetType: targetType,
+    targetId: targetId,
+    ghostId: ghostId,
+  );
+  return false;
 }

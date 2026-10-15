@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/utils/boundary_level.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
@@ -153,7 +154,13 @@ class _ScopeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     const maxShown = 4;
-    final shown = boundaries.take(maxShown).toList();
+    final sorted = [...boundaries]
+      ..sort(
+        (a, b) => boundaryTypeRank(
+          a.boundaryType,
+        ).compareTo(boundaryTypeRank(b.boundaryType)),
+      );
+    final shown = sorted.take(maxShown).toList();
     final extra = boundaries.length - shown.length;
     return AppCard(
       padding: const EdgeInsets.all(ChosenoSpacing.md + 4),
@@ -198,7 +205,12 @@ class _ScopeCard extends StatelessWidget {
               runSpacing: ChosenoSpacing.sm,
               children: [
                 for (final b in shown)
-                  AppBadge(label: b.name, tone: AppBadgeTone.neutral),
+                  AppBadge(
+                    label: boundaryLevelLabel(b.boundaryType) == null
+                        ? b.name
+                        : '${b.name} · ${boundaryLevelLabel(b.boundaryType)}',
+                    tone: AppBadgeTone.neutral,
+                  ),
                 if (extra > 0)
                   AppBadge(label: '+$extra more', tone: AppBadgeTone.primary),
               ],

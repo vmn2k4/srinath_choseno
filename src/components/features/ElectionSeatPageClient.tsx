@@ -595,7 +595,7 @@ export default function ElectionSeatPageClient({
   const startApplying = async () => {
     setApplying(true);
     setStatus("");
-    const { data, error } = await applyForSeat(supabase, seatId);
+    const { data, error } = await applyForSeat(supabase, seat?.id || seatId);
     setApplying(false);
     if (error) {
       setStatus("Error: " + error.message);
@@ -608,7 +608,7 @@ export default function ElectionSeatPageClient({
     e.preventDefault();
     setSubmittingAdminApp(true);
     setAdminAppStatus("");
-    const { error } = await applyForElectionAdmin(supabase, seatId, {
+    const { error } = await applyForElectionAdmin(supabase, seat?.id || seatId, {
       motivation: adminMotivation,
       socialMediaInfo: adminSocialMedia,
       contactEmail: adminContactEmail,
@@ -644,7 +644,7 @@ export default function ElectionSeatPageClient({
     e.preventDefault();
     setAddingCandidate(true);
     setAddCandidateStatus("");
-    const { error } = await addUnregisteredCandidate(supabase, seatId, {
+    const { error } = await addUnregisteredCandidate(supabase, seat?.id || seatId, {
       fullName: newCandidateName,
       partyId: newCandidateParty ? parseInt(newCandidateParty) : null,
       education: newCandidateEducation,
@@ -788,7 +788,7 @@ export default function ElectionSeatPageClient({
     );
   }
 
-  const alreadyApplied = myCandidacies.some((c) => c.seat_id === seatId);
+  const alreadyApplied = myCandidacies.some((c) => c.seat_id === (seat?.id || seatId));
   const isSeatAdmin = role === "admin" || adminStatus?.my_application_status === "approved";
   const seatAreaName = seat.map_shapes?.name || null;
   const seatUrl = `${SITE_URL}/elections/seat/${buildSeatSlug(seat)}`;

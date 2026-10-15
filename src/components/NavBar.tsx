@@ -65,7 +65,7 @@ export default function NavBar() {
     ...(session && profile?.role === "politician" && profile?.current_ghost_id
       ? [
           {
-            href: `/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`,
+            href: `/wall/${profile.politician_wall_slug || (profile.full_name ? buildPoliticianWallSlug(profile.full_name, profile.designation) : profile.current_ghost_id)}`,
             label: "My Wall",
             icon: Sparkles,
             active: pathname?.startsWith("/wall") ?? false,
@@ -142,7 +142,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
+                  href={`/wall/${profile.politician_wall_slug || (profile.full_name ? buildPoliticianWallSlug(profile.full_name, profile.designation) : profile.current_ghost_id)}`}
                   className={`flex items-center gap-1.5 ${navLinkClass(
                     pathname?.startsWith("/wall") ?? false
                   )}`}
@@ -402,7 +402,7 @@ export default function NavBar() {
             <>
               {profile?.role === "politician" && profile?.current_ghost_id && (
                 <Link
-                  href={`/wall/${profile.politician_wall_slug || buildPoliticianWallSlug(profile.full_name, profile.designation)}`}
+                  href={`/wall/${profile.politician_wall_slug || (profile.full_name ? buildPoliticianWallSlug(profile.full_name, profile.designation) : profile.current_ghost_id)}`}
                   className={mobileNavLinkClass(pathname?.startsWith("/wall") ?? false)}
                 >
                   <Sparkles size={18} />

@@ -3263,8 +3263,13 @@ export type Database = {
           source_profile_id: string
         }[]
       }
+      can_comment_on_post: {
+        Args: { p_post_id: string }
+        Returns: boolean
+      }
       create_post: {
         Args: {
+          p_boundary_ids?: number[]
           p_content: string
           p_election_candidate_id?: string
           p_image_url?: string

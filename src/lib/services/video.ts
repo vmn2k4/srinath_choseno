@@ -20,7 +20,7 @@ export function normalizeMediaUrl(url: string | null | undefined): string {
 }
 
 export async function uploadVideo(supabase: Client, bucket: string, fileName: string, blob: Blob) {
-  return supabase.storage.from(bucket).upload(fileName, blob, { contentType: "video/webm" });
+  return supabase.storage.from(bucket).upload(fileName, blob, { contentType: blob.type || "video/webm" });
 }
 
 export function getVideoPublicUrl(supabase: Client, bucket: string, fileName: string) {

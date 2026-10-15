@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
+import '../../../../core/widgets/widgets.dart';
 
 const _defaultCenter = LatLng(49.2827, -123.1207);
 
@@ -53,7 +54,14 @@ class LocationPickerMap extends StatefulWidget {
     required this.onPick,
     this.point,
     this.height = 260,
+    this.onLocate,
+    this.locating = false,
   });
+
+  /// When set, an empty map opens with a "Find your location" card (the web's
+  /// popup) whose button calls this, instead of relying on the search bar.
+  final VoidCallback? onLocate;
+  final bool locating;
 
   /// The currently selected point, or null when nothing is picked yet.
   final LatLng? point;
@@ -74,6 +82,7 @@ class _LocationPickerMapState extends State<LocationPickerMap> {
   }
 
   final _controller = MapController();
+  bool _promptDismissed = false;
 
   @override
   void didUpdateWidget(covariant LocationPickerMap oldWidget) {
@@ -168,7 +177,20 @@ class _LocationPickerMapState extends State<LocationPickerMap> {
                 onZoomOut: () => _zoomBy(-1),
               ),
             ),
-            if (point == null)
+            if (point == null && widget.onLocate != null && !_promptDismissed)
+              Positioned.fill(
+                child: ColoredBox(
+                  color: Colors.black.withValues(alpha: 0.35),
+                  child: Center(
+                    child: _LocatePrompt(
+                      locating: widget.locating,
+                      onLocate: widget.onLocate!,
+                      onClose: () => setState(() => _promptDismissed = true),
+                    ),
+                  ),
+                ),
+              )
+            else if (point == null)
               Positioned(
                 left: ChosenoSpacing.md,
                 // Leave room for the zoom controls on the right.
@@ -256,6 +278,80 @@ class _ZoomControls extends StatelessWidget {
           button(Icons.add, 'Zoom in', onZoomIn),
           Divider(height: 1, thickness: 1, color: palette.border),
           button(Icons.remove, 'Zoom out', onZoomOut),
+        ],
+      ),
+    );
+  }
+}
+
+/// The web's "Find your location" popup, centred over the empty map.
+class _LocatePrompt extends StatelessWidget {
+  const _LocatePrompt({
+    required this.locating,
+    required this.onLocate,
+    required this.onClose,
+  });
+
+  final bool locating;
+  final VoidCallback onLocate;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return Container(
+      margin: const EdgeInsets.all(ChosenoSpacing.lg),
+      padding: const EdgeInsets.fromLTRB(
+        ChosenoSpacing.md,
+        ChosenoSpacing.sm,
+        ChosenoSpacing.md,
+        ChosenoSpacing.md,
+      ),
+      decoration: BoxDecoration(
+        color: palette.surface,
+        borderRadius: BorderRadius.circular(ChosenoRadii.card),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: InkResponse(
+              onTap: onClose,
+              radius: 22,
+              child: SizedBox(
+                width: 44,
+                height: 32,
+                child: Icon(Icons.close, size: 20, color: palette.textMuted),
+              ),
+            ),
+          ),
+          Text(
+            'Find your location',
+            textAlign: TextAlign.center,
+            style: ChosenoTypography.body(
+              color: palette.textMain,
+              fontSize: 17,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: ChosenoSpacing.xs),
+          Text(
+            'Use your GPS, or close this and search or tap the map instead.',
+            textAlign: TextAlign.center,
+            style: ChosenoTypography.body(
+              color: palette.textMuted,
+              fontSize: 13,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: ChosenoSpacing.md),
+          AppButton(
+            label: 'Locate Me',
+            icon: Icons.my_location,
+            loading: locating,
+            onPressed: locating ? null : onLocate,
+          ),
         ],
       ),
     );

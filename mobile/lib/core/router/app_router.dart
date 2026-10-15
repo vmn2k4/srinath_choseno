@@ -24,6 +24,7 @@ import '../../presentation/features/auth/screens/sign_in_screen.dart';
 import '../../presentation/features/boundaries/providers/boundaries_providers.dart';
 import '../../presentation/features/elections/screens/elections_list_screen.dart';
 import '../../presentation/features/elections/screens/pick_share_screen.dart';
+import '../../presentation/features/feed/screens/post_detail_screen.dart';
 import '../../presentation/features/elections/screens/race_list_screen.dart';
 import '../../presentation/features/elections/screens/seat_detail_screen.dart';
 import '../../presentation/features/feed/screens/feed_screen.dart';
@@ -73,6 +74,9 @@ abstract final class AppRoutes {
       '/elections/place-$shapeId${name != null ? '?name=${Uri.encodeComponent(name)}' : ''}';
 
   static String pickShare(String code) => '/p/$code';
+
+  /// A single post (what a shared post link opens).
+  static String post(String postId) => '/post/$postId';
 
   static String candidacy(String candidateId) => '/candidacy/$candidateId';
 
@@ -328,6 +332,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             title: state.uri.queryParameters['name'] ?? 'Who\'s running here',
           );
         },
+      ),
+      // A single shared post (`/post/<id>`).
+      GoRoute(
+        path: '/post/:id',
+        builder: (context, state) =>
+            PostDetailScreen(postId: state.pathParameters['id']!),
       ),
       // Shared-picks page (`/p/<code>`).
       GoRoute(

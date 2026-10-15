@@ -1,20 +1,30 @@
 // Port of `PostCard.tsx`'s Feed configuration (vote-bar on) — see
-// docs/FLUTTER_MOBILE_APP_GUIDE.md §5 in the parent repo. Simplified for
-// v1: no image/video/link-preview rendering (composer doesn't produce
-// them yet either), no @mention highlighting, no report action, no
-// civic-score badge (that needs the Profile domain's score fields, not
-// yet ported).
+// docs/FLUTTER_MOBILE_APP_GUIDE.md §5 in the parent repo. Shows the photo,
+// video thumbnail/player and link card, a share button and the
+// report/block menu. Still missing: @mention highlighting and the
+// civic-score badge.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../politician_wall/widgets/wall_post_tile.dart'
+    show PostImage, LinkCard;
 import 'package:intl/intl.dart';
 
+import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/ghost_name.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/utils/share_link.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/posts/entities/post.dart';
+import '../../../common/widgets/content_safety_sheets.dart';
 import '../../../common/widgets/vote_pill.dart';
+import '../providers/content_safety_providers.dart';
+import '../../../common/widgets/post_video_thumbnail.dart';
 
-class FeedPostTile extends StatefulWidget {
+class FeedPostTile extends ConsumerStatefulWidget {
   const FeedPostTile({
     super.key,
     required this.post,
@@ -27,17 +37,57 @@ class FeedPostTile extends StatefulWidget {
   final void Function(String content) onComment;
 
   @override
-  State<FeedPostTile> createState() => _FeedPostTileState();
+  ConsumerState<FeedPostTile> createState() => _FeedPostTileState();
 }
 
-class _FeedPostTileState extends State<FeedPostTile> {
+class _FeedPostTileState extends ConsumerState<FeedPostTile> {
   bool _commentsExpanded = false;
+  bool _hidden = false;
   final _commentController = TextEditingController();
 
   @override
   void dispose() {
     _commentController.dispose();
     super.dispose();
+  }
+
+  Future<void> _menu(String type, String id, String ghostId) async {
+    final hide = await showContentActionsSheet(
+      context,
+      ref,
+      targetType: type,
+      targetId: id,
+      ghostId: ghostId,
+    );
+    if (hide && mounted) setState(() => _hidden = true);
+  }
+
+  Future<void> _open(String url) async {
+    final uri = Uri.tryParse(url);
+    if (uri != null) await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  void _showImage(String url) {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => Dialog.fullscreen(
+        backgroundColor: Colors.black,
+        child: Stack(
+          children: [
+            Center(child: InteractiveViewer(child: Image.network(url))),
+            SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _submitComment() {
@@ -50,8 +100,9 @@ class _FeedPostTileState extends State<FeedPostTile> {
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     final post = widget.post;
+    if (_hidden) return const SizedBox.shrink();
+    final blocked = ref.watch(blockedAuthorsProvider).value ?? const <String>{};
 
-    final score = post.likesCount - post.dislikesCount;
     return AppCard(
       padding: const EdgeInsets.fromLTRB(
         ChosenoSpacing.lg,
@@ -80,7 +131,7 @@ class _FeedPostTileState extends State<FeedPostTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ghost ${post.ghostId.substring(0, 6)}',
+                      post.author?.fullName ?? ghostDisplayName(post.ghostId),
                       style: ChosenoTypography.body(
                         color: palette.textMain,
                         fontSize: 14,
@@ -88,7 +139,7 @@ class _FeedPostTileState extends State<FeedPostTile> {
                       ),
                     ),
                     Text(
-                      DateFormat.MMMd().add_jm().format(post.createdAt),
+                      '${post.author != null ? 'Politician · ' : ''}${DateFormat.MMMd().add_jm().format(post.createdAt)}',
                       style: ChosenoTypography.body(
                         color: palette.textMuted,
                         fontSize: 12,
@@ -97,30 +148,66 @@ class _FeedPostTileState extends State<FeedPostTile> {
                   ],
                 ),
               ),
+              SizedBox(
+                width: 36,
+                height: 36,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  tooltip: 'Report or block',
+                  icon: Icon(
+                    Icons.flag_outlined,
+                    size: 20,
+                    color: palette.textMuted,
+                  ),
+                  onPressed: () => _menu('post', post.id, post.ghostId),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: ChosenoSpacing.md),
           // Larger, higher-contrast body copy (post-content-typography
           // decision: text-base + text-main, the Facebook/Reddit reading
           // size — this is what people actually came to read).
-          Text(
-            post.content,
-            style: ChosenoTypography.body(
-              color: palette.textMain,
-              fontSize: 16,
-              height: 1.5,
+          if (post.content.trim().isNotEmpty)
+            Text(
+              post.content,
+              style: ChosenoTypography.body(
+                color: palette.textMain,
+                fontSize: 16,
+                height: 1.5,
+              ),
             ),
-          ),
+          if (post.imageUrl != null)
+            PostImage(
+              url: post.imageUrl!,
+              aspectRatio: 4 / 3,
+              onTap: () => _showImage(post.imageUrl!),
+            ),
+          if (post.videoUrl != null) ...[
+            const SizedBox(height: ChosenoSpacing.sm),
+            PostVideoThumbnail(url: post.videoUrl!),
+          ],
+          if (post.linkUrl != null) ...[
+            const SizedBox(height: ChosenoSpacing.sm),
+            LinkCard(
+              url: post.linkUrl!,
+              title: post.linkTitle,
+              description: post.linkDescription,
+              image: post.linkImage,
+              onTap: () => _open(post.linkUrl!),
+            ),
+          ],
           const SizedBox(height: ChosenoSpacing.md),
           Row(
             children: [
               VotePill(
-                score: score,
-                onUp: () {
+                likes: post.likesCount,
+                dislikes: post.dislikesCount,
+                onLike: () {
                   AppHaptics.tap();
                   widget.onVote(1);
                 },
-                onDown: () {
+                onDislike: () {
                   AppHaptics.tap();
                   widget.onVote(-1);
                 },
@@ -159,39 +246,65 @@ class _FeedPostTileState extends State<FeedPostTile> {
                   ),
                 ),
               ),
+              const Spacer(),
+              IconButton(
+                tooltip: 'Share this post',
+                icon: Icon(Icons.ios_share_outlined, color: palette.textMuted),
+                onPressed: () => shareChosenoLink(AppRoutes.post(post.id)),
+              ),
             ],
           ),
           if (_commentsExpanded) ...[
             const SizedBox(height: ChosenoSpacing.md),
             Divider(color: palette.borderLight),
             const SizedBox(height: ChosenoSpacing.sm),
-            ...post.comments.map(
-              (c) => Padding(
-                padding: const EdgeInsets.only(bottom: ChosenoSpacing.md),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Ghost ${c.ghostId.substring(0, 6)}',
-                      style: ChosenoTypography.body(
-                        color: palette.textTertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
+            ...post.comments
+                .where((c) => !blocked.contains(c.ghostId))
+                .map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: ChosenoSpacing.md),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              ghostDisplayName(c.ghostId),
+                              style: ChosenoTypography.body(
+                                color: palette.textTertiary,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            ...[
+                              const Spacer(),
+                              InkWell(
+                                onTap: () => _menu('comment', c.id, c.ghostId),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Icon(
+                                    Icons.flag_outlined,
+                                    size: 16,
+                                    color: palette.textMuted,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          c.content,
+                          style: ChosenoTypography.body(
+                            color: palette.textMain,
+                            fontSize: 14,
+                            height: 1.45,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      c.content,
-                      style: ChosenoTypography.body(
-                        color: palette.textMain,
-                        fontSize: 14,
-                        height: 1.45,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
             Row(
               children: [
                 Expanded(

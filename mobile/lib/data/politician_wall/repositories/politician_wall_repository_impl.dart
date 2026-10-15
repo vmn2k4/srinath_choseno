@@ -4,9 +4,11 @@ import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import '../../../core/errors/app_failure.dart';
 import '../../../core/errors/result.dart';
 import '../../../domain/politician_wall/entities/politician_wall_profile.dart';
+import '../../../domain/posts/entities/post_draft.dart';
 import '../../../domain/politician_wall/repositories/politician_wall_repository.dart';
 import '../../../domain/posts/entities/post.dart';
 import '../../posts/models/post_model.dart';
+import '../../posts/politician_authors.dart';
 import '../datasources/politician_wall_remote_data_source.dart';
 import '../models/politician_wall_profile_model.dart';
 
@@ -120,12 +122,57 @@ class PoliticianWallRepositoryImpl implements PoliticianWallRepository {
   }
 
   @override
-  Future<Result<void>> createWallPost(
-    String wallGhostId,
-    String content,
+  Future<Result<List<Post>>> getCandidatePosts(
+    String candidateId,
+    String politicianId,
   ) async {
     try {
-      await _remote.createWallPost(wallGhostId, content);
+      final ghostId = await _remote.getGhostIdForProfile(politicianId);
+      final rows = await _remote.getCandidatePosts(
+        candidateId,
+        ghostId,
+        limit: 50,
+      );
+      final posts = rows
+          .cast<Map<String, dynamic>>()
+          .map((r) => r.toPost())
+          .toList();
+      return Result.ok(
+        withAuthors(
+          posts,
+          await _remote.getPoliticianAuthors(posts.map((p) => p.ghostId)),
+        ),
+      );
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<void>> createCandidatePost(
+    String candidateId,
+    String ghostId,
+    PostDraft draft,
+  ) async {
+    try {
+      await _remote.createCandidatePost(candidateId, ghostId, draft);
+      return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<void>> createWallPost(
+    String wallGhostId,
+    PostDraft draft,
+  ) async {
+    try {
+      await _remote.createWallPost(wallGhostId, draft);
       return const Result.ok(null);
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
@@ -146,8 +193,15 @@ class PoliticianWallRepositoryImpl implements PoliticianWallRepository {
         limit: limit,
         offset: offset,
       );
+      final posts = rows
+          .cast<Map<String, dynamic>>()
+          .map((r) => r.toPost())
+          .toList();
       return Result.ok(
-        rows.cast<Map<String, dynamic>>().map((r) => r.toPost()).toList(),
+        withAuthors(
+          posts,
+          await _remote.getPoliticianAuthors(posts.map((p) => p.ghostId)),
+        ),
       );
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));

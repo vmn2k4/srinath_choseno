@@ -21,7 +21,12 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/candidacy_detail.dart';
 import '../../../../domain/elections/entities/candidacy_question_answer.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../../../domain/posts/entities/post_draft.dart';
+import '../../../common/widgets/content_safety_sheets.dart';
+import '../../../common/widgets/post_composer_sheet.dart';
 import '../../politician_wall/providers/politician_wall_providers.dart';
+import '../../politician_wall/widgets/wall_post_tile.dart';
+import '../../profile/providers/profile_providers.dart';
 import '../providers/candidacy_providers.dart';
 
 class CandidacyWallScreen extends ConsumerWidget {
@@ -63,7 +68,7 @@ class CandidacyWallScreen extends ConsumerWidget {
                   _ClaimCandidacyCard(candidateId: candidateId),
                 ],
                 const SizedBox(height: ChosenoSpacing.lg),
-
+                _CandidacyPosts(candidateId: candidateId, detail: data.detail),
                 const SizedBox(height: ChosenoSpacing.lg),
                 if (data.answers.isNotEmpty) ...[
                   const SectionHeader(
@@ -572,5 +577,119 @@ class _AnswerValue extends StatelessWidget {
           style: ChosenoTypography.body(color: palette.textMain, fontSize: 14),
         );
     }
+  }
+}
+
+/// Candidacy Wall posts: the feed plus a collapsed composer (text, photo and
+/// @tags — the web has no video attach here).
+class _CandidacyPosts extends ConsumerWidget {
+  const _CandidacyPosts({required this.candidateId, required this.detail});
+
+  final String candidateId;
+  final CandidacyDetail detail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final palette = ChosenoTheme.of(context);
+    final key = (candidateId: candidateId, politicianId: detail.politicianId);
+    final postsAsync = ref.watch(candidacyPostsProvider(key));
+    final me = ref.watch(ownProfileProvider).value;
+    final isOwner = me != null && me.id == detail.politicianId;
+    final first = detail.fullName.split(' ').first;
+
+    Future<void> openComposer() async {
+      if (me?.currentGhostId == null) return;
+      if (!await ensureTermsAccepted(context)) return;
+      if (!context.mounted) return;
+      await showPostComposerSheet(
+        context,
+        hint: isOwner
+            ? 'Post an update to your candidacy wall… Type @ to tag a politician'
+            : 'Leave a post or message for $first… Type @ to tag a politician',
+        ghostId: me!.currentGhostId!,
+        viewerCountry: me.country,
+        onSubmit: (PostDraft draft) async {
+          final result = await ref
+              .read(politicianWallRepositoryProvider)
+              .createCandidatePost(candidateId, me.currentGhostId!, draft);
+          final ok = result.when(ok: (_) => true, err: (_) => false);
+          if (ok) ref.invalidate(candidacyPostsProvider(key));
+          return ok;
+        },
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SectionHeader(
+          icon: Icons.forum_outlined,
+          title: 'Posts',
+          subtitle: 'Updates and messages on this candidacy.',
+        ),
+        const SizedBox(height: ChosenoSpacing.md),
+        InkWell(
+          borderRadius: BorderRadius.circular(ChosenoRadii.card),
+          onTap: openComposer,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: ChosenoSpacing.md,
+              vertical: ChosenoSpacing.sm + 4,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: palette.borderLight),
+              borderRadius: BorderRadius.circular(ChosenoRadii.card),
+              color: palette.surfaceHover,
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.edit_outlined, size: 18, color: palette.primary),
+                const SizedBox(width: ChosenoSpacing.sm),
+                Expanded(
+                  child: Text(
+                    isOwner
+                        ? 'Post an update to your candidacy wall…'
+                        : 'Leave a post or message for $first…',
+                    style: ChosenoTypography.body(
+                      color: palette.textMuted,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                Icon(Icons.image_outlined, size: 18, color: palette.textMuted),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: ChosenoSpacing.md),
+        postsAsync.when(
+          data: (posts) => posts.isEmpty
+              ? const EmptyState(
+                  icon: Icons.chat_bubble_outline,
+                  title: 'No posts yet',
+                  message: 'Posts on this candidacy will show up here.',
+                )
+              : Column(
+                  children: [
+                    for (final p in posts)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: ChosenoSpacing.md,
+                        ),
+                        child: WallPostTile(post: p),
+                      ),
+                  ],
+                ),
+          loading: () => const Padding(
+            padding: EdgeInsets.all(ChosenoSpacing.lg),
+            child: Center(child: LoadingIndicator()),
+          ),
+          error: (_, _) => Text(
+            'Could not load posts.',
+            style: ChosenoTypography.body(color: palette.danger),
+          ),
+        ),
+      ],
+    );
   }
 }

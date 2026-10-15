@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../../core/utils/boundary_level.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
@@ -201,8 +202,13 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                                         const SizedBox(height: 2),
                                         Text(
                                           [
-                                            if (b.boundaryType != null)
-                                              b.boundaryType!,
+                                            if (boundaryLevelLabel(
+                                                  b.boundaryType,
+                                                ) !=
+                                                null)
+                                              boundaryLevelLabel(
+                                                b.boundaryType,
+                                              )!,
                                             if (b.country != null) b.country!,
                                           ].join(' · '),
                                           style: ChosenoTypography.body(
@@ -261,6 +267,8 @@ class _Picker extends StatelessWidget {
         const SizedBox(height: ChosenoSpacing.md),
         LocationPickerMap(
           height: 300,
+          onLocate: controller.detectLocation,
+          locating: state.locating,
           point: state.hasPoint
               ? LatLng(state.pointLat!, state.pointLng!)
               : null,

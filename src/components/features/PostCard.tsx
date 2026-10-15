@@ -9,6 +9,8 @@ import VoteBar from "./VoteBar";
 import CommentComposer from "./CommentComposer";
 import MediaThumbnail from "./MediaThumbnail";
 import ReportDialog from "./ReportDialog";
+import PostShareButton from "./PostShareButton";
+import { SITE_URL } from "@/lib/constants/site";
 import PostHeader, { type PoliticianAuthorInfo, type NewsAuthorInfo } from "./PostHeader";
 import { getGhostDisplayName } from "@/lib/utils/ghostName";
 import { normalizeMediaUrl } from "@/lib/services/video";
@@ -86,6 +88,7 @@ export default function PostCard({
   politicianAuthor,
   onReport,
   commentError,
+  commentBlockedMessage,
   boundaryName,
   mentions,
   mentionBadge = false,
@@ -124,6 +127,9 @@ export default function PostCard({
   politicianAuthor?: PoliticianAuthorInfo | null;
   onReport?: (targetType: ReportTargetType, targetId: string, abuseType: string) => Promise<{ error?: unknown }>;
   commentError?: string;
+  // Shown instead of the comment box when the viewer is signed in but not
+  // allowed to join this conversation (e.g. a feed post from another area).
+  commentBlockedMessage?: string | null;
   boundaryName?: string | null;
   mentions?: PostMention[];
   // True on a politician wall when this post shows up only because someone
@@ -369,7 +375,13 @@ export default function PostCard({
           commentsCount={comments.length}
           onUpvote={() => onVote?.(post.id, 1)}
           onDownvote={() => onVote?.(post.id, -1)}
+          shareUrl={`${SITE_URL}/post/${post.id}`}
         />
+      )}
+      {!showVoteBar && (
+        <div className="px-5 py-2.5 bg-surface/20 border-t border-border-light/20 flex items-center justify-end">
+          <PostShareButton url={`${SITE_URL}/post/${post.id}`} />
+        </div>
       )}
 
       <div className="bg-surface/10 p-3 border-t border-border-light/20">
@@ -427,6 +439,10 @@ export default function PostCard({
             />
             {commentError && <p className="text-danger-light text-xs mt-1.5">{commentError}</p>}
           </>
+        ) : commentBlockedMessage ? (
+          <p className="text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-xl px-4 py-2.5">
+            {commentBlockedMessage}
+          </p>
         ) : (
           onRequireAuth && (
             <button
