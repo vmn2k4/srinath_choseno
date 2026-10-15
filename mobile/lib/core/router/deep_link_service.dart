@@ -19,7 +19,20 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../presentation/features/auth/providers/auth_providers.dart';
 import 'app_router.dart';
+
+/// The link a signed-out visitor tapped, remembered until they are signed in
+/// and onboarded. go_router's own `?from=` is not enough on a cold start: the
+/// splash screen can resolve auth (and write `from=/`) before the OS link has
+/// been handed over, which dropped the article on the floor and landed on Home.
+class PendingDeepLink {
+  String? target;
+}
+
+final pendingDeepLinkProvider = Provider<PendingDeepLink>(
+  (ref) => PendingDeepLink(),
+);
 
 class DeepLinkService {
   DeepLinkService(this._ref) : _appLinks = AppLinks();
@@ -32,24 +45,34 @@ class DeepLinkService {
   /// first (the app was launched BY tapping one), then subscribes for any
   /// tapped while already running.
   Future<void> start() async {
-    try {
-      final initial = await _appLinks.getInitialLink();
-      if (initial != null) _handle(initial);
-    } catch (e) {
-      // getInitialLink can throw on some platform channel edge cases
-      // (e.g. no Activity yet) — a missed cold-start link just means the
-      // app opens to its normal initial route instead, never a crash.
-      if (kDebugMode) debugPrint('DeepLinkService: getInitialLink failed: $e');
-    }
+    // Subscribe FIRST. On Android a cold start hands the launching link to
+    // the stream, and `getInitialLink()` can take long enough (or never
+    // return) that awaiting it before listening — the old order — dropped
+    // the very link that launched the app.
     _subscription = _appLinks.uriLinkStream.listen(
       _handle,
       onError: (Object e) {
         if (kDebugMode) debugPrint('DeepLinkService: uriLinkStream error: $e');
       },
     );
+    try {
+      final initial = await _appLinks.getInitialLink().timeout(
+        const Duration(seconds: 3),
+      );
+      // The stream may already have delivered the same link; _handle is
+      // idempotent for an identical target, so a duplicate is harmless.
+      if (initial != null) _handle(initial);
+    } catch (e) {
+      // A missed cold-start link just means the app opens to its normal
+      // initial route instead, never a crash.
+      if (kDebugMode) debugPrint('DeepLinkService: getInitialLink failed: $e');
+    }
   }
 
   void dispose() => _subscription?.cancel();
+
+  String? _lastTarget;
+  DateTime? _lastAt;
 
   void _handle(Uri uri) {
     // Only ever act on our own domain (or a schemeless/hostless path, in
@@ -63,11 +86,25 @@ class DeepLinkService {
         : '${uri.path}${uri.hasQuery ? '?${uri.query}' : ''}';
     if (target == '/' || target.isEmpty) return;
 
+    final now = DateTime.now();
+    if (target == _lastTarget &&
+        _lastAt != null &&
+        now.difference(_lastAt!) < const Duration(seconds: 2)) {
+      return;
+    }
+    _lastTarget = target;
+    _lastAt = now;
+
     // go_router's own `redirect` (app_router.dart) still applies on top of
     // this — a signed-out tap lands on Auth first, carrying `?from=` so
     // sign-in resumes here afterward, not just Home. An unmatched path
     // (a web page with no mobile screen yet) renders go_router's normal
     // "page not found" rather than crashing.
+    // Signed out (or auth still resolving): remember it so sign-in can resume
+    // here instead of Home.
+    if (_ref.read(authStateChangesProvider).value == null) {
+      _ref.read(pendingDeepLinkProvider).target = target;
+    }
     _ref.read(appRouterProvider).go(target);
   }
 }

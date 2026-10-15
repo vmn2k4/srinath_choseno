@@ -14,6 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'deep_link_service.dart';
+
 import '../../presentation/common/widgets/app_shell.dart';
 import '../../presentation/features/auth/providers/auth_providers.dart';
 import '../../presentation/features/candidacy/screens/candidacy_wall_screen.dart';
@@ -109,7 +111,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // finishes loading, without needing a second Listenable hookup for
       // that specific transition.
       final profileState = ref.read(ownProfileProvider);
-      if (profileState.isLoading && !profileState.hasValue) return null;
+      // Wait whenever the profile is (re)loading — not only on the very first
+      // load. Right after sign-in Riverpod keeps the previous (signed-out,
+      // null) value while the real one loads, and treating that stale null as
+      // "onboarding not completed" flashed the role-selection screen and sent
+      // a pending deep link astray.
+      // A signed-in user always has a profile (it is healed if missing), so a
+      // null here is the brief gap before the post-sign-in load starts, not
+      // "no profile" — also wait through it.
+      if (profileState.isLoading ||
+          (profileState.value == null && !profileState.hasError)) {
+        return null;
+      }
 
       final onboardingCompleted =
           profileState.value?.onboardingCompleted ?? false;
@@ -143,6 +156,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           location == AppRoutes.onboarding ||
           location == AppRoutes.splash ||
           (location == AppRoutes.setLocation && !needsLocation)) {
+        final pending = ref.read(pendingDeepLinkProvider);
+        if (pending.target != null && pending.target != location) {
+          final t = pending.target!;
+          pending.target = null;
+          return t;
+        }
         if (location == AppRoutes.auth) {
           final from = state.uri.queryParameters['from'];
           if (from != null && from.isNotEmpty && from != AppRoutes.auth) {
