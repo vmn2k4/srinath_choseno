@@ -218,6 +218,11 @@ class ProfileScreen extends ConsumerWidget {
                             onTap: () =>
                                 context.push(AppRoutes.editorialStandards),
                           ),
+                          _SettingsRow(
+                            icon: Icons.delete_outline_rounded,
+                            label: 'Delete account',
+                            onTap: () => _confirmDelete(context, ref),
+                          ),
                         ],
                       ),
                       const SizedBox(height: ChosenoSpacing.sm),
@@ -495,6 +500,40 @@ class _SettingsRow {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
+}
+
+Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Delete your account?'),
+      content: const Text(
+        'This permanently deletes your account, profile, location and the '
+        'posts, comments and votes made under your current anonymous '
+        'identity. It cannot be undone.\n\nContent posted under an identity '
+        'you previously reset can’t be linked back to you, so it stays '
+        'online without any connection to you.',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, false),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, true),
+          child: const Text(
+            'Delete forever',
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ],
+    ),
+  );
+  if (ok != true) return;
+  final error = await ref.read(authControllerProvider.notifier).deleteAccount();
+  if (error != null && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+  }
 }
 
 /// A grouped list: one bordered card, hairline dividers, icon + label +

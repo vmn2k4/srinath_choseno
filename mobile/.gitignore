@@ -50,3 +50,9 @@ app.*.map.json
 # Google OAuth client downloads (Cloud Console) - keep local
 ios/Runner/client_*.plist
 android/app/client_secret_*.json
+
+# Play upload key
+android/key.properties
+android/*.jks
+android/app/*.jks
+*.keystore

@@ -115,4 +115,29 @@ class FeedRepositoryImpl implements FeedRepository {
       return const Result.err(NetworkFailure());
     }
   }
+
+  Future<Result<T>> _guard<T>(Future<T> Function() run) async {
+    try {
+      return Result.ok(await run());
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<void>> reportContent(
+    String targetType,
+    String targetId,
+    String abuseType,
+  ) => _guard(() => _remote.reportContent(targetType, targetId, abuseType));
+
+  @override
+  Future<Result<void>> blockAuthor(String targetType, String targetId) =>
+      _guard(() => _remote.blockAuthor(targetType, targetId));
+
+  @override
+  Future<Result<Set<String>>> getBlockedGhostIds() =>
+      _guard(_remote.getBlockedGhostIds);
 }

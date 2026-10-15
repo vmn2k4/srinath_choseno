@@ -102,7 +102,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-text-main">8. Your Rights</h2>
-          <p>You may request to delete your account and associated personal data at any time by contacting us at <a href="mailto:contact@choseno.com" className="text-primary hover:underline">contact@choseno.com</a>. Note that anonymized public content (ratings, posts) may remain on the platform as they cannot be linked back to your identity after deletion.</p>
+          <p>You can delete your account and associated personal data at any time in the app (Profile → Delete account) or at <Link href="/delete-account" className="text-primary hover:underline">choseno.com/delete-account</Link>. You may also contact us at <a href="mailto:contact@choseno.com" className="text-primary hover:underline">contact@choseno.com</a>. Note that anonymized public content (ratings, posts) may remain on the platform as they cannot be linked back to your identity after deletion.</p>
         </section>
 
         <section className="space-y-3">

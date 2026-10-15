@@ -36,4 +36,17 @@ abstract interface class FeedRepository {
   /// rate limit. Direct inserts are blocked by RLS (§6's "comments are
   /// RPC-only, everywhere" gotcha) — never build a fallback around that.
   Future<Result<void>> createComment(String postId, String content);
+
+  /// RPC `report_content` — [targetType] is `post` or `comment`.
+  Future<Result<void>> reportContent(
+    String targetType,
+    String targetId,
+    String abuseType,
+  );
+
+  /// RPC `block_author` — hides the author's content from the caller.
+  Future<Result<void>> blockAuthor(String targetType, String targetId);
+
+  /// RPC `my_blocked_ghost_ids` — authors the caller has blocked.
+  Future<Result<Set<String>>> getBlockedGhostIds();
 }

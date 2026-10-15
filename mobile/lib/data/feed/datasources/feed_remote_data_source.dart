@@ -84,6 +84,29 @@ class FeedRemoteDataSource {
         .single();
   }
 
+  Future<void> reportContent(String type, String id, String abuseType) {
+    return _client.rpc(
+      'report_content',
+      params: {
+        'p_target_type': type,
+        'p_target_id': id,
+        'p_abuse_type': abuseType,
+      },
+    );
+  }
+
+  Future<void> blockAuthor(String type, String id) {
+    return _client.rpc(
+      'block_author',
+      params: {'p_target_type': type, 'p_target_id': id},
+    );
+  }
+
+  Future<Set<String>> getBlockedGhostIds() async {
+    final rows = await _client.rpc('my_blocked_ghost_ids') as List<dynamic>;
+    return {for (final r in rows) r.toString()};
+  }
+
   Future<void> createComment(String postId, String content) {
     return _client.rpc(
       'create_comment',

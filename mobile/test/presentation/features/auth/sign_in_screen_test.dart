@@ -11,6 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakeAuthRepository implements AuthRepository {
+  @override
+  Future<Result<void>> deleteAccount() async => const Result.ok(null);
+
   _FakeAuthRepository(this.result);
 
   final Result<AppUser> result;

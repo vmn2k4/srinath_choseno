@@ -15,6 +15,8 @@ import '../../../../core/utils/haptics.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/posts/entities/post.dart';
 import '../../../common/widgets/vote_pill.dart';
+import '../../../common/widgets/content_safety_sheets.dart';
+import '../../feed/providers/content_safety_providers.dart';
 import '../../feed/providers/feed_repository_providers.dart';
 
 final _urlPattern = RegExp(r'https?://[^\s]+');
@@ -42,10 +44,11 @@ class WallPostTile extends ConsumerStatefulWidget {
 class _WallPostTileState extends ConsumerState<WallPostTile> {
   late int _likes = widget.post.likesCount;
   late int _dislikes = widget.post.dislikesCount;
-  late List<({String ghostId, String content})> _comments = [
+  late List<({String? id, String ghostId, String content})> _comments = [
     for (final c in widget.post.comments)
-      (ghostId: c.ghostId, content: c.content),
+      (id: c.id, ghostId: c.ghostId, content: c.content),
   ];
+  bool _hidden = false;
   bool _expanded = false;
   bool _sending = false;
   final _commentController = TextEditingController();
@@ -77,6 +80,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
   Future<void> _comment() async {
     final text = _commentController.text.trim();
     if (text.isEmpty || _sending) return;
+    if (!await ensureTermsAccepted(context)) return;
     setState(() => _sending = true);
     final result = await ref
         .read(feedRepositoryProvider)
@@ -84,7 +88,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
     if (!mounted) return;
     result.when(
       ok: (_) => setState(() {
-        _comments = [..._comments, (ghostId: 'you', content: text)];
+        _comments = [..._comments, (id: null, ghostId: 'you', content: text)];
         _commentController.clear();
         _sending = false;
       }),
@@ -95,6 +99,48 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
         ).showSnackBar(SnackBar(content: Text(f.message)));
       },
     );
+  }
+
+  Future<void> _menu(String type, String id, String ghostId) async {
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.flag_outlined),
+              title: const Text('Report'),
+              onTap: () => Navigator.pop(ctx, 'report'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.block),
+              title: const Text('Block author'),
+              onTap: () => Navigator.pop(ctx, 'block'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !mounted) return;
+    if (choice == 'report') {
+      final sent = await showReportSheet(
+        context,
+        ref,
+        targetType: type,
+        targetId: id,
+      );
+      if (sent && type == 'post' && mounted) setState(() => _hidden = true);
+    } else {
+      await confirmBlockAuthor(
+        context,
+        ref,
+        targetType: type,
+        targetId: id,
+        ghostId: ghostId,
+      );
+    }
   }
 
   Future<void> _open(String url) async {
@@ -131,6 +177,10 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     final post = widget.post;
+    final blocked = ref.watch(blockedAuthorsProvider).value ?? const <String>{};
+    if (_hidden || (!post.isNews && blocked.contains(post.ghostId))) {
+      return const SizedBox.shrink();
+    }
     final slug = post.newsArticleSlug;
     // The mirrored post often has no image of its own; use the article's hero image, then its generated
     // share card in public storage. (The site's own on-demand
@@ -199,6 +249,23 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
                   fontSize: 12,
                 ),
               ),
+              if (!post.isNews) ...[
+                const Spacer(),
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    tooltip: 'Report or block',
+                    icon: Icon(
+                      Icons.more_horiz,
+                      size: 20,
+                      color: palette.textMuted,
+                    ),
+                    onPressed: () => _menu('post', post.id, post.ghostId),
+                  ),
+                ),
+              ],
             ],
           ),
           const SizedBox(height: ChosenoSpacing.sm + 2),
@@ -312,21 +379,39 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
             const SizedBox(height: ChosenoSpacing.sm),
             Divider(color: palette.borderLight, height: 1),
             const SizedBox(height: ChosenoSpacing.sm),
-            for (final c in _comments)
+            for (final c in _comments.where((c) => !blocked.contains(c.ghostId)))
               Padding(
                 padding: const EdgeInsets.only(bottom: ChosenoSpacing.sm + 2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      c.ghostId == 'you'
-                          ? 'You'
-                          : 'Ghost ${c.ghostId.substring(0, 6)}',
-                      style: ChosenoTypography.body(
-                        color: palette.textTertiary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          c.ghostId == 'you'
+                              ? 'You'
+                              : 'Ghost ${c.ghostId.substring(0, 6)}',
+                          style: ChosenoTypography.body(
+                            color: palette.textTertiary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                        if (c.id != null) ...[
+                          const Spacer(),
+                          InkWell(
+                            onTap: () => _menu('comment', c.id!, c.ghostId),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Icon(
+                                Icons.flag_outlined,
+                                size: 16,
+                                color: palette.textMuted,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                     Text(
                       c.content,

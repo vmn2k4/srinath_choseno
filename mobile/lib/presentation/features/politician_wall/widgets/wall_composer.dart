@@ -7,6 +7,7 @@ import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../../common/widgets/content_safety_sheets.dart';
 import '../providers/politician_wall_providers.dart';
 
 const _maxLength = 1000;
@@ -40,6 +41,7 @@ class _WallComposerState extends ConsumerState<WallComposer> {
   Future<void> _post() async {
     final text = _controller.text.trim();
     if (text.isEmpty || _sending) return;
+    if (!await ensureTermsAccepted(context)) return;
     setState(() {
       _sending = true;
       _error = null;

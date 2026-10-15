@@ -3144,7 +3144,12 @@ export type Database = {
         Args: { p_boundary_type: string }
         Returns: number
       }
+      block_author: {
+        Args: { p_target_id: string; p_target_type: string }
+        Returns: undefined
+      }
       burn_ghost_identity: { Args: never; Returns: undefined }
+      delete_my_account: { Args: never; Returns: undefined }
       calculate_my_score: { Args: never; Returns: number }
       cancel_officeholder_wall_claim: {
         Args: { p_claim_id: string }

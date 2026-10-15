@@ -131,6 +131,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Result<void>> deleteAccount() async {
+    try {
+      await _remote.deleteAccount();
+      return const Result.ok(null);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
   Future<Result<void>> resetPasswordForEmail(String email) async {
     try {
       await _remote.resetPasswordForEmail(email);

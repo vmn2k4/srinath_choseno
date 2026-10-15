@@ -37,6 +37,9 @@ abstract interface class AuthRepository {
 
   Future<Result<void>> signOut();
 
+  /// Permanently deletes the signed-in account (RPC `delete_my_account`).
+  Future<Result<void>> deleteAccount();
+
   Future<Result<void>> resetPasswordForEmail(String email);
 
   Future<Result<void>> updatePassword(String newPassword);

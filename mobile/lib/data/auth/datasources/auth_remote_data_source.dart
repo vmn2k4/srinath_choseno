@@ -77,6 +77,17 @@ class AuthRemoteDataSource {
     );
   }
 
+  /// RPC `delete_my_account` removes the caller's content and auth user
+  /// server-side; the local session is then cleared (the token is dead).
+  Future<void> deleteAccount() async {
+    await _client.rpc('delete_my_account');
+    try {
+      await signOut();
+    } catch (_) {
+      // The user is already gone server-side; a failed local sign-out is moot.
+    }
+  }
+
   Future<void> signOut() async {
     await _client.auth.signOut();
     try {

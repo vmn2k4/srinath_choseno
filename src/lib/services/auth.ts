@@ -30,6 +30,13 @@ export async function signInWithGoogle(supabase: Client, nextPath?: string) {
   });
 }
 
+// Permanently deletes the caller's account (RPC delete_my_account, see
+// supabase/migrations/20261014000000): their content under the current ghost
+// id plus the auth user. Required by Google Play's account-deletion policy.
+export async function deleteMyAccount(supabase: Client) {
+  return supabase.rpc("delete_my_account");
+}
+
 export async function signOut(supabase: Client) {
   return supabase.auth.signOut();
 }

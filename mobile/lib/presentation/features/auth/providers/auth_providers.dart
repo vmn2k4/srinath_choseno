@@ -115,6 +115,12 @@ class AuthController extends AsyncNotifier<void> {
     );
   }
 
+  /// Returns null on success, otherwise the reason to show the user.
+  Future<String?> deleteAccount() async {
+    final result = await ref.read(authRepositoryProvider).deleteAccount();
+    return result.when(ok: (_) => null, err: (f) => f.message);
+  }
+
   Future<void> signOut() async {
     state = const AsyncLoading();
     final Result<void> result = await ref.read(signOutProvider)();
