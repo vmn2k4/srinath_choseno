@@ -55,3 +55,9 @@ final class UnknownFailure extends AppFailure {
     super.message = 'Something went wrong. Please try again.',
   ]);
 }
+
+/// The user backed out of a sign-in sheet (e.g. closed the Google account
+/// picker). Not an error to show — callers treat it as "nothing happened".
+final class SignInCancelled extends AppFailure {
+  const SignInCancelled() : super('Sign-in cancelled.');
+}

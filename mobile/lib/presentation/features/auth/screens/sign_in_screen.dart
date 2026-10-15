@@ -5,14 +5,16 @@
 // AsyncLoading/AsyncError/AsyncData, never touch a repository or Supabase
 // directly from widget code.
 //
-// Not yet ported from the guide: Google OAuth (needs google_sign_in +
-// platform config), the deep-link password-recovery flow (needs app_links
+// Google sign-in uses the native account picker (google_sign_in) and hands
+// the ID token to Supabase; it shows only when GOOGLE_WEB_CLIENT_ID is set.
+// Not yet ported from the guide: the deep-link password-recovery flow (needs app_links
 // wired to a route, see core/router/app_router.dart's TODO), and the
 // founder-count nudge. Forgot-password is stubbed as a snackbar-only
 // action pending the reset-password screen.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/config/env_config.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/widgets/widgets.dart';
@@ -226,6 +228,42 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                           loading: isLoading,
                           onPressed: isLoading ? null : _submit,
                         ),
+                        if (EnvConfig.googleSignInConfigured) ...[
+                          const SizedBox(height: ChosenoSpacing.md),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(color: palette.borderLight),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: ChosenoSpacing.sm + 2,
+                                ),
+                                child: Text(
+                                  'or',
+                                  style: ChosenoTypography.body(
+                                    color: palette.textMuted,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(color: palette.borderLight),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: ChosenoSpacing.md),
+                          AppButton(
+                            label: 'Continue with Google',
+                            variant: AppButtonVariant.outline,
+                            tone: AppButtonTone.defaultTone,
+                            onPressed: isLoading
+                                ? null
+                                : () => ref
+                                      .read(authControllerProvider.notifier)
+                                      .signInWithGoogle(),
+                          ),
+                        ],
                         if (!_isSignUp) ...[
                           const SizedBox(height: ChosenoSpacing.xs),
                           AppButton(

@@ -5,6 +5,7 @@
 // Supabase call is allowed to live; every use case and provider above this
 // layer works with [Result], never a thrown exception.
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 import '../../../core/errors/app_failure.dart';
@@ -59,6 +60,35 @@ class AuthRepositoryImpl implements AuthRepository {
       // bug) — print the real one so it shows up in the `flutter run`
       // terminal instead of vanishing.
       debugPrint('[auth] signInWithPassword failed: $e\n$st');
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<AppUser>> signInWithGoogle() async {
+    try {
+      final response = await _remote.signInWithGoogle();
+      final user = response.user;
+      if (user == null) {
+        return const Result.err(
+          UnknownFailure('Google sign-in did not return a user.'),
+        );
+      }
+      return Result.ok(user.toEntity());
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        return const Result.err(SignInCancelled());
+      }
+      debugPrint('[auth] google sign-in failed: ${e.code} ${e.description}');
+      return Result.err(
+        UnknownFailure(
+          "Google sign-in didn't work${e.description != null ? ': ${e.description}' : '.'}",
+        ),
+      );
+    } on supabase.AuthException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (e, st) {
+      debugPrint('[auth] google sign-in failed: $e\n$st');
       return const Result.err(NetworkFailure());
     }
   }

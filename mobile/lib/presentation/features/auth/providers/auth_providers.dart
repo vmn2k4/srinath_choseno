@@ -7,11 +7,13 @@
 // nothing about repositories/use cases/Supabase underneath it.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/errors/app_failure.dart';
 import '../../../../core/errors/result.dart';
 import '../../../../data/auth/datasources/auth_remote_data_source.dart';
 import '../../../../data/auth/repositories/auth_repository_impl.dart';
 import '../../../../domain/auth/entities/app_user.dart';
 import '../../../../domain/auth/repositories/auth_repository.dart';
+import '../../../../domain/auth/usecases/sign_in_with_google.dart';
 import '../../../../domain/auth/usecases/sign_in_with_password.dart';
 import '../../../../domain/auth/usecases/sign_out.dart';
 import '../../../../domain/auth/usecases/sign_up_with_password.dart';
@@ -29,6 +31,9 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 
 final signInWithPasswordProvider = Provider(
   (ref) => SignInWithPassword(ref.watch(authRepositoryProvider)),
+);
+final signInWithGoogleProvider = Provider(
+  (ref) => SignInWithGoogle(ref.watch(authRepositoryProvider)),
 );
 final signUpWithPasswordProvider = Provider(
   (ref) => SignUpWithPassword(ref.watch(authRepositoryProvider)),
@@ -68,6 +73,25 @@ class AuthController extends AsyncNotifier<void> {
       },
       err: (failure) {
         state = AsyncError(failure, StackTrace.current);
+        return false;
+      },
+    );
+  }
+
+  /// Native Google sign-in. Returns true on success; a cancelled picker
+  /// returns false WITHOUT putting the form into an error state.
+  Future<bool> signInWithGoogle() async {
+    state = const AsyncLoading();
+    final result = await ref.read(signInWithGoogleProvider)();
+    return result.when(
+      ok: (_) {
+        state = const AsyncData(null);
+        return true;
+      },
+      err: (failure) {
+        state = failure is SignInCancelled
+            ? const AsyncData(null)
+            : AsyncError(failure, StackTrace.current);
         return false;
       },
     );

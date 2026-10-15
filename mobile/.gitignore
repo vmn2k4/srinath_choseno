@@ -46,3 +46,7 @@ app.*.map.json
 
 # Per-environment Supabase config — see .env.example
 .env
+
+# Google OAuth client downloads (Cloud Console) - keep local
+ios/Runner/client_*.plist
+android/app/client_secret_*.json

@@ -31,6 +31,10 @@ abstract interface class AuthRepository {
     required String password,
   });
 
+  /// Native Google account picker → Supabase session. A user cancelling the
+  /// picker comes back as [SignInCancelled], not a real error.
+  Future<Result<AppUser>> signInWithGoogle();
+
   Future<Result<void>> signOut();
 
   Future<Result<void>> resetPasswordForEmail(String email);

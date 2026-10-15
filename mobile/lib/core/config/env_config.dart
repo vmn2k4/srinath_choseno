@@ -12,6 +12,17 @@ abstract final class EnvConfig {
   static String get supabaseUrl => _require('SUPABASE_URL');
   static String get supabaseAnonKey => _require('SUPABASE_ANON_KEY');
 
+  /// Google sign-in client IDs — optional: with no web client ID the Google
+  /// button is simply not shown.
+  static String? get googleWebClientId => _optional('GOOGLE_WEB_CLIENT_ID');
+  static String? get googleIosClientId => _optional('GOOGLE_IOS_CLIENT_ID');
+  static bool get googleSignInConfigured => googleWebClientId != null;
+
+  static String? _optional(String key) {
+    final value = dotenv.env[key];
+    return value == null || value.isEmpty ? null : value;
+  }
+
   static String _require(String key) {
     final value = dotenv.env[key];
     if (value == null || value.isEmpty) {

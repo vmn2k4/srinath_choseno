@@ -12,6 +12,20 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>GIDClientID</key>
+	<string>37893425997-upqak4j8oje7tfpcn1ju634qisfmtcke.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Google's reversed iOS client ID: lets the Google sign-in sheet return to the app. -->
+				<string>com.googleusercontent.apps.37893425997-upqak4j8oje7tfpcn1ju634qisfmtcke</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleName</key>
 	<string>choseno_mobile</string>
 	<key>CFBundlePackageType</key>

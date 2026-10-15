@@ -6,7 +6,10 @@
 // and no error-shape translation (also the repository's job) — kept this
 // thin specifically so it stays a faithful, easy-to-diff mirror of the
 // corresponding .ts file when that file changes on web.
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/config/env_config.dart';
 
 class AuthRemoteDataSource {
   const AuthRemoteDataSource(this._client);
@@ -31,7 +34,35 @@ class AuthRemoteDataSource {
     return _client.auth.signInWithPassword(email: email, password: password);
   }
 
-  Future<void> signOut() => _client.auth.signOut();
+  /// Native Google account picker (no browser), then hands Google's ID token
+  /// to Supabase. `serverClientId` is the Web client Supabase trusts; on iOS
+  /// `clientId` is the iOS client. Throws [GoogleSignInException] if the user
+  /// cancels.
+  Future<AuthResponse> signInWithGoogle() async {
+    final google = GoogleSignIn.instance;
+    await google.initialize(
+      clientId: EnvConfig.googleIosClientId,
+      serverClientId: EnvConfig.googleWebClientId,
+    );
+    final account = await google.authenticate();
+    final idToken = account.authentication.idToken;
+    if (idToken == null) {
+      throw const AuthException('Google did not return an ID token.');
+    }
+    return _client.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+    );
+  }
+
+  Future<void> signOut() async {
+    await _client.auth.signOut();
+    try {
+      await GoogleSignIn.instance.signOut();
+    } catch (_) {
+      // Not signed in with Google, or never initialised — nothing to clear.
+    }
+  }
 
   Future<void> resetPasswordForEmail(String email) =>
       _client.auth.resetPasswordForEmail(email);
