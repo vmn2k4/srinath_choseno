@@ -23,6 +23,7 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../common/widgets/app_shell.dart' show kBottomNavClearance;
 import '../../../../domain/politician_wall/entities/politician_wall_profile.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../politician_ratings/widgets/rate_politician_sheet.dart';
 import '../providers/politician_wall_providers.dart';
 
 class PoliticianWallScreen extends ConsumerStatefulWidget {
@@ -304,6 +305,23 @@ class _WallBody extends ConsumerWidget {
                       color: palette.textSecondary,
                       fontSize: 13,
                       height: 1.45,
+                    ),
+                  ),
+                ],
+                // Review this office holder (same sheet as the news article's
+                // tagged-politician "Rate"); you can't rate yourself.
+                if (!isTab &&
+                    ref.watch(authStateChangesProvider).value?.id !=
+                        profile.id) ...[
+                  const SizedBox(height: ChosenoSpacing.sm),
+                  AppButton(
+                    label: 'Rate ${profile.fullName.split(' ').first}',
+                    icon: Icons.star_border_rounded,
+                    variant: AppButtonVariant.outline,
+                    onPressed: () => showRatePoliticianSheet(
+                      context,
+                      politicianId: profile.id,
+                      politicianName: profile.fullName,
                     ),
                   ),
                 ],

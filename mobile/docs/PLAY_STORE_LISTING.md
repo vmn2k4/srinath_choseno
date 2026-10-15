@@ -4,11 +4,13 @@ Limits: title 30, short description 80, full description 4,000 chars. Play has n
 
 **App name (30/30):** `Choseno: Your Reps & Elections`
 
-**Short description (74/80):** `Find your reps, see who's running locally & talk politics with neighbours.`
+**Short description (77/80):** `Social media for local politics: talk issues with neighbours, rate your reps.`
 
 **Category:** Social (primary experience is ratings, discussion, sharing). Alt: News & Magazines only if editorial content becomes primary. Tags: pick only the closest options Play offers.
 
 **Full description:**
+
+Choseno is social media for local politics: discuss your local issues with your neighbours, review your elected representatives, and follow the elections near you.
 
 Find my representatives: enter your address and see every official who represents you, from city council to the legislature, in seconds. See who is running in your area, rate your politicians, and join the conversation with your neighbours.
 
