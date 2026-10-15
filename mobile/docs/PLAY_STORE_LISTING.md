@@ -60,3 +60,10 @@ Wording note: say "without displaying your real name publicly", never "anonymous
 - Icon 512×512 (from the web logo; no tiny text or party imagery).
 - Feature graphic 1024×500: "Know your representatives. Make your voice count."
 - 6 real-app phone screenshots in this order: Representatives lookup, elections, candidate profile, ratings, discussion/wall, share picks.
+
+## Play Console fill-in order (organization account — no 12-tester rule)
+1. Create app: name from above, English (Canada), App, Free; accept declarations.
+2. Dashboard → App content: Privacy policy `https://www.choseno.com/privacy`; App access (give test citizen login); Ads = No; Content rating (UGC + political discussion); Target audience 18+; Data safety (per answers above); Data deletion = `https://www.choseno.com/delete-account`; Government apps = No; News app = No.
+3. Store listing: Social category; short + full description; icon `store_assets/play/icon-512.png`; feature graphic; the six screenshots in numeric order; contact email.
+4. Production (or Internal testing first) → Create release → upload `build/app/outputs/bundle/release/app-release.aab` → enrol in Play App Signing (the keystore is the upload key; back up `~/choseno-keys/choseno-upload.jks`) → save as draft, do not submit until reviewed.
+5. Add the Play App Signing SHA-1 as an Android OAuth client in Google Cloud so Google sign-in works for the store build.
