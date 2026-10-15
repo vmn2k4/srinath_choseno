@@ -95,213 +95,206 @@ class ProfileScreen extends ConsumerWidget {
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(
                       ChosenoSpacing.lg,
-                      ChosenoSpacing.md,
+                      ChosenoSpacing.sm,
                       ChosenoSpacing.lg,
-                      kBottomNavClearance + ChosenoSpacing.lg,
+                      kBottomNavClearance + ChosenoSpacing.md,
                     ),
                     children: [
+                      // Identity: photo, name, role — one row.
                       AppCard(
-                        variant: AppCardVariant.hero,
-                        padding: const EdgeInsets.all(ChosenoSpacing.lg),
+                        padding: const EdgeInsets.all(ChosenoSpacing.md),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppAvatar(
-                              imageUrl: profile.politicianAvatarUrl,
-                              fallbackText: profile.fullName,
-                              fallbackIcon: Icons.person_outline,
-                              radius: 44,
+                            Row(
+                              children: [
+                                AppAvatar(
+                                  imageUrl: profile.politicianAvatarUrl,
+                                  fallbackText: profile.fullName,
+                                  fallbackIcon: Icons.person_outline,
+                                  radius: 28,
+                                ),
+                                const SizedBox(width: ChosenoSpacing.md),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        profile.fullName?.isNotEmpty == true
+                                            ? profile.fullName!
+                                            : 'Anonymous',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: ChosenoTypography.display(
+                                          color: palette.textMain,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      AppBadge(
+                                        label: isPolitician
+                                            ? 'Politician'
+                                            : 'Citizen',
+                                        tone: AppBadgeTone.primary,
+                                        size: AppBadgeSize.xs,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: ChosenoSpacing.md),
-                            Text(
-                              profile.fullName?.isNotEmpty == true
-                                  ? profile.fullName!
-                                  : 'Anonymous',
-                              textAlign: TextAlign.center,
-                              style: ChosenoTypography.display(
-                                color: palette.textMain,
-                                fontSize: 30,
-                              ),
-                            ),
-                            const SizedBox(height: ChosenoSpacing.sm),
-                            AppBadge(
-                              label: isPolitician ? 'Politician' : 'Citizen',
-                              tone: AppBadgeTone.primary,
-                            ),
-                            const SizedBox(height: ChosenoSpacing.lg),
-                            Divider(color: palette.borderLight),
-                            const SizedBox(height: ChosenoSpacing.md),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'YOUR DISTRICTS',
-                                style: ChosenoTypography.body(
-                                  color: palette.textTertiary,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 11,
-                                ).copyWith(letterSpacing: 0.8),
-                              ),
-                            ),
-                            const SizedBox(height: ChosenoSpacing.sm),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: membershipsAsync.when(
-                                data: (memberships) => memberships.isEmpty
-                                    ? Text(
-                                        'No boundaries on file yet.',
+                            const SizedBox(height: ChosenoSpacing.sm + 2),
+                            // Districts as one tidy line, not a wall of chips.
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.place_outlined,
+                                  size: 16,
+                                  color: palette.textMuted,
+                                ),
+                                const SizedBox(width: ChosenoSpacing.xs + 2),
+                                Expanded(
+                                  child: membershipsAsync.when(
+                                    data: (memberships) {
+                                      final names = memberships
+                                          .map((m) => m.name)
+                                          .toSet()
+                                          .toList();
+                                      return Text(
+                                        names.isEmpty
+                                            ? 'No location set yet'
+                                            : names.join(' · '),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         style: ChosenoTypography.body(
                                           color: palette.textMuted,
                                           fontSize: 13,
+                                          height: 1.35,
                                         ),
-                                      )
-                                    : Wrap(
-                                        spacing: ChosenoSpacing.sm,
-                                        runSpacing: ChosenoSpacing.sm,
-                                        children: memberships
-                                            .map(
-                                              (m) => AppBadge(
-                                                label: m.name,
-                                                tone: AppBadgeTone.neutral,
-                                              ),
-                                            )
-                                            .toList(),
-                                      ),
-                                loading: () => const LoadingIndicator(size: 16),
-                                error: (_, _) => const SizedBox.shrink(),
-                              ),
+                                      );
+                                    },
+                                    loading: () => const SizedBox(
+                                      height: 16,
+                                      child: LoadingIndicator(size: 14),
+                                    ),
+                                    error: (_, _) => const SizedBox.shrink(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: ChosenoSpacing.lg),
-                      if (isPolitician) ...[
-                        AppCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Political details',
-                                style: ChosenoTypography.display(
-                                  color: palette.textMain,
-                                  fontSize: 22,
-                                ),
-                              ),
-                              const SizedBox(height: ChosenoSpacing.md),
-                              if (profile.myWallSlug != null) ...[
-                                AppButton(
-                                  label: 'View my wall',
+                      const SizedBox(height: ChosenoSpacing.sm + 2),
+                      if (isPolitician)
+                        Row(
+                          children: [
+                            if (profile.myWallSlug != null) ...[
+                              Expanded(
+                                child: AppButton(
+                                  label: 'My wall',
                                   icon: Icons.account_circle_outlined,
                                   onPressed: () => context.push(
                                     AppRoutes.wall(profile.myWallSlug!),
                                   ),
                                 ),
-                                const SizedBox(height: ChosenoSpacing.sm + 2),
-                              ],
-                              AppButton(
+                              ),
+                              const SizedBox(width: ChosenoSpacing.sm),
+                            ],
+                            Expanded(
+                              child: AppButton(
                                 label: 'My elections',
                                 icon: Icons.how_to_vote_outlined,
                                 variant: AppButtonVariant.outline,
                                 onPressed: () =>
                                     context.push(AppRoutes.myElections),
                               ),
-                            ],
-                          ),
-                        ),
-                      ] else ...[
-                        AppCard(
-                          child: Column(
+                            ),
+                          ],
+                        )
+                      else
+                        // Score and anonymous identity side by side.
+                        IntrinsicHeight(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                'Privacy & Ghost ID',
-                                style: ChosenoTypography.display(
-                                  color: palette.textMain,
-                                  fontSize: 22,
-                                ),
-                              ),
-                              const SizedBox(height: ChosenoSpacing.md),
-                              if (profile.currentGhostId != null)
-                                Text(
-                                  'Ghost ${profile.currentGhostId!.substring(0, 8)}',
-                                  style: ChosenoTypography.body(
-                                    color: palette.textTertiary,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              const SizedBox(height: ChosenoSpacing.sm),
-                              Consumer(
-                                builder: (context, ref, _) {
-                                  final scoreAsync = ref.watch(
-                                    civicScoreProvider,
-                                  );
-                                  return scoreAsync.when(
-                                    data: (score) => Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '$score',
-                                          style: ChosenoTypography.display(
-                                            color: palette.primary,
-                                            fontSize: 40,
+                              Expanded(
+                                child: _StatTile(
+                                  label: 'Civic impact',
+                                  child: Consumer(
+                                    builder: (context, ref, _) => ref
+                                        .watch(civicScoreProvider)
+                                        .when(
+                                          data: (score) => Text(
+                                            '$score',
+                                            style: ChosenoTypography.display(
+                                              color: palette.primary,
+                                              fontSize: 28,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: ChosenoSpacing.sm,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 8,
-                                          ),
-                                          child: Text(
-                                            'civic impact score',
-                                            style: ChosenoTypography.body(
+                                          loading: () =>
+                                              const LoadingIndicator(size: 16),
+                                          error: (_, _) => Text(
+                                            '—',
+                                            style: ChosenoTypography.display(
                                               color: palette.textMuted,
-                                              fontSize: 13,
+                                              fontSize: 28,
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    loading: () =>
-                                        const LoadingIndicator(size: 16),
-                                    error: (_, _) => Text(
-                                      'Could not load score.',
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: ChosenoSpacing.sm),
+                              Expanded(
+                                child: _StatTile(
+                                  label: 'Ghost ID',
+                                  trailing: GestureDetector(
+                                    onTap: () => _confirmBurn(context, ref),
+                                    child: Text(
+                                      'Rotate',
                                       style: ChosenoTypography.body(
                                         color: palette.danger,
+                                        fontWeight: FontWeight.w600,
                                         fontSize: 12,
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: ChosenoSpacing.md),
-                              AppButton(
-                                label: 'Rotate Ghost ID',
-                                variant: AppButtonVariant.outline,
-                                tone: AppButtonTone.danger,
-                                onPressed: () => _confirmBurn(context, ref),
+                                  ),
+                                  child: Text(
+                                    profile.currentGhostId != null
+                                        ? profile.currentGhostId!.substring(
+                                            0,
+                                            8,
+                                          )
+                                        : '—',
+                                    style: ChosenoTypography.body(
+                                      color: palette.textMain,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                      const SizedBox(height: ChosenoSpacing.lg),
+                      const SizedBox(height: ChosenoSpacing.sm + 2),
                       const _AppearanceCard(),
-                      const SizedBox(height: ChosenoSpacing.lg),
+                      const SizedBox(height: ChosenoSpacing.sm + 2),
                       AppButton(
                         label: 'Sign out',
+                        icon: Icons.logout_rounded,
                         variant: AppButtonVariant.outline,
                         tone: AppButtonTone.danger,
                         onPressed: () =>
                             ref.read(authControllerProvider.notifier).signOut(),
                       ),
-                      const SizedBox(height: ChosenoSpacing.xl),
+                      const SizedBox(height: ChosenoSpacing.sm),
                       Wrap(
                         alignment: WrapAlignment.center,
-                        spacing: ChosenoSpacing.lg,
-                        runSpacing: ChosenoSpacing.sm,
+                        spacing: ChosenoSpacing.md,
                         children: [
                           _LegalLink(label: 'About', route: AppRoutes.about),
                           _LegalLink(
@@ -314,7 +307,7 @@ class ProfileScreen extends ConsumerWidget {
                             route: AppRoutes.correctionsPolicy,
                           ),
                           _LegalLink(
-                            label: 'Editorial Standards',
+                            label: 'Standards',
                             route: AppRoutes.editorialStandards,
                           ),
                         ],
@@ -361,8 +354,48 @@ class _LegalLink extends StatelessWidget {
   }
 }
 
-/// Appearance picker — Midnight Pulse (dark, default) or the website's
-/// Warm orange light theme. Persisted by [ThemeController].
+/// A small labelled tile: label on top, a value below, optional action.
+class _StatTile extends StatelessWidget {
+  const _StatTile({required this.label, required this.child, this.trailing});
+
+  final String label;
+  final Widget child;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return AppCard(
+      padding: const EdgeInsets.all(ChosenoSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label.toUpperCase(),
+                  style: ChosenoTypography.body(
+                    color: palette.textMuted,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 11,
+                  ).copyWith(letterSpacing: 0.6),
+                ),
+              ),
+              ?trailing,
+            ],
+          ),
+          const SizedBox(height: 4),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+/// Appearance picker — one row: label plus a chip per theme. Persisted by
+/// [ThemeController].
 class _AppearanceCard extends ConsumerWidget {
   const _AppearanceCard();
 
@@ -371,34 +404,35 @@ class _AppearanceCard extends ConsumerWidget {
     final palette = ChosenoTheme.of(context);
     final current = ref.watch(themeControllerProvider);
     return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(
+        horizontal: ChosenoSpacing.md,
+        vertical: ChosenoSpacing.sm + 2,
+      ),
+      child: Row(
         children: [
-          Text(
-            'Appearance',
-            style: ChosenoTypography.body(
-              color: palette.textMain,
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: ChosenoSpacing.sm),
-          Wrap(
-            spacing: ChosenoSpacing.sm,
-            children: [
-              for (final t in AppThemeChoice.values)
-                ChoiceChip(
+          Icon(Icons.palette_outlined, size: 18, color: palette.textMuted),
+          const SizedBox(width: ChosenoSpacing.sm),
+          // Three equal segments — always fits, whatever the label widths.
+          for (final t in AppThemeChoice.values)
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: ChosenoSpacing.xs),
+                child: ChoiceChip(
+                  visualDensity: VisualDensity.compact,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  padding: EdgeInsets.zero,
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                   avatar: CircleAvatar(
                     backgroundColor: t.palette.primary,
-                    radius: 7,
+                    radius: 5,
                   ),
-                  label: Text('${t.label} · ${t.mode}'),
+                  label: Text(t.shortLabel, overflow: TextOverflow.ellipsis),
                   selected: current == t,
                   onSelected: (_) =>
                       ref.read(themeControllerProvider.notifier).select(t),
                 ),
-            ],
-          ),
+              ),
+            ),
         ],
       ),
     );

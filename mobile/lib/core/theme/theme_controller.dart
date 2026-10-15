@@ -10,12 +10,16 @@ import 'theme_config.dart';
 
 enum AppThemeChoice {
   clean('Clean', 'Light'),
-  pulse('Midnight Pulse', 'Dark'),
-  warmOrange('Warm orange', 'Light');
+  pulse('Midnight Pulse', 'Dark', 'Dark'),
+  warmOrange('Warm orange', 'Light', 'Orange');
 
-  const AppThemeChoice(this.label, this.mode);
+  const AppThemeChoice(this.label, this.mode, [String? short])
+    : shortLabel = short ?? label;
   final String label;
   final String mode;
+
+  /// Compact name for tight rows (Profile's one-line picker).
+  final String shortLabel;
 
   ChosenoPalette get palette => switch (this) {
     AppThemeChoice.clean => ChosenoPalette.clean,
