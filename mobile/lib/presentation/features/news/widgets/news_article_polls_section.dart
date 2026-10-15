@@ -98,7 +98,10 @@ class _PollCard extends ConsumerWidget {
                       : 'No votes yet — be the first. · Sign in to vote')
                 : '$total vote${total == 1 ? '' : 's'}'
                       '${isSignedIn ? '' : ' · Sign in to vote'}',
-            style: ChosenoTypography.body(color: palette.textMuted, fontSize: 11),
+            style: ChosenoTypography.body(
+              color: palette.textMuted,
+              fontSize: 11,
+            ),
           ),
         ],
       ),

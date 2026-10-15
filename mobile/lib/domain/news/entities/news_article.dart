@@ -55,19 +55,12 @@ class NewsArticle {
   /// coalesce `getPublishedNewsArticles`'s own `.order()` uses.
   DateTime? get displayDate => eventDate ?? publishedAt ?? createdAt;
 
-  /// `heroImageUrl`, filtered to exclude a known bad-data pattern: some
-  /// ingestion pipeline run set this column to the article's own
-  /// auto-generated social-share OG card (`.../og-cards/<slug>.png` — a
-  /// branded "Choseno" preview graphic with the headline baked into it,
-  /// meant for a Twitter/Facebook link preview, never for in-article
-  /// display) instead of leaving it null or a real photo. Both the news
-  /// list thumbnail and the article screen's own hero image read this
-  /// getter, not `heroImageUrl` directly, so neither ever renders that
-  /// card as if it were a photo — same underlying data issue affects the
-  /// website's article page, not something specific to this app.
+  /// The article's image. The generated `og-cards/<slug>.png` share card IS a
+  /// valid image — the website shows it on every news card and article page —
+  /// so nothing is filtered out (an older version of this app hid those cards
+  /// as "bad data", which left most articles with no picture).
   String? get displayableHeroImageUrl {
     final url = heroImageUrl;
-    if (url == null || url.contains('/og-cards/')) return null;
-    return url;
+    return url == null || url.isEmpty ? null : url;
   }
 }

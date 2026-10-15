@@ -94,11 +94,19 @@ class _NewsArticleCard extends StatelessWidget {
 
     return AppCard(
       variant: AppCardVariant.standard,
+      padding: EdgeInsets.zero,
       onTap: () => context.push('/news/${article.slug}'),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              ChosenoSpacing.md,
+              ChosenoSpacing.md,
+              ChosenoSpacing.md,
+              ChosenoSpacing.sm + 2,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -128,8 +136,8 @@ class _NewsArticleCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: ChosenoTypography.display(
                     color: palette.textMain,
-                    fontSize: 22,
-                    height: 1.15,
+                    fontSize: 19,
+                    height: 1.2,
                   ),
                 ),
                 if (article.summary != null) ...[
@@ -158,24 +166,27 @@ class _NewsArticleCard extends StatelessWidget {
               ],
             ),
           ),
-          // A real news app's list always carries a thumbnail — skipped
-          // entirely (no placeholder box) rather than reserved-but-empty
-          // when an article genuinely has no usable photo, same as the
-          // article screen's own hero image.
-          if (thumbnailUrl != null) ...[
-            const SizedBox(width: ChosenoSpacing.sm),
+          // Image last and full width, like the website's card (its 1200x630
+          // composite already carries the headline, so it isn't cropped);
+          // collapsed entirely if there is none or it fails to load.
+          if (thumbnailUrl != null)
             ClipRRect(
-              borderRadius: BorderRadius.circular(ChosenoRadii.sm),
-              child: Image.network(
-                thumbnailUrl,
-                width: 92,
-                height: 92,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox(width: 92, height: 92),
+              borderRadius: const BorderRadius.vertical(
+                bottom: Radius.circular(ChosenoRadii.card),
+              ),
+              child: AspectRatio(
+                aspectRatio: 1200 / 630,
+                child: Image.network(
+                  thumbnailUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, progress) => progress == null
+                      ? child
+                      : ColoredBox(color: palette.surfaceActive),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox.shrink(),
+                ),
               ),
             ),
-          ],
         ],
       ),
     );
