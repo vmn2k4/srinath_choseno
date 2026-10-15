@@ -1,22 +1,19 @@
-// Edit profile — one compact form (no wizard). Name, photo and, for
-// politicians, party / education / hometown / bio; the location is a
-// collapsed row that opens the map only when you want to change it. Save is
-// pinned at the bottom. (The multi-step flow lives on in Onboarding, where
-// it makes sense for a first-time user.)
+// Edit profile — ONE form for everyone (citizen and politician alike): your
+// name and your location. Photo, party, education, hometown and bio are not
+// editable here (politicians keep whatever they already have — the save only
+// writes the fields this form changes). Location is a card that opens the map
+// on demand; Save is pinned at the bottom.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
-import '../../../../core/utils/avatar_picker.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/profile/entities/user_profile.dart';
 import '../../../common/widgets/detail_app_bar.dart';
 import '../../location/widgets/address_search_field.dart';
 import '../../location/widgets/location_picker_map.dart';
-import '../../onboarding/widgets/step_political_details.dart'
-    show politicalPartiesForCountryProvider;
 import '../providers/edit_profile_providers.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
@@ -60,39 +57,20 @@ class _EditForm extends ConsumerStatefulWidget {
 
 class _EditFormState extends ConsumerState<_EditForm> {
   late final TextEditingController _name;
-  late final TextEditingController _education;
-  late final TextEditingController _hometown;
-  late final TextEditingController _bio;
   bool _mapOpen = false;
 
   @override
   void initState() {
     super.initState();
-    final s = ref.read(editProfileControllerProvider);
-    _name = TextEditingController(text: s.fullName);
-    _education = TextEditingController(text: s.education);
-    _hometown = TextEditingController(text: s.hometown);
-    _bio = TextEditingController(text: s.bio);
+    _name = TextEditingController(
+      text: ref.read(editProfileControllerProvider).fullName,
+    );
   }
 
   @override
   void dispose() {
     _name.dispose();
-    _education.dispose();
-    _hometown.dispose();
-    _bio.dispose();
     super.dispose();
-  }
-
-  Future<void> _pickAvatar() async {
-    final controller = ref.read(editProfileControllerProvider.notifier);
-    final picked = await pickAvatarFromGallery();
-    if (picked == null) return;
-    if (picked.error != null) {
-      controller.setAvatarError(picked.error!);
-      return;
-    }
-    await controller.uploadAvatar(picked.photo!.bytes, picked.photo!.extension);
   }
 
   Future<void> _save() async {
@@ -106,14 +84,16 @@ class _EditFormState extends ConsumerState<_EditForm> {
     final s = ref.watch(editProfileControllerProvider);
     final c = ref.read(editProfileControllerProvider.notifier);
     final isPolitician = s.role == UserRole.politician;
-    final parties = isPolitician
-        ? ref.watch(politicalPartiesForCountryProvider(s.country))
-        : null;
 
-    final boundaryNames = s.matchedBoundaries
-        .map((b) => b.name)
-        .toSet()
+    final seen = <String>{};
+    final boundaries = s.matchedBoundaries
+        .where((b) => seen.add(b.name))
         .toList();
+    final initial =
+        (_name.text.trim().isNotEmpty
+                ? _name.text.trim()[0]
+                : (isPolitician ? 'P' : 'C'))
+            .toUpperCase();
 
     return Column(
       children: [
@@ -126,192 +106,136 @@ class _EditFormState extends ConsumerState<_EditForm> {
               ChosenoSpacing.md,
             ),
             children: [
-              // Photo (politicians) + name, side by side.
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (isPolitician) ...[
-                    GestureDetector(
-                      onTap: s.uploadingAvatar ? null : _pickAvatar,
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          AppAvatar(
-                            imageUrl: s.avatarUrl,
-                            fallbackText: s.fullName,
-                            radius: 30,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: palette.primary,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: palette.surface,
-                                width: 2,
-                              ),
-                            ),
-                            child: s.uploadingAvatar
-                                ? SizedBox(
-                                    width: 12,
-                                    height: 12,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: palette.textOnPrimary,
-                                    ),
-                                  )
-                                : Icon(
-                                    Icons.photo_camera,
-                                    size: 12,
-                                    color: palette.textOnPrimary,
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: ChosenoSpacing.md),
-                  ],
-                  Expanded(
-                    child: AppTextField(
-                      label: isPolitician
-                          ? 'Public full name'
-                          : 'Display name (optional)',
-                      controller: _name,
-                      onChanged: c.setFullName,
-                    ),
-                  ),
-                ],
-              ),
-              if (s.avatarError != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: ChosenoSpacing.xs),
-                  child: Text(
-                    s.avatarError!,
-                    style: ChosenoTypography.body(
-                      color: palette.danger,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              if (!isPolitician)
-                Padding(
-                  padding: const EdgeInsets.only(top: ChosenoSpacing.xs + 2),
-                  child: Text(
-                    'Posts stay tied to your anonymous Ghost ID, not this name.',
-                    style: ChosenoTypography.body(
-                      color: palette.textMuted,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              if (isPolitician) ...[
-                const SizedBox(height: ChosenoSpacing.md),
-                parties!.when(
-                  data: (list) => DropdownButtonFormField<int?>(
-                    initialValue: s.politicalPartyId,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Political party',
-                    ),
-                    items: [
-                      const DropdownMenuItem<int?>(
-                        value: null,
-                        child: Text('Independent / none'),
-                      ),
-                      ...list.map(
-                        (p) => DropdownMenuItem<int?>(
-                          value: p.id,
-                          child: Text(p.name, overflow: TextOverflow.ellipsis),
-                        ),
-                      ),
-                    ],
-                    onChanged: c.setPoliticalPartyId,
-                  ),
-                  loading: () => const LinearProgressIndicator(minHeight: 2),
-                  error: (_, _) => Text(
-                    'Could not load parties.',
-                    style: ChosenoTypography.body(color: palette.danger),
-                  ),
-                ),
-                const SizedBox(height: ChosenoSpacing.md),
-                AppTextField(
-                  label: 'Education',
-                  controller: _education,
-                  onChanged: c.setEducation,
-                ),
-                const SizedBox(height: ChosenoSpacing.md),
-                AppTextField(
-                  label: 'Hometown',
-                  controller: _hometown,
-                  onChanged: c.setHometown,
-                ),
-                const SizedBox(height: ChosenoSpacing.md),
-                TextField(
-                  controller: _bio,
-                  onChanged: c.setBio,
-                  minLines: 3,
-                  maxLines: 4,
-                  decoration: const InputDecoration(
-                    labelText: 'Bio / platform',
-                    alignLabelWithHint: true,
-                  ),
-                ),
-              ],
-              const SizedBox(height: ChosenoSpacing.md),
-              // Location: one row; the map opens on demand.
+              // Identity: a tinted initial, the role, and the name field.
               AppCard(
                 padding: const EdgeInsets.all(ChosenoSpacing.md),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    InkWell(
-                      onTap: () => setState(() => _mapOpen = !_mapOpen),
-                      child: Row(
-                        children: [
-                          Icon(
+                    Row(
+                      children: [
+                        Container(
+                          width: 52,
+                          height: 52,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: palette.primary.withValues(alpha: 0.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            initial,
+                            style: ChosenoTypography.display(
+                              color: palette.primary,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: ChosenoSpacing.md),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Your name',
+                                style: ChosenoTypography.display(
+                                  color: palette.textMain,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              AppBadge(
+                                label: isPolitician ? 'Politician' : 'Citizen',
+                                tone: AppBadgeTone.primary,
+                                size: AppBadgeSize.xs,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: ChosenoSpacing.md),
+                    AppTextField(
+                      label: isPolitician
+                          ? 'Public full name'
+                          : 'Display name (optional)',
+                      controller: _name,
+                      onChanged: (v) {
+                        c.setFullName(v);
+                        setState(() {});
+                      },
+                    ),
+                    const SizedBox(height: ChosenoSpacing.sm),
+                    _Note(
+                      icon: isPolitician ? Icons.public : Icons.shield_outlined,
+                      text: isPolitician
+                          ? 'Shown on your public wall.'
+                          : 'Posts stay tied to your anonymous Ghost ID, not this name.',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: ChosenoSpacing.sm + 2),
+              // Location: boundaries as chips; the map opens on demand.
+              AppCard(
+                padding: const EdgeInsets.all(ChosenoSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: palette.primary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
                             Icons.place_outlined,
-                            size: 18,
+                            size: 17,
                             color: palette.primary,
                           ),
-                          const SizedBox(width: ChosenoSpacing.sm),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Location',
-                                  style: ChosenoTypography.body(
-                                    color: palette.textMain,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Text(
-                                  boundaryNames.isEmpty
-                                      ? 'Not set'
-                                      : boundaryNames.join(' · '),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: ChosenoTypography.body(
-                                    color: palette.textMuted,
-                                    fontSize: 12,
-                                    height: 1.3,
-                                  ),
-                                ),
-                              ],
+                        ),
+                        const SizedBox(width: ChosenoSpacing.sm + 2),
+                        Expanded(
+                          child: Text(
+                            'Your location',
+                            style: ChosenoTypography.display(
+                              color: palette.textMain,
+                              fontSize: 18,
                             ),
                           ),
-                          Text(
-                            _mapOpen ? 'Done' : 'Change',
-                            style: ChosenoTypography.body(
-                              color: palette.primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                            ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () => setState(() => _mapOpen = !_mapOpen),
+                          icon: Icon(
+                            _mapOpen
+                                ? Icons.expand_less_rounded
+                                : Icons.edit_location_alt_outlined,
+                            size: 18,
                           ),
+                          label: Text(_mapOpen ? 'Done' : 'Change'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: ChosenoSpacing.sm),
+                    if (boundaries.isEmpty)
+                      Text(
+                        'No location set yet — tap Change to pick one.',
+                        style: ChosenoTypography.body(
+                          color: palette.textMuted,
+                          fontSize: 13,
+                        ),
+                      )
+                    else
+                      Wrap(
+                        spacing: ChosenoSpacing.xs + 2,
+                        runSpacing: ChosenoSpacing.xs + 2,
+                        children: [
+                          for (final b in boundaries)
+                            _BoundaryChip(name: b.name, type: b.boundaryType),
                         ],
                       ),
-                    ),
                     if (_mapOpen) ...[
                       const SizedBox(height: ChosenoSpacing.md),
                       AddressSearchField(
@@ -350,6 +274,12 @@ class _EditFormState extends ConsumerState<_EditForm> {
                   ],
                 ),
               ),
+              const SizedBox(height: ChosenoSpacing.sm + 2),
+              const _Note(
+                icon: Icons.how_to_vote_outlined,
+                text:
+                    'Your location decides your representatives, the races on your ballot, and your Home feed tabs.',
+              ),
             ],
           ),
         ),
@@ -382,6 +312,7 @@ class _EditFormState extends ConsumerState<_EditForm> {
                 ),
               AppButton(
                 label: 'Save changes',
+                icon: Icons.check_rounded,
                 loading: s.saving,
                 onPressed: s.saving ? null : _save,
               ),
@@ -389,6 +320,85 @@ class _EditFormState extends ConsumerState<_EditForm> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A one-line hint: small icon + muted text.
+class _Note extends StatelessWidget {
+  const _Note({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 15, color: palette.textMuted),
+        const SizedBox(width: ChosenoSpacing.xs + 2),
+        Expanded(
+          child: Text(
+            text,
+            style: ChosenoTypography.body(
+              color: palette.textMuted,
+              fontSize: 12,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A boundary as a soft chip: layers icon, name, and its level in muted text.
+class _BoundaryChip extends StatelessWidget {
+  const _BoundaryChip({required this.name, this.type});
+
+  final String name;
+  final String? type;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: palette.surfaceHover,
+        borderRadius: BorderRadius.circular(ChosenoRadii.full),
+        border: Border.all(color: palette.borderLight),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.layers_outlined, size: 13, color: palette.primary),
+          const SizedBox(width: 5),
+          Flexible(
+            child: Text(
+              name,
+              overflow: TextOverflow.ellipsis,
+              style: ChosenoTypography.body(
+                color: palette.textMain,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          if (type != null) ...[
+            const SizedBox(width: 5),
+            Text(
+              type!,
+              style: ChosenoTypography.body(
+                color: palette.textMuted,
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
