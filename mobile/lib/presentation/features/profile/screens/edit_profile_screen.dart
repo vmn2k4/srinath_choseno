@@ -86,8 +86,14 @@ class _EditFormState extends ConsumerState<_EditForm> {
   }
 
   Future<void> _save() async {
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
     final ok = await ref.read(editProfileControllerProvider.notifier).save();
-    if (ok && mounted) Navigator.of(context).pop();
+    if (!ok) return;
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(const SnackBar(content: Text('Profile saved')));
+    if (navigator.canPop()) navigator.pop();
   }
 
   @override

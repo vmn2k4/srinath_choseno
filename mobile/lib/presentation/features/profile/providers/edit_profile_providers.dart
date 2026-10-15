@@ -131,7 +131,10 @@ class EditProfileFormState {
 class EditProfileController extends Notifier<EditProfileFormState> {
   @override
   EditProfileFormState build() {
-    final profile = ref.watch(ownProfileProvider).value;
+    // read, not watch: saving refreshes the profile, and a watch would
+    // rebuild this controller mid-save — resetting the form to its loading
+    // state and unmounting the screen before it could close itself.
+    final profile = ref.read(ownProfileProvider).value;
     return EditProfileFormState(
       role: profile?.role ?? UserRole.normal,
       fullName: profile?.fullName ?? '',
