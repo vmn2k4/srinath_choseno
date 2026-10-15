@@ -19,6 +19,9 @@ abstract final class EnvConfig {
   static bool get googleSignInConfigured => googleWebClientId != null;
 
   static String? _optional(String key) {
+    // If .env was never loaded (e.g. widget tests) an optional key is just
+    // "not set" — the feature it gates stays off instead of throwing.
+    if (!dotenv.isInitialized) return null;
     final value = dotenv.env[key];
     return value == null || value.isEmpty ? null : value;
   }

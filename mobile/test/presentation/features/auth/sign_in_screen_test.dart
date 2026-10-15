@@ -34,6 +34,9 @@ class _FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<Result<AppUser>> signInWithGoogle() async => result;
+
+  @override
   Future<Result<AppUser>> signUpWithPassword({
     required String email,
     required String password,
@@ -71,6 +74,7 @@ Future<void> _pump(WidgetTester tester, _FakeAuthRepository repo) async {
 }
 
 void main() {
+  _googleCancelTests();
   testWidgets(
     'tapping Sign in calls the auth repository with the typed email',
     (tester) async {
@@ -103,5 +107,44 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Invalid login credentials'), findsOneWidget);
+  });
+}
+
+void _googleCancelTests() {
+  test('a cancelled Google picker is not treated as an error', () async {
+    final container = ProviderContainer(
+      overrides: [
+        authRepositoryProvider.overrideWithValue(
+          _FakeAuthRepository(const Result.err(SignInCancelled())),
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final ok = await container
+        .read(authControllerProvider.notifier)
+        .signInWithGoogle();
+
+    expect(ok, isFalse);
+    // Back to idle, not AsyncError: no snackbar, no red text.
+    expect(container.read(authControllerProvider).hasError, isFalse);
+  });
+
+  test('a real Google failure surfaces as an error', () async {
+    final container = ProviderContainer(
+      overrides: [
+        authRepositoryProvider.overrideWithValue(
+          _FakeAuthRepository(const Result.err(NetworkFailure())),
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final ok = await container
+        .read(authControllerProvider.notifier)
+        .signInWithGoogle();
+
+    expect(ok, isFalse);
+    expect(container.read(authControllerProvider).hasError, isTrue);
   });
 }

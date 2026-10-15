@@ -1,8 +1,6 @@
 import 'package:choseno_mobile/core/router/app_router.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 
 /// Every web path a shared link can carry must resolve to a real route — a
 /// miss would show go_router's "page not found" instead of the content.
