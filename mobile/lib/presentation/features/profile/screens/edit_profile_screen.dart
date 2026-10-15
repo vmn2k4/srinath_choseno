@@ -234,24 +234,16 @@ class _EditFormState extends ConsumerState<_EditForm> {
                   ),
                 ),
                 const SizedBox(height: ChosenoSpacing.md),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        label: 'Education',
-                        controller: _education,
-                        onChanged: c.setEducation,
-                      ),
-                    ),
-                    const SizedBox(width: ChosenoSpacing.sm),
-                    Expanded(
-                      child: AppTextField(
-                        label: 'Hometown',
-                        controller: _hometown,
-                        onChanged: c.setHometown,
-                      ),
-                    ),
-                  ],
+                AppTextField(
+                  label: 'Education',
+                  controller: _education,
+                  onChanged: c.setEducation,
+                ),
+                const SizedBox(height: ChosenoSpacing.md),
+                AppTextField(
+                  label: 'Hometown',
+                  controller: _hometown,
+                  onChanged: c.setHometown,
                 ),
                 const SizedBox(height: ChosenoSpacing.md),
                 TextField(
