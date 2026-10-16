@@ -182,6 +182,24 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        // Always-visible switch: the old text link under the
+                        // card sat below the fold on a normal phone, so new
+                        // users never saw there was a sign-up.
+                        SegmentedButton<bool>(
+                          showSelectedIcon: false,
+                          segments: const [
+                            ButtonSegment(value: false, label: Text('Sign in')),
+                            ButtonSegment(
+                              value: true,
+                              label: Text('Create account'),
+                            ),
+                          ],
+                          selected: {_isSignUp},
+                          onSelectionChanged: isLoading
+                              ? null
+                              : (s) => setState(() => _isSignUp = s.first),
+                        ),
+                        const SizedBox(height: ChosenoSpacing.lg),
                         Text(
                           _isSignUp ? 'Create your account' : 'Welcome back',
                           style: ChosenoTypography.display(

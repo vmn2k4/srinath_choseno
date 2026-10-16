@@ -7,6 +7,7 @@ import 'package:choseno_mobile/domain/auth/entities/sign_up_outcome.dart';
 import 'package:choseno_mobile/domain/auth/repositories/auth_repository.dart';
 import 'package:choseno_mobile/presentation/features/auth/providers/auth_providers.dart';
 import 'package:choseno_mobile/presentation/features/auth/screens/sign_in_screen.dart';
+import 'package:choseno_mobile/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -116,7 +117,7 @@ void main() {
 
       await tester.enterText(find.byType(TextField).at(0), 'me@example.com');
       await tester.enterText(find.byType(TextField).at(1), 'secret123');
-      await tester.tap(find.text('Sign in'));
+      await tester.tap(find.widgetWithText(AppButton, 'Sign in'));
       await tester.pump();
 
       expect(repo.calls, 1);
@@ -134,7 +135,7 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'me@example.com');
     await tester.enterText(find.byType(TextField).at(1), 'wrong');
-    await tester.tap(find.text('Sign in'));
+    await tester.tap(find.widgetWithText(AppButton, 'Sign in'));
     await tester.pumpAndSettle();
 
     expect(find.text('Invalid login credentials'), findsOneWidget);

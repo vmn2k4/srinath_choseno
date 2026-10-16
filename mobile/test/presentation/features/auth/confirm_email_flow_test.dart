@@ -10,6 +10,7 @@ import 'package:choseno_mobile/domain/auth/repositories/auth_repository.dart';
 import 'package:choseno_mobile/presentation/features/auth/providers/auth_providers.dart';
 import 'package:choseno_mobile/presentation/features/auth/screens/confirm_email_screen.dart';
 import 'package:choseno_mobile/presentation/features/auth/screens/sign_in_screen.dart';
+import 'package:choseno_mobile/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -124,21 +125,43 @@ Future<void> _pumpApp(WidgetTester tester, _Repo repo) async {
   await tester.pumpAndSettle();
 }
 
+/// The always-visible "Create account" segment at the top of the sign-in card.
+final _createAccountSwitch = find.descendant(
+  of: find.byType(SegmentedButton<bool>),
+  matching: find.text('Create account'),
+);
+
 Future<void> _submitForm(WidgetTester tester, String button) async {
   await tester.enterText(find.byType(TextField).at(0), 'new@example.com');
   await tester.enterText(find.byType(TextField).at(1), 'secret123');
-  await tester.tap(find.text(button));
+  await tester.tap(find.widgetWithText(AppButton, button));
   await tester.pumpAndSettle();
 }
 
 void main() {
+  testWidgets('the sign-in screen shows a Create account switch up front', (
+    tester,
+  ) async {
+    await _pumpApp(tester, _Repo());
+
+    // Visible without scrolling or finding a link under the card.
+    expect(_createAccountSwitch, findsOneWidget);
+    expect(find.text('Welcome back'), findsOneWidget);
+
+    await tester.tap(_createAccountSwitch);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Create your account'), findsOneWidget);
+    expect(find.text('Welcome back'), findsNothing);
+  });
+
   testWidgets('sign-up that needs confirmation opens the code screen', (
     tester,
   ) async {
     final repo = _Repo();
     await _pumpApp(tester, repo);
     // Switch to the sign-up form.
-    await tester.tap(find.textContaining('Create an account'));
+    await tester.tap(_createAccountSwitch);
     await tester.pumpAndSettle();
     await _submitForm(tester, 'Create account');
 
@@ -184,7 +207,7 @@ void main() {
   testWidgets('resend is on a cooldown after sign-up', (tester) async {
     final repo = _Repo();
     await _pumpApp(tester, repo);
-    await tester.tap(find.textContaining('Create an account'));
+    await tester.tap(_createAccountSwitch);
     await tester.pumpAndSettle();
     await _submitForm(tester, 'Create account');
 
@@ -201,7 +224,7 @@ void main() {
         ),
       );
       await _pumpApp(tester, repo);
-      await tester.tap(find.textContaining('Create an account'));
+      await tester.tap(_createAccountSwitch);
       await tester.pumpAndSettle();
       await _submitForm(tester, 'Create account');
 
