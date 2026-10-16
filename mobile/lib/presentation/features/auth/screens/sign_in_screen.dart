@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -284,15 +285,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  /// Poster-style hero: the big "ChosenO" wordmark sits BEHIND the illustration,
-  /// whose head overlaps the lower part of the letters, so the name reads as
-  /// part of the artwork rather than a label stuck above it. The figure takes
-  /// whatever height the screen has to spare (so it is as big as it can be
-  /// without pushing the form into scrolling), on a soft glow.
+  /// The illustration as the hero (as big as the spare height allows, on a
+  /// soft glow), with the "ChosenO" wordmark directly beneath it as the title
+  /// of the form — so the name belongs to the sign-in block instead of floating
+  /// above the picture.
   Widget _header(ChosenoPalette palette, {required double artHeight}) {
-    const wordSize = 58.0;
-    // How far the picture's top edge sits below the top of the wordmark.
-    const overlapTop = 44.0;
     final brand = ShaderMask(
       blendMode: BlendMode.srcIn,
       // Brand orange — the logo's and the website wordmark's colour.
@@ -303,64 +300,54 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         // Capital O, as in the website's wordmark.
         'ChosenO',
         textAlign: TextAlign.center,
-        style: ChosenoTypography.display(
+        // Fredoka: rounded and friendly, matching the soft clay look of the
+        // illustration. Wordmark only — the rest of the app stays Inter.
+        style: GoogleFonts.fredoka(
           color: Colors.white,
-          fontSize: wordSize,
-        ).copyWith(letterSpacing: -1.2, height: 1.0),
+          fontSize: 50,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.2,
+          height: 1.0,
+        ),
       ),
     );
-    if (artHeight < 150) {
-      return Center(
-        child: Text.rich(
-          // No room for the picture (small screen / keyboard): just the name.
-          TextSpan(
-            text: 'ChosenO',
-            style: ChosenoTypography.display(color: _brandOrange, fontSize: 40),
-          ),
-        ),
-      );
-    }
-    return SizedBox(
-      height: artHeight + overlapTop,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(top: 0, left: 0, right: 0, child: Center(child: brand)),
-          Positioned(
-            top: overlapTop,
-            left: 0,
-            right: 0,
-            height: artHeight,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Soft glow behind the figure.
-                Container(
-                  width: artHeight * 1.05,
-                  height: artHeight * 1.05,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        palette.primary.withValues(alpha: 0.20),
-                        palette.primary.withValues(alpha: 0.0),
-                      ],
-                    ),
+    if (artHeight < 150) return Center(child: brand);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: artHeight,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Soft glow behind the figure.
+              Container(
+                width: artHeight * 1.05,
+                height: artHeight * 1.05,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      palette.primary.withValues(alpha: 0.20),
+                      palette.primary.withValues(alpha: 0.0),
+                    ],
                   ),
                 ),
-                // Original 3D-style illustration (generated for Choseno),
-                // background removed so it sits straight on the page.
-                Image.asset(
-                  'assets/images/auth_hero.png',
-                  height: artHeight,
-                  fit: BoxFit.contain,
-                  semanticLabel: 'A friendly figure waving beside a ballot box',
-                ),
-              ],
-            ),
+              ),
+              // Original 3D-style illustration (generated for Choseno),
+              // background removed so it sits straight on the page.
+              Image.asset(
+                'assets/images/auth_hero.png',
+                height: artHeight,
+                fit: BoxFit.contain,
+                semanticLabel: 'A friendly figure waving beside a ballot box',
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: ChosenoSpacing.sm),
+        brand,
+      ],
     );
   }
 }
