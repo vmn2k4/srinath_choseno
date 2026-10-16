@@ -39,6 +39,11 @@ class SignInScreen extends ConsumerStatefulWidget {
 class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  // Stable keys: opening the keyboard flips the layout between the fixed
+  // one-screen column and the scrolling one, which reparents the fields. Without
+  // keys they were rebuilt, lost focus and the keyboard closed right away.
+  final _emailFieldKey = GlobalKey();
+  final _passwordFieldKey = GlobalKey();
   bool _isSignUp = false;
 
   @override
@@ -183,6 +188,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         _brandBlock(palette),
         const SizedBox(height: ChosenoSpacing.lg),
         _AuthField(
+          key: _emailFieldKey,
           label: 'Email',
           controller: _emailController,
           icon: Icons.mail_outline_rounded,
@@ -191,6 +197,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ),
         const SizedBox(height: ChosenoSpacing.sm),
         _AuthField(
+          key: _passwordFieldKey,
           label: 'Password',
           controller: _passwordController,
           icon: Icons.lock_outline_rounded,
@@ -435,6 +442,7 @@ class _ModeLink extends StatelessWidget {
 /// passwords) — sits directly on the page backdrop, no filled box.
 class _AuthField extends StatefulWidget {
   const _AuthField({
+    super.key,
     required this.label,
     required this.controller,
     required this.icon,
