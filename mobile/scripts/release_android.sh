@@ -3,11 +3,17 @@
 #   bump versionCode -> analyze + test -> build a SIGNED release .aab
 #   (with a stripped .env) -> verify it -> upload to Google Play.
 #
-#   scripts/release_android.sh                 # bump, test, build, upload to internal testing
-#   scripts/release_android.sh --no-upload     # build + verify only (upload by hand)
+#   scripts/release_android.sh                          # bump, test, build, upload to internal testing
+#   scripts/release_android.sh --no-upload              # build + verify only (upload by hand)
 #   scripts/release_android.sh --track beta --notes "What's new"
+#   scripts/release_android.sh --promote production --rollout 0.1
+#       # no build: take what is already on internal testing to production,
+#       # staged to 10% of users (raise it later in Play Console)
+#   scripts/release_android.sh --track production --rollout 0.1 --notes "..."
+#       # build + upload straight to production, staged
 #
-# One-time Play setup for the upload step is in docs/ANDROID_RELEASE.md.
+# A production release always asks you to type "production" first (--yes skips
+# that for automation). One-time Play setup is in docs/ANDROID_RELEASE.md.
 set -euo pipefail
 
 PACKAGE="com.choseno.choseno_mobile"
@@ -18,6 +24,9 @@ UPLOAD=1
 TESTS=1
 NOTES="Bug fixes and improvements."
 PUSH_TAG=0
+ROLLOUT=""
+PROMOTE=""
+ASSUME_YES=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -28,7 +37,10 @@ while [[ $# -gt 0 ]]; do
     --no-upload) UPLOAD=0; shift ;;
     --skip-tests) TESTS=0; shift ;;
     --push-tag) PUSH_TAG=1; shift ;;
-    -h|--help) sed -n '2,13p' "$0"; exit 0 ;;
+    --rollout) ROLLOUT="$2"; shift 2 ;;
+    --promote) PROMOTE="$2"; shift 2 ;;
+    --yes) ASSUME_YES=1; shift ;;
+    -h|--help) sed -n '2,19p' "$0"; exit 0 ;;
     *) echo "Unknown option: $1" >&2; exit 2 ;;
   esac
 done
@@ -36,6 +48,41 @@ done
 cd "$(dirname "$0")/.."
 say() { printf '\n\033[1m==> %s\033[0m\n' "$*"; }
 die() { echo "ERROR: $*" >&2; exit 1; }
+
+if [[ -n "$ROLLOUT" ]]; then
+  [[ "$ROLLOUT" =~ ^0\.[0-9]+$|^1(\.0+)?$ ]] && awk "BEGIN{exit !($ROLLOUT>0 && $ROLLOUT<=1)}" \
+    || { echo "--rollout must be a fraction above 0 and up to 1 (e.g. 0.1 = 10%)" >&2; exit 2; }
+fi
+DEST="${PROMOTE:-$TRACK}"
+case "$DEST" in internal|alpha|beta|production) ;; *) echo "Unknown track: $DEST" >&2; exit 2 ;; esac
+[[ -z "$PROMOTE" || "$PROMOTE" != "internal" ]] || { echo "--promote takes the DESTINATION track (e.g. production)" >&2; exit 2; }
+
+confirm_production() {
+  [[ "$DEST" == "production" && "$ASSUME_YES" != 1 ]] || return 0
+  printf '\n\033[1;31mThis releases to PRODUCTION%s.\033[0m Type "production" to continue: ' "${ROLLOUT:+ ($(awk "BEGIN{print $ROLLOUT*100}")% staged)}"
+  read -r answer
+  [[ "$answer" == "production" ]] || { echo "Cancelled." >&2; exit 1; }
+}
+
+load_play_key() {
+  KEY="${PLAY_JSON_KEY:-$HOME/.config/choseno/play-service-account.json}"
+  [[ -f "$KEY" ]] || die "No Play service-account key at $KEY (or \$PLAY_JSON_KEY). See docs/ANDROID_RELEASE.md."
+  command -v fastlane >/dev/null || die "fastlane not installed (brew install fastlane)"
+}
+
+# ------------------------------------------------------- promote (no build)
+if [[ -n "$PROMOTE" ]]; then
+  confirm_production
+  load_play_key
+  say "Promoting internal testing -> '$PROMOTE'${ROLLOUT:+ at $ROLLOUT}"
+  LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 fastlane supply \
+    --package_name "$PACKAGE" --json_key "$KEY" \
+    --track internal --track_promote_to "$PROMOTE" \
+    ${ROLLOUT:+--rollout "$ROLLOUT"} \
+    --skip_upload_aab --skip_upload_apk --skip_upload_metadata \
+    --skip_upload_changelogs --skip_upload_images --skip_upload_screenshots
+  say "Promoted to '$PROMOTE'"; exit 0
+fi
 
 # ---------------------------------------------------------------- preflight
 say "Preflight"
@@ -95,22 +142,25 @@ if [[ "$UPLOAD" == 0 ]]; then
 fi
 
 # ------------------------------------------------------------------- upload
-KEY="${PLAY_JSON_KEY:-$HOME/.config/choseno/play-service-account.json}"
-[[ -f "$KEY" ]] || die "No Play service-account key at $KEY (or \$PLAY_JSON_KEY). See docs/ANDROID_RELEASE.md. The bundle is built: $PWD/$AAB"
-command -v fastlane >/dev/null || die "fastlane not installed (brew install fastlane)"
+confirm_production
+load_play_key
 
 META="$(mktemp -d)"; trap 'rm -rf "$META"' EXIT
 mkdir -p "$META/android/en-US/changelogs"
 printf '%s\n' "$NOTES" > "$META/android/en-US/changelogs/${BUILD}.txt"
 
-say "Uploading to Play track '$TRACK' (status: $STATUS)"
-fastlane supply \
+# A staged rollout is an "inProgress" release; a full one is "completed".
+RELEASE_STATUS="$STATUS"
+[[ -z "$ROLLOUT" ]] || RELEASE_STATUS="inProgress"
+
+say "Uploading to Play track '$TRACK' (status: $RELEASE_STATUS${ROLLOUT:+, rollout $ROLLOUT})"
+LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 fastlane supply \
   --aab "$AAB" \
   --package_name "$PACKAGE" \
   --json_key "$KEY" \
   --track "$TRACK" \
-  --release_status "$STATUS" \
-  --release_name "${NAME} (${BUILD})" \
+  --release_status "$RELEASE_STATUS" \
+  ${ROLLOUT:+--rollout "$ROLLOUT"} \
   --metadata_path "$META/android" \
   --skip_upload_metadata false --skip_upload_changelogs false \
   --skip_upload_images --skip_upload_screenshots --skip_upload_apk

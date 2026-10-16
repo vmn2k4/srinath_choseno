@@ -1,17 +1,37 @@
 # Releasing the Android app
 
-One command builds a signed bundle and publishes it to Google Play:
+Releases are made from this Mac with one script. (A GitHub Actions workflow was
+tried and dropped: it only pays off with several releasers or releasing away
+from this machine, and it would put the signing and Play keys in GitHub.)
 
 ```bash
 cd mobile
 scripts/release_android.sh                      # bump versionCode, test, build, upload to Internal testing
 scripts/release_android.sh --no-upload          # build + verify only, upload the .aab by hand
+scripts/release_android.sh --no-bump            # re-run without bumping (e.g. after a failed upload)
 scripts/release_android.sh --track beta --notes "What's new"
 ```
 
-What the script does, in order: preflight → bump `version: x.y.z+N` in
-`pubspec.yaml` → `flutter analyze` → `flutter test` → build the signed
-`.aab` → verify it → upload with `fastlane supply` → tag `android-vX.Y.Z+N`.
+What it does, in order: preflight → bump `version: x.y.z+N` in `pubspec.yaml` →
+`flutter analyze` → `flutter test` → build the signed `.aab` → verify it →
+upload with `fastlane supply` → tag `android-vX.Y.Z+N` (local; `--push-tag` pushes it).
+Commit the `pubspec.yaml` bump afterwards.
+
+## Production
+
+A production release always asks you to type `production` first (`--yes` skips
+the question). Prefer promoting a build testers have already used, staged:
+
+```bash
+scripts/release_android.sh --promote production --rollout 0.1   # internal -> production, 10% of users
+```
+
+Raise the percentage later in Play Console (Production → release → Update
+rollout) or promote again. Without `--rollout` a release goes to 100%.
+`--track production --rollout 0.1` builds and uploads straight to production.
+
+Production needs the Play listing finished and goes through Google review, and
+the service account must have the production permission (see below).
 
 ## Why the build uses a stripped `.env`
 
@@ -21,46 +41,24 @@ the app reads (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `GOOGLE_WEB_CLIENT_ID`,
 `GOOGLE_IOS_CLIENT_ID`), restores your `.env` afterwards, and **refuses to
 finish if the bundle still contains `username`/`password` lines**.
 
-## One-time setup for the upload step
+## One-time setup for the upload step (done)
 
-The upload uses the Play Developer API, which needs a service account:
+1. Google Cloud: enable *Google Play Android Developer API*, create a service
+   account and a JSON key.
+2. Play Console → Users and permissions → invite the service account's email
+   with *Release to testing tracks* (add *Release to production* only for
+   production releases).
+3. Save the key at `~/.config/choseno/play-service-account.json`
+   (`chmod 600`), or point `PLAY_JSON_KEY` at it. Never commit it.
 
-1. **Google Cloud** (any project): enable *Google Play Android Developer API*,
-   create a service account, create a JSON key.
-2. **Play Console → Users and permissions → Invite new users**: invite the
-   service account's email, and grant it *Release to testing tracks* (add
-   *Release to production* only if you want it to publish to production) for
-   the Choseno app.
-3. Save the key outside the repo and lock it down:
-   ```bash
-   mkdir -p ~/.config/choseno
-   mv ~/Downloads/<key>.json ~/.config/choseno/play-service-account.json
-   chmod 600 ~/.config/choseno/play-service-account.json
-   ```
-   (or point `PLAY_JSON_KEY` at it). Never commit it.
-4. `brew install fastlane` if it isn't installed.
+## Back these up (this Mac holds the only copies)
 
-Until step 1–3 are done the script still builds and verifies the bundle, then
-stops and tells you where the `.aab` is.
-
-## Releasing from CI instead
-
-`.github/workflows/android-release.yml` does the same on GitHub when you push a
-tag like `android-v1.0.0+3` (or run it from the Actions tab). Commit the version
-bump first — CI uses the versionCode in `pubspec.yaml`.
-
-Repository secrets to add (Settings → Secrets and variables → Actions):
-
-| Secret | Value |
-|---|---|
-| `ANDROID_KEYSTORE_BASE64` | `base64 -i <upload keystore>.jks \| pbcopy` |
-| `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_PASSWORD`, `ANDROID_KEY_ALIAS` | from `android/key.properties` |
-| `PLAY_SERVICE_ACCOUNT_JSON` | the whole JSON key file |
-| `SUPABASE_URL`, `SUPABASE_ANON_KEY` | same as `.env` |
-| `GOOGLE_WEB_CLIENT_ID`, `GOOGLE_IOS_CLIENT_ID` | same as `.env` |
+- The upload keystore referenced by `android/key.properties`, and its passwords.
+  Losing it means you cannot update the app without a Play key-reset request.
+- `~/.config/choseno/play-service-account.json` (replaceable: create a new key).
 
 ## Rules Play enforces
 
 - `versionCode` must be higher than every build ever uploaded (the script bumps it).
-- Internal testing releases are available to testers within minutes; production goes through review.
-- Releases to a still-"draft" app must use `--status draft`.
+- Internal testing reaches testers within minutes to an hour; production goes through review.
+- A release on a still-"draft" app must use `--status draft`.
