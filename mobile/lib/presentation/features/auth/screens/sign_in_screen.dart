@@ -145,10 +145,15 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                           palette,
                           isLoading: isLoading,
                           profileError: profileError,
-                          // The illustration only appears when it won't push
-                          // the form into scrolling (tall phone, no keyboard).
-                          showArt:
-                              constraints.maxHeight >= 740 && !keyboardOpen,
+                          // The illustration takes the height the form leaves
+                          // spare (the form block is ~470pt), so it is as big
+                          // as fits without scrolling; hidden with the
+                          // keyboard open.
+                          artHeight: keyboardOpen
+                              ? 0
+                              : (constraints.maxHeight - 500)
+                                    .clamp(0.0, 320.0)
+                                    .toDouble(),
                         ),
                       ),
                     ),
@@ -166,89 +171,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     ChosenoPalette palette, {
     required bool isLoading,
     required Object? profileError,
-    required bool showArt,
+    required double artHeight,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Brand row: the Choseno mark + wordmark.
-        Row(
-          children: [
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x40F97316),
-                    blurRadius: 22,
-                    offset: Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
-              ),
-            ),
-            const SizedBox(width: ChosenoSpacing.md),
-            Text(
-              'Choseno',
-              style: ChosenoTypography.display(
-                color: palette.textMain,
-                fontSize: 24,
-              ),
-            ),
-          ],
-        ),
-        if (showArt) ...[
-          const SizedBox(height: ChosenoSpacing.xs),
-          // Original 3D-style illustration (generated for Choseno), background
-          // removed so it sits straight on the page.
-          Image.asset(
-            'assets/images/auth_hero.png',
-            height: 140,
-            fit: BoxFit.contain,
-            semanticLabel: 'A friendly figure waving beside a ballot box',
-          ),
-          const SizedBox(height: ChosenoSpacing.xs),
-        ] else
-          const SizedBox(height: ChosenoSpacing.xl),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
-          layoutBuilder: (current, previous) => Stack(
-            alignment: Alignment.topLeft,
-            children: [...previous, if (current != null) current],
-          ),
-          child: SizedBox(
-            key: ValueKey(_isSignUp),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _isSignUp ? 'Create your account' : 'Welcome back!',
-                  style: ChosenoTypography.display(
-                    color: palette.textMain,
-                    fontSize: 32,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  _isSignUp
-                      ? 'Free, and anonymous by default.'
-                      : 'Sign in to see your district.',
-                  style: ChosenoTypography.body(
-                    color: palette.textMuted,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        _header(palette, artHeight: artHeight),
         const SizedBox(height: ChosenoSpacing.lg),
         _AuthField(
           label: 'Email',
@@ -350,6 +279,81 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           isSignUp: _isSignUp,
           enabled: !isLoading,
           onTap: () => setState(() => _isSignUp = !_isSignUp),
+        ),
+      ],
+    );
+  }
+
+  /// Small centred logo row, then the illustration as the hero — it takes
+  /// whatever height the screen has to spare (so it is as big as it can be
+  /// without pushing the form into scrolling), on a soft glow.
+  Widget _header(ChosenoPalette palette, {required double artHeight}) {
+    final brand = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(13),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x40F97316),
+                blurRadius: 18,
+                offset: Offset(0, 5),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(13),
+            child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
+          ),
+        ),
+        const SizedBox(width: ChosenoSpacing.sm + 2),
+        Text(
+          'Choseno',
+          style: ChosenoTypography.display(
+            color: palette.textMain,
+            fontSize: 24,
+          ),
+        ),
+      ],
+    );
+    if (artHeight < 150) return Center(child: brand);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        brand,
+        const SizedBox(height: ChosenoSpacing.md),
+        SizedBox(
+          height: artHeight,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Soft glow behind the figure.
+              Container(
+                width: artHeight * 1.05,
+                height: artHeight * 1.05,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      palette.primary.withValues(alpha: 0.20),
+                      palette.primary.withValues(alpha: 0.0),
+                    ],
+                  ),
+                ),
+              ),
+              // Original 3D-style illustration (generated for Choseno),
+              // background removed so it sits straight on the page.
+              Image.asset(
+                'assets/images/auth_hero.png',
+                height: artHeight,
+                fit: BoxFit.contain,
+                semanticLabel: 'A friendly figure waving beside a ballot box',
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -463,8 +467,16 @@ class _AuthFieldState extends State<_AuthField> {
         enabledBorder: line(palette.border),
         border: line(palette.border),
         focusedBorder: line(palette.primary, 2),
-        prefixIcon: Icon(widget.icon, color: palette.textMuted, size: 20),
-        prefixIconConstraints: const BoxConstraints(minWidth: 36),
+        // Flush with the page's left edge (the default adds a 12pt inset that
+        // pushed the icon out of line with the heading above it).
+        prefixIcon: Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: Icon(widget.icon, color: palette.textMuted, size: 20),
+        ),
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 32,
+          minHeight: 24,
+        ),
         suffixIcon: widget.password
             ? IconButton(
                 tooltip: _hidden ? 'Show password' : 'Hide password',

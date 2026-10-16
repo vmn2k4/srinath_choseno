@@ -136,20 +136,22 @@ Future<void> _submitForm(WidgetTester tester, String button) async {
 }
 
 void main() {
-  testWidgets('the sign-in screen shows a Create account switch up front', (
+  testWidgets('the sign-in screen shows a Create account link up front', (
     tester,
   ) async {
     await _pumpApp(tester, _Repo());
 
-    // Visible without scrolling or finding a link under the card.
+    // Visible without scrolling or hunting for a link under the card.
     expect(_createAccountSwitch, findsOneWidget);
-    expect(find.text('Welcome back!'), findsOneWidget);
+    expect(find.widgetWithText(AppButton, 'Sign in'), findsOneWidget);
 
     await tester.tap(_createAccountSwitch);
     await tester.pumpAndSettle();
 
-    expect(find.text('Create your account'), findsOneWidget);
-    expect(find.text('Welcome back!'), findsNothing);
+    expect(find.widgetWithText(AppButton, 'Create account'), findsOneWidget);
+    expect(find.widgetWithText(AppButton, 'Sign in'), findsNothing);
+    // ...and the same link now offers the way back.
+    expect(find.byKey(const Key('auth-mode-signin')), findsOneWidget);
   });
 
   testWidgets('sign-up that needs confirmation opens the code screen', (
