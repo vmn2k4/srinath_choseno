@@ -134,6 +134,8 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
   if (places.length === 0) return null;
 
   const visible = showAll ? sorted : sorted.slice(0, INITIAL_COUNT);
+  const provincial = places.some((p) => p.source_url?.includes("elections.bc.ca"));
+  const authority = provincial ? "Elections BC" : "your local government";
   const checked = places.reduce((m, p) => (p.last_checked_at > m ? p.last_checked_at : m), "");
 
   return (
@@ -263,7 +265,7 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
                       opensAt: sc.opens_at,
                       closesAt: sc.closes_at,
                       location: [place.name, place.address].filter(Boolean).join(", "),
-                      description: `${sc.voting_type === "general" ? "Election day" : "Advance voting"} at ${place.name} (${jurisdictionName}). Bring ID. Confirm hours with your local government. Find more at https://www.choseno.com/find-my-district`,
+                      description: `${sc.voting_type === "general" ? "Election day" : "Advance voting"} at ${place.name} (${jurisdictionName}). Bring ID. Confirm hours with ${authority}. Find more at https://www.choseno.com/find-my-district`,
                     },
                   }))}
                 />
@@ -283,9 +285,9 @@ export default function VotingPlacesSection({ mapShapeId, electionDate, jurisdic
         </button>
       )}
       <p className="mt-4 text-xs text-text-muted">
-        Collected from {jurisdictionName}&apos;s official election information
-        {checked ? `, last checked ${checked.slice(0, 10)}` : ""}. Locations and hours can change — confirm with your
-        local government before you go.
+        Collected from {provincial ? "Elections BC" : `${jurisdictionName}'s official election information`}
+        {checked ? `, last checked ${checked.slice(0, 10)}` : ""}. Locations and hours can change — confirm with{" "}
+        {authority} before you go.
       </p>
     </section>
   );

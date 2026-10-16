@@ -3,7 +3,7 @@
 
 Usage: python3 scripts/voting_places/load_voting_places.py data/<file>.json [...]
 
-Each data file: {"map_shape_id": int, "jurisdiction": str, "source_url": str,
+Each data file (optional "election_name"/"election_date" override the local-election defaults): {"map_shape_id": int, "jurisdiction": str, "source_url": str,
  "places": [{"name","address","notes"?, "lat"?,"lng"?, "schedules":[{"type","date","open","close","notes"?}]}]}
 
 Addresses are geocoded with Nominatim (1 req/s, cached in .geocode_cache.json);
@@ -55,7 +55,7 @@ def geocode(place, muni, jurisdiction):
     queries.append(f'{place["name"]}, {jurisdiction}, BC, Canada')
     for q in queries:
         r = nominatim(q)
-        if r and km(r[0], r[1], float(muni["lat"]), float(muni["lng"])) <= MAX_KM:
+        if muni and r and km(r[0], r[1], float(muni["lat"]), float(muni["lng"])) <= MAX_KM:
             return r[0], r[1], "nominatim"
     return None, None, None
 
@@ -68,8 +68,9 @@ def q(v):
 
 def build_sql(doc):
     sid, jur = doc["map_shape_id"], doc["jurisdiction"]
-    muni = MUNIS[sid]
-    out = [f"DELETE FROM public.voting_places WHERE map_shape_id={sid} AND election_date='{ELECTION_DATE}';"]
+    muni = MUNIS.get(sid)
+    ELECTION_NAME_, ELECTION_DATE_ = doc.get("election_name", ELECTION_NAME), doc.get("election_date", ELECTION_DATE)
+    out = [f"DELETE FROM public.voting_places WHERE map_shape_id={sid} AND election_date='{ELECTION_DATE_}';"]
     for p in doc["places"]:
         lat, lng, src = geocode(p, muni, jur)
         if lat is None:
@@ -77,7 +78,7 @@ def build_sql(doc):
         out.append(
             "WITH ins AS (INSERT INTO public.voting_places (election_name, election_date, map_shape_id, "
             "jurisdiction_name, name, address, lat, lng, geocode_source, notes, source_url) VALUES ("
-            f"{q(ELECTION_NAME)}, '{ELECTION_DATE}', {sid}, {q(jur)}, {q(p['name'])}, {q(p.get('address'))}, "
+            f"{q(ELECTION_NAME_)}, '{ELECTION_DATE_}', {sid}, {q(jur)}, {q(p['name'])}, {q(p.get('address'))}, "
             f"{lat if lat is not None else 'NULL'}, {lng if lng is not None else 'NULL'}, {q(src)}, "
             f"{q(p.get('notes'))}, {q(doc.get('source_url'))}) RETURNING id) "
             "INSERT INTO public.voting_place_schedules (voting_place_id, voting_type, vote_date, opens_at, closes_at, notes) "

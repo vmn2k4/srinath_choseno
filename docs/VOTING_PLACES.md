@@ -14,3 +14,6 @@ Migration: `supabase/migrations/20261008000005_voting_places.sql` (public read, 
 `scripts/voting_places/` — `helpers.py` (compact builders), `data_*.py` (researched data per municipality, source URL recorded), `load_voting_places.py` (geocodes addresses via Nominatim, accepts a hit only within 60 km of the municipality centroid, replaces that municipality's rows, applies via `supabase db query --linked`). `missing.txt` lists municipalities with no data yet.
 
 Re-run `python3 scripts/voting_places/load_voting_places.py data/<file>.json` after correcting a file. Hours/locations change late — recheck `source_url` before the election.
+
+## BC provincial election (Oct 24, 2026)
+Loaded from Elections BC's Where to Vote GeoServer layer (`wtv:EBC_VOTING_PLACES`, the feed behind wheretovote.elections.bc.ca): 93 ridings, 1,398 places incl. district electoral offices, with coordinates and advance-day flags. `scripts/voting_places/gen_provincial_2026.py` converts it to `data/provincial_2026.json` (docs carry their own `election_name`/`election_date`), then the normal loader applies it. Advance Oct 16–21 8am–8pm; Final Voting Day Oct 24 8am–8pm (DEOs until 4pm). Riding names match `map_shapes` exactly. The loader prints "SQL FAILED" falsely on some ridings — verify by counting rows.
