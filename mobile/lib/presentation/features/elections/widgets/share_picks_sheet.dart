@@ -13,6 +13,7 @@ import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/election_candidate.dart';
 import '../../politician_ratings/providers/politician_ratings_providers.dart';
 import '../providers/elections_providers.dart';
+import 'pick_share_image_preview.dart';
 import '../providers/seat_detail_providers.dart';
 
 const _noteMax = 140;
@@ -74,6 +75,11 @@ class _SharePicksSheetState extends ConsumerState<SharePicksSheet> {
   bool _submitting = false;
   String? _error;
   String? _code;
+
+  /// The preview card has been generated (or we stopped waiting for it) —
+  /// only then is the share link handed out.
+  bool _imageReady = false;
+  bool _imageGaveUp = false;
 
   @override
   void dispose() {
@@ -220,7 +226,34 @@ class _SharePicksSheetState extends ConsumerState<SharePicksSheet> {
           style: ChosenoTypography.body(color: palette.textMuted, fontSize: 14),
         ),
         const SizedBox(height: ChosenoSpacing.md),
-        AppButton(label: 'Share', icon: Icons.ios_share, onPressed: _share),
+        PickShareImagePreview(
+          code: _code!,
+          onReady: () {
+            if (mounted) setState(() => _imageReady = true);
+          },
+          onGaveUp: () {
+            if (mounted) setState(() => _imageGaveUp = true);
+          },
+        ),
+        if (_imageGaveUp && !_imageReady) ...[
+          const SizedBox(height: ChosenoSpacing.xs),
+          Text(
+            'The preview image is taking longer than usual. You can share now; it should appear in chats shortly.',
+            style: ChosenoTypography.body(
+              color: palette.textMuted,
+              fontSize: 12,
+            ),
+          ),
+        ],
+        const SizedBox(height: ChosenoSpacing.md),
+        AppButton(
+          label: _imageReady || _imageGaveUp
+              ? 'Share'
+              : 'Preparing your image…',
+          icon: Icons.ios_share,
+          loading: !(_imageReady || _imageGaveUp),
+          onPressed: _imageReady || _imageGaveUp ? _share : null,
+        ),
         const SizedBox(height: ChosenoSpacing.xs),
         AppButton(
           label: 'Done',
