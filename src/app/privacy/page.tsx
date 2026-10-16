@@ -49,7 +49,7 @@ export default function PrivacyPage() {
             </div>
             <div>
               <p className="font-semibold text-text-main">Location (Boundary Matching Only)</p>
-              <p>To show you elections and candidates relevant to your area, we may ask for your location or address. We use it to match you to your electoral boundaries.</p>
+              <p>To show you elections and candidates relevant to your area, we may ask for your location or address. We use it to match you to your electoral boundaries. If you search by address, city, or postal code, the text you type is sent to the OpenStreetMap Nominatim geocoding service to find the matching location.</p>
             </div>
           </div>
         </section>
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-text-main">6. Data Sharing</h2>
           <p>We do <strong className="text-text-main">not</strong> sell your personal data, and we do <strong className="text-text-main">not</strong> share it with political parties, advertisers, or data brokers. We may share aggregated, anonymized statistics publicly.</p>
-          <p>We rely on service providers to run the platform, including Supabase (database and authentication, with data stored in the United States), Google (Sign-In and Analytics), and our hosting provider. They process data on our behalf. We may also disclose information if required by law, a valid court order, or to protect the rights and safety of others.</p>
+          <p>We rely on service providers to run the platform, including Supabase (database and authentication, with data stored in the United States), Google (Sign-In and Analytics), OpenStreetMap (address search), and our hosting provider. They process data on our behalf. We may also disclose information if required by law, a valid court order, or to protect the rights and safety of others.</p>
         </section>
 
         <section className="space-y-3">

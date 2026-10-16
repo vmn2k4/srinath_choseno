@@ -198,7 +198,9 @@ const _privacy = <_Section>[
       'Location (Boundary Matching Only)',
       'To show you elections and candidates relevant to your area, we may ask '
       'for your location or address. We use it to match you to your electoral '
-      'boundaries.',
+      'boundaries. If you search by address, city, or postal code, the text '
+      'you type is sent to the OpenStreetMap Nominatim geocoding service to '
+      'find the matching location.',
     ),
   ]),
   _Section('3. User-Generated Content', [
@@ -242,10 +244,10 @@ const _privacy = <_Section>[
     _Para(
       'We rely on service providers to run the platform, including Supabase '
       '(database and authentication, with data stored in the United States), '
-      'Google (Sign-In and Analytics), and our hosting provider. They process '
-      'data on our behalf. We may also disclose information if required by '
-      'law, a valid court order, or to protect the rights and safety of '
-      'others.',
+      'Google (Sign-In and Analytics), OpenStreetMap (address search), and '
+      'our hosting provider. They process data on our behalf. We may also '
+      'disclose information if required by law, a valid court order, or to '
+      'protect the rights and safety of others.',
     ),
   ]),
   _Section('7. Cookies', [
