@@ -284,40 +284,23 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  /// Small centred logo row, then the illustration as the hero — it takes
+  /// The big "Choseno" wordmark, then the illustration as the hero — it takes
   /// whatever height the screen has to spare (so it is as big as it can be
   /// without pushing the form into scrolling), on a soft glow.
   Widget _header(ChosenoPalette palette, {required double artHeight}) {
-    final brand = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(13),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x40F97316),
-                blurRadius: 18,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(13),
-            child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
-          ),
-        ),
-        const SizedBox(width: ChosenoSpacing.sm + 2),
-        Text(
-          'Choseno',
-          style: ChosenoTypography.display(
-            color: palette.textMain,
-            fontSize: 24,
-          ),
-        ),
-      ],
+    // The wordmark alone (no logo tile): big, in the brand gradient.
+    final brand = ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) =>
+          ChosenoGradients.primary(palette).createShader(bounds),
+      child: Text(
+        'Choseno',
+        textAlign: TextAlign.center,
+        style: ChosenoTypography.display(
+          color: Colors.white,
+          fontSize: 44,
+        ).copyWith(letterSpacing: -0.8, height: 1.05),
+      ),
     );
     if (artHeight < 150) return Center(child: brand);
     return Column(
