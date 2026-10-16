@@ -125,11 +125,9 @@ Future<void> _pumpApp(WidgetTester tester, _Repo repo) async {
   await tester.pumpAndSettle();
 }
 
-/// The always-visible "Create account" segment at the top of the sign-in card.
-final _createAccountSwitch = find.descendant(
-  of: find.byType(SegmentedButton<bool>),
-  matching: find.text('Create account'),
-);
+/// The always-visible "Create account" half of the pill switch at the top of
+/// the sign-in sheet.
+final _createAccountSwitch = find.byKey(const Key('auth-mode-signup'));
 
 Future<void> _submitForm(WidgetTester tester, String button) async {
   await tester.enterText(find.byType(TextField).at(0), 'new@example.com');

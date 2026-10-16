@@ -59,6 +59,7 @@ dependencies:
   chewie: ^1.13.1
   youtube_player_flutter: ^9.1.3
   webview_flutter: ^4.13.1
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,7 @@ flutter:
   assets:
     - .env
     - assets/images/google_g.png
+    - assets/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

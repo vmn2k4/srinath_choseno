@@ -7,12 +7,13 @@
 //
 // Google sign-in uses the native account picker (google_sign_in) and hands
 // the ID token to Supabase; it shows only when GOOGLE_WEB_CLIENT_ID is set.
-// Not yet ported from the guide: the deep-link password-recovery flow (needs app_links
-// wired to a route, see core/router/app_router.dart's TODO), and the
-// founder-count nudge. Forgot-password is stubbed as a snackbar-only
-// action pending the reset-password screen.
+// Layout: a dark brand header (the Choseno mark, an SVG contour-map backdrop,
+// three value chips) with a rounded sheet rising over it that holds the form.
+// Password reset lives on its own screens (forgot_password_screen.dart).
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -103,230 +104,515 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       }
     });
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: ChosenoSpacing.lg + 4,
-              vertical: ChosenoSpacing.xl,
+    final keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      // Clock/battery in white over the dark header.
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        backgroundColor: _heroBottom,
+        body: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                children: [
+                  _Hero(compact: keyboardOpen),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: palette.surface,
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(32),
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x33000000),
+                            blurRadius: 24,
+                            offset: Offset(0, -6),
+                          ),
+                        ],
+                      ),
+                      child: SafeArea(
+                        top: false,
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 440),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                ChosenoSpacing.lg + 4,
+                                ChosenoSpacing.lg,
+                                ChosenoSpacing.lg + 4,
+                                ChosenoSpacing.md,
+                              ),
+                              child: _form(
+                                palette,
+                                isLoading: isLoading,
+                                profileError: profileError,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: ConstrainedBox(
-              // Single-column form width — DESIGN.md's Layout section
-              // reserves a fixed reading width for the auth card
-              // specifically, not the full-width dashboard convention
-              // other screens use.
-              constraints: const BoxConstraints(maxWidth: 420),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _form(
+    ChosenoPalette palette, {
+    required bool isLoading,
+    required Object? profileError,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _ModeSwitch(
+          isSignUp: _isSignUp,
+          enabled: !isLoading,
+          onChanged: (v) => setState(() => _isSignUp = v),
+        ),
+        const SizedBox(height: ChosenoSpacing.md + 2),
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          layoutBuilder: (current, previous) => Stack(
+            alignment: Alignment.topLeft,
+            children: [...previous, if (current != null) current],
+          ),
+          child: SizedBox(
+            key: ValueKey(_isSignUp),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _isSignUp ? 'Create your account' : 'Welcome back',
+                  style: ChosenoTypography.display(
+                    color: palette.textMain,
+                    fontSize: 26,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  _isSignUp
+                      ? 'Free, and anonymous by default.'
+                      : 'Sign in to see your district.',
+                  style: ChosenoTypography.body(
+                    color: palette.textMuted,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: ChosenoSpacing.md),
+        _AuthField(
+          label: 'Email',
+          controller: _emailController,
+          icon: Icons.mail_outline_rounded,
+          keyboardType: TextInputType.emailAddress,
+          autofillHints: const [AutofillHints.email],
+        ),
+        const SizedBox(height: ChosenoSpacing.md),
+        _AuthField(
+          label: 'Password',
+          controller: _passwordController,
+          icon: Icons.lock_outline_rounded,
+          password: true,
+          autofillHints: [
+            _isSignUp ? AutofillHints.newPassword : AutofillHints.password,
+          ],
+        ),
+        if (!_isSignUp)
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () => context.push(AppRoutes.forgotPassword),
+              child: const Text('Forgot password?'),
+            ),
+          )
+        else
+          const SizedBox(height: ChosenoSpacing.xs),
+        if (profileError != null) ...[
+          Text(
+            "You're signed in, but your profile couldn't be loaded: $profileError",
+            style: ChosenoTypography.body(
+              color: palette.danger,
+              fontSize: 13,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: ChosenoSpacing.sm),
+          Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: 'Retry',
+                  variant: AppButtonVariant.outline,
+                  onPressed: () =>
+                      ref.read(ownProfileProvider.notifier).refresh(),
+                ),
+              ),
+              const SizedBox(width: ChosenoSpacing.sm),
+              Expanded(
+                child: AppButton(
+                  label: 'Sign out',
+                  variant: AppButtonVariant.text,
+                  tone: AppButtonTone.danger,
+                  onPressed: () =>
+                      ref.read(authControllerProvider.notifier).signOut(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: ChosenoSpacing.sm),
+        ],
+        AppButton(
+          label: _isSignUp ? 'Create account' : 'Sign in',
+          loading: isLoading,
+          onPressed: isLoading ? null : _submit,
+        ),
+        if (EnvConfig.googleSignInConfigured) ...[
+          const SizedBox(height: ChosenoSpacing.md),
+          Row(
+            children: [
+              Expanded(child: Divider(color: palette.borderLight)),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: ChosenoSpacing.md,
+                ),
+                child: Text(
+                  'or continue with',
+                  style: ChosenoTypography.body(
+                    color: palette.textMuted,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              Expanded(child: Divider(color: palette.borderLight)),
+            ],
+          ),
+          const SizedBox(height: ChosenoSpacing.md),
+          _GoogleButton(
+            onPressed: isLoading
+                ? null
+                : () => ref
+                      .read(authControllerProvider.notifier)
+                      .signInWithGoogle(),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+// ── look ───────────────────────────────────────────────────────────────────
+
+const _heroTop = Color(0xFF0B1220);
+const _heroBottom = Color(0xFF14264F);
+
+/// The dark brand header: contour-map backdrop (SVG), the Choseno mark with a
+/// warm glow, the wordmark, and three value chips. Collapses while the
+/// keyboard is open so the form keeps the room.
+class _Hero extends StatelessWidget {
+  const _Hero({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final topInset = MediaQuery.of(context).padding.top;
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [_heroTop, _heroBottom],
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: SvgPicture.asset(
+              'assets/svg/auth_backdrop.svg',
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                ChosenoSpacing.lg,
+                topInset + (compact ? ChosenoSpacing.md : ChosenoSpacing.lg),
+                ChosenoSpacing.lg,
+                ChosenoSpacing.xl,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Center(
-                    child: Container(
-                      width: 72,
-                      height: 72,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        gradient: ChosenoGradients.primary(palette),
-                        borderRadius: BorderRadius.circular(
-                          ChosenoRadii.dialog + 4,
+                  Container(
+                    width: compact ? 56 : 76,
+                    height: compact ? 56 : 76,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(compact ? 16 : 24),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x66F97316),
+                          blurRadius: 36,
+                          spreadRadius: 1,
                         ),
-                        // Flat on light themes; the glow is a dark-theme touch.
-                        boxShadow: palette.isLight
-                            ? null
-                            : [
-                                BoxShadow(
-                                  color: palette.primary.withValues(
-                                    alpha: 0.35,
-                                  ),
-                                  blurRadius: 32,
-                                  offset: const Offset(0, 12),
-                                ),
-                              ],
-                      ),
-                      child: Text(
-                        'C',
-                        style: ChosenoTypography.display(
-                          color: palette.textOnPrimary,
-                          fontSize: 38,
-                          fontWeight: FontWeight.w800,
+                        BoxShadow(
+                          color: Color(0x553B82F6),
+                          blurRadius: 28,
+                          offset: Offset(0, 10),
                         ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: ChosenoSpacing.lg),
-                  Text(
-                    'Choseno',
-                    textAlign: TextAlign.center,
-                    style: ChosenoTypography.display(
-                      color: palette.textMain,
-                      fontSize: 44,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: ChosenoSpacing.sm),
-                  Text(
-                    'Know who represents you.\nRate every politician in your area.',
-                    textAlign: TextAlign.center,
-                    style: ChosenoTypography.body(
-                      color: palette.textMuted,
-                      fontSize: 15,
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: ChosenoSpacing.xl),
-                  AppCard(
-                    variant: AppCardVariant.hero,
-                    padding: const EdgeInsets.all(ChosenoSpacing.lg),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // Always-visible switch: the old text link under the
-                        // card sat below the fold on a normal phone, so new
-                        // users never saw there was a sign-up.
-                        SegmentedButton<bool>(
-                          showSelectedIcon: false,
-                          segments: const [
-                            ButtonSegment(value: false, label: Text('Sign in')),
-                            ButtonSegment(
-                              value: true,
-                              label: Text('Create account'),
-                            ),
-                          ],
-                          selected: {_isSignUp},
-                          onSelectionChanged: isLoading
-                              ? null
-                              : (s) => setState(() => _isSignUp = s.first),
-                        ),
-                        const SizedBox(height: ChosenoSpacing.lg),
-                        Text(
-                          _isSignUp ? 'Create your account' : 'Welcome back',
-                          style: ChosenoTypography.display(
-                            color: palette.textMain,
-                            fontSize: 24,
-                          ),
-                        ),
-                        const SizedBox(height: ChosenoSpacing.lg),
-                        AppTextField(
-                          label: 'Email',
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.email],
-                        ),
-                        const SizedBox(height: ChosenoSpacing.md),
-                        AppTextField(
-                          label: 'Password',
-                          controller: _passwordController,
-                          obscureText: true,
-                          autofillHints: [
-                            _isSignUp
-                                ? AutofillHints.newPassword
-                                : AutofillHints.password,
-                          ],
-                        ),
-                        if (profileError != null) ...[
-                          const SizedBox(height: ChosenoSpacing.md),
-                          Text(
-                            "You're signed in, but your profile couldn't be loaded: $profileError",
-                            style: ChosenoTypography.body(
-                              color: palette.danger,
-                              fontSize: 13,
-                              height: 1.4,
-                            ),
-                          ),
-                          const SizedBox(height: ChosenoSpacing.sm),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: AppButton(
-                                  label: 'Retry',
-                                  variant: AppButtonVariant.outline,
-                                  onPressed: () => ref
-                                      .read(ownProfileProvider.notifier)
-                                      .refresh(),
-                                ),
-                              ),
-                              const SizedBox(width: ChosenoSpacing.sm),
-                              Expanded(
-                                child: AppButton(
-                                  label: 'Sign out',
-                                  variant: AppButtonVariant.text,
-                                  tone: AppButtonTone.danger,
-                                  onPressed: () => ref
-                                      .read(authControllerProvider.notifier)
-                                      .signOut(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                        const SizedBox(height: ChosenoSpacing.lg),
-                        AppButton(
-                          label: _isSignUp ? 'Create account' : 'Sign in',
-                          loading: isLoading,
-                          onPressed: isLoading ? null : _submit,
-                        ),
-                        if (EnvConfig.googleSignInConfigured) ...[
-                          const SizedBox(height: ChosenoSpacing.md),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Divider(color: palette.borderLight),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: ChosenoSpacing.sm + 2,
-                                ),
-                                child: Text(
-                                  'or',
-                                  style: ChosenoTypography.body(
-                                    color: palette.textMuted,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(color: palette.borderLight),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: ChosenoSpacing.md),
-                          _GoogleButton(
-                            onPressed: isLoading
-                                ? null
-                                : () => ref
-                                      .read(authControllerProvider.notifier)
-                                      .signInWithGoogle(),
-                          ),
-                        ],
-                        if (!_isSignUp) ...[
-                          const SizedBox(height: ChosenoSpacing.xs),
-                          AppButton(
-                            label: 'Forgot password?',
-                            variant: AppButtonVariant.text,
-                            onPressed: () =>
-                                context.push(AppRoutes.forgotPassword),
-                          ),
-                        ],
                       ],
                     ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(compact ? 16 : 24),
+                      child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
+                    ),
                   ),
-                  const SizedBox(height: ChosenoSpacing.md),
-                  AppButton(
-                    label: _isSignUp
-                        ? 'Already have an account? Sign in'
-                        : "New here? Create an account",
-                    variant: AppButtonVariant.text,
-                    onPressed: isLoading
-                        ? null
-                        : () => setState(() => _isSignUp = !_isSignUp),
+                  const SizedBox(height: ChosenoSpacing.sm + 2),
+                  Text(
+                    'Choseno',
+                    style: ChosenoTypography.display(
+                      color: Colors.white,
+                      fontSize: compact ? 26 : 34,
+                    ),
+                  ),
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 200),
+                    alignment: Alignment.topCenter,
+                    child: compact
+                        ? const SizedBox(width: double.infinity)
+                        : Column(
+                            children: [
+                              const SizedBox(height: 6),
+                              Text(
+                                'Know who represents you.\nRate every politician in your area.',
+                                textAlign: TextAlign.center,
+                                style: ChosenoTypography.body(
+                                  color: Colors.white70,
+                                  fontSize: 15,
+                                  height: 1.45,
+                                ),
+                              ),
+                              const SizedBox(height: ChosenoSpacing.md),
+                              const Wrap(
+                                alignment: WrapAlignment.center,
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  _Chip('assets/svg/auth_pin.svg', 'Districts'),
+                                  _Chip('assets/svg/auth_star.svg', 'Reviews'),
+                                  _Chip(
+                                    'assets/svg/auth_ballot.svg',
+                                    'Elections',
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                   ),
                 ],
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip(this.asset, this.label);
+
+  final String asset;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.16)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(asset, width: 16, height: 16),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: ChosenoTypography.body(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sign in | Create account as one sliding pill (always visible, so new users
+/// can see there is a sign-up without scrolling).
+class _ModeSwitch extends StatelessWidget {
+  const _ModeSwitch({
+    required this.isSignUp,
+    required this.enabled,
+    required this.onChanged,
+  });
+
+  final bool isSignUp;
+  final bool enabled;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    Widget segment(Key key, String label, bool signUp) {
+      final selected = isSignUp == signUp;
+      return Expanded(
+        child: Semantics(
+          button: true,
+          selected: selected,
+          label: label,
+          excludeSemantics: true,
+          child: GestureDetector(
+            key: key,
+            behavior: HitTestBehavior.opaque,
+            onTap: enabled ? () => onChanged(signUp) : null,
+            child: SizedBox(
+              height: 44,
+              child: Center(
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 200),
+                  style: ChosenoTypography.body(
+                    color: selected ? Colors.white : palette.textMuted,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
+                  child: Text(label),
+                ),
+              ),
+            ),
+          ),
         ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: palette.surfaceHover,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: palette.borderLight),
+      ),
+      child: Stack(
+        children: [
+          AnimatedAlign(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            alignment: isSignUp ? Alignment.centerRight : Alignment.centerLeft,
+            child: FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  gradient: ChosenoGradients.primary(palette),
+                  borderRadius: BorderRadius.circular(100),
+                  boxShadow: [
+                    BoxShadow(
+                      color: palette.primary.withValues(alpha: 0.35),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              segment(const Key('auth-mode-signin'), 'Sign in', false),
+              segment(const Key('auth-mode-signup'), 'Create account', true),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Text field with a leading icon (and a show/hide eye for passwords) on the
+/// app's standard input styling.
+class _AuthField extends StatefulWidget {
+  const _AuthField({
+    required this.label,
+    required this.controller,
+    required this.icon,
+    this.password = false,
+    this.keyboardType,
+    this.autofillHints,
+  });
+
+  final String label;
+  final TextEditingController controller;
+  final IconData icon;
+  final bool password;
+  final TextInputType? keyboardType;
+  final Iterable<String>? autofillHints;
+
+  @override
+  State<_AuthField> createState() => _AuthFieldState();
+}
+
+class _AuthFieldState extends State<_AuthField> {
+  bool _hidden = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    return TextField(
+      controller: widget.controller,
+      obscureText: widget.password && _hidden,
+      keyboardType: widget.keyboardType,
+      autofillHints: widget.autofillHints,
+      autocorrect: false,
+      enableSuggestions: !widget.password,
+      decoration: InputDecoration(
+        labelText: widget.label,
+        prefixIcon: Icon(widget.icon, color: palette.textMuted, size: 20),
+        suffixIcon: widget.password
+            ? IconButton(
+                tooltip: _hidden ? 'Show password' : 'Hide password',
+                icon: Icon(
+                  _hidden
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: palette.textMuted,
+                  size: 20,
+                ),
+                onPressed: () => setState(() => _hidden = !_hidden),
+              )
+            : null,
       ),
     );
   }
