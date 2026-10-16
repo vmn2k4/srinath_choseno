@@ -15,7 +15,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
@@ -114,53 +113,41 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: palette.background,
-        body: Stack(
-          children: [
-            // Faint electoral-map backdrop (SVG) behind everything.
-            Positioned.fill(
-              child: SvgPicture.asset(
-                'assets/svg/auth_backdrop.svg',
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
-            ),
-            SafeArea(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // Normal case: the page is exactly one screen tall and the
-                  // illustration flexes to take whatever height is left, so it
-                  // can never scroll. Only with the keyboard open (or a very
-                  // short screen) does it fall back to a scrolling column
-                  // without the picture.
-                  final fill = !keyboardOpen && constraints.maxHeight >= 600;
-                  Widget content() => ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 420),
-                    child: _content(
-                      palette,
-                      isLoading: isLoading,
-                      profileError: profileError,
-                      fill: fill,
-                    ),
-                  );
-                  const pad = EdgeInsets.symmetric(
-                    horizontal: ChosenoSpacing.lg + 4,
-                    vertical: ChosenoSpacing.md,
-                  );
-                  if (fill) {
-                    return Padding(
-                      padding: pad,
-                      child: Align(child: content()),
-                    );
-                  }
-                  return SingleChildScrollView(
-                    padding: pad,
-                    child: Center(child: content()),
-                  );
-                },
-              ),
-            ),
-          ],
+        // The app-wide AppBackdrop (soft gradient + map lines) shows through.
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Normal case: the page is exactly one screen tall and the
+              // illustration flexes to take whatever height is left, so it
+              // can never scroll. Only with the keyboard open (or a very
+              // short screen) does it fall back to a scrolling column
+              // without the picture.
+              final fill = !keyboardOpen && constraints.maxHeight >= 600;
+              Widget content() => ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 420),
+                child: _content(
+                  palette,
+                  isLoading: isLoading,
+                  profileError: profileError,
+                  fill: fill,
+                ),
+              );
+              const pad = EdgeInsets.symmetric(
+                horizontal: ChosenoSpacing.lg + 4,
+                vertical: ChosenoSpacing.md,
+              );
+              if (fill) {
+                return Padding(
+                  padding: pad,
+                  child: Align(child: content()),
+                );
+              }
+              return SingleChildScrollView(
+                padding: pad,
+                child: Center(child: content()),
+              );
+            },
+          ),
         ),
       ),
     );
