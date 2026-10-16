@@ -288,13 +288,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   /// whatever height the screen has to spare (so it is as big as it can be
   /// without pushing the form into scrolling), on a soft glow.
   Widget _header(ChosenoPalette palette, {required double artHeight}) {
-    // The wordmark alone (no logo tile): big, in the brand gradient.
+    // The wordmark alone (no logo tile): big, in the brand orange gradient.
     final brand = ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) =>
-          ChosenoGradients.primary(palette).createShader(bounds),
+      // Brand orange — the logo's and the website wordmark's colour.
+      shaderCallback: (bounds) => const LinearGradient(
+        colors: [_brandOrange, _brandOrangeDeep],
+      ).createShader(bounds),
       child: Text(
-        'Choseno',
+        // Capital O, as in the website's wordmark.
+        'ChosenO',
         textAlign: TextAlign.center,
         style: ChosenoTypography.display(
           color: Colors.white,
@@ -344,6 +347,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 }
 
 // ── look ───────────────────────────────────────────────────────────────────
+
+/// Change the sign-in wordmark colour here.
+const _brandOrange = Color(0xFFFF8A1F);
+const _brandOrangeDeep = Color(0xFFEA580C);
 
 /// "New here? **Create account**" / "Already have an account? **Sign in**" —
 /// always on screen because the page fits the viewport.
