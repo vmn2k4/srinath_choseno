@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
 import 'core/router/deep_link_service.dart';
-import 'core/theme/app_backdrop.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
 
@@ -33,7 +32,6 @@ class _ChosenoAppState extends ConsumerState<ChosenoApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.build(ref.watch(themeControllerProvider).palette),
       routerConfig: router,
-      builder: (context, child) => AppBackdrop(child: child ?? const SizedBox()),
     );
   }
 }

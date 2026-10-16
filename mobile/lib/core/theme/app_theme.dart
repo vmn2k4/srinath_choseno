@@ -80,8 +80,7 @@ abstract final class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: palette.isLight ? Brightness.light : Brightness.dark,
-      // Transparent so the app-wide AppBackdrop shows through.
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: palette.background,
       colorScheme: (palette.isLight ? ColorScheme.light : ColorScheme.dark)(
         primary: palette.primary,
         onPrimary: palette.textOnPrimary,
@@ -97,7 +96,7 @@ abstract final class AppTheme {
       // Pushed detail screens: flat, background-coloured, no scroll tint —
       // the page content is the star, not a heavy toolbar.
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: palette.background,
         foregroundColor: palette.textMain,
         elevation: 0,
         scrolledUnderElevation: 0,
