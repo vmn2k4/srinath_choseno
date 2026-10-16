@@ -25,7 +25,7 @@ interface ArticlePageProps {
 // benefit from `revalidate` below. See src/lib/supabase/publicServer.ts.
 //
 // 5 minutes: long enough to spare the DB on a viral article's traffic
-// spike, short enough that a published correction (see /corrections-policy)
+// spike, short enough that a published correction
 // shows up promptly instead of sitting stale for hours.
 export const revalidate = 300;
 
@@ -196,8 +196,6 @@ export default async function NewsArticlePage({ params }: ArticlePageProps) {
           "@type": "ImageObject",
           url: `${SITE_URL}/icon.svg`,
         },
-        publishingPrinciples: `${SITE_URL}/editorial-standards`,
-        correctionsPolicy: `${SITE_URL}/corrections-policy`,
       },
       author: {
         "@type": "Organization",

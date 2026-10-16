@@ -75,8 +75,6 @@ abstract final class AppRoutes {
   static const about = '/about';
   static const privacy = '/privacy';
   static const terms = '/terms';
-  static const correctionsPolicy = '/corrections-policy';
-  static const editorialStandards = '/editorial-standards';
 
   /// `wallIdOrSlug` accepts either a raw ghost id / profile id or a
   /// `wall_slug` — mirrors the website's two wall URL forms (§4.A.9).
@@ -429,16 +427,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.terms,
         builder: (context, state) =>
             const StaticContentScreen(page: StaticPage.terms),
-      ),
-      GoRoute(
-        path: AppRoutes.correctionsPolicy,
-        builder: (context, state) =>
-            const StaticContentScreen(page: StaticPage.correctionsPolicy),
-      ),
-      GoRoute(
-        path: AppRoutes.editorialStandards,
-        builder: (context, state) =>
-            const StaticContentScreen(page: StaticPage.editorialStandards),
       ),
     ],
   );

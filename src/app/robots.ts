@@ -16,49 +16,49 @@ export default function robots(): MetadataRoute.Robots {
       // Explicitly allow OpenAI's GPTBot (powers ChatGPT web search)
       {
         userAgent: "GPTBot",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Explicitly allow Perplexity AI crawler
       {
         userAgent: "PerplexityBot",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Explicitly allow Anthropic's Claude crawler
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Google's extended crawlers for AI features (Gemini, SGE)
       {
         userAgent: "Google-Extended",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Meta's AI crawler
       {
         userAgent: "FacebookBot",
-        allow: ["/blog/", "/wall/", "/elections/", "/news/", "/about", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/blog/", "/wall/", "/elections/", "/news/", "/about", "/feed/"],
         disallow: ["/admin/", "/profile/", "/officeholder-claim/"],
       },
       // OpenAI's answer engine crawler (powers ChatGPT web search & answers)
       {
         userAgent: "OAI-SearchBot",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Apple News & Spotlight crawler
       {
         userAgent: "Applebot",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
       // Apple Intelligence web retrieval
       {
         userAgent: "Applebot-Extended",
-        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/", "/editorial-standards", "/corrections-policy"],
+        allow: ["/", "/blog/", "/wall/", "/elections/", "/news/", "/about", "/find-my-district", "/feed/"],
         disallow: ["/admin/", "/profile/", "/onboarding/", "/claim/", "/apply/", "/officeholder-claim/"],
       },
     ],

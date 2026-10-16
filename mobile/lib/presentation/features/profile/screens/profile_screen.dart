@@ -214,12 +214,6 @@ class ProfileScreen extends ConsumerWidget {
                             onTap: () => context.push(AppRoutes.terms),
                           ),
                           _SettingsRow(
-                            icon: Icons.fact_check_outlined,
-                            label: 'Corrections and standards',
-                            onTap: () =>
-                                context.push(AppRoutes.editorialStandards),
-                          ),
-                          _SettingsRow(
                             icon: Icons.delete_outline_rounded,
                             label: 'Delete account',
                             onTap: () => _confirmDelete(context, ref),

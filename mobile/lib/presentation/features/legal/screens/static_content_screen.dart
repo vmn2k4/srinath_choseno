@@ -1,7 +1,6 @@
 // Screen A.12 from docs/FLUTTER_MOBILE_APP_GUIDE.md (parent repo) — one
 // generic screen fed by an enum. No data layer: the copy below mirrors the
-// website pages (src/app/{about,privacy,terms,corrections-policy,
-// editorial-standards}) and the `about` strings in
+// website pages (src/app/{about,privacy,terms}) and the `about` strings in
 // src/lib/i18n/locales/en.json. When those change, update this file too.
 import '../../../common/widgets/detail_app_bar.dart';
 import 'package:flutter/gestures.dart';
@@ -13,7 +12,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 
-enum StaticPage { about, privacy, terms, correctionsPolicy, editorialStandards }
+enum StaticPage { about, privacy, terms }
 
 const _contactEmail = 'contact@choseno.com';
 
@@ -50,15 +49,11 @@ extension on StaticPage {
     StaticPage.about => 'About Choseno',
     StaticPage.privacy => 'Privacy Policy',
     StaticPage.terms => 'Terms of Service',
-    StaticPage.correctionsPolicy => 'Corrections Policy',
-    StaticPage.editorialStandards => 'Editorial Standards',
   };
 
   String? get meta => switch (this) {
     StaticPage.about => null,
     StaticPage.privacy || StaticPage.terms => 'Effective date: August 10, 2026',
-    StaticPage.correctionsPolicy ||
-    StaticPage.editorialStandards => 'Last updated: August 17, 2026',
   };
 
   /// Other legal pages offered at the bottom of each page.
@@ -66,7 +61,6 @@ extension on StaticPage {
     StaticPage.about => const [
       ('Terms of Service', AppRoutes.terms),
       ('Privacy Policy', AppRoutes.privacy),
-      ('Editorial Standards', AppRoutes.editorialStandards),
     ],
     StaticPage.privacy => const [
       ('Terms of Service', AppRoutes.terms),
@@ -76,21 +70,12 @@ extension on StaticPage {
       ('Privacy Policy', AppRoutes.privacy),
       ('About Choseno', AppRoutes.about),
     ],
-    StaticPage.correctionsPolicy => const [
-      ('Editorial Standards', AppRoutes.editorialStandards),
-    ],
-    StaticPage.editorialStandards => const [
-      ('Corrections Policy', AppRoutes.correctionsPolicy),
-      ('About Choseno', AppRoutes.about),
-    ],
   };
 
   List<_Section> get sections => switch (this) {
     StaticPage.about => _about,
     StaticPage.privacy => _privacy,
     StaticPage.terms => _terms,
-    StaticPage.correctionsPolicy => _corrections,
-    StaticPage.editorialStandards => _editorial,
   };
 }
 
@@ -424,114 +409,6 @@ const _terms = <_Section>[
   ]),
   _Section('13. Contact', [
     _Para('Questions about these terms? Contact us at $_contactEmail.'),
-  ]),
-];
-
-const _corrections = <_Section>[
-  _Section('1. Reporting an error', [
-    _Para(
-      'If you find a factual error in a Choseno news article — including if you '
-      'are the subject of the story — email $_contactEmail with the article\'s '
-      'URL and a description of what\'s wrong. Where possible, include a source '
-      'that supports the correct information; it speeds up verification.',
-    ),
-  ]),
-  _Section('2. How we review a correction request', [
-    _Para(
-      'We re-check the disputed claim against the article\'s original cited '
-      'sources and, where relevant, against the platform\'s own underlying '
-      'civic data (candidate filings, office/seat records). If the claim '
-      'doesn\'t hold up, we correct it. We aim to respond to correction '
-      'requests within a few business days.',
-    ),
-  ]),
-  _Section('3. How a correction is disclosed', [
-    _Para(
-      'Minor corrections (typos, formatting) are fixed silently. Substantive '
-      'corrections — anything that changes a fact, a name, a figure, or the '
-      'meaning of a claim — update the article\'s content and its "last '
-      'updated" timestamp, which is visible on the article and carried in its '
-      'structured data so search engines and AI systems reading the page see '
-      'the corrected version, not a stale cached claim.',
-    ),
-  ]),
-  _Section('4. Removal requests', [
-    _Para(
-      'We correct factual errors; we don\'t remove accurate coverage of a '
-      'public official\'s public actions or filings on request. If you believe '
-      'an entire article should not exist — for example, it concerns a private '
-      'individual rather than a public official, or was published in error — '
-      'say so in your email and we\'ll review it on those grounds '
-      'specifically.',
-    ),
-  ]),
-  _Section('5. Contact', [
-    _Para(
-      '$_contactEmail — see also our Editorial Standards for how stories are '
-      'sourced and reviewed before publication.',
-    ),
-  ]),
-];
-
-const _editorial = <_Section>[
-  _Section('1. Who publishes this', [
-    _Para(
-      'Choseno\'s civic news coverage is published by the Choseno Civic News '
-      'Desk, operated by Choseno, an independent hyperlocal civic platform. We '
-      'are not affiliated with any political party, candidate, or government '
-      'office, and we do not accept payment from politicians or campaigns in '
-      'exchange for coverage.',
-    ),
-  ]),
-  _Section('2. How stories are sourced', [
-    _Para(
-      'Every published article is built from publicly available source '
-      'material — government filings, official statements, municipal records, '
-      'election filings, and reporting from other outlets — cited under a '
-      '"Sources" section at the bottom of the article whenever it exists. We do '
-      'not publish unsourced claims as fact. Stories tagged to a specific '
-      'politician or seat are drawn from the same public record used elsewhere '
-      'on Choseno (candidate filings, boundary/office data) so a claim about '
-      'who holds or is running for a seat is checkable against the platform\'s '
-      'own underlying data, not just the prose.',
-    ),
-  ]),
-  _Section('3. AI-assisted drafting, human-gated publishing', [
-    _Para(
-      'Choseno is a small, independent team. Story drafts are assembled with AI '
-      'assistance from the cited public sources to keep pace with the volume of '
-      'civic activity across many jurisdictions — the same reason large '
-      'outlets increasingly use AI-assisted tooling in their newsrooms. Every '
-      'article is reviewed against its cited sources before it moves from '
-      'draft to published status; nothing goes live automatically off an '
-      'unreviewed model output. We\'d rather disclose this plainly than have a '
-      'reader assume a byline means something it doesn\'t.',
-    ),
-  ]),
-  _Section('4. Neutrality & non-partisanship', [
-    _Para(
-      'Coverage of candidates and elected officials is written to describe '
-      'verifiable actions, statements, and filings — not to endorse or oppose '
-      'anyone. Choseno\'s rating and review features are entirely separate, '
-      'user-generated opinion content (clearly distinguished on every '
-      'politician wall) and are never presented as Choseno\'s own editorial '
-      'position.',
-    ),
-  ]),
-  _Section('5. What we don\'t do', [
-    _Para(
-      'We don\'t run anonymous sourcing for serious factual claims, we don\'t '
-      'accept payment for coverage, and we don\'t alter a published article\'s '
-      'substance without noting it (see our Corrections Policy).',
-    ),
-  ]),
-  _Section('6. Questions or concerns', [
-    _Para(
-      'If you believe a story is inaccurate, unfair, or missing important '
-      'context — including if you are the subject of an article — contact us '
-      'at $_contactEmail. See the Corrections Policy for how we handle and log '
-      'factual corrections.',
-    ),
   ]),
 ];
 

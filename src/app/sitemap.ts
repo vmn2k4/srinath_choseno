@@ -30,8 +30,6 @@ function getStaticRoutes(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/find-my-district`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${baseUrl}/news`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    { url: `${baseUrl}/editorial-standards`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.4 },
-    { url: `${baseUrl}/corrections-policy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.4 },
     // Category hubs are a fixed, known set (NEWS_CATEGORIES) -- always
     // indexable even before any topic (freeform tags, not enumerable) page
     // has earned a link. See /news/category/[slug].
