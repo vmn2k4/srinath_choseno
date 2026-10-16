@@ -53,7 +53,7 @@ extension on StaticPage {
 
   String? get meta => switch (this) {
     StaticPage.about => null,
-    StaticPage.privacy || StaticPage.terms => 'Effective date: August 10, 2026',
+    StaticPage.privacy || StaticPage.terms => 'Effective date: October 16, 2026',
   };
 
   /// Other legal pages offered at the bottom of each page.
@@ -156,51 +156,57 @@ const _about = <_Section>[
 const _privacy = <_Section>[
   _Section('1. Overview', [
     _Para(
-      'Choseno ("we," "our," or "the platform") is an independent civic social '
-      'media platform that lets citizens anonymously rate, review, and discuss '
-      'elected officials and political candidates. We take your privacy '
-      'seriously. This policy explains what data we collect, why we collect it, '
-      'and how it is protected.',
+      'Choseno ("we," "our," or "the platform") is an independent civic '
+      'social media platform, available on the web and as a mobile app, that '
+      'lets citizens anonymously rate, review, and discuss elected officials '
+      'and political candidates. This policy explains what data we collect, '
+      'why we collect it, and the steps we take to protect it.',
+    ),
+    _Para(
+      'Choseno is an early-stage startup and is currently in beta. We work '
+      'hard to protect your information, but we cannot guarantee that every '
+      'feature works as intended or that your data will never be exposed (see '
+      'Section 8).',
     ),
   ]),
   _Section('2. Information We Collect', [
     _Labeled(
       'Account Information',
       'If you create an account (via email or Google Sign-In), we store your '
-          'email address and name solely for authentication purposes. We do not '
-          'sell, trade, or share your personal account information with any '
-          'third parties.',
+      'email address and name for authentication and account management. We '
+      'do not sell your personal account information.',
     ),
     _Labeled(
       'Ghost IDs & Anonymity',
-      'All public activity on Choseno — posts, ratings, and comments — is tied '
-          'to a rotating, anonymized "Ghost ID," not your real name or account '
-          'identity. Your Ghost ID rotates periodically. No other user, '
-          'including politicians on the platform, can link your Ghost ID to '
-          'your real identity.',
+      'Public activity on Choseno (posts, ratings, and comments) is tied to a '
+      'rotating, anonymized "Ghost ID" rather than your real name. The system '
+      'is designed so that other users, including politicians on the '
+      'platform, cannot link a Ghost ID to your real identity. We strive to '
+      'maintain this, but we cannot guarantee absolute anonymity. For '
+      'example, information you choose to include in a post, a legal order, '
+      'or a security incident could reveal who you are.',
     ),
     _Labeled(
-      'Usage & Analytics Data',
-      'We collect standard web analytics data (page views, session durations, '
-          'referral sources) through Google Analytics to improve platform '
-          'performance. This data is aggregated and anonymized. It is not '
-          'linked to your personal identity.',
+      'Usage, Analytics & Diagnostic Data',
+      'We collect standard analytics data (page views, session durations, '
+      'referral sources) through Google Analytics, and technical error '
+      'information (such as error messages, the page you were on, and browser '
+      'or device details) to find and fix problems. We use this to improve '
+      'the platform and do not use it to identify you.',
     ),
     _Labeled(
       'Location (Boundary Matching Only)',
       'To show you elections and candidates relevant to your area, we may ask '
-          'for your location or address. This is used only to match you to your '
-          'electoral boundaries. We do not store your precise location '
-          'permanently.',
+      'for your location or address. We use it to match you to your electoral '
+      'boundaries.',
     ),
   ]),
   _Section('3. User-Generated Content', [
     _Para(
-      'Choseno is a social media platform. Content posted by users — including '
-      'ratings, reviews, comments, and wall posts — is user-generated. Choseno '
-      'does not verify, endorse, or take responsibility for user-generated '
-      'content. Users are solely responsible for the accuracy and legality of '
-      'content they post.',
+      'Content posted by users, including ratings, reviews, comments, and '
+      'wall posts, is user-generated. Choseno does not verify, endorse, or '
+      'take responsibility for it. Users are solely responsible for the '
+      'accuracy and legality of what they post.',
     ),
     _Para(
       'By posting on Choseno, you grant Choseno a non-exclusive license to '
@@ -210,12 +216,12 @@ const _privacy = <_Section>[
   ]),
   _Section('4. Public Politician & Candidate Data', [
     _Para(
-      'Politician and candidate profile information (name, office sought, party '
-      'affiliation, campaign website) is sourced from publicly available '
-      'government records and official election filings. This is public '
-      'information and is displayed under fair use of public civic data. If you '
-      'are a public official and believe information about you is factually '
-      'incorrect, please contact us at $_contactEmail.',
+      'Politician and candidate profile information (name, office sought, '
+      'party affiliation, campaign website) is sourced from publicly '
+      'available government records and official election filings. We do not '
+      'guarantee that it is complete or current. If you are a public official '
+      'and believe information about you is incorrect, please contact us at '
+      '$_contactEmail.',
     ),
   ]),
   _Section('5. How We Use Your Data', [
@@ -223,21 +229,23 @@ const _privacy = <_Section>[
       'To authenticate and maintain your account',
       'To match you to your electoral districts and relevant candidates',
       'To display anonymized community discussions and ratings',
-      'To improve platform performance through aggregated analytics',
-      'To send optional notification emails if you opt in (no marketing spam)',
+      'To keep the platform secure, diagnose errors, and improve performance',
+      'To send optional notification emails if you opt in',
     ]),
   ]),
   _Section('6. Data Sharing', [
     _Para(
-      'We do not sell your personal data. We do not share your personal data '
-      'with political parties, advertisers, or data brokers. We may share '
-      'aggregated, anonymized platform statistics publicly to demonstrate '
-      'platform health and engagement.',
+      'We do not sell your personal data, and we do not share it with '
+      'political parties, advertisers, or data brokers. We may share '
+      'aggregated, anonymized statistics publicly.',
     ),
     _Para(
-      'We use Supabase for our backend database and authentication. Supabase is '
-      'a SOC 2 Type II certified platform with data stored in the United '
-      'States.',
+      'We rely on service providers to run the platform, including Supabase '
+      '(database and authentication, with data stored in the United States), '
+      'Google (Sign-In and Analytics), and our hosting provider. They process '
+      'data on our behalf. We may also disclose information if required by '
+      'law, a valid court order, or to protect the rights and safety of '
+      'others.',
     ),
   ]),
   _Section('7. Cookies', [
@@ -245,36 +253,51 @@ const _privacy = <_Section>[
       'Choseno uses essential cookies for session authentication and '
       'non-essential analytics cookies (Google Analytics) on the website. You '
       'can disable analytics cookies through your browser settings. Essential '
-      'session cookies are required for the platform to function.',
+      'cookies are required for the platform to function.',
     ),
   ]),
-  _Section('8. Your Rights', [
+  _Section('8. Security & Beta Disclaimer', [
     _Para(
-      'You can delete your account and associated personal data at any time in '
-      'the app (Profile → Delete account) or at choseno.com/delete-account. You '
-      'may also contact us at $_contactEmail. Note that anonymized public '
-      'content (ratings, posts) may remain on the platform as they cannot be '
-      'linked back to your identity after deletion.',
+      'We use commercially reasonable measures to protect your information. '
+      'However, no website, app, or database is completely secure, and '
+      'Choseno is a beta product built by a small team. We cannot guarantee '
+      'that unauthorized access, hacking, data loss, or data disclosure will '
+      'never occur. To the fullest extent permitted by law, Choseno and its '
+      'founders are not liable for losses resulting from such events. If we '
+      'become aware of a breach affecting your personal information, we will '
+      'notify you as required by applicable law.',
+    ),
+    _Para(
+      'You are responsible for keeping your login credentials secure.',
     ),
   ]),
-  _Section('9. Children\'s Privacy', [
+  _Section('9. Your Rights', [
     _Para(
-      'Choseno is not intended for use by anyone under the age of 13. We do not '
+      'You can delete your account and associated personal data at any time '
+      'in the app (Profile → Delete account) or at '
+      'choseno.com/delete-account. You may also contact us at $_contactEmail. '
+      'Anonymized public content (ratings, posts) may remain on the platform, '
+      'as it cannot be linked back to your identity after deletion.',
+    ),
+  ]),
+  _Section('10. Children\'s Privacy', [
+    _Para(
+      'Choseno is not intended for anyone under the age of 13. We do not '
       'knowingly collect personal data from children. If you believe a child '
-      'has created an account, please contact us immediately.',
+      'has created an account, please contact us.',
     ),
   ]),
-  _Section('10. Changes to This Policy', [
+  _Section('11. Changes to This Policy', [
     _Para(
-      'We may update this privacy policy from time to time. Significant changes '
-      'will be communicated via the platform. Continued use of Choseno after a '
-      'policy update constitutes acceptance of the revised policy.',
+      'We may update this policy from time to time. Significant changes will '
+      'be communicated via the platform. Continued use of Choseno after an '
+      'update constitutes acceptance of the revised policy.',
     ),
   ]),
-  _Section('11. Contact', [
+  _Section('12. Contact', [
     _Para(
-      'For privacy-related questions, data deletion requests, or factual '
-      'correction requests, contact us at $_contactEmail.',
+      'For privacy questions, data deletion requests, or correction requests, '
+      'contact us at $_contactEmail.',
     ),
   ]),
 ];
@@ -284,131 +307,184 @@ const _terms = <_Section>[
     _Para(
       'By accessing or using Choseno ("the platform," "the service," "we," or '
       '"us"), you agree to be bound by these Terms of Service and our Privacy '
-      'Policy. If you do not agree, do not use the platform.',
+      'Policy. You must be at least 13 years old to use Choseno. If you do '
+      'not agree, do not use the platform.',
     ),
   ]),
-  _Section('2. Description of Service', [
+  _Section('2. Beta Service', [
     _Para(
-      'Choseno is an independent, user-generated civic social media platform '
-      'that allows citizens to anonymously review, rate, and discuss elected '
-      'officials and political candidates in their electoral districts. Choseno '
-      'is not a news organization, a political party, a PAC, or an election '
-      'authority. It is a neutral public forum for civic conversation.',
+      'Choseno is an early-stage startup product currently in beta. Features '
+      'may be incomplete, change, or stop working without notice, and data '
+      'may be lost or reset. We strive to deliver every feature described on '
+      'the website and app, but we do not guarantee that any feature, '
+      'content, or data will be available, accurate, complete, or work as '
+      'intended.',
     ),
   ]),
-  _Section('3. User-Generated Content — Platform Liability Shield', [
+  _Section('3. Description of Service', [
     _Para(
-      'Choseno is a social media platform that hosts user-generated content '
-      '(UGC). Under Section 230 of the Communications Decency Act and '
-      'equivalent applicable laws:',
+      'Choseno is an independent, user-generated civic platform that allows '
+      'citizens to anonymously review, rate, and discuss elected officials '
+      'and political candidates in their electoral districts. Choseno is not '
+      'a political party, a PAC, or an election authority. It is a neutral '
+      'public forum for civic conversation.',
+    ),
+    _Para(
+      'Choseno may also display informational content such as election '
+      'details, candidate information, and news summaries, some of which is '
+      'created with the help of AI tools and may contain errors or omissions. '
+      'This content is provided for general information only. Please verify '
+      'important details, such as election dates, polling places, and '
+      'candidate information, with official government sources.',
+    ),
+  ]),
+  _Section('4. User-Generated Content', [
+    _Para(
+      'Choseno hosts user-generated content (UGC). Under Section 230 of the '
+      'Communications Decency Act and equivalent applicable laws:',
     ),
     _Bullets([
       'Choseno is not the author or publisher of user-generated content.',
-      'Choseno is not liable for any user-submitted reviews, ratings, comments, '
-          'posts, or discussions.',
+      'Choseno is not liable for user-submitted reviews, ratings, comments, '
+      'posts, or discussions.',
       'Users are solely responsible for the content they submit and its '
-          'accuracy, legality, and appropriateness.',
+      'accuracy, legality, and appropriateness.',
       'Choseno does not verify or endorse any user-submitted content.',
     ]),
   ]),
-  _Section('4. User Conduct', [
-    _Para('By using Choseno, you agree not to:'),
+  _Section('5. User Conduct', [
+    _Para(
+      'By using Choseno, you agree not to:',
+    ),
     _Bullets([
       'Post false, defamatory, or knowingly misleading information about any '
-          'person',
+      'person',
       'Harass, threaten, or intimidate any individual, candidate, or elected '
-          'official',
+      'official',
       'Post content that is illegal, obscene, or violates any third party\'s '
-          'rights',
+      'rights',
       'Attempt to manipulate ratings through fake accounts or coordinated '
-          'inauthentic behavior',
-      'Use the platform for any commercial advertising or political '
-          'fundraising',
+      'inauthentic behavior',
+      'Use the platform for commercial advertising or political fundraising',
       'Impersonate any politician, candidate, or other person',
       'Scrape, crawl, or extract platform data in bulk without written '
-          'permission',
+      'permission',
+      'Attempt to hack, disrupt, or gain unauthorized access to the platform '
+      'or other users\' accounts',
     ]),
   ]),
-  _Section('5. Anonymous Ghost ID System', [
+  _Section('6. Anonymous Ghost ID System', [
     _Para(
-      'Choseno uses a rotating "Ghost ID" system to protect user anonymity. '
-      'Your public activity is never directly linked to your real identity. '
-      'However, Choseno may be legally required to disclose account information '
-      'if compelled by a valid court order or law enforcement request related '
-      'to illegal activity. Anonymity does not grant permission to engage in '
-      'illegal conduct.',
+      'Choseno uses a rotating "Ghost ID" system designed to protect user '
+      'anonymity. Your public activity is not intentionally linked to your '
+      'real identity, but we cannot guarantee absolute anonymity. Choseno may '
+      'be required to disclose account information if compelled by a valid '
+      'court order or law enforcement request. Anonymity does not grant '
+      'permission to engage in illegal conduct.',
     ),
   ]),
-  _Section('6. Public Official & Candidate Information', [
+  _Section('7. Public Official & Candidate Information', [
     _Para(
-      'Politician and candidate profile data displayed on Choseno is sourced '
-      'from publicly available official government records and campaign '
-      'filings. This constitutes fair use of public civic information. Public '
-      'officials have a reduced expectation of privacy regarding their '
-      'exercise of public duties.',
-    ),
-    _Para(
-      'If you are a public official and believe information displayed about '
-      'you is factually incorrect, contact us at $_contactEmail and we will '
-      'investigate.',
+      'Politician and candidate profile data on Choseno is sourced from '
+      'publicly available government records and campaign filings. We do not '
+      'guarantee its accuracy or completeness. If you are a public official '
+      'and believe information about you is incorrect, contact us at '
+      '$_contactEmail and we will look into it.',
     ),
   ]),
-  _Section('7. Content Moderation', [
+  _Section('8. Content Moderation', [
     _Para(
-      'Choseno reserves the right — but not the obligation — to remove content '
-      'that violates these Terms of Service. We are not responsible for failing '
-      'to remove any particular content. Content removal decisions are made at '
-      'our sole discretion.',
+      'Choseno reserves the right, but not the obligation, to remove content '
+      'that violates these Terms. We are not responsible for failing to '
+      'remove any particular content. Moderation decisions are made at our '
+      'sole discretion.',
     ),
     _Para(
-      'To report content that you believe violates these terms, use the '
+      'To report content that you believe violates these Terms, use the '
       'in-platform report button or contact us at $_contactEmail.',
     ),
   ]),
-  _Section('8. Disclaimer of Warranties', [
+  _Section('9. Disclaimer of Warranties', [
     _Para(
-      'Choseno is provided "as is" and "as available" without warranties of '
-      'any kind, either express or implied. We do not warrant that the platform '
-      'will be uninterrupted, error-free, or free of viruses or other harmful '
-      'components. We do not warrant the accuracy of any candidate or '
-      'politician data displayed on the platform.',
+      'Choseno is provided "as is" and "as available," without warranties of '
+      'any kind, express or implied, including accuracy, reliability, '
+      'availability, merchantability, fitness for a particular purpose, and '
+      'non-infringement. We do not warrant that the platform will be '
+      'uninterrupted, error-free, or free of harmful components, or that any '
+      'data displayed on it is accurate.',
     ),
   ]),
-  _Section('9. Limitation of Liability', [
+  _Section('10. Security & Data Disclaimer', [
     _Para(
-      'To the maximum extent permitted by applicable law, Choseno, its '
-      'founders, operators, and affiliates shall not be liable for any '
-      'indirect, incidental, special, consequential, or punitive damages '
-      'arising from your use of the platform or from any content posted by '
-      'users, including but not limited to defamatory statements, inaccurate '
-      'ratings, or any other user-generated content.',
+      'We use commercially reasonable measures to protect the platform and '
+      'your information, but no system is completely secure. We cannot '
+      'guarantee that unauthorized access, hacking, data loss, or data '
+      'disclosure will never occur. To the fullest extent permitted by law, '
+      'Choseno is not liable for any loss or harm resulting from them. You '
+      'use the platform at your own risk and are responsible for keeping your '
+      'login credentials secure.',
     ),
   ]),
-  _Section('10. Intellectual Property', [
+  _Section('11. Limitation of Liability', [
+    _Para(
+      'To the fullest extent permitted by law, Choseno and its founders, '
+      'operators, employees, and affiliates are not liable for any indirect, '
+      'incidental, special, consequential, or punitive damages, or for any '
+      'loss of data, profits, or goodwill, arising from your use of the '
+      'platform or from content posted by users, including defamatory '
+      'statements, inaccurate ratings, security incidents, or service '
+      'interruptions.',
+    ),
+    _Para(
+      'Our total liability for any claim relating to the platform is limited '
+      'to the greater of \$100 or the amount you paid us in the preceding 12 '
+      'months. Some jurisdictions do not allow certain limitations, so some '
+      'of the above may not apply to you.',
+    ),
+  ]),
+  _Section('12. Indemnification', [
+    _Para(
+      'You agree to indemnify and hold harmless Choseno and its founders, '
+      'operators, and affiliates from any claims, damages, or expenses '
+      '(including reasonable legal fees) arising from content you post or '
+      'your violation of these Terms.',
+    ),
+  ]),
+  _Section('13. Suspension & Termination', [
+    _Para(
+      'We may suspend or terminate your access at any time, with or without '
+      'notice, including for violating these Terms. You may stop using '
+      'Choseno and delete your account at any time as described in our '
+      'Privacy Policy.',
+    ),
+  ]),
+  _Section('14. Intellectual Property', [
     _Para(
       'The Choseno name, logo, and platform design are owned by Choseno. '
-      'User-generated content remains the intellectual property of its '
-      'authors, subject to the non-exclusive license granted in our Privacy '
-      'Policy. You may not reproduce, copy, or distribute Choseno\'s platform '
-      'design or proprietary features without written permission.',
+      'User-generated content remains the property of its authors, subject to '
+      'the non-exclusive license granted in our Privacy Policy. You may not '
+      'reproduce, copy, or distribute Choseno\'s platform design or '
+      'proprietary features without written permission.',
     ),
   ]),
-  _Section('11. Governing Law', [
+  _Section('15. Governing Law', [
     _Para(
-      'These Terms of Service are governed by the laws of the applicable '
-      'jurisdiction in which Choseno operates. Any disputes shall be resolved '
-      'through good-faith negotiation before pursuing legal remedies.',
+      'These Terms are governed by the laws of the applicable jurisdiction in '
+      'which Choseno operates. Disputes shall first be addressed through '
+      'good-faith negotiation before pursuing legal remedies.',
     ),
   ]),
-  _Section('12. Changes to These Terms', [
+  _Section('16. Changes to These Terms', [
     _Para(
       'We may revise these Terms from time to time. We will notify users of '
       'significant changes through the platform. Continued use of Choseno '
-      'following any revision constitutes acceptance of the updated Terms.',
+      'after a revision constitutes acceptance of the updated Terms.',
     ),
   ]),
-  _Section('13. Contact', [
-    _Para('Questions about these terms? Contact us at $_contactEmail.'),
+  _Section('17. Contact', [
+    _Para(
+      'Questions about these Terms? Contact us at $_contactEmail.',
+    ),
   ]),
 ];
 
