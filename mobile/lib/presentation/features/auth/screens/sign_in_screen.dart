@@ -127,39 +127,37 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             ),
             SafeArea(
               child: LayoutBuilder(
-                builder: (context, constraints) => SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
+                builder: (context, constraints) {
+                  // Normal case: the page is exactly one screen tall and the
+                  // illustration flexes to take whatever height is left, so it
+                  // can never scroll. Only with the keyboard open (or a very
+                  // short screen) does it fall back to a scrolling column
+                  // without the picture.
+                  final fill = !keyboardOpen && constraints.maxHeight >= 600;
+                  Widget content() => ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 420),
+                    child: _content(
+                      palette,
+                      isLoading: isLoading,
+                      profileError: profileError,
+                      fill: fill,
+                    ),
+                  );
+                  const pad = EdgeInsets.symmetric(
                     horizontal: ChosenoSpacing.lg + 4,
                     vertical: ChosenoSpacing.md,
-                  ),
-                  // The whole page is one column centred in the viewport: on a
-                  // normal phone it fits with no scrolling, and it only scrolls
-                  // when the keyboard or a very small screen leaves no room.
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight - ChosenoSpacing.md * 2,
-                    ),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 420),
-                        child: _content(
-                          palette,
-                          isLoading: isLoading,
-                          profileError: profileError,
-                          // The illustration takes the height the form leaves
-                          // spare (the form block is ~470pt), so it is as big
-                          // as fits without scrolling; hidden with the
-                          // keyboard open.
-                          artHeight: keyboardOpen
-                              ? 0
-                              : (constraints.maxHeight - 500)
-                                    .clamp(0.0, 320.0)
-                                    .toDouble(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  );
+                  if (fill) {
+                    return Padding(
+                      padding: pad,
+                      child: Align(child: content()),
+                    );
+                  }
+                  return SingleChildScrollView(
+                    padding: pad,
+                    child: Center(child: content()),
+                  );
+                },
               ),
             ),
           ],
@@ -172,13 +170,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     ChosenoPalette palette, {
     required bool isLoading,
     required Object? profileError,
-    required double artHeight,
+    required bool fill,
   }) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: fill ? MainAxisSize.max : MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _header(palette, artHeight: artHeight),
+        if (fill) ...[
+          Expanded(child: _art(palette)),
+          const SizedBox(height: ChosenoSpacing.sm),
+        ],
+        _brandBlock(palette),
         const SizedBox(height: ChosenoSpacing.lg),
         _AuthField(
           label: 'Email',
@@ -285,45 +287,20 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  /// The illustration as the hero (as big as the spare height allows, on a
-  /// soft glow), with the "ChosenO" wordmark directly beneath it as the title
-  /// of the form — so the name belongs to the sign-in block instead of floating
-  /// above the picture.
-  Widget _header(ChosenoPalette palette, {required double artHeight}) {
-    final brand = ShaderMask(
-      blendMode: BlendMode.srcIn,
-      // Brand orange — the logo's and the website wordmark's colour.
-      shaderCallback: (bounds) => const LinearGradient(
-        colors: [_brandOrange, _brandOrangeDeep],
-      ).createShader(bounds),
-      child: Text(
-        // Capital O, as in the website's wordmark.
-        'ChosenO',
-        textAlign: TextAlign.center,
-        // Fredoka: rounded and friendly, matching the soft clay look of the
-        // illustration. Wordmark only — the rest of the app stays Inter.
-        style: GoogleFonts.fredoka(
-          color: Colors.white,
-          fontSize: 50,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0.2,
-          height: 1.0,
-        ),
-      ),
-    );
-    if (artHeight < 150) return Center(child: brand);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: artHeight,
-          child: Stack(
+  /// The illustration: fills the height the Expanded parent gives it (capped
+  /// at 340pt on tall screens), on a soft glow.
+  Widget _art(ChosenoPalette palette) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 340),
+        child: LayoutBuilder(
+          builder: (context, c) => Stack(
             alignment: Alignment.center,
             children: [
               // Soft glow behind the figure.
               Container(
-                width: artHeight * 1.05,
-                height: artHeight * 1.05,
+                width: c.maxHeight * 1.05,
+                height: c.maxHeight * 1.05,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
@@ -338,15 +315,54 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               // background removed so it sits straight on the page.
               Image.asset(
                 'assets/images/auth_hero.png',
-                height: artHeight,
+                height: c.maxHeight,
                 fit: BoxFit.contain,
                 semanticLabel: 'A friendly figure waving beside a ballot box',
               ),
             ],
           ),
         ),
-        const SizedBox(height: ChosenoSpacing.sm),
-        brand,
+      ),
+    );
+  }
+
+  /// "ChosenO" wordmark with the tagline under it.
+  Widget _brandBlock(ChosenoPalette palette) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ShaderMask(
+          blendMode: BlendMode.srcIn,
+          // Brand orange — the logo's and the website wordmark's colour.
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [_brandOrange, _brandOrangeDeep],
+          ).createShader(bounds),
+          child: Text(
+            // Capital O, as in the website's wordmark.
+            'ChosenO',
+            textAlign: TextAlign.center,
+            // Fredoka: rounded and friendly, matching the soft clay look of
+            // the illustration. Wordmark only — the rest of the app is Inter.
+            style: GoogleFonts.fredoka(
+              color: Colors.white,
+              fontSize: 50,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.2,
+              height: 1.0,
+            ),
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          'Voice of the silent majority',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.fredoka(
+            color: palette.textMuted,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.4,
+          ),
+        ),
       ],
     );
   }
