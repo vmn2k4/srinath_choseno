@@ -20,6 +20,10 @@ import '../../presentation/common/widgets/app_shell.dart';
 import '../../presentation/features/auth/providers/auth_providers.dart';
 import '../../presentation/features/candidacy/screens/candidacy_wall_screen.dart';
 import '../../presentation/features/candidacy/screens/candidate_application_screen.dart';
+import '../../presentation/features/auth/screens/confirm_email_screen.dart';
+import '../../presentation/features/auth/screens/forgot_password_screen.dart';
+import '../../presentation/features/auth/screens/new_password_screen.dart';
+import '../../presentation/features/auth/screens/reset_password_screen.dart';
 import '../../presentation/features/auth/screens/sign_in_screen.dart';
 import '../../presentation/features/boundaries/providers/boundaries_providers.dart';
 import '../../presentation/features/elections/screens/elections_list_screen.dart';
@@ -45,6 +49,19 @@ import '../../presentation/features/splash/screens/splash_screen.dart';
 abstract final class AppRoutes {
   static const splash = '/';
   static const auth = '/auth';
+  static const confirmEmail = '/auth/confirm-email';
+  static const forgotPassword = '/auth/forgot-password';
+  static const resetPassword = '/auth/reset-password';
+  static const newPassword = '/auth/new-password';
+
+  /// Password reset step 2 (enter the emailed code).
+  static String resetPasswordFor(String email) =>
+      '$resetPassword?email=${Uri.encodeComponent(email)}';
+
+  /// The "enter your 6-digit code" screen. [resend] sends a fresh email as it
+  /// opens (used when a login hit an unconfirmed email).
+  static String confirmEmailFor(String email, {bool resend = false}) =>
+      '$confirmEmail?email=${Uri.encodeComponent(email)}${resend ? '&resend=1' : ''}';
   static const onboarding = '/onboarding';
   static const home = '/home';
   static const myWall = '/my-wall';
@@ -101,13 +118,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final location = state.matchedLocation;
 
       if (!isSignedIn) {
-        if (location == AppRoutes.auth) return null;
+        if (location == AppRoutes.auth ||
+            location == AppRoutes.confirmEmail ||
+            location == AppRoutes.forgotPassword ||
+            location == AppRoutes.resetPassword) {
+          return null;
+        }
         // Carries the originally-requested location through sign-in (see
         // the "bounce away from Auth" branch below) — otherwise a shared
         // link tapped while signed out lands on Home after sign-in
         // instead of the article/seat/wall page the link actually pointed
         // to (see deep_link_service.dart).
         return '${AppRoutes.auth}?from=${Uri.encodeComponent(state.uri.toString())}';
+      }
+
+      // A reset code/link was accepted: hold the person on the set-new-password
+      // screen (the code created a real session, so without this they'd be
+      // treated as simply signed in and sent Home with the old password).
+      if (ref.read(passwordRecoveryPendingProvider)) {
+        return location == AppRoutes.newPassword ? null : AppRoutes.newPassword;
       }
 
       // Signed in — check onboarding next. `ownProfileProvider` is watched
@@ -157,6 +186,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // `?from=` (see the sign-out branch above), in which case that's
       // where the visitor actually meant to go.
       if (location == AppRoutes.auth ||
+          location == AppRoutes.confirmEmail ||
+          location == AppRoutes.forgotPassword ||
+          location == AppRoutes.resetPassword ||
+          location == AppRoutes.newPassword ||
           location == AppRoutes.onboarding ||
           location == AppRoutes.splash ||
           (location == AppRoutes.setLocation && !needsLocation)) {
@@ -184,6 +217,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.auth,
         builder: (context, state) => const SignInScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.confirmEmail,
+        builder: (context, state) => ConfirmEmailScreen(
+          email: state.uri.queryParameters['email'] ?? '',
+          autoResend: state.uri.queryParameters['resend'] == '1',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.resetPassword,
+        builder: (context, state) => ResetPasswordScreen(
+          email: state.uri.queryParameters['email'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.newPassword,
+        builder: (context, state) => const NewPasswordScreen(),
       ),
       GoRoute(
         path: AppRoutes.onboarding,
@@ -402,5 +456,6 @@ class _RouterRefreshListenable extends ChangeNotifier {
     ref.listen(authStateChangesProvider, (_, _) => notifyListeners());
     ref.listen(ownProfileProvider, (_, _) => notifyListeners());
     ref.listen(needsLocationProvider, (_, _) => notifyListeners());
+    ref.listen(passwordRecoveryPendingProvider, (_, _) => notifyListeners());
   }
 }

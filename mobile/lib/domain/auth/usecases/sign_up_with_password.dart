@@ -1,5 +1,5 @@
 import '../../../core/errors/result.dart';
-import '../entities/app_user.dart';
+import '../entities/sign_up_outcome.dart';
 import '../repositories/auth_repository.dart';
 
 class SignUpWithPassword {
@@ -7,7 +7,7 @@ class SignUpWithPassword {
 
   final AuthRepository _repository;
 
-  Future<Result<AppUser>> call({
+  Future<Result<SignUpOutcome>> call({
     required String email,
     required String password,
   }) {

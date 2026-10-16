@@ -34,6 +34,23 @@ final pendingDeepLinkProvider = Provider<PendingDeepLink>(
   (ref) => PendingDeepLink(),
 );
 
+/// What `choseno://auth/confirm?token_hash=…&type=signup|recovery` carries —
+/// the button in the sign-up or password-reset email of someone who uses the
+/// app (via the website's /auth/open-app page). Null for anything else, so
+/// only these two types are ever acted on this way.
+({String tokenHash, String type})? parseAuthConfirmLink(Uri uri) {
+  if (uri.scheme != 'choseno' || uri.host != 'auth') return null;
+  if (uri.path != '/confirm') return null;
+  final type = uri.queryParameters['type'];
+  if (type != 'signup' && type != 'recovery') return null;
+  final tokenHash = uri.queryParameters['token_hash'];
+  if (tokenHash == null ||
+      !RegExp(r'^[A-Za-z0-9_-]{10,256}$').hasMatch(tokenHash)) {
+    return null;
+  }
+  return (tokenHash: tokenHash, type: type!);
+}
+
 class DeepLinkService {
   DeepLinkService(this._ref) : _appLinks = AppLinks();
 
@@ -74,7 +91,46 @@ class DeepLinkService {
   String? _lastTarget;
   DateTime? _lastAt;
 
+  String? _lastConfirmToken;
+
+  Future<void> _confirmFromLink(({String tokenHash, String type}) link) async {
+    final tokenHash = link.tokenHash;
+    // The OS can deliver the same link on both the stream and getInitialLink;
+    // the token is single-use, so only try it once.
+    if (tokenHash == _lastConfirmToken) return;
+    _lastConfirmToken = tokenHash;
+    if (kDebugMode) {
+      debugPrint('DeepLinkService: confirming sign-up from app link');
+    }
+    final controller = _ref.read(authControllerProvider.notifier);
+    final error = link.type == 'recovery'
+        ? await controller.verifyRecoveryTokenHash(tokenHash)
+        : await controller.verifySignupTokenHash(tokenHash);
+    if (kDebugMode) {
+      debugPrint(
+        'DeepLinkService: confirm link result: ${error ?? 'signed in'}',
+      );
+    }
+    if (error == null) return; // session created — the router takes over
+    _ref
+        .read(authNoticeProvider.notifier)
+        .show(
+          link.type == 'recovery'
+              ? "That reset link didn't work — it may have expired or been used already. Tap Forgot password? to get a new code."
+              : "That confirmation link didn't work — it may have expired or been used already. Sign in to get a new code.",
+        );
+    _ref.read(appRouterProvider).go(AppRoutes.auth);
+  }
+
   void _handle(Uri uri) {
+    final confirmLink = parseAuthConfirmLink(uri);
+    if (confirmLink != null) {
+      unawaited(_confirmFromLink(confirmLink));
+      return;
+    }
+    // Any other choseno:// link is ignored; only https links on our own
+    // domain are routed below.
+    if (uri.scheme == 'choseno') return;
     // Only ever act on our own domain (or a schemeless/hostless path, in
     // case something constructs a bare Uri directly) — never navigate on
     // an arbitrary host some other app's link handed us.

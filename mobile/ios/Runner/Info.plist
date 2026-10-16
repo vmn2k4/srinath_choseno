@@ -23,6 +23,8 @@
 			<array>
 				<!-- Google's reversed iOS client ID: lets the Google sign-in sheet return to the app. -->
 				<string>com.googleusercontent.apps.37893425997-upqak4j8oje7tfpcn1ju634qisfmtcke</string>
+				<!-- choseno://auth/confirm?token_hash=… : the "Open the Choseno app" button on the confirm-email page. -->
+				<string>choseno</string>
 			</array>
 		</dict>
 	</array>

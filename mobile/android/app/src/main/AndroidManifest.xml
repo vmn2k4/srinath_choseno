@@ -41,6 +41,14 @@
                  plain, always-prompted deep link. DeepLinkService
                  (core/router/deep_link_service.dart) handles the resulting
                  intent via app_links. -->
+            <!-- choseno://auth/confirm — opens the app from the sign-up
+                 confirmation page's "Open the Choseno app" button. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="choseno" android:host="auth"/>
+            </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

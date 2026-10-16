@@ -11,6 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import '../../../core/errors/app_failure.dart';
 import '../../../core/errors/result.dart';
 import '../../../domain/auth/entities/app_user.dart';
+import '../../../domain/auth/entities/sign_up_outcome.dart';
 import '../../../domain/auth/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
 import '../models/app_user_model.dart';
@@ -94,7 +95,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<AppUser>> signUpWithPassword({
+  Future<Result<SignUpOutcome>> signUpWithPassword({
     required String email,
     required String password,
   }) async {
@@ -106,7 +107,85 @@ class AuthRepositoryImpl implements AuthRepository {
           UnknownFailure('Sign-up did not return a user.'),
         );
       }
+      // Supabase answers a sign-up for an already-registered, confirmed email
+      // with a fake "success" (to avoid revealing which emails have accounts):
+      // the tell is an empty identities list. No email is sent in that case,
+      // so say so instead of showing a "check your email" screen that would
+      // wait forever.
+      if (user.identities != null && user.identities!.isEmpty) {
+        return const Result.err(
+          ServerFailure(
+            'An account with this email already exists. Sign in instead, or use "Forgot password?".',
+            code: 'user_already_exists',
+          ),
+        );
+      }
+      return Result.ok(
+        response.session != null
+            ? SignUpOutcome.signedIn
+            : SignUpOutcome.needsEmailConfirmation,
+      );
+    } on supabase.AuthRetryableFetchException {
+      return const Result.err(
+        NetworkFailure(
+          "Can't reach the server. Check this device's internet connection and try again.",
+        ),
+      );
+    } on supabase.AuthException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  Future<Result<AppUser>> _verified(Future<supabase.AuthResponse> call) async {
+    try {
+      final response = await call;
+      final user = response.user ?? response.session?.user;
+      if (user == null) {
+        return const Result.err(
+          UnknownFailure('Confirmation did not sign you in.'),
+        );
+      }
       return Result.ok(user.toEntity());
+    } on supabase.AuthRetryableFetchException {
+      return const Result.err(
+        NetworkFailure(
+          "Can't reach the server. Check this device's internet connection and try again.",
+        ),
+      );
+    } on supabase.AuthException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Result<AppUser>> verifySignupCode({
+    required String email,
+    required String code,
+  }) => _verified(_remote.verifySignupCode(email: email, code: code));
+
+  @override
+  Future<Result<AppUser>> verifyRecoveryCode({
+    required String email,
+    required String code,
+  }) => _verified(_remote.verifyRecoveryCode(email: email, code: code));
+
+  @override
+  Future<Result<AppUser>> verifyRecoveryTokenHash(String tokenHash) =>
+      _verified(_remote.verifyRecoveryTokenHash(tokenHash));
+
+  @override
+  Future<Result<AppUser>> verifySignupTokenHash(String tokenHash) =>
+      _verified(_remote.verifySignupTokenHash(tokenHash));
+
+  @override
+  Future<Result<void>> resendSignupEmail(String email) async {
+    try {
+      await _remote.resendSignupEmail(email);
+      return const Result.ok(null);
     } on supabase.AuthRetryableFetchException {
       return const Result.err(
         NetworkFailure(

@@ -14,6 +14,19 @@ export async function signUp(supabase: Client, email: string, password: string, 
   });
 }
 
+// Confirm a sign-up with the 6-digit code from the confirmation email. Same
+// one-time token as the email's link: using either invalidates the other.
+// Creates the session on success, exactly like clicking the link would.
+export async function verifySignupCode(supabase: Client, email: string, code: string) {
+  return supabase.auth.verifyOtp({ email, token: code.replace(/\s+/g, ""), type: "signup" });
+}
+
+// Sends a fresh confirmation email (new link + new code; the old ones stop
+// working). Rate-limited by Supabase (~60s) — callers show a cooldown.
+export async function resendSignupEmail(supabase: Client, email: string) {
+  return supabase.auth.resend({ type: "signup", email });
+}
+
 export async function signInWithPassword(supabase: Client, email: string, password: string) {
   return supabase.auth.signInWithPassword({ email, password });
 }

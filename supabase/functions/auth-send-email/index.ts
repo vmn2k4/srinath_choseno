@@ -158,6 +158,28 @@ function paragraph(text: string): string {
   return `<p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:${BRAND.slate};">${text}</p>`;
 }
 
+// "482913" -> "482 913" for reading aloud / typing; the raw code is what gets
+// verified, so the app and website strip whitespace before sending it.
+function spacedCode(token: string): string {
+  // Split into two halves ("482 913" / "3085 8585"); the project's OTP length
+  // is a Supabase setting (the live project issues 8 digits), so don't assume 6.
+  if (token.length < 6) return token;
+  const mid = Math.ceil(token.length / 2);
+  return `${token.slice(0, mid)} ${token.slice(mid)}`;
+}
+
+// The one-time code shown next to the confirm button on signup emails.
+// Same underlying Supabase OTP as the link: using either one confirms the
+// email and invalidates the other. Useful when the link opens on the wrong
+// device, or inside a mail app's in-app browser, or the app isn't installed.
+function codeBlock(token: string, intro = "Or enter this code in the Choseno app or on the sign-up page:"): string {
+  if (!token) return "";
+  return (
+    `<p style="margin:22px 0 8px;font-size:13px;line-height:1.5;color:${BRAND.slate};">${intro}</p>` +
+    `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 18px;"><tr><td style="padding:14px 22px;background:${BRAND.surface};border:1px solid ${BRAND.border};border-radius:10px;font-size:28px;font-weight:800;letter-spacing:0.18em;color:${BRAND.ink};font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;">${spacedCode(token)}</td></tr></table>`
+  );
+}
+
 // Our own app's origin — matches src/lib/constants/site.ts's SITE_URL.
 // Hardcoded (this Deno function can't import from the Next.js app) rather
 // than derived from emailData.site_url/redirect_to: GoTrue validates
@@ -220,12 +242,24 @@ function buildEmail(
   siteUrl: string,
   recipientEmail: string,
   candidateClaim?: CandidateClaimContext,
+  signupClient?: string,
 ): { subject: string; html: string; text: string } {
   const { token, token_hash, redirect_to, email_action_type } = emailData;
   const nextPath = extractNextPath(redirect_to);
   const verifyUrl = `${siteUrl}/auth/confirm?token_hash=${encodeURIComponent(token_hash)}&type=${encodeURIComponent(email_action_type)}${
     nextPath ? `&next=${encodeURIComponent(nextPath)}` : ""
   }`;
+
+  // People who signed up in the mobile app land on /auth/open-app, a page that
+  // offers "Open in the Choseno app" (choseno://auth/confirm) and, as a
+  // fallback, the normal browser confirmation. It does NOT consume the token
+  // on load, so an email scanner prefetching the link can't use it up.
+  // Web sign-ups keep the direct /auth/confirm link.
+  // Password-reset emails follow the same rule for people who use the app.
+  const signupLinkUrl =
+    (email_action_type === "signup" || email_action_type === "recovery") && signupClient === "app"
+      ? `${siteUrl}/auth/open-app?token_hash=${encodeURIComponent(token_hash)}&type=${email_action_type}`
+      : verifyUrl;
 
   if (email_action_type === "invite" && candidateClaim?.electionInviteTemplate && candidateClaim.seatUrl) {
     const custom = buildElectionInviteEmail(candidateClaim.electionInviteTemplate, {
@@ -284,12 +318,13 @@ function buildEmail(
             paragraph(
               `Thanks for signing up, <strong>${recipientEmail}</strong>. Choseno is a place for real, honest reviews of the people who represent you — like Yelp, but for democracy. Confirm your email and you're ready to go.`,
             ) +
-            ctaButton("Confirm email address", verifyUrl) +
+            ctaButton("Confirm email address", signupLinkUrl) +
+            codeBlock(token) +
             paragraph(
               "Didn't sign up for Choseno? You can safely ignore this email — no account will be created.",
             ),
         ),
-        text: `Welcome to Choseno!\n\nThanks for signing up, ${recipientEmail}. Confirm your email to get started:\n${verifyUrl}\n\nDidn't sign up? You can safely ignore this email.`,
+        text: `Welcome to Choseno!\n\nThanks for signing up, ${recipientEmail}. Confirm your email to get started:\n${signupLinkUrl}\n${token ? `\nOr enter this code in the Choseno app or on the sign-up page: ${spacedCode(token)}\n` : ""}\nDidn't sign up? You can safely ignore this email.`,
       };
     case "recovery":
       return {
@@ -300,12 +335,13 @@ function buildEmail(
             paragraph(
               `We received a request to reset the password for <strong>${recipientEmail}</strong>. Click below to choose a new one — this link is only valid for a short time.`,
             ) +
-            ctaButton("Reset password", verifyUrl) +
+            ctaButton("Reset password", signupLinkUrl) +
+            codeBlock(token, "Using the Choseno app? Enter this code on the “Forgot password” screen instead:") +
             paragraph(
               "If you didn't request this, you can safely ignore this email — your password won't change.",
             ),
         ),
-        text: `Reset your Choseno password\n\nWe received a request to reset the password for ${recipientEmail}:\n${verifyUrl}\n\nIf you didn't request this, you can safely ignore this email.`,
+        text: `Reset your Choseno password\n\nWe received a request to reset the password for ${recipientEmail}:\n${signupLinkUrl}\n${token ? `\nUsing the Choseno app? Enter this code on the Forgot password screen: ${spacedCode(token)}\n` : ""}\nIf you didn't request this, you can safely ignore this email.`,
       };
     case "magiclink":
       return {
@@ -470,7 +506,14 @@ Deno.serve(async (req) => {
       }
     }
 
-    const { subject, html, text } = buildEmail(email_data, SITE_URL, user.email, candidateClaim);
+    // Set by the mobile app's signUp(data: {signup_client: "app"}); absent for
+    // web sign-ups. Read from the user (not redirect_to) so it also applies
+    // to "resend confirmation" emails.
+    const signupClient = typeof user.user_metadata?.signup_client === "string"
+      ? user.user_metadata.signup_client
+      : undefined;
+
+    const { subject, html, text } = buildEmail(email_data, SITE_URL, user.email, candidateClaim, signupClient);
 
     const { error } = await admin.functions.invoke("send-email", {
       body: { to: user.email, subject, html, text },

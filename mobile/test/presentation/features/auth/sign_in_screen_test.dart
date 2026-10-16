@@ -3,6 +3,7 @@ import 'package:choseno_mobile/core/errors/result.dart';
 import 'package:choseno_mobile/core/theme/app_theme.dart';
 import 'package:choseno_mobile/core/theme/theme_config.dart';
 import 'package:choseno_mobile/domain/auth/entities/app_user.dart';
+import 'package:choseno_mobile/domain/auth/entities/sign_up_outcome.dart';
 import 'package:choseno_mobile/domain/auth/repositories/auth_repository.dart';
 import 'package:choseno_mobile/presentation/features/auth/providers/auth_providers.dart';
 import 'package:choseno_mobile/presentation/features/auth/screens/sign_in_screen.dart';
@@ -40,10 +41,37 @@ class _FakeAuthRepository implements AuthRepository {
   Future<Result<AppUser>> signInWithGoogle() async => result;
 
   @override
-  Future<Result<AppUser>> signUpWithPassword({
+  Future<Result<SignUpOutcome>> signUpWithPassword({
     required String email,
     required String password,
+  }) async => result.when(
+    ok: (_) => const Result.ok(SignUpOutcome.signedIn),
+    err: Result.err,
+  );
+
+  @override
+  Future<Result<AppUser>> verifySignupCode({
+    required String email,
+    required String code,
   }) async => result;
+
+  @override
+  Future<Result<AppUser>> verifySignupTokenHash(String tokenHash) async =>
+      result;
+
+  @override
+  Future<Result<AppUser>> verifyRecoveryCode({
+    required String email,
+    required String code,
+  }) async => result;
+
+  @override
+  Future<Result<AppUser>> verifyRecoveryTokenHash(String tokenHash) async =>
+      result;
+
+  @override
+  Future<Result<void>> resendSignupEmail(String email) async =>
+      const Result.ok(null);
 
   @override
   Future<Result<void>> signOut() async => const Result.ok(null);

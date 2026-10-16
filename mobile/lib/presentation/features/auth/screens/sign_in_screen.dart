@@ -13,6 +13,10 @@
 // action pending the reset-password screen.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/router/app_router.dart';
+import '../../../../domain/auth/entities/sign_up_outcome.dart';
 
 import '../../../../core/config/env_config.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -45,14 +49,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
-    final success = _isSignUp
-        ? await controller.signUp(email: email, password: password)
-        : await controller.signIn(email: email, password: password);
+    // Signed in right away: authStateChangesProvider fires and the router's
+    // redirect logic takes over (core/router/app_router.dart). If the email
+    // still needs confirming — right after sign-up, or a login before the
+    // link/code was used — go to the code screen instead.
+    final needsConfirmation = _isSignUp
+        ? await controller.signUp(email: email, password: password) ==
+              SignUpOutcome.needsEmailConfirmation
+        : await controller.signIn(email: email, password: password) ==
+              SignInOutcome.needsEmailConfirmation;
 
-    if (success && mounted) {
-      // On success, authStateChangesProvider fires and the router's
-      // redirect logic takes over — see core/router/app_router.dart.
-      // Nothing to navigate to here explicitly.
+    if (needsConfirmation && mounted) {
+      context.push(AppRoutes.confirmEmailFor(email, resend: !_isSignUp));
     }
   }
 
@@ -71,6 +79,17 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ? profileState.error
         : null;
     final isLoading = authState.isLoading || profileLoading;
+
+    // A confirmation link that couldn't be used (expired, already used) leaves
+    // a notice here; show it once.
+    ref.listen(authNoticeProvider, (previous, next) {
+      if (next != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next)));
+        ref.read(authNoticeProvider.notifier).show(null);
+      }
+    });
 
     ref.listen(authControllerProvider, (previous, next) {
       final error = next.error;
@@ -268,15 +287,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                           AppButton(
                             label: 'Forgot password?',
                             variant: AppButtonVariant.text,
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Reset-password screen not yet built — see the Flutter guide §4.B.',
-                                  ),
-                                ),
-                              );
-                            },
+                            onPressed: () =>
+                                context.push(AppRoutes.forgotPassword),
                           ),
                         ],
                       ],

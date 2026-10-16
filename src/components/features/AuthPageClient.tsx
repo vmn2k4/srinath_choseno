@@ -10,7 +10,8 @@ import { Card, Input, Button, Alert } from "@/components/primitives";
 import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
 import { createClient } from "@/lib/supabase/client";
 import { trackSignUp, trackLogin, trackSignUpFailed, trackSignUpAbandoned } from "@/lib/analytics/events";
-import { Mail, Flag } from "lucide-react";
+import { Flag } from "lucide-react";
+import ConfirmEmailPanel from "./ConfirmEmailPanel";
 
 // Supabase answers a repeat sign-up / confirmation-email request inside its
 // ~60s window with "For security purposes, you can only request this after N
@@ -42,6 +43,8 @@ export default function AuthPageClient({
   const [cooldown, setCooldown] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // Set once an email needs confirming: swaps the form for the code screen.
+  const [confirmEmail, setConfirmEmail] = useState<{ email: string; autoResend: boolean } | null>(null);
   // An incoming ?error= (e.g. an expired "forgot password" link) always
   // means the user needs to log in or retry, not sign up.
   const [isSignUp, setIsSignUp] = useState(
@@ -133,11 +136,10 @@ export default function AuthPageClient({
           router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));
           router.refresh();
         } else {
+          // Email confirmation is on: the confirmation email carries a button
+          // AND a 6-digit code — show the code screen right away.
           setCooldown(60);
-          setMessage({
-            type: "success",
-            text: "Account created! Check your email for confirmation or log in.",
-          });
+          setConfirmEmail({ email, autoResend: false });
         }
       } else {
         const { data, error } = await signInWithPassword(supabase, email, password);
@@ -150,6 +152,12 @@ export default function AuthPageClient({
     } catch (err: unknown) {
       const errorObj = err as { error_description?: string; message?: string; code?: string };
       const text = errorObj.error_description || errorObj.message || "An unexpected error occurred.";
+      // Logging in before confirming the email (or after the link expired):
+      // go to the code screen and send a fresh email instead of a dead end.
+      if (!isSignUp && errorObj.code === "email_not_confirmed") {
+        setConfirmEmail({ email, autoResend: true });
+        return;
+      }
       const wait = parseEmailCooldownSeconds(errorObj);
       if (isSignUp) {
         hasReportedOutcomeRef.current = true;
@@ -221,6 +229,21 @@ export default function AuthPageClient({
   return (
     <div className="w-full max-w-md mx-auto mt-10 sm:mt-14 px-4 pb-16">
       <Card padding="lg" className="shadow-2xl animate-fade-in border border-border-light/40">
+        {confirmEmail ? (
+          <ConfirmEmailPanel
+            email={confirmEmail.email}
+            autoResend={confirmEmail.autoResend}
+            onConfirmed={() => {
+              router.push(nextPath || (initialRole ? `/onboarding?role=${initialRole}` : "/onboarding"));
+              router.refresh();
+            }}
+            onChangeEmail={() => {
+              setConfirmEmail(null);
+              setMessage({ type: "", text: "" });
+            }}
+          />
+        ) : (
+        <>
         <h1 className="text-2xl font-extrabold text-text-main text-center">
           {isSignUp ? t("auth.signUpBtn") : t("auth.title")}
         </h1>
@@ -400,6 +423,8 @@ export default function AuthPageClient({
               </Button>
             </div>
           </div>
+        )}
+        </>
         )}
       </Card>
     </div>

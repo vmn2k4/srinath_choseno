@@ -12,6 +12,7 @@ import '../../../../core/errors/result.dart';
 import '../../../../data/auth/datasources/auth_remote_data_source.dart';
 import '../../../../data/auth/repositories/auth_repository_impl.dart';
 import '../../../../domain/auth/entities/app_user.dart';
+import '../../../../domain/auth/entities/sign_up_outcome.dart';
 import '../../../../domain/auth/repositories/auth_repository.dart';
 import '../../../../domain/auth/usecases/sign_in_with_google.dart';
 import '../../../../domain/auth/usecases/sign_in_with_password.dart';
@@ -51,6 +52,37 @@ final authStateChangesProvider = StreamProvider<AppUser?>((ref) {
   return ref.watch(authRepositoryProvider).authStateChanges;
 });
 
+/// A one-line notice for the sign-in screen (e.g. a confirmation link that
+/// didn't work), set where there is no BuildContext to show it from.
+class AuthNotice extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void show(String? message) => state = message;
+}
+
+final authNoticeProvider = NotifierProvider<AuthNotice, String?>(
+  AuthNotice.new,
+);
+
+/// True from the moment a password-reset code/link is accepted until the new
+/// password is saved (or cancelled). The code creates a real session, so
+/// without this the router would treat the person as simply signed in and
+/// move them to Home before they set the password.
+class PasswordRecoveryPending extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void set(bool value) => state = value;
+}
+
+final passwordRecoveryPendingProvider =
+    NotifierProvider<PasswordRecoveryPending, bool>(
+      PasswordRecoveryPending.new,
+    );
+
+enum SignInOutcome { signedIn, failed, needsEmailConfirmation }
+
 /// Sign-in/sign-up form actions. Deliberately separate from
 /// [authStateChangesProvider] above: that one is "what is the current
 /// session," this one is "is a sign-in attempt in flight, and what was the
@@ -60,7 +92,10 @@ class AuthController extends AsyncNotifier<void> {
   @override
   Future<void> build() async {}
 
-  Future<bool> signIn({required String email, required String password}) async {
+  Future<SignInOutcome> signIn({
+    required String email,
+    required String password,
+  }) async {
     state = const AsyncLoading();
     final result = await ref.read(signInWithPasswordProvider)(
       email: email,
@@ -69,11 +104,18 @@ class AuthController extends AsyncNotifier<void> {
     return result.when(
       ok: (_) {
         state = const AsyncData(null);
-        return true;
+        return SignInOutcome.signedIn;
       },
       err: (failure) {
+        // Signing in before confirming the email (or after the confirmation
+        // link expired) isn't an error to show — it routes to the code
+        // screen, which sends a fresh email.
+        if (failure is ServerFailure && failure.code == 'email_not_confirmed') {
+          state = const AsyncData(null);
+          return SignInOutcome.needsEmailConfirmation;
+        }
         state = AsyncError(failure, StackTrace.current);
-        return false;
+        return SignInOutcome.failed;
       },
     );
   }
@@ -97,22 +139,141 @@ class AuthController extends AsyncNotifier<void> {
     );
   }
 
-  Future<bool> signUp({required String email, required String password}) async {
+  /// Null on failure (the error is on [state]); otherwise whether the email
+  /// still needs confirming.
+  Future<SignUpOutcome?> signUp({
+    required String email,
+    required String password,
+  }) async {
     state = const AsyncLoading();
     final result = await ref.read(signUpWithPasswordProvider)(
       email: email,
       password: password,
     );
     return result.when(
-      ok: (_) {
+      ok: (outcome) {
         state = const AsyncData(null);
-        return true;
+        return outcome;
       },
       err: (failure) {
         state = AsyncError(failure, StackTrace.current);
-        return false;
+        return null;
       },
     );
+  }
+
+  /// Confirms the email with the 6-digit code and signs in. Returns null on
+  /// success (the router takes over), otherwise the message to show. Kept off
+  /// [state] so the confirm screen shows its own inline error.
+  Future<String?> verifySignupCode({
+    required String email,
+    required String code,
+  }) async {
+    final result = await ref
+        .read(authRepositoryProvider)
+        .verifySignupCode(
+          email: email,
+          code: code.replaceAll(RegExp(r'\s'), ''),
+        );
+    return result.when(ok: (_) => null, err: _confirmMessage);
+  }
+
+  /// Confirms from the `choseno://auth/confirm` link. Null on success.
+  Future<String?> verifySignupTokenHash(String tokenHash) async {
+    final result = await ref
+        .read(authRepositoryProvider)
+        .verifySignupTokenHash(tokenHash);
+    return result.when(ok: (_) => null, err: _confirmMessage);
+  }
+
+  /// Sends a fresh confirmation email. Null on success; a message otherwise
+  /// (including Supabase's "wait N seconds" cooldown).
+  Future<String?> resendConfirmation(String email) async {
+    final result = await ref
+        .read(authRepositoryProvider)
+        .resendSignupEmail(email);
+    return result.when(ok: (_) => null, err: (f) => f.message);
+  }
+
+  /// Sends the "reset your password" email (a button + a 6-digit code).
+  /// Supabase answers success even for an unknown email, so the UI can always
+  /// move on without revealing which emails have accounts. Null on success.
+  Future<String?> requestPasswordReset(String email) async {
+    final result = await ref
+        .read(authRepositoryProvider)
+        .resetPasswordForEmail(email);
+    return result.when(ok: (_) => null, err: (f) => f.message);
+  }
+
+  /// Accepts the reset code. On success the router sends the person to the
+  /// set-new-password screen. Null on success, otherwise the message to show.
+  Future<String?> verifyRecoveryCode({
+    required String email,
+    required String code,
+  }) async {
+    final pending = ref.read(passwordRecoveryPendingProvider.notifier);
+    pending.set(true); // before the session event, so the router doesn't race
+    final result = await ref
+        .read(authRepositoryProvider)
+        .verifyRecoveryCode(
+          email: email,
+          code: code.replaceAll(RegExp(r'\s'), ''),
+        );
+    return result.when(
+      ok: (_) => null,
+      err: (f) {
+        pending.set(false);
+        return _confirmMessage(f);
+      },
+    );
+  }
+
+  /// Same, from the `choseno://auth/confirm?type=recovery` link.
+  Future<String?> verifyRecoveryTokenHash(String tokenHash) async {
+    final pending = ref.read(passwordRecoveryPendingProvider.notifier);
+    pending.set(true);
+    final result = await ref
+        .read(authRepositoryProvider)
+        .verifyRecoveryTokenHash(tokenHash);
+    return result.when(
+      ok: (_) => null,
+      err: (f) {
+        pending.set(false);
+        return _confirmMessage(f);
+      },
+    );
+  }
+
+  /// Saves the new password for the recovery session. Null on success (the
+  /// router then moves on); otherwise the message to show.
+  Future<String?> setNewPassword(String password) async {
+    final result = await ref
+        .read(authRepositoryProvider)
+        .updatePassword(password);
+    return result.when(
+      ok: (_) {
+        ref.read(passwordRecoveryPendingProvider.notifier).set(false);
+        return null;
+      },
+      err: (f) => f.message,
+    );
+  }
+
+  /// Abandons a password reset: signs the temporary session back out.
+  Future<void> cancelPasswordReset() async {
+    await ref.read(authRepositoryProvider).signOut();
+    ref.read(passwordRecoveryPendingProvider.notifier).set(false);
+  }
+
+  static String _confirmMessage(AppFailure f) {
+    final text = '${f is ServerFailure ? f.code : ''} ${f.message}'
+        .toLowerCase();
+    if (text.contains('expired') ||
+        text.contains('invalid') ||
+        text.contains('otp')) {
+      return "That code isn't right or has expired. Check the email, or tap Resend code for a new one.";
+    }
+    return f.message;
   }
 
   /// Returns null on success, otherwise the reason to show the user.

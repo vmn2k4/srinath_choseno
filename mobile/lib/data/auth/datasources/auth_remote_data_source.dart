@@ -28,7 +28,47 @@ class AuthRemoteDataSource {
     required String email,
     required String password,
   }) {
-    return _client.auth.signUp(email: email, password: password);
+    // `signup_client: app` is read by the auth-send-email function to point
+    // the confirmation button at the app instead of the website.
+    return _client.auth.signUp(
+      email: email,
+      password: password,
+      data: const {'signup_client': 'app'},
+    );
+  }
+
+  Future<AuthResponse> verifySignupCode({
+    required String email,
+    required String code,
+  }) {
+    return _client.auth.verifyOTP(
+      email: email,
+      token: code,
+      type: OtpType.signup,
+    );
+  }
+
+  Future<AuthResponse> verifySignupTokenHash(String tokenHash) {
+    return _client.auth.verifyOTP(tokenHash: tokenHash, type: OtpType.signup);
+  }
+
+  Future<AuthResponse> verifyRecoveryCode({
+    required String email,
+    required String code,
+  }) {
+    return _client.auth.verifyOTP(
+      email: email,
+      token: code,
+      type: OtpType.recovery,
+    );
+  }
+
+  Future<AuthResponse> verifyRecoveryTokenHash(String tokenHash) {
+    return _client.auth.verifyOTP(tokenHash: tokenHash, type: OtpType.recovery);
+  }
+
+  Future<ResendResponse> resendSignupEmail(String email) {
+    return _client.auth.resend(type: OtpType.signup, email: email);
   }
 
   Future<AuthResponse> signInWithPassword({
