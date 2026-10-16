@@ -125,8 +125,7 @@ Future<void> _pumpApp(WidgetTester tester, _Repo repo) async {
   await tester.pumpAndSettle();
 }
 
-/// The always-visible "Create account" half of the pill switch at the top of
-/// the sign-in sheet.
+/// The always-visible "New here? Create account" link on the sign-in page.
 final _createAccountSwitch = find.byKey(const Key('auth-mode-signup'));
 
 Future<void> _submitForm(WidgetTester tester, String button) async {
@@ -144,13 +143,13 @@ void main() {
 
     // Visible without scrolling or finding a link under the card.
     expect(_createAccountSwitch, findsOneWidget);
-    expect(find.text('Welcome back'), findsOneWidget);
+    expect(find.text('Welcome back!'), findsOneWidget);
 
     await tester.tap(_createAccountSwitch);
     await tester.pumpAndSettle();
 
     expect(find.text('Create your account'), findsOneWidget);
-    expect(find.text('Welcome back'), findsNothing);
+    expect(find.text('Welcome back!'), findsNothing);
   });
 
   testWidgets('sign-up that needs confirmation opens the code screen', (

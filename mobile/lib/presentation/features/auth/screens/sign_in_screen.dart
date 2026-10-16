@@ -7,8 +7,10 @@
 //
 // Google sign-in uses the native account picker (google_sign_in) and hands
 // the ID token to Supabase; it shows only when GOOGLE_WEB_CLIENT_ID is set.
-// Layout: a dark brand header (the Choseno mark, an SVG contour-map backdrop,
-// three value chips) with a rounded sheet rising over it that holds the form.
+// Layout: one light column on a faint SVG contour-map backdrop — the Choseno
+// mark, a big greeting, transparent underline fields, the primary button,
+// Google, and a Create account / Sign in link. It fits a phone viewport with no
+// scrolling (it only scrolls with the keyboard open or on a very small screen).
 // Password reset lives on its own screens (forgot_password_screen.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -107,58 +109,51 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      // Clock/battery in white over the dark header.
-      value: SystemUiOverlayStyle.light,
+      value: palette.isLight
+          ? SystemUiOverlayStyle.dark
+          : SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: _heroBottom,
-        body: CustomScrollView(
-          physics: const ClampingScrollPhysics(),
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(
-                children: [
-                  _Hero(compact: keyboardOpen),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: palette.surface,
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(32),
-                        ),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x33000000),
-                            blurRadius: 24,
-                            offset: Offset(0, -6),
-                          ),
-                        ],
-                      ),
-                      child: SafeArea(
-                        top: false,
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 440),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                ChosenoSpacing.lg + 4,
-                                ChosenoSpacing.lg,
-                                ChosenoSpacing.lg + 4,
-                                ChosenoSpacing.md,
-                              ),
-                              child: _form(
-                                palette,
-                                isLoading: isLoading,
-                                profileError: profileError,
-                              ),
-                            ),
-                          ),
+        backgroundColor: palette.background,
+        body: Stack(
+          children: [
+            // Faint electoral-map backdrop (SVG) behind everything.
+            Positioned.fill(
+              child: SvgPicture.asset(
+                'assets/svg/auth_backdrop.svg',
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
+            ),
+            SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: ChosenoSpacing.lg + 4,
+                    vertical: ChosenoSpacing.md,
+                  ),
+                  // The whole page is one column centred in the viewport: on a
+                  // normal phone it fits with no scrolling, and it only scrolls
+                  // when the keyboard or a very small screen leaves no room.
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight - ChosenoSpacing.md * 2,
+                    ),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 420),
+                        child: _content(
+                          palette,
+                          isLoading: isLoading,
+                          profileError: profileError,
+                          // The illustration only appears when it won't push
+                          // the form into scrolling (tall phone, no keyboard).
+                          showArt:
+                              constraints.maxHeight >= 740 && !keyboardOpen,
                         ),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
@@ -167,21 +162,60 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  Widget _form(
+  Widget _content(
     ChosenoPalette palette, {
     required bool isLoading,
     required Object? profileError,
+    required bool showArt,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _ModeSwitch(
-          isSignUp: _isSignUp,
-          enabled: !isLoading,
-          onChanged: (v) => setState(() => _isSignUp = v),
+        // Brand row: the Choseno mark + wordmark.
+        Row(
+          children: [
+            Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x40F97316),
+                    blurRadius: 22,
+                    offset: Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
+              ),
+            ),
+            const SizedBox(width: ChosenoSpacing.md),
+            Text(
+              'Choseno',
+              style: ChosenoTypography.display(
+                color: palette.textMain,
+                fontSize: 24,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: ChosenoSpacing.md + 2),
+        if (showArt) ...[
+          const SizedBox(height: ChosenoSpacing.xs),
+          // Original 3D-style illustration (generated for Choseno), background
+          // removed so it sits straight on the page.
+          Image.asset(
+            'assets/images/auth_hero.png',
+            height: 140,
+            fit: BoxFit.contain,
+            semanticLabel: 'A friendly figure waving beside a ballot box',
+          ),
+          const SizedBox(height: ChosenoSpacing.xs),
+        ] else
+          const SizedBox(height: ChosenoSpacing.xl),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
           layoutBuilder: (current, previous) => Stack(
@@ -195,27 +229,27 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _isSignUp ? 'Create your account' : 'Welcome back',
+                  _isSignUp ? 'Create your account' : 'Welcome back!',
                   style: ChosenoTypography.display(
                     color: palette.textMain,
-                    fontSize: 26,
+                    fontSize: 32,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   _isSignUp
                       ? 'Free, and anonymous by default.'
                       : 'Sign in to see your district.',
                   style: ChosenoTypography.body(
                     color: palette.textMuted,
-                    fontSize: 14,
+                    fontSize: 15,
                   ),
                 ),
               ],
             ),
           ),
         ),
-        const SizedBox(height: ChosenoSpacing.md),
+        const SizedBox(height: ChosenoSpacing.lg),
         _AuthField(
           label: 'Email',
           controller: _emailController,
@@ -223,7 +257,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           keyboardType: TextInputType.emailAddress,
           autofillHints: const [AutofillHints.email],
         ),
-        const SizedBox(height: ChosenoSpacing.md),
+        const SizedBox(height: ChosenoSpacing.sm),
         _AuthField(
           label: 'Password',
           controller: _passwordController,
@@ -242,7 +276,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             ),
           )
         else
-          const SizedBox(height: ChosenoSpacing.xs),
+          const SizedBox(height: ChosenoSpacing.md),
         if (profileError != null) ...[
           Text(
             "You're signed in, but your profile couldn't be loaded: $profileError",
@@ -292,7 +326,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   horizontal: ChosenoSpacing.md,
                 ),
                 child: Text(
-                  'or continue with',
+                  'or',
                   style: ChosenoTypography.body(
                     color: palette.textMuted,
                     fontSize: 12,
@@ -311,6 +345,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       .signInWithGoogle(),
           ),
         ],
+        const SizedBox(height: ChosenoSpacing.md),
+        _ModeLink(
+          isSignUp: _isSignUp,
+          enabled: !isLoading,
+          onTap: () => setState(() => _isSignUp = !_isSignUp),
+        ),
       ],
     );
   }
@@ -318,251 +358,65 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
 // ── look ───────────────────────────────────────────────────────────────────
 
-const _heroTop = Color(0xFF0B1220);
-const _heroBottom = Color(0xFF14264F);
+/// "New here? **Create account**" / "Already have an account? **Sign in**" —
+/// always on screen because the page fits the viewport.
+class _ModeLink extends StatelessWidget {
+  const _ModeLink({
+    required this.isSignUp,
+    required this.enabled,
+    required this.onTap,
+  });
 
-/// The dark brand header: contour-map backdrop (SVG), the Choseno mark with a
-/// warm glow, the wordmark, and three value chips. Collapses while the
-/// keyboard is open so the form keeps the room.
-class _Hero extends StatelessWidget {
-  const _Hero({required this.compact});
-
-  final bool compact;
+  final bool isSignUp;
+  final bool enabled;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final topInset = MediaQuery.of(context).padding.top;
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [_heroTop, _heroBottom],
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: SvgPicture.asset(
-              'assets/svg/auth_backdrop.svg',
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                ChosenoSpacing.lg,
-                topInset + (compact ? ChosenoSpacing.md : ChosenoSpacing.lg),
-                ChosenoSpacing.lg,
-                ChosenoSpacing.xl,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+    final palette = ChosenoTheme.of(context);
+    return Semantics(
+      button: true,
+      label: isSignUp ? 'Sign in' : 'Create account',
+      excludeSemantics: true,
+      child: InkWell(
+        key: Key(isSignUp ? 'auth-mode-signin' : 'auth-mode-signup'),
+        borderRadius: BorderRadius.circular(12),
+        onTap: enabled ? onTap : null,
+        child: SizedBox(
+          height: 48,
+          child: Center(
+            child: Text.rich(
+              TextSpan(
+                style: ChosenoTypography.body(
+                  color: palette.textMuted,
+                  fontSize: 14,
+                ),
                 children: [
-                  Container(
-                    width: compact ? 56 : 76,
-                    height: compact ? 56 : 76,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(compact ? 16 : 24),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x66F97316),
-                          blurRadius: 36,
-                          spreadRadius: 1,
-                        ),
-                        BoxShadow(
-                          color: Color(0x553B82F6),
-                          blurRadius: 28,
-                          offset: Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(compact ? 16 : 24),
-                      child: SvgPicture.asset('assets/svg/choseno_mark.svg'),
-                    ),
+                  TextSpan(
+                    text: isSignUp
+                        ? 'Already have an account?  '
+                        : 'New here?  ',
                   ),
-                  const SizedBox(height: ChosenoSpacing.sm + 2),
-                  Text(
-                    'Choseno',
-                    style: ChosenoTypography.display(
-                      color: Colors.white,
-                      fontSize: compact ? 26 : 34,
+                  TextSpan(
+                    text: isSignUp ? 'Sign in' : 'Create account',
+                    style: ChosenoTypography.body(
+                      color: palette.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
                     ),
-                  ),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 200),
-                    alignment: Alignment.topCenter,
-                    child: compact
-                        ? const SizedBox(width: double.infinity)
-                        : Column(
-                            children: [
-                              const SizedBox(height: 6),
-                              Text(
-                                'Know who represents you.\nRate every politician in your area.',
-                                textAlign: TextAlign.center,
-                                style: ChosenoTypography.body(
-                                  color: Colors.white70,
-                                  fontSize: 15,
-                                  height: 1.45,
-                                ),
-                              ),
-                              const SizedBox(height: ChosenoSpacing.md),
-                              const Wrap(
-                                alignment: WrapAlignment.center,
-                                spacing: 8,
-                                runSpacing: 8,
-                                children: [
-                                  _Chip('assets/svg/auth_pin.svg', 'Districts'),
-                                  _Chip('assets/svg/auth_star.svg', 'Reviews'),
-                                  _Chip(
-                                    'assets/svg/auth_ballot.svg',
-                                    'Elections',
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
                   ),
                 ],
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip(this.asset, this.label);
-
-  final String asset;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.16)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(asset, width: 16, height: 16),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: ChosenoTypography.body(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Sign in | Create account as one sliding pill (always visible, so new users
-/// can see there is a sign-up without scrolling).
-class _ModeSwitch extends StatelessWidget {
-  const _ModeSwitch({
-    required this.isSignUp,
-    required this.enabled,
-    required this.onChanged,
-  });
-
-  final bool isSignUp;
-  final bool enabled;
-  final ValueChanged<bool> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = ChosenoTheme.of(context);
-    Widget segment(Key key, String label, bool signUp) {
-      final selected = isSignUp == signUp;
-      return Expanded(
-        child: Semantics(
-          button: true,
-          selected: selected,
-          label: label,
-          excludeSemantics: true,
-          child: GestureDetector(
-            key: key,
-            behavior: HitTestBehavior.opaque,
-            onTap: enabled ? () => onChanged(signUp) : null,
-            child: SizedBox(
-              height: 44,
-              child: Center(
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 200),
-                  style: ChosenoTypography.body(
-                    color: selected ? Colors.white : palette.textMuted,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
-                  child: Text(label),
-                ),
-              ),
-            ),
-          ),
         ),
-      );
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: palette.surfaceHover,
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: palette.borderLight),
-      ),
-      child: Stack(
-        children: [
-          AnimatedAlign(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            alignment: isSignUp ? Alignment.centerRight : Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Container(
-                height: 44,
-                decoration: BoxDecoration(
-                  gradient: ChosenoGradients.primary(palette),
-                  borderRadius: BorderRadius.circular(100),
-                  boxShadow: [
-                    BoxShadow(
-                      color: palette.primary.withValues(alpha: 0.35),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              segment(const Key('auth-mode-signin'), 'Sign in', false),
-              segment(const Key('auth-mode-signup'), 'Create account', true),
-            ],
-          ),
-        ],
       ),
     );
   }
 }
 
-/// Text field with a leading icon (and a show/hide eye for passwords) on the
-/// app's standard input styling.
+/// Transparent underline field with a leading icon (and a show/hide eye for
+/// passwords) — sits directly on the page backdrop, no filled box.
 class _AuthField extends StatefulWidget {
   const _AuthField({
     required this.label,
@@ -590,6 +444,10 @@ class _AuthFieldState extends State<_AuthField> {
   @override
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
+    UnderlineInputBorder line(Color c, [double w = 1.2]) =>
+        UnderlineInputBorder(
+          borderSide: BorderSide(color: c, width: w),
+        );
     return TextField(
       controller: widget.controller,
       obscureText: widget.password && _hidden,
@@ -597,9 +455,16 @@ class _AuthFieldState extends State<_AuthField> {
       autofillHints: widget.autofillHints,
       autocorrect: false,
       enableSuggestions: !widget.password,
+      style: ChosenoTypography.body(color: palette.textMain, fontSize: 16),
       decoration: InputDecoration(
         labelText: widget.label,
+        filled: false,
+        contentPadding: const EdgeInsets.symmetric(vertical: 14),
+        enabledBorder: line(palette.border),
+        border: line(palette.border),
+        focusedBorder: line(palette.primary, 2),
         prefixIcon: Icon(widget.icon, color: palette.textMuted, size: 20),
+        prefixIconConstraints: const BoxConstraints(minWidth: 36),
         suffixIcon: widget.password
             ? IconButton(
                 tooltip: _hidden ? 'Show password' : 'Hide password',
