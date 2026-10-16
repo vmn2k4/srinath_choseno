@@ -284,11 +284,15 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  /// The big "Choseno" wordmark, then the illustration as the hero — it takes
+  /// Poster-style hero: the big "ChosenO" wordmark sits BEHIND the illustration,
+  /// whose head overlaps the lower part of the letters, so the name reads as
+  /// part of the artwork rather than a label stuck above it. The figure takes
   /// whatever height the screen has to spare (so it is as big as it can be
   /// without pushing the form into scrolling), on a soft glow.
   Widget _header(ChosenoPalette palette, {required double artHeight}) {
-    // The wordmark alone (no logo tile): big, in the brand orange gradient.
+    const wordSize = 58.0;
+    // How far the picture's top edge sits below the top of the wordmark.
+    const overlapTop = 44.0;
     final brand = ShaderMask(
       blendMode: BlendMode.srcIn,
       // Brand orange — the logo's and the website wordmark's colour.
@@ -301,47 +305,62 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         textAlign: TextAlign.center,
         style: ChosenoTypography.display(
           color: Colors.white,
-          fontSize: 44,
-        ).copyWith(letterSpacing: -0.8, height: 1.05),
+          fontSize: wordSize,
+        ).copyWith(letterSpacing: -1.2, height: 1.0),
       ),
     );
-    if (artHeight < 150) return Center(child: brand);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        brand,
-        const SizedBox(height: ChosenoSpacing.md),
-        SizedBox(
-          height: artHeight,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Soft glow behind the figure.
-              Container(
-                width: artHeight * 1.05,
-                height: artHeight * 1.05,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      palette.primary.withValues(alpha: 0.20),
-                      palette.primary.withValues(alpha: 0.0),
-                    ],
-                  ),
-                ),
-              ),
-              // Original 3D-style illustration (generated for Choseno),
-              // background removed so it sits straight on the page.
-              Image.asset(
-                'assets/images/auth_hero.png',
-                height: artHeight,
-                fit: BoxFit.contain,
-                semanticLabel: 'A friendly figure waving beside a ballot box',
-              ),
-            ],
+    if (artHeight < 150) {
+      return Center(
+        child: Text.rich(
+          // No room for the picture (small screen / keyboard): just the name.
+          TextSpan(
+            text: 'ChosenO',
+            style: ChosenoTypography.display(color: _brandOrange, fontSize: 40),
           ),
         ),
-      ],
+      );
+    }
+    return SizedBox(
+      height: artHeight + overlapTop,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Positioned(top: 0, left: 0, right: 0, child: Center(child: brand)),
+          Positioned(
+            top: overlapTop,
+            left: 0,
+            right: 0,
+            height: artHeight,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Soft glow behind the figure.
+                Container(
+                  width: artHeight * 1.05,
+                  height: artHeight * 1.05,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        palette.primary.withValues(alpha: 0.20),
+                        palette.primary.withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+                // Original 3D-style illustration (generated for Choseno),
+                // background removed so it sits straight on the page.
+                Image.asset(
+                  'assets/images/auth_hero.png',
+                  height: artHeight,
+                  fit: BoxFit.contain,
+                  semanticLabel: 'A friendly figure waving beside a ballot box',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
