@@ -310,6 +310,17 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
       _submitting = true;
       _error = null;
     });
+    // A link posted before its preview finished loading (e.g. straight from a
+    // share) would save without a card — fetch it now instead.
+    var link = _link;
+    final url = firstUrlIn(content);
+    if (link == null &&
+        url != null &&
+        _videoUrl == null &&
+        !_dismissedLinks.contains(url)) {
+      link = await fetchLinkMetadata(url);
+      if (!mounted) return;
+    }
     String? imageUrl;
     if (_imageBytes != null) {
       final up = await ref
@@ -330,7 +341,7 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
         content: content,
         imageUrl: imageUrl,
         videoUrl: _videoUrl,
-        linkMetadata: _link,
+        linkMetadata: link,
         mentionedPoliticianIds: [
           for (final e in _mentions.entries)
             if (content.contains(e.value)) e.key,

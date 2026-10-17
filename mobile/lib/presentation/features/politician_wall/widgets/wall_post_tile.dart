@@ -16,6 +16,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/ghost_name.dart';
 import '../../../../core/utils/share_link.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../../../data/posts/link_preview_fetcher.dart';
 import '../../../../domain/posts/entities/post.dart';
 import '../../../common/widgets/vote_pill.dart';
 import '../../../common/widgets/post_video_thumbnail.dart';
@@ -296,7 +297,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
           ],
           if (post.linkUrl != null || inlineUrl != null) ...[
             const SizedBox(height: ChosenoSpacing.sm),
-            LinkCard(
+            FetchedLinkCard(
               url: post.linkUrl ?? inlineUrl!,
               title: post.linkTitle,
               description: post.linkDescription,
@@ -450,6 +451,60 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
       ),
     );
   }
+}
+
+/// A [LinkCard] that fills in its own title / description / image when the post
+/// saved none (a link posted before its preview finished loading) — like the
+/// web, which fetches the preview at render time for such posts.
+class FetchedLinkCard extends StatefulWidget {
+  const FetchedLinkCard({
+    super.key,
+    required this.url,
+    required this.onTap,
+    this.title,
+    this.description,
+    this.image,
+  });
+
+  final String url;
+  final String? title;
+  final String? description;
+  final String? image;
+  final VoidCallback onTap;
+
+  static final Map<String, Map<String, dynamic>?> _cache = {};
+
+  @override
+  State<FetchedLinkCard> createState() => _FetchedLinkCardState();
+}
+
+class _FetchedLinkCardState extends State<FetchedLinkCard> {
+  Map<String, dynamic>? _meta;
+
+  bool get _needsFetch => widget.title == null && widget.image == null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!_needsFetch) return;
+    if (FetchedLinkCard._cache.containsKey(widget.url)) {
+      _meta = FetchedLinkCard._cache[widget.url];
+      return;
+    }
+    fetchLinkMetadata(widget.url).then((m) {
+      FetchedLinkCard._cache[widget.url] = m;
+      if (mounted) setState(() => _meta = m);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => LinkCard(
+    url: widget.url,
+    title: widget.title ?? _meta?['title'] as String?,
+    description: widget.description ?? _meta?['description'] as String?,
+    image: widget.image ?? _meta?['image'] as String?,
+    onTap: widget.onTap,
+  );
 }
 
 /// A compact link card: image (if any), title, description, host.

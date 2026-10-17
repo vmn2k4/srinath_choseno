@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../politician_wall/widgets/wall_post_tile.dart'
-    show PostImage, LinkCard;
+    show PostImage, FetchedLinkCard;
 import 'package:intl/intl.dart';
 
 import '../../../../core/router/app_router.dart';
@@ -18,6 +18,7 @@ import '../../../../core/utils/share_link.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/utils/haptics.dart';
 import '../../../../core/widgets/widgets.dart';
+import '../../../../data/posts/link_preview_fetcher.dart' show firstUrlIn;
 import '../../../../domain/posts/entities/post.dart';
 import '../../../common/widgets/content_safety_sheets.dart';
 import '../../../common/widgets/vote_pill.dart';
@@ -187,14 +188,14 @@ class _FeedPostTileState extends ConsumerState<FeedPostTile> {
             const SizedBox(height: ChosenoSpacing.sm),
             PostVideoThumbnail(url: post.videoUrl!),
           ],
-          if (post.linkUrl != null) ...[
+          if (post.linkUrl != null || firstUrlIn(post.content) != null) ...[
             const SizedBox(height: ChosenoSpacing.sm),
-            LinkCard(
-              url: post.linkUrl!,
+            FetchedLinkCard(
+              url: post.linkUrl ?? firstUrlIn(post.content)!,
               title: post.linkTitle,
               description: post.linkDescription,
               image: post.linkImage,
-              onTap: () => _open(post.linkUrl!),
+              onTap: () => _open(post.linkUrl ?? firstUrlIn(post.content)!),
             ),
           ],
           const SizedBox(height: ChosenoSpacing.md),
