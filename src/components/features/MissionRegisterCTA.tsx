@@ -46,7 +46,7 @@ const RESHOW_AFTER_DAYS = 7;
 // later modal -- on any page -- is the normal mission popup. The mission
 // per-variant keys are deliberately left untouched by the video, so the
 // mission popup still gets its first showing on the next page/visit.
-const INTRO_VIDEO_URL = "https://youtube.com/shorts/QDD8hBVkpi4";
+const INTRO_VIDEO_URL = "https://youtube.com/shorts/qlr9s9QkVww";
 const INTRO_VIDEO_SEEN_KEY = "choseno_intro_video_seen_v1";
 
 function storageKey(prefix: string, variant: MissionCtaVariant): string {
