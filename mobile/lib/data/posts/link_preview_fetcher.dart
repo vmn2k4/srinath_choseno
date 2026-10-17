@@ -26,8 +26,10 @@ final _blockTitleRe = RegExp(
 bool _isBlockPage(String? title, String? description) =>
     (title != null && _blockTitleRe.hasMatch(title.trim())) ||
     (description != null &&
-        RegExp(r'^reference #[\w.]+', caseSensitive: false)
-            .hasMatch(description.trim()));
+        RegExp(
+          r'^reference #[\w.]+',
+          caseSensitive: false,
+        ).hasMatch(description.trim()));
 
 /// A readable title from a headline-style URL slug, or null when the last path
 /// segment isn't one (fewer than 3 words).
@@ -51,6 +53,98 @@ String? titleFromUrlSlug(String url) {
 /// Null on any failure (offline, rate-limited, unfetchable page) — the post
 /// then simply goes out without a card, exactly like the web.
 Future<Map<String, dynamic>?> fetchLinkMetadata(String url) async {
+  // Microlink's free tier is rate-limited per IP (25 requests), and phones on
+  // a carrier network share IPs, so it often refuses. Fall back to reading the
+  // page's own og: tags from the device, then to a title from the URL slug.
+  return await _fetchViaMicrolink(url) ??
+      await _fetchDirect(url) ??
+      _slugOnly(url);
+}
+
+Map<String, dynamic>? _slugOnly(String url) {
+  final title = titleFromUrlSlug(url);
+  if (title == null) return null;
+  return {'title': title, 'url': url};
+}
+
+String? _metaContent(String html, List<String> keys) {
+  for (final tag in RegExp(
+    r'<meta\b[^>]*>',
+    caseSensitive: false,
+  ).allMatches(html)) {
+    final t = tag.group(0)!;
+    final key = RegExp(
+      r'''(?:property|name)\s*=\s*["']([^"']+)["']''',
+      caseSensitive: false,
+    ).firstMatch(t)?.group(1)?.toLowerCase();
+    if (key == null || !keys.contains(key)) continue;
+    final content = RegExp(
+      r'''content\s*=\s*(?:"([^"]*)"|'([^']*)')''',
+      caseSensitive: false,
+    ).firstMatch(t);
+    final v = content?.group(1) ?? content?.group(2);
+    if (v != null && v.trim().isNotEmpty) return _unescape(v.trim());
+  }
+  return null;
+}
+
+String _unescape(String v) => v
+    .replaceAll('&amp;', '&')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&#x27;', "'")
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>');
+
+Future<Map<String, dynamic>?> _fetchDirect(String url) async {
+  try {
+    final res = await http
+        .get(
+          Uri.parse(url),
+          headers: {
+            'User-Agent':
+                'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36',
+            'Accept': 'text/html',
+          },
+        )
+        .timeout(const Duration(seconds: 8));
+    if (res.statusCode != 200) return null;
+    final html = res.body.length > 300000
+        ? res.body.substring(0, 300000)
+        : res.body;
+    var title =
+        _metaContent(html, ['og:title', 'twitter:title']) ??
+        RegExp(
+          r'<title[^>]*>([^<]*)</title>',
+          caseSensitive: false,
+        ).firstMatch(html)?.group(1)?.trim();
+    var description = _metaContent(html, [
+      'og:description',
+      'twitter:description',
+      'description',
+    ]);
+    final blocked = _isBlockPage(title, description);
+    if (blocked) {
+      title = titleFromUrlSlug(url);
+      description = null;
+    }
+    final image = blocked
+        ? null
+        : _metaContent(html, ['og:image', 'twitter:image']);
+    if (title == null && image == null) return null;
+    return {
+      'title': title,
+      'description': description,
+      'image': image == null ? null : Uri.parse(url).resolve(image).toString(),
+      'video': null,
+      'url': url,
+    };
+  } catch (_) {
+    return null;
+  }
+}
+
+Future<Map<String, dynamic>?> _fetchViaMicrolink(String url) async {
   try {
     final res = await http
         .get(
