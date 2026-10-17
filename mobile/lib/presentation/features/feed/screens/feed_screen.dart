@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
+import '../../../../core/router/share_intake_service.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/widgets/widgets.dart';
@@ -67,11 +68,57 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     super.dispose();
   }
 
+  void _openComposer(FeedState state, {SharedDraft? shared}) {
+    final controller = ref.read(feedControllerProvider.notifier);
+    final me = ref.read(ownProfileProvider).value;
+    if (me?.currentGhostId == null) return;
+    showPostComposerSheet(
+      context,
+      hint: "What's happening in your constituency? Type @ to tag a politician",
+      ghostId: me!.currentGhostId!,
+      allowVideo: me.role == UserRole.politician,
+      viewerCountry: me.country,
+      targets: [
+        for (final t in state.tabs.whereType<MembershipTab>())
+          PostTarget(
+            shapeId: t.shapeId,
+            label: t.levelLabel == null
+                ? t.label
+                : '${t.label} · ${t.levelLabel}',
+          ),
+      ],
+      initialTargetId: state.tabs[state.selectedIndex] is MembershipTab
+          ? (state.tabs[state.selectedIndex] as MembershipTab).shapeId
+          : null,
+      initialText: shared?.text ?? '',
+      initialImage: shared?.imageBytes,
+      initialImageExt: shared?.imageExt ?? 'jpg',
+      onSubmit: controller.submitPost,
+    );
+  }
+
+  /// Content shared into the app from another app: open the composer
+  /// prefilled with it, once, when the feed is ready.
+  void _consumeSharedDraft(FeedState state) {
+    final shared = ref.read(pendingShareProvider);
+    if (shared == null || ref.read(ownProfileProvider).value == null) return;
+    ref.read(pendingShareProvider.notifier).clear();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _openComposer(state, shared: shared);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = ChosenoTheme.of(context);
     final feedAsync = ref.watch(feedControllerProvider);
     final controller = ref.read(feedControllerProvider.notifier);
+    ref.listen(pendingShareProvider, (_, next) {
+      final state = ref.read(feedControllerProvider).value;
+      if (next != null && state != null && state.tabs.isNotEmpty) {
+        _consumeSharedDraft(state);
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -98,6 +145,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
             }
 
             _syncTabController(state);
+            _consumeSharedDraft(state);
             final tabController = _tabController!;
 
             return Column(
@@ -112,35 +160,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                     HeaderIconButton(
                       icon: Icons.edit_square,
                       tooltip: 'New post',
-                      onTap: () {
-                        final me = ref.read(ownProfileProvider).value;
-                        if (me?.currentGhostId == null) return;
-                        showPostComposerSheet(
-                          context,
-                          hint:
-                              "What's happening in your constituency? Type @ to tag a politician",
-                          ghostId: me!.currentGhostId!,
-                          allowVideo: me.role == UserRole.politician,
-                          viewerCountry: me.country,
-                          targets: [
-                            for (final t
-                                in state.tabs.whereType<MembershipTab>())
-                              PostTarget(
-                                shapeId: t.shapeId,
-                                label: t.levelLabel == null
-                                    ? t.label
-                                    : '${t.label} · ${t.levelLabel}',
-                              ),
-                          ],
-                          initialTargetId:
-                              state.tabs[state.selectedIndex] is MembershipTab
-                              ? (state.tabs[state.selectedIndex]
-                                        as MembershipTab)
-                                    .shapeId
-                              : null,
-                          onSubmit: controller.submitPost,
-                        );
-                      },
+                      onTap: () => _openComposer(state),
                     ),
                   ],
                 ),

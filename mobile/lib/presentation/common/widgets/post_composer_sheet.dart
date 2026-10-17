@@ -20,7 +20,8 @@ import '../../../core/widgets/widgets.dart';
 import '../../../data/posts/link_preview_fetcher.dart';
 import '../../../domain/posts/entities/post_draft.dart';
 import '../../features/feed/providers/feed_repository_providers.dart';
-import '../../features/politician_wall/widgets/wall_post_tile.dart' show LinkCard;
+import '../../features/politician_wall/widgets/wall_post_tile.dart'
+    show LinkCard;
 
 const _maxImageBytes = 5 * 1024 * 1024;
 const _maxVideoBytes = 50 * 1024 * 1024;
@@ -36,6 +37,9 @@ Future<void> showPostComposerSheet(
   String? viewerCountry,
   List<PostTarget> targets = const [],
   int? initialTargetId,
+  String initialText = '',
+  Uint8List? initialImage,
+  String initialImageExt = 'jpg',
 }) {
   return showModalBottomSheet<void>(
     context: context,
@@ -52,6 +56,9 @@ Future<void> showPostComposerSheet(
         viewerCountry: viewerCountry,
         targets: targets,
         initialTargetId: initialTargetId,
+        initialText: initialText,
+        initialImage: initialImage,
+        initialImageExt: initialImageExt,
         onSubmit: onSubmit,
       ),
     ),
@@ -66,8 +73,15 @@ class _PostComposer extends ConsumerStatefulWidget {
     required this.viewerCountry,
     required this.targets,
     required this.initialTargetId,
+    required this.initialText,
+    required this.initialImage,
+    required this.initialImageExt,
     required this.onSubmit,
   });
+
+  final String initialText;
+  final Uint8List? initialImage;
+  final String initialImageExt;
 
   final List<PostTarget> targets;
   final int? initialTargetId;
@@ -117,6 +131,16 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     _targetId = widget.targets.any((t) => t.shapeId == widget.initialTargetId)
         ? widget.initialTargetId
         : null;
+    if (widget.initialText.isNotEmpty) {
+      _text.text = widget.initialText;
+      _text.selection = TextSelection.collapsed(offset: _text.text.length);
+      // Fetch the link preview card for a shared URL.
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _updateLinkPreview(_text.text),
+      );
+    }
+    _imageBytes = widget.initialImage;
+    _imageExt = widget.initialImageExt;
     WidgetsBinding.instance.addPostFrameCallback((_) => _focus.requestFocus());
   }
 

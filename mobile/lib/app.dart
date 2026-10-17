@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
 import 'core/router/deep_link_service.dart';
+import 'core/router/share_intake_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_controller.dart';
 
@@ -21,6 +22,8 @@ class _ChosenoAppState extends ConsumerState<ChosenoApp> {
     // link (if the app was launched by tapping one) and subscribes for
     // any tapped while already running.
     ref.read(deepLinkServiceProvider).start();
+    // Content shared into Choseno from other apps becomes a draft post.
+    ref.read(shareIntakeServiceProvider).start();
   }
 
   @override
