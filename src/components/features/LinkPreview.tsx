@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkIcon } from "lucide-react";
 import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
+import { isBlockPageMetadata, titleFromUrlSlug } from "@/lib/utils/linkPreview";
 
 export type LinkMetadata = {
   title?: string;
@@ -72,9 +73,12 @@ export default function LinkPreview({
         );
         const json = await res.json();
         if (!ignore && json.status === "success") {
+          // Bot-blocked sites come back with the block page's text -- swap in a
+          // title recovered from the URL slug and drop the junk description.
+          const blocked = isBlockPageMetadata(json.data.title, json.data.description);
           const fetchedData: LinkMetadata = {
-            title: json.data.title,
-            description: json.data.description,
+            title: blocked ? titleFromUrlSlug(url) || undefined : json.data.title,
+            description: blocked ? undefined : json.data.description,
             image: json.data.image?.url || json.data.logo?.url,
             video: json.data.video?.url,
             url: json.data.url,

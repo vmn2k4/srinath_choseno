@@ -276,7 +276,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
               ),
             ),
           ] else
-            Text(
+            LinkifiedText(
               content,
               style: ChosenoTypography.body(
                 color: palette.textMain,

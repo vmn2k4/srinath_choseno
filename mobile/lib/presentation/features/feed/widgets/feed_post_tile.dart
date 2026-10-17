@@ -169,7 +169,7 @@ class _FeedPostTileState extends ConsumerState<FeedPostTile> {
           // decision: text-base + text-main, the Facebook/Reddit reading
           // size — this is what people actually came to read).
           if (post.content.trim().isNotEmpty)
-            Text(
+            LinkifiedText(
               post.content,
               style: ChosenoTypography.body(
                 color: palette.textMain,

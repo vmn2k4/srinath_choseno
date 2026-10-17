@@ -12,6 +12,7 @@ export 'app_text_field.dart';
 export 'empty_state.dart';
 export 'fade_slide_in.dart';
 export 'pressable.dart';
+export 'linkified_text.dart';
 export 'loading_indicator.dart';
 export 'section_header.dart';
 export 'skeleton.dart';

@@ -33,8 +33,38 @@ export type PostMention = { politicianId: string; fullName: string; wallHref: st
 // case (mention inserted via the composer's autocomplete, never hand-edited
 // afterward); a name that no longer appears verbatim in the content (e.g.
 // the user rewrote around it) just doesn't get linked.
+// Turns bare http(s) URLs in a plain-text run into real links so a pasted
+// link reads (and works) as a link instead of ordinary text. Trailing
+// sentence punctuation stays outside the link.
+const URL_RE = /https?:\/\/[^\s]+/g;
+function linkifyText(text: string, keyPrefix: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let key = 0;
+  for (const match of text.matchAll(URL_RE)) {
+    const start = match.index ?? 0;
+    const url = match[0].replace(/[.,;:!?)\]]+$/, "");
+    if (start > lastIndex) nodes.push(text.slice(lastIndex, start));
+    nodes.push(
+      <a
+        key={`${keyPrefix}-url-${key++}`}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer nofollow ugc"
+        onClick={(e) => e.stopPropagation()}
+        className="text-primary underline underline-offset-2 break-all hover:text-primary/80"
+      >
+        {url}
+      </a>
+    );
+    lastIndex = start + url.length;
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex));
+  return nodes;
+}
+
 function renderContentWithMentions(content: string, mentions?: PostMention[] | null): ReactNode {
-  if (!mentions || mentions.length === 0) return content;
+  if (!mentions || mentions.length === 0) return linkifyText(content, "t");
 
   const names = [...new Set(mentions.map((m) => m.fullName))].sort((a, b) => b.length - a.length);
   const escaped = names.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
@@ -45,7 +75,7 @@ function renderContentWithMentions(content: string, mentions?: PostMention[] | n
   let match: RegExpExecArray | null;
   let key = 0;
   while ((match = pattern.exec(content)) !== null) {
-    if (match.index > lastIndex) nodes.push(content.slice(lastIndex, match.index));
+    if (match.index > lastIndex) nodes.push(...linkifyText(content.slice(lastIndex, match.index), `m${key}`));
     const name = match[1];
     const mention = mentions.find((m) => m.fullName === name);
     nodes.push(
@@ -59,7 +89,7 @@ function renderContentWithMentions(content: string, mentions?: PostMention[] | n
     );
     lastIndex = match.index + match[0].length;
   }
-  if (lastIndex < content.length) nodes.push(content.slice(lastIndex));
+  if (lastIndex < content.length) nodes.push(...linkifyText(content.slice(lastIndex), "tail"));
   return nodes;
 }
 
