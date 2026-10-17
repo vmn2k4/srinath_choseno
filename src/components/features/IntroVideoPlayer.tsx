@@ -14,11 +14,20 @@ import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
 export default function IntroVideoPlayer({
   url,
   className = "max-h-[26rem] max-w-full rounded-xl bg-black",
+  autoPlay = false,
+  wide = false,
 }: {
   url: string;
   className?: string;
+  // YouTube only. Starts playing on mount as a clean, muted, looping clip
+  // with YouTube's own controls/captions/annotations switched off and the
+  // iframe non-interactive (so hover controls can't appear). Skips the
+  // click-to-play thumbnail, so YouTube loads as soon as this mounts.
+  autoPlay?: boolean;
+  // Use the full width of the container instead of the 260px cap.
+  wide?: boolean;
 }) {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(autoPlay);
   const youTubeId = parseYouTubeId(url);
   const facebookEmbed = youTubeId ? null : facebookVideoEmbedUrl(url, true);
 
@@ -55,11 +64,11 @@ export default function IntroVideoPlayer({
   }
 
   return (
-    <div className="relative w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden bg-black">
+    <div className={`relative w-full ${wide ? "max-w-[340px]" : "max-w-[260px]"} aspect-[9/16] rounded-xl overflow-hidden bg-black`}>
       {playing ? (
         <iframe
-          className="absolute inset-0 w-full h-full border-0"
-          src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1`}
+          className={`absolute inset-0 w-full h-full border-0 ${autoPlay ? "pointer-events-none" : ""}`}
+          src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1${autoPlay ? `&mute=1&loop=1&playlist=${youTubeId}&controls=0&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0` : ""}`}
           title="Candidate intro video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen

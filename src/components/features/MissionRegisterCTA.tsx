@@ -7,6 +7,7 @@ import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
 import { trackMissionCtaClicked, trackMissionCtaShown, trackShare } from "@/lib/analytics/events";
 import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
+import IntroVideoPlayer from "./IntroVideoPlayer";
 
 // Anonymous-visitor conversion CTA, shown on the pages where a guest is
 // most likely to have an opinion forming (the homepage, a news story, their
@@ -39,6 +40,14 @@ export type MissionCtaVariant = "home" | "news" | "district" | "elections" | "se
 const MODAL_SEEN_PREFIX = "choseno_mission_modal_seen_v2";
 const SIDEBAR_DISMISSED_PREFIX = "choseno_mission_sidebar_dismissed_v2";
 const RESHOW_AFTER_DAYS = 7;
+
+// First-ever visit (any page) shows this intro video in the modal slot
+// instead of the mission copy. Once it's closed we stamp this key, so every
+// later modal -- on any page -- is the normal mission popup. The mission
+// per-variant keys are deliberately left untouched by the video, so the
+// mission popup still gets its first showing on the next page/visit.
+const INTRO_VIDEO_URL = "https://youtube.com/shorts/QDD8hBVkpi4";
+const INTRO_VIDEO_SEEN_KEY = "choseno_intro_video_seen_v1";
 
 function storageKey(prefix: string, variant: MissionCtaVariant): string {
   return `${prefix}_${variant}`;
@@ -193,6 +202,7 @@ export default function MissionRegisterCTA({
 }) {
   const { user, loading } = useAuth();
   const [showModal, setShowModal] = useState(false);
+  const [modalIsVideo, setModalIsVideo] = useState(false);
   const [sidebarDismissed, setSidebarDismissed] = useState(true); // starts hidden until localStorage check below, to avoid a flash
   const [shareCopied, setShareCopied] = useState(false);
   // Ref guards (not just the effects' own dependency arrays / closure
@@ -222,10 +232,12 @@ export default function MissionRegisterCTA({
     const fire = () => {
       if (fired) return;
       fired = true;
+      const isVideo = !window.localStorage.getItem(INTRO_VIDEO_SEEN_KEY);
+      setModalIsVideo(isVideo);
       setShowModal(true);
       if (!modalShownRef.current) {
         modalShownRef.current = true;
-        trackMissionCtaShown({ variant, trigger: "modal" });
+        trackMissionCtaShown({ variant, trigger: isVideo ? "intro_video" : "modal" });
       }
     };
 
@@ -246,8 +258,12 @@ export default function MissionRegisterCTA({
 
   const dismissModal = useCallback(() => {
     setShowModal(false);
+    if (modalIsVideo) {
+      window.localStorage.setItem(INTRO_VIDEO_SEEN_KEY, String(Date.now()));
+      return;
+    }
     markSeen(storageKey(MODAL_SEEN_PREFIX, variant));
-  }, [variant]);
+  }, [variant, modalIsVideo]);
 
   const dismissSidebar = useCallback(() => {
     setSidebarDismissed(true);
@@ -255,9 +271,9 @@ export default function MissionRegisterCTA({
   }, [variant]);
 
   const handleModalCtaClick = useCallback(() => {
-    trackMissionCtaClicked({ variant, trigger: "modal" });
+    trackMissionCtaClicked({ variant, trigger: modalIsVideo ? "intro_video" : "modal" });
     dismissModal();
-  }, [variant, dismissModal]);
+  }, [variant, modalIsVideo, dismissModal]);
 
   const handleSidebarCtaClick = useCallback(() => {
     trackMissionCtaClicked({ variant, trigger: "sidebar" });
@@ -309,7 +325,33 @@ export default function MissionRegisterCTA({
 
   return (
     <>
-      {showModal && (
+      {showModal && modalIsVideo && (
+        <Modal onOverlayClick={dismissModal}>
+          <Card padding="md" className="relative w-[92vw] max-w-sm !bg-surface shadow-2xl space-y-3 flex flex-col items-center !pt-10">
+            <button
+              type="button"
+              onClick={dismissModal}
+              aria-label="Close"
+              className="absolute top-3.5 right-3.5 z-10 text-text-muted hover:text-text-main transition-colors cursor-pointer"
+            >
+              <X size={18} />
+            </button>
+            <IntroVideoPlayer url={INTRO_VIDEO_URL} autoPlay wide />
+            <Button as={Link} href={href} onClick={handleModalCtaClick} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700">
+              {copy.cta}
+            </Button>
+            <button
+              type="button"
+              onClick={dismissModal}
+              className="text-xs font-semibold text-text-muted hover:text-text-main transition-colors cursor-pointer"
+            >
+              Close
+            </button>
+          </Card>
+        </Modal>
+      )}
+
+      {showModal && !modalIsVideo && (
         <Modal onOverlayClick={dismissModal}>
           <Card padding="md" className="relative w-[88vw] max-w-sm !bg-surface shadow-2xl space-y-3.5">
             <button

@@ -152,7 +152,7 @@ export function trackSelectContent(contentType: string, itemId: string) {
 // MissionRegisterCTA.tsx for where this fires.
 export function trackMissionCtaClicked(params: {
   variant: "home" | "news" | "district" | "elections" | "seat";
-  trigger: "modal" | "sidebar";
+  trigger: "modal" | "sidebar" | "intro_video";
 }) {
   sendEvent("mission_cta_clicked", { variant: params.variant, trigger: params.trigger });
 }
@@ -163,7 +163,7 @@ export function trackMissionCtaClicked(params: {
 // impressions needs both sides recorded.
 export function trackMissionCtaShown(params: {
   variant: "home" | "news" | "district" | "elections" | "seat";
-  trigger: "modal" | "sidebar";
+  trigger: "modal" | "sidebar" | "intro_video";
 }) {
   sendEvent("mission_cta_shown", { variant: params.variant, trigger: params.trigger });
 }
