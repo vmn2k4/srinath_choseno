@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkIcon } from "lucide-react";
 import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
-import { isBlockPageMetadata, titleFromUrlSlug } from "@/lib/utils/linkPreview";
+import { createClient } from "@/lib/supabase/client";
+import { fetchLinkPreview } from "@/lib/services/linkPreview";
 
 export type LinkMetadata = {
   title?: string;
@@ -13,12 +14,8 @@ export type LinkMetadata = {
   url: string;
 };
 
-// Ported as-is: still calls the Microlink API directly from the client.
-// Worth revisiting later as a server-side fetch (both for reliability and
-// so link previews could ever appear in server-rendered/crawlable content),
-// but this component is only ever used inside interactive composers/post
-// cards, never on a page that needs the preview to exist pre-hydration —
-// no regression versus the Vite behavior either way.
+// Metadata comes from the `link-preview` edge function (server-side fetch,
+// shared with the mobile app) via services/linkPreview.ts.
 export default function LinkPreview({
   url,
   metadata,
@@ -68,21 +65,9 @@ export default function LinkPreview({
       if (!url) return;
       setLoading(true);
       try {
-        const res = await fetch(
-          `https://api.microlink.io/?url=${encodeURIComponent(url)}&audio=false&video=true`
-        );
-        const json = await res.json();
-        if (!ignore && json.status === "success") {
-          // Bot-blocked sites come back with the block page's text -- swap in a
-          // title recovered from the URL slug and drop the junk description.
-          const blocked = isBlockPageMetadata(json.data.title, json.data.description);
-          const fetchedData: LinkMetadata = {
-            title: blocked ? titleFromUrlSlug(url) || undefined : json.data.title,
-            description: blocked ? undefined : json.data.description,
-            image: json.data.image?.url || json.data.logo?.url,
-            video: json.data.video?.url,
-            url: json.data.url,
-          };
+        const fetchedData = await fetchLinkPreview(createClient(), url);
+        if (ignore) return;
+        if (fetchedData) {
           setFetched(fetchedData);
           onMetadataFetchedRef.current?.(fetchedData);
         } else {
