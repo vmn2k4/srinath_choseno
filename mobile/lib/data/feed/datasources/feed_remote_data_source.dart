@@ -75,6 +75,7 @@ class FeedRemoteDataSource {
         'p_is_test': AppEnvironment.isDev,
         if (draft.imageUrl != null) 'p_image_url': draft.imageUrl,
         if (draft.videoUrl != null) 'p_video_url': draft.videoUrl,
+        if (draft.linkMetadata != null) 'p_link_metadata': draft.linkMetadata,
         if (draft.mentionedPoliticianIds.isNotEmpty)
           'p_mentioned_politician_ids': draft.mentionedPoliticianIds,
         if (draft.boundaryIds.isNotEmpty) 'p_boundary_ids': draft.boundaryIds,

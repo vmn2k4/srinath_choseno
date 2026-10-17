@@ -12,9 +12,13 @@ class PostDraft {
     this.videoUrl,
     this.mentionedPoliticianIds = const [],
     this.boundaryIds = const [],
+    this.linkMetadata,
   });
 
   final String content;
+
+  /// Preview card for a pasted link ({title, description, image, video, url}).
+  final Map<String, dynamic>? linkMetadata;
   final String? imageUrl;
   final String? videoUrl;
   final List<String> mentionedPoliticianIds;

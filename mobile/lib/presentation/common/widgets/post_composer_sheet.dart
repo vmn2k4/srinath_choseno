@@ -2,8 +2,8 @@
 // Candidacy Wall) — port of the web's composer form: text with @politician
 // tagging, a Photo attach (≤5MB), and, for a politician posting as
 // themselves, a Video Pitch (record / upload ≤50MB, or a YouTube link).
-// Not ported: pasted-link preview fetch (the post tile still renders a card
-// for a link in the text).
+// A pasted link gets a preview card (fetched like the web's LinkPreview) that
+// is saved with the post as `link_metadata`; the X on the card drops it.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -17,8 +17,10 @@ import '../../../core/utils/haptics.dart';
 import '../../../core/utils/video_compression.dart';
 import '../../../core/utils/youtube.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../data/posts/link_preview_fetcher.dart';
 import '../../../domain/posts/entities/post_draft.dart';
 import '../../features/feed/providers/feed_repository_providers.dart';
+import '../../features/politician_wall/widgets/wall_post_tile.dart' show LinkCard;
 
 const _maxImageBytes = 5 * 1024 * 1024;
 const _maxVideoBytes = 50 * 1024 * 1024;
@@ -97,6 +99,12 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
   List<TaggablePolitician> _suggestions = const [];
   Timer? _debounce;
 
+  /// Preview of the first link in the text, once fetched.
+  Map<String, dynamic>? _link;
+  String? _linkUrl;
+  final Set<String> _dismissedLinks = {};
+  Timer? _linkDebounce;
+
   bool _submitting = false;
   String? _error;
 
@@ -115,6 +123,7 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
   @override
   void dispose() {
     _debounce?.cancel();
+    _linkDebounce?.cancel();
     _text.dispose();
     _focus.dispose();
     _youtube.dispose();
@@ -135,7 +144,31 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     return (start: at, query: query);
   }
 
-  void _onTextChanged(String _) {
+  void _updateLinkPreview(String text) {
+    _linkDebounce?.cancel();
+    final url = firstUrlIn(text);
+    if (url == _linkUrl) return;
+    if (url == null || _dismissedLinks.contains(url)) {
+      if (_link != null || _linkUrl != null) {
+        setState(() {
+          _link = null;
+          _linkUrl = null;
+        });
+      }
+      return;
+    }
+    _linkDebounce = Timer(const Duration(milliseconds: 600), () async {
+      final meta = await fetchLinkMetadata(url);
+      if (!mounted || firstUrlIn(_text.text) != url) return;
+      setState(() {
+        _linkUrl = url;
+        _link = meta;
+      });
+    });
+  }
+
+  void _onTextChanged(String text) {
+    _updateLinkPreview(text);
     _debounce?.cancel();
     final active = _activeMention();
     if (active == null) {
@@ -273,6 +306,7 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
         content: content,
         imageUrl: imageUrl,
         videoUrl: _videoUrl,
+        linkMetadata: _link,
         mentionedPoliticianIds: [
           for (final e in _mentions.entries)
             if (content.contains(e.value)) e.key,
@@ -347,6 +381,7 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
               if (_suggestions.isNotEmpty) _suggestionList(palette),
               if (_imageBytes != null) _imagePreview(palette),
               if (_videoUrl != null) _videoChip(palette),
+              if (_link != null) _linkPreview(palette),
               if (_videoPanel && _videoUrl == null) _videoPanelView(palette),
               if (_error != null) ...[
                 const SizedBox(height: ChosenoSpacing.xs),
@@ -508,6 +543,34 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
               ),
             ),
           ),
+      ],
+    ),
+  );
+
+  Widget _linkPreview(ChosenoPalette palette) => Padding(
+    padding: const EdgeInsets.only(bottom: ChosenoSpacing.sm),
+    child: Stack(
+      children: [
+        LinkCard(
+          url: _link!['url'] as String? ?? _linkUrl!,
+          title: _link!['title'] as String?,
+          description: _link!['description'] as String?,
+          image: _link!['image'] as String?,
+          onTap: () {},
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            icon: const Icon(Icons.close, size: 16),
+            onPressed: () => setState(() {
+              _dismissedLinks.add(_linkUrl!);
+              _link = null;
+              _linkUrl = null;
+            }),
+          ),
+        ),
       ],
     ),
   );
