@@ -45,6 +45,7 @@ extension PostMapper on Map<String, dynamic> {
       linkTitle: meta?['title'] as String?,
       linkDescription: meta?['description'] as String?,
       linkImage: meta?['image'] as String?,
+      linkVideo: meta?['video'] as String?,
     );
   }
 }

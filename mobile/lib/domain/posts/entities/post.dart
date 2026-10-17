@@ -28,6 +28,7 @@ class Post {
     this.linkTitle,
     this.linkDescription,
     this.linkImage,
+    this.linkVideo,
     this.author,
   });
 
@@ -56,6 +57,7 @@ class Post {
   final String? linkTitle;
   final String? linkDescription;
   final String? linkImage;
+  final String? linkVideo;
 
   /// Set when the post's author is a politician posting under their real
   /// name (the website shows that instead of the anonymous ghost label).
@@ -88,6 +90,7 @@ class Post {
       linkTitle: linkTitle,
       linkDescription: linkDescription,
       linkImage: linkImage,
+      linkVideo: linkVideo,
       author: author ?? this.author,
     );
   }

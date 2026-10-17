@@ -20,6 +20,9 @@ import '../../../../data/posts/link_preview_fetcher.dart';
 import '../../../../domain/posts/entities/post.dart';
 import '../../../common/widgets/vote_pill.dart';
 import '../../../common/widgets/post_video_thumbnail.dart';
+import '../../../common/widgets/facebook_video_embed.dart';
+import '../../../../core/utils/facebook_video.dart';
+import '../../../../core/utils/youtube.dart';
 import '../../../common/widgets/content_safety_sheets.dart';
 import '../../feed/providers/content_safety_providers.dart';
 import '../../feed/providers/feed_repository_providers.dart';
@@ -302,6 +305,7 @@ class _WallPostTileState extends ConsumerState<WallPostTile> {
               title: post.linkTitle,
               description: post.linkDescription,
               image: post.linkImage,
+              video: post.linkVideo,
               onTap: () => _open(post.linkUrl ?? inlineUrl!),
             ),
           ],
@@ -464,12 +468,14 @@ class FetchedLinkCard extends StatefulWidget {
     this.title,
     this.description,
     this.image,
+    this.video,
   });
 
   final String url;
   final String? title;
   final String? description;
   final String? image;
+  final String? video;
   final VoidCallback onTap;
 
   static final Map<String, Map<String, dynamic>?> _cache = {};
@@ -498,13 +504,51 @@ class _FetchedLinkCardState extends State<FetchedLinkCard> {
   }
 
   @override
-  Widget build(BuildContext context) => LinkCard(
-    url: widget.url,
-    title: widget.title ?? _meta?['title'] as String?,
-    description: widget.description ?? _meta?['description'] as String?,
-    image: widget.image ?? _meta?['image'] as String?,
-    onTap: widget.onTap,
-  );
+  Widget build(BuildContext context) {
+    final title = widget.title ?? _meta?['title'] as String?;
+    final description = widget.description ?? _meta?['description'] as String?;
+    final video = widget.video ?? _meta?['video'] as String?;
+    // Plays in the post, like the web: YouTube and Facebook links need only
+    // the URL; a news clip (direct file) comes from the preview's `video`.
+    final facebookEmbed = facebookVideoEmbedUrl(widget.url);
+    final playable = parseYouTubeId(widget.url) != null
+        ? widget.url
+        : (facebookEmbed == null ? video : null);
+    if (playable != null || facebookEmbed != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (facebookEmbed != null)
+            FacebookVideoEmbed(embedUrl: facebookEmbed)
+          else
+            PostVideoThumbnail(url: playable!),
+          if (title != null || description != null) ...[
+            const SizedBox(height: ChosenoSpacing.xs),
+            InkWell(
+              onTap: widget.onTap,
+              child: Text(
+                title ?? description!,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: ChosenoTypography.body(
+                  color: ChosenoTheme.of(context).textMain,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ],
+      );
+    }
+    return LinkCard(
+      url: widget.url,
+      title: title,
+      description: description,
+      image: widget.image ?? _meta?['image'] as String?,
+      onTap: widget.onTap,
+    );
+  }
 }
 
 /// A compact link card: image (if any), title, description, host.

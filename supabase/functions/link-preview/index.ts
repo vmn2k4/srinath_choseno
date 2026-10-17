@@ -18,7 +18,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 }
 
-const MAX_HTML_BYTES = 400_000
+// Large enough for CNN-style pages whose JSON-LD (video) sits ~500KB in.
+const MAX_HTML_BYTES = 1_500_000
 const MAX_REDIRECTS = 4
 const FETCH_TIMEOUT_MS = 8_000
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000
@@ -106,7 +107,7 @@ async function fetchHtml(start: URL): Promise<{ html: string; finalUrl: URL }> {
     if (!res.ok) throw new Error(`status ${res.status}`)
     const type = res.headers.get("content-type") || ""
     if (!/html|xml/i.test(type)) throw new Error("not html")
-    // Read only the first MAX_HTML_BYTES — og tags live in <head>.
+    // Read only the first MAX_HTML_BYTES (og tags live in <head>; JSON-LD can sit deeper).
     const reader = res.body!.getReader()
     const chunks: Uint8Array[] = []
     let total = 0
@@ -178,6 +179,30 @@ function titleFromUrlSlug(raw: string): string | undefined {
   }
 }
 
+// News sites (CNN, ...) often skip og:video but describe the clip in JSON-LD
+// (VideoObject.contentUrl) or a <video>/<source> tag. Only direct, browser-
+// playable files count — anything else would show a dead player.
+const PLAYABLE_RE = /\.(mp4|webm|m4v|mov)(\?|$)/i
+function findDirectVideo(html: string): string | undefined {
+  for (const m of html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const stack: unknown[] = [JSON.parse(m[1])]
+      while (stack.length) {
+        const n = stack.pop()
+        if (Array.isArray(n)) stack.push(...n)
+        else if (n && typeof n === "object") {
+          const o = n as Record<string, unknown>
+          const type = ([] as unknown[]).concat(o["@type"] ?? []).join(",")
+          const url = (o.contentUrl ?? o.embedUrl) as unknown
+          if (/VideoObject/.test(type) && typeof url === "string" && PLAYABLE_RE.test(url)) return url
+          stack.push(...Object.values(o))
+        }
+      }
+    } catch { /* malformed JSON-LD */ }
+  }
+  return html.match(/<(?:video|source)\b[^>]*\bsrc\s*=\s*["']([^"']+\.(?:mp4|webm|m4v|mov)[^"']*)["']/i)?.[1]
+}
+
 function absolute(v: string | undefined, base: URL): string | undefined {
   if (!v) return undefined
   try {
@@ -195,7 +220,11 @@ function parse(html: string, finalUrl: URL, requested: string): Preview {
     unescapeHtml(html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] || "") || undefined
   let description = m.get("og:description") || m.get("twitter:description") || m.get("description")
   let image = absolute(m.get("og:image") || m.get("og:image:url") || m.get("twitter:image"), finalUrl)
-  const video = absolute(m.get("og:video:secure_url") || m.get("og:video:url") || m.get("og:video"), finalUrl)
+  const ogVideo = m.get("og:video:secure_url") || m.get("og:video:url") || m.get("og:video")
+  const video = absolute(
+    ogVideo && PLAYABLE_RE.test(ogVideo) ? ogVideo : findDirectVideo(html) || ogVideo,
+    finalUrl,
+  )
   if (isBlockPage(title, description)) {
     title = titleFromUrlSlug(requested)
     description = undefined
@@ -209,6 +238,29 @@ function parse(html: string, finalUrl: URL, requested: string): Preview {
     url: absolute(m.get("og:url"), finalUrl)?.startsWith(finalUrl.origin)
       ? absolute(m.get("og:url"), finalUrl)!
       : requested,
+  }
+}
+
+// YouTube serves servers a generic consent page, so ask its oEmbed endpoint
+// (public, no key) for the real title and thumbnail instead.
+async function youTubePreview(target: URL): Promise<Preview | null> {
+  const host = target.hostname.replace(/^(www|m)\./, "")
+  if (host !== "youtube.com" && host !== "youtu.be") return null
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(target.toString())}`,
+      { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) },
+    )
+    if (!res.ok) return null
+    const j = await res.json()
+    return {
+      title: j.title,
+      description: j.author_name ? `${j.author_name} on YouTube` : undefined,
+      image: j.thumbnail_url,
+      url: target.toString(),
+    }
+  } catch {
+    return null
   }
 }
 
@@ -232,6 +284,12 @@ serve(async (req) => {
   const key = target.toString()
   const hit = cache.get(key)
   if (hit && Date.now() - hit.at < CACHE_TTL_MS) return json(hit.value, { "X-Cache": "HIT" })
+
+  const yt = await youTubePreview(target)
+  if (yt) {
+    cache.set(key, { at: Date.now(), value: yt })
+    return json(yt, { "X-Cache": "MISS" })
+  }
 
   try {
     const { html, finalUrl } = await fetchHtml(target)

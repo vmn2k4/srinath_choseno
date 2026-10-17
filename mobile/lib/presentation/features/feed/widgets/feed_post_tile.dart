@@ -195,6 +195,7 @@ class _FeedPostTileState extends ConsumerState<FeedPostTile> {
               title: post.linkTitle,
               description: post.linkDescription,
               image: post.linkImage,
+              video: post.linkVideo,
               onTap: () => _open(post.linkUrl ?? firstUrlIn(post.content)!),
             ),
           ],
