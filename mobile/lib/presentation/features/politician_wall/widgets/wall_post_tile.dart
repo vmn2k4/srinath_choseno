@@ -521,7 +521,11 @@ class _FetchedLinkCardState extends State<FetchedLinkCard> {
           if (facebookEmbed != null)
             FacebookVideoEmbed(embedUrl: facebookEmbed)
           else
-            PostVideoThumbnail(url: playable!),
+            PostVideoThumbnail(
+              url: playable!,
+              posterUrl: widget.image ?? _meta?['image'] as String?,
+              landscape: parseYouTubeId(widget.url) == null,
+            ),
           if (title != null || description != null) ...[
             const SizedBox(height: ChosenoSpacing.xs),
             InkWell(

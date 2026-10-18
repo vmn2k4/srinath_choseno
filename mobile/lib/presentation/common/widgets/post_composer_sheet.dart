@@ -623,14 +623,6 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
         runSpacing: 8,
         children: [
           chip(Icons.photo_camera_outlined, 'Add a photo', _pickImage),
-          chip(Icons.help_outline, 'Ask your neighbours', () {
-            _text.text = 'Question for my community: ';
-            _text.selection = TextSelection.collapsed(
-              offset: _text.text.length,
-            );
-            _focus.requestFocus();
-            setState(() {});
-          }),
           chip(Icons.alternate_email, 'Tag a politician', _insertTag),
         ],
       ),

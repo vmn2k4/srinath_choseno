@@ -29,9 +29,21 @@ Future<Uint8List?> _firstFrame(String url) => _frames.putIfAbsent(
 );
 
 class PostVideoThumbnail extends StatefulWidget {
-  const PostVideoThumbnail({super.key, required this.url});
+  const PostVideoThumbnail({
+    super.key,
+    required this.url,
+    this.posterUrl,
+    this.landscape = false,
+  });
 
   final String url;
+
+  /// Link-preview image used as the tile instead of decoding a frame out of a
+  /// remote clip (a news site's 1080p mp4 is far too heavy to probe in a feed).
+  final String? posterUrl;
+
+  /// 16:9 tile for a news clip; uploaded pitch videos stay 9:16.
+  final bool landscape;
 
   @override
   State<PostVideoThumbnail> createState() => _PostVideoThumbnailState();
@@ -59,9 +71,9 @@ class _PostVideoThumbnailState extends State<PostVideoThumbnail> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(ChosenoRadii.sm + 2),
           child: SizedBox(
-            width: 170,
+            width: widget.landscape ? 280 : 170,
             child: AspectRatio(
-              aspectRatio: 9 / 16,
+              aspectRatio: widget.landscape ? 16 / 9 : 9 / 16,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -74,6 +86,12 @@ class _PostVideoThumbnailState extends State<PostVideoThumbnail> {
                         fit: BoxFit.cover,
                         errorBuilder: (_, _, _) => const SizedBox.shrink(),
                       ),
+                    )
+                  else if (widget.posterUrl != null)
+                    Image.network(
+                      widget.posterUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, _, _) => const SizedBox.shrink(),
                     )
                   else
                     FutureBuilder<Uint8List?>(
