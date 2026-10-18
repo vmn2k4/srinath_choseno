@@ -2,7 +2,7 @@ import { StrictMode, useCallback, useEffect, useMemo, useRef, useState } from "r
 import { createRoot } from "react-dom/client";
 import type { Session } from "@supabase/supabase-js";
 import {
-  AtSign, CheckCircle2, ExternalLink, Image as ImageIcon, Link2, LogOut, ShieldAlert, Users, X,
+  ArrowLeft, AtSign, CheckCircle2, EyeOff, ExternalLink, Image as ImageIcon, Link2, LogOut, MapPin, ShieldAlert, Users, X,
 } from "lucide-react";
 import { supabase, SITE_URL } from "./supabase";
 import { resendSignupEmail, signInWithPassword, signOut, signUp, verifySignupCode } from "@/lib/services/auth";
@@ -54,7 +54,7 @@ function Header({ onSignOut }: { onSignOut?: () => void }) {
 }
 
 function SignIn() {
-  const [mode, setMode] = useState<"signin" | "signup" | "verify">("signin");
+  const [mode, setMode] = useState<"home" | "signin" | "signup" | "verify">("home");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -91,7 +91,31 @@ function SignIn() {
     const res = await chrome.runtime.sendMessage({ type: "google-sign-in" });
     if (!res?.ok) { setError(res?.error || "Google sign-in failed"); setBusy(null); }
   }
-  const switchTo = (m: "signin" | "signup") => { setMode(m); setError(null); setNotice(null); };
+  const switchTo = (m: "home" | "signin" | "signup") => { setMode(m); setError(null); setNotice(null); };
+
+  if (mode === "home") {
+    return (
+      <div className="screen">
+        <Header />
+        <main className="body">
+          <h1>Your honest view on politics, from any page.</h1>
+          <p className="lede">
+            Speak up about whatever you’re reading — without your name attached — so politicians and neighbours finally hear the silent majority.
+          </p>
+          <ol className="steps">
+            <li><span className="step-ic"><Link2 size={18} aria-hidden="true" /></span><div><b>The page link is added for you</b><small>Open it on any page and the link, title and image are attached automatically.</small></div></li>
+            <li><span className="step-ic"><MapPin size={18} aria-hidden="true" /></span><div><b>Shared with your districts</b><small>Your view goes to the communities where you live. Tag politicians with @.</small></div></li>
+            <li><span className="step-ic"><EyeOff size={18} aria-hidden="true" /></span><div><b>Anonymous by design</b><small>A rotating Ghost ID — no profile, no followers, no one knows it’s you.</small></div></li>
+          </ol>
+          <div className="home-actions">
+            <button type="button" className="btn btn-primary btn-block" onClick={() => switchTo("signup")}>Sign up — it’s free</button>
+            <button type="button" className="btn btn-secondary btn-block" onClick={() => switchTo("signin")}>I already have an account · Sign in</button>
+          </div>
+          <p className="foot"><a href={SITE_URL} target="_blank" rel="noreferrer">Learn more about Choseno</a></p>
+        </main>
+      </div>
+    );
+  }
 
   if (mode === "verify") {
     return (
@@ -124,6 +148,7 @@ function SignIn() {
     <div className="screen">
       <Header />
       <main className="body">
+        <button type="button" className="back-btn" onClick={() => switchTo("home")}><ArrowLeft size={16} aria-hidden="true" /> Back</button>
         <h1>{signup ? "Join the silent majority." : "Say what you really think."}</h1>
         <p className="lede">
           {signup

@@ -30,7 +30,7 @@ a { color: var(--primary); } button, select, input, textarea { font: inherit; co
 .wm-a { color: #f97316; } .wm-b { color: #f59e0b; } /* brand wordmark: same orange/amber as the site logo */
 .brand-text small { color: var(--muted); font-size: 11px; font-weight: 500; margin-top: 3px; }
 
-.body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; }
+.body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; overflow-y: auto; }
 .body.scroll { overflow-y: auto; }
 .body h1 { margin: 0; font: 800 24px/1.15 var(--font); letter-spacing: -.01em; color: var(--text); }
 .lede { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
@@ -99,3 +99,11 @@ a { color: var(--primary); } button, select, input, textarea { font: inherit; co
 .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; display: inline-block; animation: spin .7s linear infinite; } .spinner.lg { width: 28px; height: 28px; color: var(--primary); }
 @keyframes spin { to { transform: rotate(360deg); } } @keyframes rise { from { transform: translateY(12px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.steps li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border-light); }
+.steps b { display: block; font-size: 14px; font-weight: 700; } .steps small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.45; margin-top: 2px; }
+.step-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
+.home-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.home-actions .btn { flex: none; }
+.back-btn { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 2px 0; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; } .back-btn:hover { color: var(--text); }
