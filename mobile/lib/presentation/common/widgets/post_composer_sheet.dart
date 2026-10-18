@@ -472,6 +472,12 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
                       maxLines: null,
                       minLines: 4,
                       keyboardType: TextInputType.multiline,
+                      // Flutter's own copy/paste menu: iOS's native one threw
+                      // inside UIKit (UIStoryboard name) on long-press.
+                      contextMenuBuilder: (context, editableTextState) =>
+                          AdaptiveTextSelectionToolbar.editableText(
+                            editableTextState: editableTextState,
+                          ),
                       textCapitalization: TextCapitalization.sentences,
                       style: ChosenoTypography.body(
                         color: palette.textMain,
