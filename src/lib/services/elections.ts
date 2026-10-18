@@ -775,7 +775,8 @@ export async function getActiveSeatsByShapeIds(supabase: Client, shapeIds: numbe
     .from("election_seats")
     .select("id, role_title, map_shapes(name, boundary_type, properties), elections!inner(id, name, election_date, status)")
     .in("map_shape_id", shapeIds)
-    .in("elections.status", ["nominations_open", "nominations_closed", "active"]);
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
+    .gte("elections.election_date", new Date().toISOString().slice(0, 10));
 }
 
 // Active seats inside the given boundaries, each with its candidate count --
@@ -837,6 +838,7 @@ export async function getActiveSeats(
       opts.withCount ? { count: "exact" } : undefined
     )
     .in("elections.status", ["nominations_open", "nominations_closed", "active"])
+    .gte("elections.election_date", new Date().toISOString().slice(0, 10))
     .order("role_title")
     .order("id");
 
