@@ -131,7 +131,12 @@ class FeedRemoteDataSource {
 
   /// Port of `searchTaggablePoliticians` (country-tier ordering only — the
   /// web's local-boundary tier needs the viewer's memberships).
-  Future<List<dynamic>> searchTaggablePoliticians(String query) {
+  Future<List<dynamic>> searchTaggablePoliticians(
+    String query, {
+    int limit = 24,
+    int offset = 0,
+    String? country,
+  }) {
     var q = _client
         .from('profiles')
         .select(
@@ -140,7 +145,10 @@ class FeedRemoteDataSource {
         .eq('role', 'politician')
         .ilike('full_name', '%$query%');
     if (!AppEnvironment.isDev) q = q.eq('is_test', false);
-    return q.order('full_name', ascending: true).limit(24);
+    if (country != null) q = q.eq('country', country);
+    return q
+        .order('full_name', ascending: true)
+        .range(offset, offset + limit - 1);
   }
 
   Future<Map<String, dynamic>?> getPostDetailRow(String postId) {

@@ -39,10 +39,15 @@ abstract interface class FeedRepository {
   /// in [PostDraft.videoUrl].
   Future<Result<String>> uploadPostVideo(Uint8List bytes, String fileExtension);
 
-  /// @mention autocomplete: politicians whose name contains [query].
+  /// @mention autocomplete: politicians whose name contains [query]. With
+  /// [limit] / [offset] it pages through the whole list (the @ picker);
+  /// [onlyCountry] restricts it to [viewerCountry]'s officials.
   Future<Result<List<TaggablePolitician>>> searchTaggablePoliticians(
     String query, {
     String? viewerCountry,
+    int limit = 8,
+    int offset = 0,
+    bool onlyCountry = false,
   });
 
   /// RPC `vote_on_post` — a toggle server-side (voting the same type again

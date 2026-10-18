@@ -133,16 +133,25 @@ class FeedRepositoryImpl implements FeedRepository {
   Future<Result<List<TaggablePolitician>>> searchTaggablePoliticians(
     String query, {
     String? viewerCountry,
+    int limit = 8,
+    int offset = 0,
+    bool onlyCountry = false,
   }) async {
     try {
+      // The inline autocomplete (default args) fetches 24 and shows 8,
+      // country-first; a paged call returns exactly its page.
+      final paged = limit != 8 || offset != 0;
       final rows = (await _remote.searchTaggablePoliticians(
         query,
+        limit: paged ? limit : 24,
+        offset: offset,
+        country: onlyCountry ? viewerCountry : null,
       )).cast<Map<String, dynamic>>();
       int tier(Map<String, dynamic> r) =>
           viewerCountry != null && r['country'] == viewerCountry ? 0 : 1;
       final sorted = [...rows]..sort((a, b) => tier(a).compareTo(tier(b)));
       return Result.ok([
-        for (final r in sorted.take(8))
+        for (final r in paged ? sorted : sorted.take(8))
           TaggablePolitician(
             id: r['id'] as String,
             fullName: r['full_name'] as String? ?? 'Politician',

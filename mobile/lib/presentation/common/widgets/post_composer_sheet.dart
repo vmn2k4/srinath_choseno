@@ -20,6 +20,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../data/posts/link_preview_fetcher.dart';
 import '../../../domain/posts/entities/post_draft.dart';
 import '../../features/feed/providers/feed_repository_providers.dart';
+import 'mention_picker_sheet.dart';
 import 'post_video_thumbnail.dart' show showInAppVideo;
 import '../../features/politician_wall/widgets/wall_post_tile.dart'
     show LinkCard;
@@ -591,16 +592,24 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     );
   }
 
-  void _insertTag() {
+  /// The @ button: pick from the full, searchable list of officials and drop
+  /// "@Name " at the cursor.
+  Future<void> _insertTag() async {
+    final p = await showMentionPicker(
+      context,
+      viewerCountry: widget.viewerCountry,
+    );
+    if (p == null || !mounted) return;
     final t = _text.text;
     final sel = _text.selection;
-    final at = sel.isValid ? sel.baseOffset : t.length;
-    final needsSpace = at > 0 && !RegExp(r'\s').hasMatch(t[at - 1]);
-    final ins = needsSpace ? ' @' : '@';
+    final at = sel.isValid && sel.baseOffset >= 0 ? sel.baseOffset : t.length;
+    final lead = at > 0 && !RegExp(r'\s').hasMatch(t[at - 1]) ? ' ' : '';
+    final ins = '$lead@${p.fullName} ';
     _text.value = TextEditingValue(
       text: t.replaceRange(at, at, ins),
       selection: TextSelection.collapsed(offset: at + ins.length),
     );
+    _mentions[p.id] = '@${p.fullName}';
     _focus.requestFocus();
     setState(() {});
   }
