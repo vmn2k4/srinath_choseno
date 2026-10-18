@@ -306,6 +306,8 @@ export default function FeedPageClient() {
     setPostTarget(pill?.filterType === "shape" && pill.shapeId != null ? String(pill.shapeId) : "all");
   }, [masterFilter, filterPills]);
 
+  const feedRequestId = useRef(0);
+
   const loadFeedPosts = async () => {
     if (!user || !profile) return;
 
@@ -325,7 +327,19 @@ export default function FeedPageClient() {
       queries.push(getInternationalScopedPosts(supabase));
     }
 
+    // Nothing to query yet (memberships still loading): keep what's on screen
+    // rather than overwriting it with an empty list.
+    if (queries.length === 0) return;
+
+    const requestId = ++feedRequestId.current;
     const results = await Promise.all(queries);
+    // A newer load started while this one was in flight, or every query
+    // failed (timeout/RLS/network): don't replace good posts with nothing.
+    if (requestId !== feedRequestId.current) return;
+    if (results.some((r) => r?.error)) {
+      console.error("Feed load failed:", results.map((r) => r?.error).filter(Boolean));
+      return;
+    }
     const combined: PostWithComments[] = [];
     const seen = new Set<string>();
 
@@ -352,6 +366,9 @@ export default function FeedPageClient() {
     setPostMentions(await hydratePostMentions(supabase, combined));
   };
 
+  const loadFeedPostsRef = useRef(loadFeedPosts);
+  loadFeedPostsRef.current = loadFeedPosts;
+
   useEffect(() => {
     if (profile && profile.role !== "admin") Promise.resolve().then(() => loadFeedPosts());
   }, [masterFilter, memberships, profile]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -372,7 +389,10 @@ export default function FeedPageClient() {
   // fallback for the "left the tab, came back" case popstate won't catch.
   useEffect(() => {
     if (!profile || profile.role === "admin") return;
-    const refetch = () => loadFeedPosts();
+    // Always call the latest loadFeedPosts: this effect only re-runs on
+    // [profile], so a direct reference would close over the memberships and
+    // filter from when profile was set (memberships still [] -> empty feed).
+    const refetch = () => loadFeedPostsRef.current();
     const onVisibilityChange = () => {
       if (document.visibilityState === "visible") refetch();
     };
