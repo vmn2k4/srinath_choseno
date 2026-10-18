@@ -20,6 +20,7 @@ import '../../../core/widgets/widgets.dart';
 import '../../../data/posts/link_preview_fetcher.dart';
 import '../../../domain/posts/entities/post_draft.dart';
 import '../../features/feed/providers/feed_repository_providers.dart';
+import 'post_video_thumbnail.dart' show showInAppVideo;
 import '../../features/politician_wall/widgets/wall_post_tile.dart'
     show LinkCard;
 
@@ -500,10 +501,6 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
                         ),
                       ),
                     ),
-                    if (_text.text.isEmpty &&
-                        _imageBytes == null &&
-                        _videoUrl == null)
-                      _starterChips(palette),
                     if (_suggestions.isNotEmpty) _suggestionList(palette),
                     if (_imageBytes != null) _imagePreview(palette),
                     if (_videoUrl != null) _videoChip(palette),
@@ -606,33 +603,6 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     );
     _focus.requestFocus();
     setState(() {});
-  }
-
-  Widget _starterChips(ChosenoPalette palette) {
-    Widget chip(IconData icon, String label, VoidCallback onTap) => ActionChip(
-      avatar: Icon(icon, size: 18, color: palette.primary),
-      label: Text(label),
-      labelStyle: ChosenoTypography.body(
-        color: palette.textMain,
-        fontSize: 13,
-        fontWeight: FontWeight.w600,
-      ),
-      backgroundColor: palette.surfaceHover,
-      side: BorderSide(color: palette.borderLight),
-      shape: const StadiumBorder(),
-      onPressed: onTap,
-    );
-    return Padding(
-      padding: const EdgeInsets.only(bottom: ChosenoSpacing.md),
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: [
-          chip(Icons.photo_camera_outlined, 'Add a photo', _pickImage),
-          chip(Icons.alternate_email, 'Tag a politician', _insertTag),
-        ],
-      ),
-    );
   }
 
   Widget _toolButton(
@@ -847,35 +817,38 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     ),
   );
 
-  Widget _videoChip(ChosenoPalette palette) => Container(
-    margin: const EdgeInsets.only(bottom: ChosenoSpacing.sm),
-    padding: const EdgeInsets.symmetric(
-      horizontal: ChosenoSpacing.md,
-      vertical: ChosenoSpacing.sm,
-    ),
-    decoration: BoxDecoration(
-      color: palette.primary.withValues(alpha: 0.1),
-      borderRadius: BorderRadius.circular(ChosenoRadii.sm * 2),
-    ),
-    child: Row(
-      children: [
-        Icon(Icons.videocam, size: 18, color: palette.primary),
-        const SizedBox(width: ChosenoSpacing.sm),
-        Expanded(
-          child: Text(
-            'Campaign video attached',
-            style: ChosenoTypography.body(
-              color: palette.textMain,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
+  Widget _videoChip(ChosenoPalette palette) => GestureDetector(
+    onTap: () => showInAppVideo(context, _videoUrl!),
+    child: Container(
+      margin: const EdgeInsets.only(bottom: ChosenoSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: ChosenoSpacing.md,
+        vertical: ChosenoSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: palette.primary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(ChosenoRadii.sm * 2),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.videocam, size: 18, color: palette.primary),
+          const SizedBox(width: ChosenoSpacing.sm),
+          Expanded(
+            child: Text(
+              'Campaign video attached · tap to preview',
+              style: ChosenoTypography.body(
+                color: palette.textMain,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
-        ),
-        InkResponse(
-          onTap: () => setState(() => _videoUrl = null),
-          child: Icon(Icons.close, size: 18, color: palette.textMuted),
-        ),
-      ],
+          InkResponse(
+            onTap: () => setState(() => _videoUrl = null),
+            child: Icon(Icons.close, size: 18, color: palette.textMuted),
+          ),
+        ],
+      ),
     ),
   );
 
