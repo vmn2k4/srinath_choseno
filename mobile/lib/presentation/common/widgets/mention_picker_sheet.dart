@@ -165,8 +165,34 @@ class _MentionPickerState extends ConsumerState<_MentionPicker> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: FilterChip(
-                    label: Text('Only ${widget.viewerCountry}'),
+                    avatar: Icon(
+                      _myCountryOnly ? Icons.check : Icons.public,
+                      size: 18,
+                      color: _myCountryOnly
+                          ? palette.textOnPrimary
+                          : palette.textSecondary,
+                    ),
+                    showCheckmark: false,
+                    label: Text(
+                      _myCountryOnly
+                          ? '${widget.viewerCountry} only'
+                          : 'All countries',
+                    ),
+                    labelStyle: ChosenoTypography.body(
+                      color: _myCountryOnly
+                          ? palette.textOnPrimary
+                          : palette.textMain,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
                     selected: _myCountryOnly,
+                    selectedColor: palette.primary,
+                    backgroundColor: palette.surfaceHover,
+                    side: BorderSide(
+                      color: _myCountryOnly
+                          ? palette.primary
+                          : palette.borderLight,
+                    ),
                     onSelected: (v) {
                       _myCountryOnly = v;
                       _reset();
