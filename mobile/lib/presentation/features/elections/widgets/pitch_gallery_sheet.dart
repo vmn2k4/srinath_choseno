@@ -1,14 +1,14 @@
 // Port of SeatPitchGallery.tsx — every candidate pitch video in a race.
 // Order is shuffled per open so no candidate gets the first slot by default.
-// Videos open in the OS (YouTube app / browser): the app has no in-app video
-// player, and YouTube/Facebook links can't be played from a bare <video>.
+// Videos play inside the app (post_video_thumbnail.dart's InAppVideoPlayer:
+// YouTube, Facebook, or an uploaded file) — never the OS "open with" chooser.
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/theme/theme_config.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../domain/elections/entities/election_candidate.dart';
+import '../../../common/widgets/post_video_thumbnail.dart';
 
 /// YouTube id from watch / youtu.be / shorts / embed links, else null
 /// (port of parseYouTubeId in src/lib/utils/youtube.ts).
@@ -125,10 +125,7 @@ class _PitchCard extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => launchUrl(
-                Uri.parse(url),
-                mode: LaunchMode.externalApplication,
-              ),
+              onTap: () => showInAppVideo(context, url),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(ChosenoRadii.card / 2),
                 child: Stack(

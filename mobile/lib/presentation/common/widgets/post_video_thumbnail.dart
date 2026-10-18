@@ -13,7 +13,9 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../core/theme/theme_config.dart';
+import '../../../core/utils/facebook_video.dart';
 import '../../../core/utils/youtube.dart';
+import 'facebook_video_embed.dart';
 
 final Map<String, Future<Uint8List?>> _frames = {};
 
@@ -256,4 +258,47 @@ class _UploadedInlineState extends State<_UploadedInline> {
       child: Chewie(controller: chewie),
     );
   }
+}
+
+/// Plays any video link inside the app — YouTube (embedded player), a Facebook
+/// video / reel (Facebook's own player), or an uploaded file (Chewie) — so
+/// nothing is handed to the phone's "open with" chooser.
+class InAppVideoPlayer extends StatelessWidget {
+  const InAppVideoPlayer({super.key, required this.url});
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    final youTubeId = parseYouTubeId(url);
+    if (youTubeId != null) return _YouTubeInline(id: youTubeId);
+    final fb = facebookVideoEmbedUrl(url);
+    if (fb != null) return FacebookVideoEmbed(embedUrl: fb);
+    return _UploadedInline(url: url);
+  }
+}
+
+/// Full-screen, in-app player for [url] with a close button.
+Future<void> showInAppVideo(BuildContext context, String url) {
+  return showDialog<void>(
+    context: context,
+    builder: (dialogContext) => Dialog.fullscreen(
+      backgroundColor: Colors.black,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Center(child: InAppVideoPlayer(url: url)),
+            Positioned(
+              top: 4,
+              right: 4,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white, size: 28),
+                onPressed: () => Navigator.of(dialogContext).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
