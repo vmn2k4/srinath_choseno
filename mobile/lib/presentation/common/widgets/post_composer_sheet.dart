@@ -598,6 +598,7 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     final p = await showMentionPicker(
       context,
       viewerCountry: widget.viewerCountry,
+      districtShapeIds: [for (final t in widget.targets) t.shapeId],
     );
     if (p == null || !mounted) return;
     final t = _text.text;

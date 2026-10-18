@@ -50,6 +50,12 @@ abstract interface class FeedRepository {
     bool onlyCountry = false,
   });
 
+  /// Current office holders of [shapeIds] (the viewer's districts), in the
+  /// order the shapes are given — the @ picker's first section.
+  Future<Result<List<TaggablePolitician>>> getLocalOfficials(
+    List<int> shapeIds,
+  );
+
   /// RPC `vote_on_post` — a toggle server-side (voting the same type again
   /// removes the vote). Returns the authoritative post-vote counts read
   /// back after the call, since a naive client-side +1 drifts the instant

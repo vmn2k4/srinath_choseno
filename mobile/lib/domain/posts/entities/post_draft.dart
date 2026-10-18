@@ -44,9 +44,13 @@ class TaggablePolitician {
     required this.id,
     required this.fullName,
     this.photoUrl,
+    this.office,
   });
 
   final String id;
   final String fullName;
   final String? photoUrl;
+
+  /// The office they currently hold, e.g. "Councillor · Potton".
+  final String? office;
 }

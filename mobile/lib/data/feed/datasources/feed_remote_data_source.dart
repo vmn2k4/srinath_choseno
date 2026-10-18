@@ -140,7 +140,7 @@ class FeedRemoteDataSource {
     var q = _client
         .from('profiles')
         .select(
-          'id, full_name, country, politician_profiles(avatar_url, photo_url)',
+          'id, full_name, country, politician_profiles(avatar_url, photo_url), office_holders!office_holders_linked_profile_id_fkey(is_current, map_shapes(name), election_role_types(role_title))',
         )
         .eq('role', 'politician')
         .ilike('full_name', '%$query%');
@@ -149,6 +149,20 @@ class FeedRemoteDataSource {
     return q
         .order('full_name', ascending: true)
         .range(offset, offset + limit - 1);
+  }
+
+  /// Current office holders of the given districts (the viewer's own), each
+  /// with the profile an @mention resolves to and the office they hold.
+  Future<List<dynamic>> getLocalOfficials(List<int> shapeIds) {
+    if (shapeIds.isEmpty) return Future.value(const []);
+    return _client
+        .from('office_holders')
+        .select(
+          'map_shape_id, election_role_types(role_title), map_shapes(name), profiles!office_holders_linked_profile_id_fkey(id, full_name, is_test, politician_profiles(avatar_url, photo_url))',
+        )
+        .inFilter('map_shape_id', shapeIds)
+        .eq('is_current', true)
+        .not('linked_profile_id', 'is', null);
   }
 
   Future<Map<String, dynamic>?> getPostDetailRow(String postId) {

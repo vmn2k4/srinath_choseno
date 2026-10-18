@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
+import '../../../core/config/app_environment.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/errors/result.dart';
 import '../../../domain/feed/repositories/feed_repository.dart';
@@ -156,8 +157,66 @@ class FeedRepositoryImpl implements FeedRepository {
             id: r['id'] as String,
             fullName: r['full_name'] as String? ?? 'Politician',
             photoUrl: _photo(r['politician_profiles']),
+            office: _office(r['office_holders']),
           ),
       ]);
+    } on supabase.PostgrestException catch (e) {
+      return Result.err(ServerFailure(e.message, code: e.code));
+    } catch (_) {
+      return const Result.err(NetworkFailure());
+    }
+  }
+
+  /// "Councillor · Potton" from the profile's current office_holders row.
+  static String? _office(dynamic holders) {
+    if (holders is! List) return null;
+    for (final h in holders) {
+      if (h is! Map || h['is_current'] != true) continue;
+      final role = (h['election_role_types'] as Map?)?['role_title'];
+      final place = (h['map_shapes'] as Map?)?['name'];
+      final parts = [
+        if (role is String && role.isNotEmpty) role,
+        if (place is String && place.isNotEmpty) place,
+      ];
+      if (parts.isNotEmpty) return parts.join(' · ');
+    }
+    return null;
+  }
+
+  @override
+  Future<Result<List<TaggablePolitician>>> getLocalOfficials(
+    List<int> shapeIds,
+  ) async {
+    try {
+      final rows = (await _remote.getLocalOfficials(
+        shapeIds,
+      )).cast<Map<String, dynamic>>();
+      int order(Map<String, dynamic> r) =>
+          shapeIds.indexOf(r['map_shape_id'] as int);
+      final sorted = [...rows]..sort((a, b) => order(a).compareTo(order(b)));
+      final seen = <String>{};
+      final out = <TaggablePolitician>[];
+      for (final r in sorted) {
+        final profile = r['profiles'];
+        if (profile is! Map<String, dynamic>) continue;
+        if (!AppEnvironment.isDev && profile['is_test'] == true) continue;
+        final id = profile['id'] as String;
+        if (!seen.add(id)) continue;
+        final role = (r['election_role_types'] as Map?)?['role_title'];
+        final place = (r['map_shapes'] as Map?)?['name'];
+        out.add(
+          TaggablePolitician(
+            id: id,
+            fullName: profile['full_name'] as String? ?? 'Politician',
+            photoUrl: _photo(profile['politician_profiles']),
+            office: [
+              if (role is String && role.isNotEmpty) role,
+              if (place is String && place.isNotEmpty) place,
+            ].join(' · '),
+          ),
+        );
+      }
+      return Result.ok(out);
     } on supabase.PostgrestException catch (e) {
       return Result.err(ServerFailure(e.message, code: e.code));
     } catch (_) {

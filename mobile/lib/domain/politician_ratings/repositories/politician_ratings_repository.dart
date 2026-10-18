@@ -11,6 +11,7 @@ abstract interface class PoliticianRatingsRepository {
     required String politicianId,
     required int rating,
     String? comment,
+
     /// The article this rating was cast from, if any — recorded on the
     /// rating so a "via [headline]" link can render wherever reviews are
     /// listed later (see migration
