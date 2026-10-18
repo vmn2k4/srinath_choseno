@@ -4,6 +4,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PostCard, { type PostWithComments } from "./PostCard";
+import ElectionBreadcrumb from "./ElectionBreadcrumb";
+import PoliticianSidebar from "./PoliticianSidebar";
+import { Card, Spinner, EmptyState, Badge, Button } from "@/components/primitives";
+import { buildBoundarySlug } from "@/lib/utils/slugs";
 import { createClient } from "@/lib/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -91,44 +95,93 @@ export default function PostPermalinkClient({ postId }: { postId: string }) {
     reportContent(supabase, targetType, targetId, abuseType);
 
   if (loading) {
-    return <div className="max-w-4xl mx-auto px-4 py-16 text-center text-text-muted">Loading…</div>;
+    return (
+      <div className="w-full max-w-none px-4 lg:px-8 py-16 flex justify-center">
+        <Spinner />
+      </div>
+    );
   }
   if (!post) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-3">
-        <p className="text-text-main font-semibold">This post isn&apos;t available.</p>
-        <Link href="/feed" className="text-primary text-sm font-semibold">
-          Go to your feed
-        </Link>
+      <div className="w-full max-w-none px-4 lg:px-8 py-8 space-y-4">
+        <ElectionBreadcrumb items={[{ name: "Home", href: "/" }, { name: "Feed", href: "/feed" }, { name: "Post" }]} />
+        <EmptyState
+          title="This post isn't available"
+          description="It may have been removed, or the link is wrong."
+          action={
+            <Link href="/feed">
+              <Button>Go to your feed</Button>
+            </Link>
+          }
+        />
       </div>
     );
   }
 
+  type Shape = { id: number; name: string; boundary_type: string; country: string };
+  const rawBoundaries = ((post as unknown as { post_boundaries?: Array<{ map_shapes: Shape | null }> }).post_boundaries) || [];
+  const shapes = rawBoundaries.map((b) => b.map_shapes).filter((m): m is Shape => !!m && m.id != null);
+  const uniqueShapes = shapes.filter((m, i) => shapes.findIndex((x) => x.id === m.id) === i);
+  const first = uniqueShapes[0];
+  const crumbs: Array<{ name: string; href?: string }> = [{ name: "Home", href: "/" }, { name: "Feed", href: "/feed" }];
+  if (first) crumbs.push({ name: first.name, href: `/elections/${buildBoundarySlug(first)}` });
+  crumbs.push({ name: "Post" });
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-4">
-      <Link href="/feed" className="text-sm font-semibold text-text-muted hover:text-text-main">
-        ← Feed
-      </Link>
-      <PostCard
-        post={post}
-        showVoteBar
-        onVote={handleVote}
-        canComment={canComment}
-        onRequireAuth={user ? undefined : requireAuth}
-        commentBlockedMessage={
-          user && !canComment
-            ? `Only people in ${areaLabel} can join this conversation. You can read the thread and see the reactions.`
-            : null
-        }
-        commentValue={comment}
-        onCommentChange={setComment}
-        onSubmitComment={handleComment}
-        commentError={commentError}
-        politicianAuthor={author}
-        onReport={user ? handleReport : undefined}
-        boundaryName={areas[0] ?? null}
-        mentions={mentions}
-      />
+    <div className="w-full max-w-none animate-fade-in pb-20 px-4 lg:px-8 py-6 space-y-4">
+      <ElectionBreadcrumb items={crumbs} />
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 min-w-0 space-y-4">
+          <PostCard
+            post={post}
+            showVoteBar
+            onVote={handleVote}
+            canComment={canComment}
+            onRequireAuth={user ? undefined : requireAuth}
+            commentBlockedMessage={
+              user && !canComment
+                ? `Only people in ${areaLabel} can join this conversation. You can read the thread and see the reactions.`
+                : null
+            }
+            commentValue={comment}
+            onCommentChange={setComment}
+            onSubmitComment={handleComment}
+            commentError={commentError}
+            politicianAuthor={author}
+            onReport={user ? handleReport : undefined}
+            boundaryName={areas[0] ?? null}
+            mentions={mentions}
+          />
+        </div>
+        <div className="w-full lg:w-80 shrink-0 space-y-4">
+          {uniqueShapes.length > 0 && (
+            <Card padding="sm" className="space-y-2">
+              <h2 className="text-sm font-bold text-text-main">Posted in</h2>
+              <div className="flex flex-wrap gap-2">
+                {uniqueShapes.map((m) => (
+                  <Link key={m.id} href={`/elections/${buildBoundarySlug(m)}`}>
+                    <Badge>{m.name}</Badge>
+                  </Link>
+                ))}
+              </div>
+            </Card>
+          )}
+          {first && (
+            <PoliticianSidebar
+              profile={{ country: first.country }}
+              activeTab={`shape-${first.id}`}
+              selectedPill={{
+                key: `shape-${first.id}`,
+                districtName: first.name,
+                divisionType: first.boundary_type,
+                filterType: "shape",
+                shapeId: first.id,
+              }}
+              memberships={uniqueShapes}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

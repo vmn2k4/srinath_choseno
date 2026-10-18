@@ -261,7 +261,7 @@ export async function burnGhostIdentityViaRpc(supabase: Client) {
 export async function getPostById(supabase: Client, postId: string) {
   let query = supabase
     .from("posts")
-    .select("*, comments(*), post_boundaries(map_shape_id, map_shapes(name, boundary_type)), news_articles(slug, event_date, published_at)")
+    .select("*, comments(*), post_boundaries(map_shape_id, map_shapes(id, name, boundary_type, country)), news_articles(slug, event_date, published_at)")
     .eq("id", postId);
   if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
   return query.maybeSingle();
