@@ -367,103 +367,293 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
         _text.text.trim().isNotEmpty ||
         _imageBytes != null ||
         _videoUrl != null;
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.all(ChosenoSpacing.md),
-        padding: const EdgeInsets.all(ChosenoSpacing.md),
-        decoration: BoxDecoration(
-          color: palette.surface,
-          borderRadius: BorderRadius.circular(ChosenoRadii.card),
-          border: Border.all(color: palette.borderLight),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
+    final busy = _submitting || _videoUploading;
+    final screenH = MediaQuery.of(context).size.height;
+    return Container(
+      constraints: BoxConstraints(maxHeight: screenH * 0.88),
+      decoration: BoxDecoration(
+        color: palette.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Drag handle
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(top: 10, bottom: 4),
+                decoration: BoxDecoration(
+                  color: palette.borderLight,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            // Header: close · title · Post
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                ChosenoSpacing.xs,
+                0,
+                ChosenoSpacing.md,
+                0,
+              ),
+              child: Row(
                 children: [
+                  IconButton(
+                    icon: Icon(Icons.close, color: palette.textMain),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
                   Expanded(
                     child: Text(
                       'New post',
+                      textAlign: TextAlign.center,
                       style: ChosenoTypography.display(
                         color: palette.textMain,
-                        fontSize: 18,
+                        fontSize: 17,
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
+                  const SizedBox(width: 48),
                 ],
               ),
-              TextField(
-                controller: _text,
-                focusNode: _focus,
-                onChanged: (v) {
-                  setState(() {});
-                  _onTextChanged(v);
-                },
-                maxLines: 6,
-                minLines: 3,
-                decoration: InputDecoration(
-                  hintText: widget.hint,
-                  border: InputBorder.none,
+            ),
+            Divider(height: 12, color: palette.borderLight),
+            Flexible(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: ChosenoSpacing.md,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: ChosenoSpacing.xs),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: palette.primary.withValues(
+                              alpha: 0.14,
+                            ),
+                            child: Icon(Icons.person, color: palette.primary),
+                          ),
+                          const SizedBox(width: ChosenoSpacing.sm),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Share with your community',
+                                  style: ChosenoTypography.body(
+                                    color: palette.textMain,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                if (widget.targets.length > 1)
+                                  _targetPicker(palette),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    TextField(
+                      controller: _text,
+                      focusNode: _focus,
+                      onChanged: (v) {
+                        setState(() {});
+                        _onTextChanged(v);
+                      },
+                      maxLines: null,
+                      minLines: 4,
+                      keyboardType: TextInputType.multiline,
+                      textCapitalization: TextCapitalization.sentences,
+                      style: ChosenoTypography.body(
+                        color: palette.textMain,
+                        fontSize: 17,
+                        height: 1.45,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: widget.hint,
+                        hintStyle: ChosenoTypography.body(
+                          color: palette.textMuted,
+                          fontSize: 17,
+                          height: 1.45,
+                        ),
+                        filled: false,
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: ChosenoSpacing.sm,
+                        ),
+                      ),
+                    ),
+                    if (_text.text.isEmpty &&
+                        _imageBytes == null &&
+                        _videoUrl == null)
+                      _starterChips(palette),
+                    if (_suggestions.isNotEmpty) _suggestionList(palette),
+                    if (_imageBytes != null) _imagePreview(palette),
+                    if (_videoUrl != null) _videoChip(palette),
+                    if (_link != null) _linkPreview(palette),
+                    if (_videoPanel && _videoUrl == null)
+                      _videoPanelView(palette),
+                    if (_error != null)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: ChosenoSpacing.sm,
+                        ),
+                        child: Text(
+                          _error!,
+                          style: ChosenoTypography.body(
+                            color: palette.danger,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
-              if (widget.targets.length > 1) _targetPicker(palette),
-              if (_suggestions.isNotEmpty) _suggestionList(palette),
-              if (_imageBytes != null) _imagePreview(palette),
-              if (_videoUrl != null) _videoChip(palette),
-              if (_link != null) _linkPreview(palette),
-              if (_videoPanel && _videoUrl == null) _videoPanelView(palette),
-              if (_error != null) ...[
-                const SizedBox(height: ChosenoSpacing.xs),
-                Text(
-                  _error!,
-                  style: ChosenoTypography.body(
-                    color: palette.danger,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-              const SizedBox(height: ChosenoSpacing.sm),
-              Row(
+            ),
+            // Attach toolbar
+            Divider(height: 1, color: palette.borderLight),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: ChosenoSpacing.sm,
+                vertical: ChosenoSpacing.sm,
+              ),
+              child: Row(
                 children: [
-                  AppButton(
-                    label: 'Photo',
+                  _toolButton(
+                    palette,
                     icon: Icons.image_outlined,
-                    variant: AppButtonVariant.text,
-                    tone: AppButtonTone.defaultTone,
-                    onPressed: _submitting ? null : _pickImage,
+                    label: 'Photo',
+                    onTap: _submitting ? null : _pickImage,
                   ),
                   if (widget.allowVideo)
-                    AppButton(
-                      label: 'Video Pitch',
+                    _toolButton(
+                      palette,
                       icon: Icons.videocam_outlined,
-                      variant: AppButtonVariant.text,
-                      tone: _videoPanel
-                          ? AppButtonTone.primary
-                          : AppButtonTone.defaultTone,
-                      onPressed: _submitting || _videoUrl != null
+                      label: 'Video Pitch',
+                      active: _videoPanel,
+                      onTap: _submitting || _videoUrl != null
                           ? null
                           : () => setState(() => _videoPanel = !_videoPanel),
                     ),
+                  _toolButton(
+                    palette,
+                    icon: Icons.alternate_email,
+                    label: 'Tag',
+                    onTap: _insertTag,
+                  ),
                   const Spacer(),
-                  AppButton(
-                    label: 'Post',
-                    loading: _submitting,
-                    onPressed: _submitting || !canPost || _videoUploading
-                        ? null
-                        : _submit,
+                  SizedBox(
+                    height: 48,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 28),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: busy || !canPost ? null : _submit,
+                      child: _submitting
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(
+                              'Post',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  void _insertTag() {
+    final t = _text.text;
+    final sel = _text.selection;
+    final at = sel.isValid ? sel.baseOffset : t.length;
+    final needsSpace = at > 0 && !RegExp(r'\s').hasMatch(t[at - 1]);
+    final ins = needsSpace ? ' @' : '@';
+    _text.value = TextEditingValue(
+      text: t.replaceRange(at, at, ins),
+      selection: TextSelection.collapsed(offset: at + ins.length),
+    );
+    _focus.requestFocus();
+    setState(() {});
+  }
+
+  Widget _starterChips(ChosenoPalette palette) {
+    Widget chip(IconData icon, String label, VoidCallback onTap) => ActionChip(
+      avatar: Icon(icon, size: 18, color: palette.primary),
+      label: Text(label),
+      labelStyle: ChosenoTypography.body(
+        color: palette.textMain,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+      ),
+      backgroundColor: palette.surfaceHover,
+      side: BorderSide(color: palette.borderLight),
+      shape: const StadiumBorder(),
+      onPressed: onTap,
+    );
+    return Padding(
+      padding: const EdgeInsets.only(bottom: ChosenoSpacing.md),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          chip(Icons.photo_camera_outlined, 'Add a photo', _pickImage),
+          chip(Icons.help_outline, 'Ask your neighbours', () {
+            _text.text = 'Question for my community: ';
+            _text.selection = TextSelection.collapsed(
+              offset: _text.text.length,
+            );
+            _focus.requestFocus();
+            setState(() {});
+          }),
+          chip(Icons.alternate_email, 'Tag a politician', _insertTag),
+        ],
+      ),
+    );
+  }
+
+  Widget _toolButton(
+    ChosenoPalette palette, {
+    required IconData icon,
+    required String label,
+    required VoidCallback? onTap,
+    bool active = false,
+  }) {
+    final color = onTap == null
+        ? palette.textMuted.withValues(alpha: 0.5)
+        : (active ? palette.primary : palette.textSecondary);
+    // Icon-only so the row fits beside the big Post button on any phone.
+    return IconButton(
+      tooltip: label,
+      iconSize: 26,
+      padding: const EdgeInsets.all(12),
+      onPressed: onTap,
+      icon: Icon(icon, color: color),
     );
   }
 
@@ -519,18 +709,41 @@ class _PostComposerState extends ConsumerState<_PostComposer> {
     if (picked != null && mounted) setState(() => _targetId = picked.id);
   }
 
-  Widget _targetPicker(ChosenoPalette palette) => Padding(
-    padding: const EdgeInsets.only(bottom: ChosenoSpacing.sm),
-    child: InkWell(
-      borderRadius: BorderRadius.circular(ChosenoRadii.sm * 2),
-      onTap: _submitting ? null : _chooseTarget,
-      child: InputDecorator(
-        decoration: const InputDecoration(
-          labelText: 'Post to',
-          prefixIcon: Icon(Icons.groups_outlined),
-          suffixIcon: Icon(Icons.arrow_drop_down),
+  Widget _targetPicker(ChosenoPalette palette) => Align(
+    alignment: Alignment.centerLeft,
+    child: Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Material(
+        color: palette.primary.withValues(alpha: 0.08),
+        shape: StadiumBorder(
+          side: BorderSide(color: palette.primary.withValues(alpha: 0.25)),
         ),
-        child: Text(_targetLabel, overflow: TextOverflow.ellipsis),
+        child: InkWell(
+          customBorder: const StadiumBorder(),
+          onTap: _submitting ? null : _chooseTarget,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.groups_outlined, size: 18, color: palette.primary),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    'Post to: $_targetLabel',
+                    overflow: TextOverflow.ellipsis,
+                    style: ChosenoTypography.body(
+                      color: palette.primary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Icon(Icons.expand_more, size: 18, color: palette.primary),
+              ],
+            ),
+          ),
+        ),
       ),
     ),
   );
