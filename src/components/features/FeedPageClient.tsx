@@ -18,6 +18,7 @@ import {
   Video,
   ShieldAlert,
   X,
+  AtSign,
 } from "lucide-react";
 import LinkPreview from "./LinkPreview";
 import { useTranslation } from "@/contexts/LanguageContext";
@@ -31,7 +32,9 @@ import { parseYouTubeId, youTubeWatchUrl } from "@/lib/utils/youtube";
 const PlayInterviewReel = dynamic(() => import("./PlayInterviewReel"), { ssr: false });
 import PoliticianSidebar from "./PoliticianSidebar";
 import MediaThumbnail from "./MediaThumbnail";
-import MentionTextarea from "./MentionTextarea";
+import MentionTextarea, { type MentionTextareaHandle } from "./MentionTextarea";
+import MentionPickerModal from "./MentionPickerModal";
+import Modal from "@/components/primitives/Modal";
 import FeedSortControl from "./FeedSortControl";
 import { sortByEngagement, defaultSortMode } from "@/lib/utils/feedSort";
 import {
@@ -159,6 +162,8 @@ export default function FeedPageClient() {
   // full textarea + toolbar, which used to dominate the first screenful on
   // mobile before any actual feed content appeared.
   const [composerOpen, setComposerOpen] = useState(false);
+  const [mentionPickerOpen, setMentionPickerOpen] = useState(false);
+  const composerTextRef = useRef<MentionTextareaHandle>(null);
 
   // Ticking clock for the ephemeral story strip (rule 6) — kept in state
   // and updated on an interval rather than calling Date.now() during render,
@@ -826,39 +831,97 @@ export default function FeedPageClient() {
                   content is visible. Expands automatically once there's a
                   draft, image, or video pending. */}
               {profile?.current_ghost_id && (
-                <Card padding={composerOpen ? "md" : "sm"}>
-                  {!composerOpen ? (
-                    <button
-                      type="button"
-                      onClick={() => setComposerOpen(true)}
-                      className="w-full flex items-center gap-2.5 text-left cursor-pointer"
-                    >
-                      <Avatar src={avatarUrl} name={profile?.full_name} size="sm" />
-                      <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
-                        {t("feed.createPostPlaceholder")}
-                      </span>
-                      <span className="shrink-0 flex items-center gap-1 text-text-muted">
-                        <ImageIcon size={18} aria-hidden="true" />
-                        {isPolitician && <Video size={18} aria-hidden="true" />}
-                      </span>
-                    </button>
-                  ) : (
-                    <form onSubmit={handleCreatePost} className="space-y-3">
+                <Card padding="sm">
+                  <button
+                    type="button"
+                    onClick={() => setComposerOpen(true)}
+                    className="w-full flex items-center gap-2.5 text-left cursor-pointer"
+                  >
+                    <Avatar src={avatarUrl} name={profile?.full_name} size="sm" />
+                    <span className="flex-1 min-w-0 text-sm text-text-muted bg-surface/50 border border-border-light/30 rounded-full px-4 py-2 truncate">
+                      {newPostContent.trim() ? `Draft: ${newPostContent.trim()}` : t("feed.createPostPlaceholder")}
+                    </span>
+                    <span className="shrink-0 flex items-center gap-1 text-text-muted">
+                      <ImageIcon size={18} aria-hidden="true" />
+                      {isPolitician && <Video size={18} aria-hidden="true" />}
+                    </span>
+                  </button>
+                </Card>
+              )}
+
+              {/* Post composer — same layout as the mobile app: header with
+                  close + title, "Share with your community" + Post-to chip,
+                  an open text area, then ONE toolbar row (photo, video pitch
+                  for politicians, @ tag) with the Post button at its end. */}
+              {profile?.current_ghost_id && composerOpen && (
+                <Modal
+                  className="w-full max-w-xl"
+                  onOverlayClick={() => setComposerOpen(false)}
+                >
+                  <form
+                    onSubmit={handleCreatePost}
+                    role="dialog"
+                    aria-label="New post"
+                    className="flex flex-col max-h-[90vh] bg-surface rounded-2xl border border-border-light/50 shadow-xl overflow-hidden"
+                  >
+                    <div className="flex items-center gap-2 px-3 py-2.5 border-b border-border-light/40">
+                      <button
+                        type="button"
+                        onClick={() => setComposerOpen(false)}
+                        aria-label="Close"
+                        className="p-1.5 rounded-lg text-text-main hover:bg-surface-hover cursor-pointer"
+                      >
+                        <X size={20} />
+                      </button>
+                      <h3 className="flex-1 text-center text-base font-bold text-text-main pr-8">New post</h3>
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto px-4 pt-3 pb-1 space-y-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar src={avatarUrl} name={profile?.full_name} size="md" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-bold text-text-main">Share with your community</p>
+                          {filterPills.length > 2 && (
+                            <label className="mt-0.5 inline-flex max-w-full items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary-light">
+                              <Users size={14} className="shrink-0" />
+                              <span className="shrink-0">Post to:</span>
+                              <select
+                                value={postTarget}
+                                onChange={(e) => setPostTarget(e.target.value)}
+                                className="min-w-0 truncate bg-transparent font-semibold outline-none cursor-pointer"
+                              >
+                                <option value="all">All my districts</option>
+                                {filterPills
+                                  .filter((p) => p.filterType === "shape" && p.shapeId != null)
+                                  .map((p) => (
+                                    <option key={p.key} value={String(p.shapeId)}>
+                                      {p.districtName}
+                                      {p.divisionType ? ` · ${p.divisionType}` : ""}
+                                    </option>
+                                  ))}
+                              </select>
+                            </label>
+                          )}
+                        </div>
+                      </div>
+
                       <MentionTextarea
                         supabase={supabase}
+                        variant="plain"
+                        handleRef={composerTextRef}
                         placeholder="What's happening in your constituency? Type @ to tag a politician"
                         value={newPostContent}
                         onChange={handlePostTextChange}
                         onMentionsChange={setMentionedPoliticianIds}
                         viewerShapeIds={memberships.map((m) => m.id)}
                         viewerCountry={profile?.country}
-                        rows={3}
+                        rows={5}
                         autoFocus
                       />
 
-                    {postError && <Alert tone="danger">{postError}</Alert>}
+                      {postError && <Alert tone="danger">{postError}</Alert>}
 
-                    {(imagePreview || uploadedVideoUrl) && (
+                      {(imagePreview || uploadedVideoUrl) && (
                       <div className="flex gap-3 items-end flex-wrap">
                         {imagePreview && (
                           <div className="flex gap-2 items-end">
@@ -963,76 +1026,69 @@ export default function FeedPageClient() {
                       </div>
                     )}
 
-                    {filterPills.length > 2 && (
-                      <label className="flex items-center gap-2 text-xs text-text-muted">
-                        <span className="shrink-0 font-semibold">Post to</span>
-                        <select
-                          value={postTarget}
-                          onChange={(e) => setPostTarget(e.target.value)}
-                          className="min-w-0 flex-1 rounded-lg border border-border-light/50 bg-surface px-2 py-1.5 text-xs text-text-main"
-                        >
-                          <option value="all">All my districts</option>
-                          {filterPills
-                            .filter((p) => p.filterType === "shape" && p.shapeId != null)
-                            .map((p) => (
-                              <option key={p.key} value={String(p.shapeId)}>
-                                {p.districtName}
-                                {p.divisionType ? ` · ${p.divisionType}` : ""}
-                              </option>
-                            ))}
-                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-1 px-3 py-2.5 border-t border-border-light/40">
+                      <label
+                        title="Add a photo"
+                        className="cursor-pointer p-2.5 rounded-xl text-text-secondary hover:text-text-main hover:bg-surface-hover transition-colors"
+                      >
+                        <ImageIcon size={22} />
+                        <span className="sr-only">Photo</span>
+                        <input type="file" accept="image/*" className="hidden" onChange={handleImageSelect} />
                       </label>
-                    )}
 
-                    <div className="flex items-center justify-between pt-2">
-                      <div className="flex items-center gap-1">
-                        <label className="cursor-pointer text-xs text-text-muted hover:text-text-main flex items-center gap-1 p-1.5 rounded-lg hover:bg-surface/50 transition-colors">
-                          <ImageIcon size={16} />
-                          <span>Photo</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={handleImageSelect}
-                          />
-                        </label>
-
-                        {isPolitician && (
-                          <button
-                            type="button"
-                            onClick={() => setShowVideoRecorder((v) => !v)}
-                            disabled={!!uploadedVideoUrl}
-                            className={`text-xs flex items-center gap-1 p-1.5 rounded-lg transition-colors cursor-pointer disabled:opacity-50 ${
-                              showVideoRecorder
-                                ? "text-primary bg-primary/10"
-                                : "text-text-muted hover:text-text-main hover:bg-surface/50"
-                            }`}
-                          >
-                            <Video size={16} />
-                            <span>Video Pitch</span>
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-2">
+                      {isPolitician && (
                         <button
                           type="button"
-                          onClick={closeComposerIfEmpty}
-                          className="text-xs font-semibold text-text-muted hover:text-text-main px-2 py-1.5 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer"
+                          title="Video pitch"
+                          aria-label="Video pitch"
+                          onClick={() => setShowVideoRecorder((v) => !v)}
+                          disabled={!!uploadedVideoUrl}
+                          className={`p-2.5 rounded-xl transition-colors cursor-pointer disabled:opacity-40 ${
+                            showVideoRecorder
+                              ? "text-primary bg-primary/10"
+                              : "text-text-secondary hover:text-text-main hover:bg-surface-hover"
+                          }`}
                         >
-                          Cancel
+                          <Video size={22} />
                         </button>
-                        <Button
-                          type="submit"
-                          disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
-                        >
-                          {submitting ? t("feed.posting") : t("feed.postBtn")}
-                        </Button>
-                      </div>
+                      )}
+
+                      <button
+                        type="button"
+                        title="Tag an official"
+                        aria-label="Tag an official"
+                        onClick={() => setMentionPickerOpen(true)}
+                        className="p-2.5 rounded-xl text-text-secondary hover:text-text-main hover:bg-surface-hover transition-colors cursor-pointer"
+                      >
+                        <AtSign size={22} />
+                      </button>
+
+                      <div className="flex-1" />
+                      <Button
+                        type="submit"
+                        size="lg"
+                        disabled={submitting || (!newPostContent.trim() && !imageFile && !uploadedVideoUrl)}
+                      >
+                        {submitting ? t("feed.posting") : t("feed.postBtn")}
+                      </Button>
                     </div>
                   </form>
-                  )}
-                </Card>
+                </Modal>
+              )}
+
+              {mentionPickerOpen && (
+                <MentionPickerModal
+                  supabase={supabase}
+                  viewerShapeIds={memberships.map((m) => m.id)}
+                  viewerCountry={profile?.country}
+                  onClose={() => setMentionPickerOpen(false)}
+                  onSelect={(official) => {
+                    composerTextRef.current?.insertMention(official);
+                    setMentionPickerOpen(false);
+                  }}
+                />
               )}
 
               {/* Video Stories Strip — renders nothing when empty (see

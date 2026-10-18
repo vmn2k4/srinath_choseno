@@ -310,6 +310,98 @@ export async function searchTaggablePoliticians(
   return { data: sorted.slice(0, limit), error: null };
 }
 
+// ── @mention picker (the composer's "@" button) ────────────────────────────
+// A tagged official as the picker shows it: who they are + the office they
+// currently hold ("Councillor · Surrey"), if any.
+export type MentionOfficial = {
+  id: string;
+  fullName: string;
+  avatarUrl: string | null;
+  office: string | null;
+};
+
+type OfficeHolderRef = {
+  is_current?: boolean | null;
+  map_shapes?: { name?: string | null } | null;
+  election_role_types?: { role_title?: string | null } | null;
+};
+
+function officeLabel(role?: string | null, place?: string | null) {
+  const parts = [role, place].filter((p): p is string => Boolean(p));
+  return parts.length ? parts.join(" · ") : null;
+}
+
+// The current office out of a profile's office_holders rows.
+function currentOffice(holders: OfficeHolderRef[] | null | undefined) {
+  const cur = (holders || []).find((h) => h.is_current);
+  return cur ? officeLabel(cur.election_role_types?.role_title, cur.map_shapes?.name) : null;
+}
+
+// Current office holders of the viewer's own districts, in the order the
+// shape ids are given -- the picker's first section. Every current holder has
+// a linked profile, which is what an @mention resolves to.
+export async function getLocalOfficials(supabase: Client, shapeIds: number[]): Promise<MentionOfficial[]> {
+  if (shapeIds.length === 0) return [];
+  const { data, error } = await supabase
+    .from("office_holders")
+    .select(
+      "map_shape_id, election_role_types(role_title), map_shapes(name), profiles!office_holders_linked_profile_id_fkey(id, full_name, is_test, politician_profiles(avatar_url, photo_url))"
+    )
+    .in("map_shape_id", shapeIds)
+    .eq("is_current", true)
+    .not("linked_profile_id", "is", null);
+  if (error || !data) return [];
+
+  const sorted = [...data].sort((a, b) => shapeIds.indexOf(a.map_shape_id) - shapeIds.indexOf(b.map_shape_id));
+  const seen = new Set<string>();
+  const out: MentionOfficial[] = [];
+  for (const row of sorted) {
+    const profile = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
+    if (!profile || seen.has(profile.id)) continue;
+    if (!isDevEnvironment() && profile.is_test) continue;
+    seen.add(profile.id);
+    const pp = Array.isArray(profile.politician_profiles) ? profile.politician_profiles[0] : profile.politician_profiles;
+    out.push({
+      id: profile.id,
+      fullName: profile.full_name || "Politician",
+      avatarUrl: pp?.photo_url || pp?.avatar_url || null,
+      office: officeLabel(
+        (row.election_role_types as { role_title?: string | null } | null)?.role_title,
+        (row.map_shapes as { name?: string | null } | null)?.name
+      ),
+    });
+  }
+  return out;
+}
+
+// One page of officials, alphabetical -- the picker's scrollable "everyone"
+// list. Empty `query` lists all; `country` restricts to one country.
+export async function listTaggablePoliticians(
+  supabase: Client,
+  { query = "", country = null, limit = 30, offset = 0 }: { query?: string; country?: string | null; limit?: number; offset?: number }
+): Promise<MentionOfficial[]> {
+  let q = supabase
+    .from("profiles")
+    .select(
+      "id, full_name, country, politician_profiles(avatar_url, photo_url), office_holders!office_holders_linked_profile_id_fkey(is_current, map_shapes(name), election_role_types(role_title))"
+    )
+    .eq("role", "politician")
+    .ilike("full_name", `%${query.trim()}%`);
+  if (!isDevEnvironment()) q = q.eq("is_test", false);
+  if (country) q = q.eq("country", country);
+  const { data, error } = await q.order("full_name", { ascending: true }).range(offset, offset + limit - 1);
+  if (error || !data) return [];
+  return data.map((row) => {
+    const pp = Array.isArray(row.politician_profiles) ? row.politician_profiles[0] : row.politician_profiles;
+    return {
+      id: row.id,
+      fullName: row.full_name || "Politician",
+      avatarUrl: pp?.photo_url || pp?.avatar_url || null,
+      office: currentOffice(row.office_holders as unknown as OfficeHolderRef[]),
+    };
+  });
+}
+
 // profiles — role/full_name/country/constituency upsert, shared by
 // OnboardingFlow (passes onboardingCompleted:true) and EditProfileFlow (omits it).
 export async function upsertProfileCore(

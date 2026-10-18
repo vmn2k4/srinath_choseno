@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { searchTaggablePoliticians } from "@/lib/services/profile";
@@ -17,6 +17,13 @@ type MentionCandidate = {
 };
 
 type SearchResultRow = NonNullable<Awaited<ReturnType<typeof searchTaggablePoliticians>>["data"]>[number];
+
+export type MentionTextareaHandle = {
+  // Drops "@Full Name " at the caret (the composer's @ button), tracked as a
+  // mention like one picked from the inline suggestions.
+  insertMention: (candidate: { id: string; fullName: string }) => void;
+  focus: () => void;
+};
 
 // Twitter-style "@" autocomplete, shared by the Feed/PoliticianWall/
 // CandidacyWall composers (three near-identical <Textarea>s otherwise). Owns
@@ -35,6 +42,8 @@ export default function MentionTextarea({
   className = "",
   viewerShapeIds,
   viewerCountry,
+  variant = "box",
+  handleRef,
 }: {
   supabase: Client;
   value: string;
@@ -49,6 +58,10 @@ export default function MentionTextarea({
   // Omit either to fall back to plain alphabetical order.
   viewerShapeIds?: number[];
   viewerCountry?: string | null;
+  // "plain" is the borderless, larger-type composer look (inside the post
+  // modal); "box" is the original filled input used by the other composers.
+  variant?: "box" | "plain";
+  handleRef?: Ref<MentionTextareaHandle>;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -165,6 +178,27 @@ export default function MentionTextarea({
     });
   }
 
+  useImperativeHandle(handleRef, () => ({
+    focus: () => textareaRef.current?.focus(),
+    insertMention: (candidate) => {
+      const el = textareaRef.current;
+      const caret = el?.selectionStart ?? value.length;
+      const before = value.slice(0, caret);
+      const after = value.slice(caret);
+      const lead = before.length > 0 && !/\s$/.test(before) ? " " : "";
+      const inserted = `${lead}@${candidate.fullName} `;
+      onChange(`${before}${inserted}${after}`);
+      setInsertedMentions((prev) => new Map(prev).set(candidate.fullName, candidate.id));
+      requestAnimationFrame(() => {
+        const t = textareaRef.current;
+        if (!t) return;
+        t.focus();
+        const pos = before.length + inserted.length;
+        t.setSelectionRange(pos, pos);
+      });
+    },
+  }));
+
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (!open || suggestions.length === 0) return;
     if (e.key === "ArrowDown") {
@@ -193,7 +227,11 @@ export default function MentionTextarea({
         placeholder={placeholder}
         rows={rows}
         autoFocus={autoFocus}
-        className={`w-full bg-surface-hover border border-border-light rounded-xl p-3 text-sm text-text-main placeholder:text-text-muted outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all resize-none disabled:opacity-50 ${className}`.trim()}
+        className={`${
+          variant === "plain"
+            ? "w-full bg-transparent py-2 text-base leading-relaxed text-text-main placeholder:text-text-muted outline-none resize-none disabled:opacity-50"
+            : "w-full bg-surface-hover border border-border-light rounded-xl p-3 text-sm text-text-main placeholder:text-text-muted outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all resize-none disabled:opacity-50"
+        } ${className}`.trim()}
       />
 
       {open && (loading || suggestions.length > 0) && (
