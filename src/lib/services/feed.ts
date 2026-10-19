@@ -232,7 +232,8 @@ export async function getActiveElectionsForUser(supabase: Client) {
     .from("election_seats")
     .select("id, role_title, election_id, map_shape_id, map_shapes(name), elections!inner(id, name, election_date, status)")
     .in("map_shape_id", shapeIds)
-    .in("elections.status", ["nominations_open", "active"]);
+    .in("elections.status", ["nominations_open", "nominations_closed", "active"])
+    .gte("elections.election_date", new Date().toISOString().slice(0, 10));
 
   if (error || !seats) return { data: [], error };
 

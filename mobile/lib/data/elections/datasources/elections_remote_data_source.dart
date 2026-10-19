@@ -47,6 +47,8 @@ class ElectionsRemoteDataSource {
 
   Future<void> syncElectionStatus() => _client.rpc('sync_election_status');
 
+  String _today() => DateTime.now().toIso8601String().substring(0, 10);
+
   Future<List<dynamic>> getActiveSeatsByShapeIds(List<int> shapeIds) async {
     await syncElectionStatus();
     return _client
@@ -59,7 +61,8 @@ class ElectionsRemoteDataSource {
           'nominations_open',
           'nominations_closed',
           'active',
-        ]);
+        ])
+        .gte('elections.election_date', _today());
   }
 
   Future<List<dynamic>> getActiveSeats({
@@ -77,6 +80,7 @@ class ElectionsRemoteDataSource {
           'nominations_closed',
           'active',
         ])
+        .gte('elections.election_date', _today())
         .order('role_title')
         .range(offset, offset + limit - 1);
   }

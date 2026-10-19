@@ -1166,7 +1166,8 @@ export default function PoliticianWallClient({
                 // checks candidacies.length > 0). Same open-race status set
                 // used everywhere else in the app (see
                 // getOpenSeatsNearShapeIds in elections.ts).
-                const isOpenRace = ["nominations_open", "nominations_closed", "active"].includes(election?.status);
+                const isOpenRace = ["nominations_open", "nominations_closed", "active"].includes(election?.status)
+                  && (!election?.election_date || election.election_date >= new Date().toISOString().slice(0, 10));
 
                 if (!isOpenRace || !seat?.id) return null;
 
