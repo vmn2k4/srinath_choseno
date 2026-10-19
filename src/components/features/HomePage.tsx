@@ -17,8 +17,8 @@ import {
 import HomeLocateWidget from "@/components/features/home/HomeLocateWidget";
 import HomeFeedPreview from "@/components/features/home/HomeFeedPreview";
 import { HomeSignupButtons, HomeStickySignup } from "@/components/features/home/HomeSignup";
-import HomeBackdrop from "@/components/features/home/HomeBackdrop";
 import HomeViewportScale from "@/components/features/home/HomeViewportScale";
+import HomeStats from "@/components/features/home/HomeStats";
 import HomeMemberReviews from "@/components/features/home/HomeMemberReviews";
 import HomeTestimonial from "@/components/features/home/HomeTestimonial";
 import HomeSupportedCountries from "@/components/features/home/HomeSupportedCountries";
@@ -94,8 +94,6 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
   const faqList: { q: string; a: string }[] = Array.isArray(faqsData) ? faqsData : [];
 
   return (
-    <>
-    <HomeBackdrop />
     <HomeViewportScale>
     <div className="w-full overflow-x-clip">
       {/* The page now carries its own persistent sign-up surfaces (hero buttons +
@@ -153,6 +151,9 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
           </Reveal>
         </div>
       </HeroSection>
+
+      {/* ============ STATS — social proof straight under the hero ============ */}
+      <HomeStats />
 
       {/* ============ LOOKUP — the search-intent entry (who's running, rate my rep), finder-first ============ */}
       <section className="relative py-14 sm:py-24 px-4 sm:px-6" aria-labelledby="home-lookup-title">
@@ -375,6 +376,5 @@ export default function HomePage({ latestNews = [] }: HomePageProps) {
       </section>
     </div>
     </HomeViewportScale>
-    </>
   );
 }

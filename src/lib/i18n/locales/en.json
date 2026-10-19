@@ -251,6 +251,14 @@
         "q1": "I'm comfortable sharing my views on politicians here because my name isn't attached and the focus stays on the issues, not on me. There aren't many posts yet since the platform is new, but I hope it grows big. I'll keep sharing.",
         "q2": "I didn't even know which riding I lived in. It was so easy to see my electoral boundaries and find out who represents me.",
         "q3": "We usually vote for parties, not for the people actually running. I hope Choseno helps people see which candidates they align with and vote for the right person."
+      },
+      "stats": {
+        "title": "Choseno by the numbers",
+        "visitors": "Visitors in the last 90 days",
+        "countries": "Countries covered",
+        "note": "Visitors counted by our analytics over the last 90 days. Boundary and politician totals from our database.",
+        "boundaries": "Electoral boundaries mapped",
+        "politicians": "Elected officials & candidates you can discuss"
       }
     }
   },
