@@ -2,7 +2,7 @@ import { StrictMode, useCallback, useEffect, useMemo, useRef, useState } from "r
 import { createRoot } from "react-dom/client";
 import type { Session } from "@supabase/supabase-js";
 import {
-  ArrowLeft, AtSign, CheckCircle2, EyeOff, ExternalLink, Image as ImageIcon, Link2, LogOut, MapPin, ShieldAlert, Users, X,
+  ArrowLeft, AtSign, Home, UserRound, CheckCircle2, EyeOff, ExternalLink, Image as ImageIcon, Link2, LogOut, MapPin, ShieldAlert, Users, X,
 } from "lucide-react";
 import { supabase, SITE_URL } from "./supabase";
 import { resendSignupEmail, signInWithPassword, signOut, signUp, verifySignupCode } from "@/lib/services/auth";
@@ -44,6 +44,12 @@ function Header({ onSignOut }: { onSignOut?: () => void }) {
         <strong aria-label="Choseno"><span className="wm-a">Chosen</span><span className="wm-b">o</span></strong>
         <small>Companion · Voice of the Silent Majority</small>
       </div>
+      {onSignOut && (
+        <>
+          <a className="icon-btn" href={`${SITE_URL}/feed`} target="_blank" rel="noreferrer" aria-label="Open your feed on choseno.com" title="Your feed"><Home size={18} /></a>
+          <a className="icon-btn" href={`${SITE_URL}/profile`} target="_blank" rel="noreferrer" aria-label="Open your profile on choseno.com" title="Your profile"><UserRound size={18} /></a>
+        </>
+      )}
       {onSignOut && (
         <button type="button" className="icon-btn" onClick={onSignOut} aria-label="Sign out" title="Sign out">
           <LogOut size={18} />

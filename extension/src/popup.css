@@ -128,3 +128,4 @@ a { color: var(--primary); } button, select, input, textarea { font: inherit; co
 .districts { max-height: 78px; overflow-y: auto; flex-shrink: 0; }
 .body.scroll { overflow-y: hidden; }
 .mention-wrap { flex: 1; min-height: 72px; }
+.brand .icon-btn { width: 36px; height: 36px; }
