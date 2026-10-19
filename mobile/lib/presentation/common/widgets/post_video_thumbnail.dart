@@ -6,6 +6,7 @@
 import 'dart:typed_data';
 
 import 'package:chewie/chewie.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -154,6 +155,9 @@ class _YouTubeInlineState extends State<_YouTubeInline> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
+      onEnterFullScreen: () => SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp],
+      ),
       player: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
@@ -191,7 +195,7 @@ class _UploadedInlineState extends State<_UploadedInline> {
             () => _chewie = ChewieController(
               videoPlayerController: _video,
               autoPlay: true,
-              allowFullScreen: true,
+              allowFullScreen: false,
               aspectRatio: _video.value.aspectRatio,
             ),
           );
