@@ -264,6 +264,53 @@ async function youTubePreview(target: URL): Promise<Preview | null> {
   }
 }
 
+// ── Blocked links ────────────────────────────────────────────────────────
+// Our own domain blocklist (is_domain_blocked RPC), then Google Safe Browsing.
+// Both fail open: if either is unreachable or unconfigured the link is allowed
+// here (create_post/create_comment re-check the blocklist server-side).
+async function isBlockedByList(host: string): Promise<boolean> {
+  const base = Deno.env.get("SUPABASE_URL")
+  const key = Deno.env.get("SUPABASE_ANON_KEY")
+  if (!base || !key) return false
+  try {
+    const res = await fetch(`${base}/rest/v1/rpc/is_domain_blocked`, {
+      method: "POST",
+      headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_host: host }),
+      signal: AbortSignal.timeout(2_000),
+    })
+    return res.ok && (await res.json()) === true
+  } catch {
+    return false
+  }
+}
+
+async function isUnsafeBySafeBrowsing(url: string): Promise<boolean> {
+  const key = Deno.env.get("GOOGLE_SAFE_BROWSING_KEY")
+  if (!key) return false
+  try {
+    const res = await fetch(`https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${key}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client: { clientId: "choseno", clientVersion: "1.0" },
+        threatInfo: {
+          threatTypes: ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE", "POTENTIALLY_HARMFUL_APPLICATION"],
+          platformTypes: ["ANY_PLATFORM"],
+          threatEntryTypes: ["URL"],
+          threatEntries: [{ url }],
+        },
+      }),
+      signal: AbortSignal.timeout(2_000),
+    })
+    if (!res.ok) return false
+    const data = await res.json()
+    return Array.isArray(data?.matches) && data.matches.length > 0
+  } catch {
+    return false
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders })
   if (req.method !== "POST") return json({ error: "POST only" })
@@ -280,6 +327,12 @@ serve(async (req) => {
   } catch {
     return json({ error: "Invalid url" })
   }
+
+  const [listed, unsafe] = await Promise.all([
+    isBlockedByList(target.hostname),
+    isUnsafeBySafeBrowsing(target.toString()),
+  ])
+  if (listed || unsafe) return json({ error: "blocked", blocked: true })
 
   const key = target.toString()
   const hit = cache.get(key)
