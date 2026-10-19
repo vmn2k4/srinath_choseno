@@ -220,7 +220,7 @@ const TRUST_CHIPS = [
 // The one place the popup's sign-up buttons are defined, so the video modal and
 // the mission modal always offer the same two ways in: Google first (one tap,
 // opens the account picker), email second (the existing /auth sign-up page).
-function MissionAuthButtons({
+export function MissionAuthButtons({
   cta,
   href,
   onEmailClick,
@@ -260,7 +260,7 @@ function MissionAuthButtons({
   );
 }
 
-function GoogleMark() {
+export function GoogleMark() {
   return (
     <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -280,6 +280,7 @@ export default function MissionRegisterCTA({
   shareUrl,
   shareText,
   shareTrackingId,
+  hideSidebar = false,
 }: {
   variant: MissionCtaVariant;
   nextPath?: string;
@@ -298,6 +299,9 @@ export default function MissionRegisterCTA({
   shareUrl?: string;
   shareText?: string;
   shareTrackingId?: string;
+  // Pages with their own persistent sign-up surface (the homepage's hero +
+  // sticky bar) skip the floating card so two prompts never stack.
+  hideSidebar?: boolean;
 }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
@@ -314,7 +318,7 @@ export default function MissionRegisterCTA({
   const modalShownRef = useRef(false);
 
   useEffect(() => {
-    if (loading || user) return; // matches the component's own `if (loading || user) return null` -- an
+    if (loading || user || hideSidebar) return; // matches the component's own `if (loading || user) return null` -- an
     // impression fired here for a signed-in visitor would be counted against a CTA that never actually renders.
     const suppressed = isSuppressed(storageKey(SIDEBAR_DISMISSED_PREFIX, variant));
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -323,7 +327,7 @@ export default function MissionRegisterCTA({
       sidebarShownRef.current = true;
       trackMissionCtaShown({ variant, trigger: "sidebar" });
     }
-  }, [variant, loading, user]);
+  }, [variant, loading, user, hideSidebar]);
 
   useEffect(() => {
     if (loading || user) return;
@@ -557,7 +561,7 @@ export default function MissionRegisterCTA({
         </Modal>
       )}
 
-      {!sidebarDismissed && (
+      {!sidebarDismissed && !hideSidebar && (
         <div className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 sm:w-72 z-40 animate-fade-in">
           <Card padding="sm" className="relative !bg-surface shadow-xl border-primary/20 space-y-2">
             <button

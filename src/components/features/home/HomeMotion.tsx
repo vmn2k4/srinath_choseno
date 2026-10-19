@@ -393,7 +393,7 @@ export function HeroSection({ children }: { children: ReactNode }) {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[92vh] flex items-center justify-center px-6 py-10 sm:py-14 lg:py-6 overflow-hidden"
+      className="relative min-h-[calc(92vh/var(--home-zoom,1))] flex items-center justify-center px-6 py-10 sm:py-14 lg:py-6 overflow-hidden"
     >
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
         <ParallaxOrb className="orb orb-a" sectionRef={heroRef} range={[0, -180]} driftX={[0, 40, -20, 0]} duration={18} />
@@ -403,7 +403,7 @@ export function HeroSection({ children }: { children: ReactNode }) {
 
       <motion.div
         style={reduceMotion ? undefined : { y, opacity, scale }}
-        className="relative z-10 max-w-7xl mx-auto w-full"
+        className="relative z-10 max-w-7xl min-[1700px]:max-w-[100rem] mx-auto w-full"
       >
         {children}
       </motion.div>

@@ -174,6 +174,84 @@
       "titleMain": "Join your district.",
       "titleSub": "Vote informed.",
       "subtitle": "See what your neighbors are already saying, then walk into the booth knowing exactly who you're choosing."
+    },
+    "social": {
+      "badge": "The anonymous social network for politics",
+      "titleMain": "Say what you think about politics.",
+      "titleSub": "Not who you are.",
+      "subtitle": "Share your political opinions with people in your own riding, ward or district. No name on your posts. No arguments to get dragged into. Just your opinion.",
+      "trustPrivate": "Your name stays private",
+      "trustLocal": "Only your own community",
+      "trustNoReply": "No need to reply",
+      "microcopy": "Free. Takes about 10 seconds. Join early and earn a permanent Founder badge.",
+      "lookupLink": "Just looking? Find who represents you",
+      "googleCta": "Continue with Google",
+      "googleOpening": "Opening Google…",
+      "emailCta": "or sign up with email",
+      "stickyNote": "Free. Your real name is never shown.",
+      "feedHeader": "Example opinions from a community like yours",
+      "composerPlaceholder": "What do you think about politics?",
+      "postingAs": "Posting as",
+      "post": "Post",
+      "support": "Support",
+      "exampleNote": "Illustrative examples, not live posts.",
+      "how": {
+        "title": "See an opinion. Share yours. Move on.",
+        "subtitle": "Built for saying your piece, not for winning arguments.",
+        "s1Title": "We find your community",
+        "s1Text": "Share your location once and we match it to your real voting area. No address to type, no forms.",
+        "s2Title": "Post as a Ghost",
+        "s2Text": "Your opinion appears under an anonymous Ghost name. You can burn it and start fresh whenever you like.",
+        "s3Title": "Get support, skip the fights",
+        "s3Text": "Neighbours can support what you said. Nobody can pull you into a long reply thread you didn't ask for.",
+        "cta": "Share your first opinion"
+      },
+      "privacy": {
+        "title": "Politics is public. Your identity doesn't have to be.",
+        "subtitle": "Here is exactly what is and isn't visible, so you can decide with your eyes open.",
+        "publicTitle": "What others can see",
+        "public1": "Your opinion and the Ghost name it's posted under",
+        "public2": "The community it belongs to, such as your riding or ward",
+        "public3": "Public posts can show up in search engines, so never include details that identify you",
+        "privateTitle": "What stays private",
+        "private1": "Your real name is never shown with your opinions",
+        "private2": "Your exact address is never displayed",
+        "private3": "You can burn your Ghost name and start fresh at any time"
+      },
+      "district": {
+        "title": "Who's running in your riding, ward or district?",
+        "subtitle": "Find your community in seconds. See who represents you and who's on your ballot, then say what you think about them."
+      },
+      "closing": {
+        "titleMain": "Your community needs more voices.",
+        "titleSub": "Add yours.",
+        "subtitle": "Free to join. Your name is never shown with your opinions.",
+        "candidate": "Running for office?",
+        "candidateLink": "Create your candidate page"
+      },
+      "rate": {
+        "eyebrow": "Like Google Reviews, but for democracy",
+        "title": "Rate your politicians on results, not rhetoric.",
+        "subtitle": "See how your neighbours rate your MP, MLA, mayor or councillor, then add your own rating without your name attached."
+      },
+      "lookup": {
+        "badge": "Know who's on your ballot",
+        "title": "Who's running in your riding, ward or district?",
+        "subtitle": "Enter your address or city to see who represents you, who's running to replace them, and what your neighbours think.",
+        "browse": "Find your riding and races",
+        "p1": "Every level: city, province or state, federal",
+        "p2": "Matched to your area automatically. No long forms"
+      },
+      "hook": "Ever wanted to share a political opinion online, but didn't want the backlash?",
+      "reviews": {
+        "eyebrow": "Early member feedback",
+        "title": "What our first members say",
+        "who": "Early Choseno member",
+        "note": "Feedback from early members, lightly edited for length and clarity.",
+        "q1": "I'm comfortable sharing my views on politicians here because my name isn't attached and the focus stays on the issues, not on me. There aren't many posts yet since the platform is new, but I hope it grows big. I'll keep sharing.",
+        "q2": "I didn't even know which riding I lived in. It was so easy to see my electoral boundaries and find out who represents me.",
+        "q3": "We usually vote for parties, not for the people actually running. I hope Choseno helps people see which candidates they align with and vote for the right person."
+      }
     }
   },
   "elections": {

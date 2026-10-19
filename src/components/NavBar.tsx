@@ -12,8 +12,11 @@ import GlobalPoliticianSearch from "@/components/features/GlobalPoliticianSearch
 import ChosenoLogo from "@/components/primitives/ChosenoLogo";
 import { trackLogout } from "@/lib/analytics/events";
 import { buildPoliticianWallSlug } from "@/lib/utils/slugs";
+import { useViewportZoom } from "@/lib/hooks/useViewportZoom";
 
 export default function NavBar() {
+  // Same proportional scaling as the homepage, so the top bar grows with the screen too.
+  const viewportZoom = useViewportZoom();
   const { session, profile, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const { t } = useTranslation();
@@ -120,7 +123,10 @@ export default function NavBar() {
 
   return (
     <>
-    <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border w-full">
+    <nav
+      style={viewportZoom === 1 ? undefined : { zoom: viewportZoom }}
+      className="sticky top-0 z-40 bg-background/80 backdrop-blur-md elevation-2 border-b border-border w-full"
+    >
       <div className="w-full px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
         <Link href="/" className="hover:opacity-90 transition-opacity">
           <ChosenoLogo size="sm" />

@@ -22,27 +22,27 @@ export const metadata: Metadata = {
     "Find who's running in your riding, ward or district and who your MP, MLA or councillor is. Compare election candidates and rate your politicians — like Google Reviews, but for democracy.",
   alternates: { canonical: BASE_URL },
   openGraph: {
-    title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
+    title: "Say What You Think About Politics. Not Who You Are.",
     description:
-      "Find every candidate running in your district, see who holds office, and rate them — like Google Reviews, but for democracy.",
+      "The anonymous social network for politics. Share your opinion in your own riding, ward or district, and find who's running — like Google Reviews, but for democracy.",
     url: BASE_URL,
     siteName: SITE_NAME,
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/og-home-v2.jpg`,
+        url: `${BASE_URL}/og-home-v3.jpg`,
         width: 1200,
         height: 630,
-        alt: "Choseno — Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
+        alt: "Choseno — Say What You Think About Politics. Not Who You Are.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Know Who's On Your Ballot. Informed Voters Build Better Democracy.",
+    title: "Say What You Think About Politics. Not Who You Are.",
     description:
-      "Find every candidate running in your district, see who holds office, and rate them — like Google Reviews, but for democracy.",
-    images: [`${BASE_URL}/og-home-v2.jpg`],
+      "The anonymous social network for politics. Share your opinion in your own riding, ward or district, and find who's running — like Google Reviews, but for democracy.",
+    images: [`${BASE_URL}/og-home-v3.jpg`],
   },
 };
 
@@ -77,36 +77,6 @@ export default async function Page() {
         target: `${BASE_URL}/elections?q={search_term_string}`,
         "query-input": "required name=search_term_string",
       },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What is Choseno?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Choseno is an anonymous civic platform—like Google Reviews, but for democracy. It lets citizens rate local politicians, compare 2026 midterm election candidates, and leave constituent reviews in real electoral districts.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is Choseno free and anonymous?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes, Choseno is 100% free to use. Voters participate under rotating anonymous Ghost IDs to share honest constituent feedback without exposing their personal identities.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How do I find 2026 midterm candidates on my ballot?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Use Choseno's interactive 'Find My District' tool or Elections Directory to view all 2026 U.S. House and Senate candidates running in your state and district.",
-          },
-        },
-      ],
     },
   ];
 

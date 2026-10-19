@@ -168,6 +168,22 @@ export function trackMissionCtaShown(params: {
   sendEvent("mission_cta_shown", { variant: params.variant, trigger: params.trigger });
 }
 
+// Homepage sign-up touchpoints (hero, mid-page, sticky mobile bar, closing).
+// Same shown/clicked idea as the mission CTA, but keyed by *placement* so the
+// redesign can answer "which spot on the page actually converts" instead of
+// only "did the homepage convert" -- GA4's sign_up event alone can't say.
+export type HomeSignupPlacement = "hero" | "how_it_works" | "sticky_bar" | "closing";
+
+export function trackHomeSignupClicked(params: { placement: HomeSignupPlacement; method: "google" | "email" }) {
+  sendEvent("home_signup_clicked", { placement: params.placement, method: params.method });
+}
+
+// Fires once per page view the first time a placement scrolls into view, so
+// click-through = clicked / seen is computable per placement.
+export function trackHomeSignupSeen(params: { placement: HomeSignupPlacement }) {
+  sendEvent("home_signup_seen", { placement: params.placement });
+}
+
 // Shown/clicked pair for the "N more representatives -- sign in to see the
 // rest" gate on HomeLocateWidget and find-my-district's Chain of
 // Representation (see ANON_REP_PREVIEW_LIMIT in lib/constants/site.ts).
