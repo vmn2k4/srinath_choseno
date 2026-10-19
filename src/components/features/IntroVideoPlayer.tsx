@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Maximize2, Minimize2, Play, Volume2, VolumeX } from "lucide-react";
 import { parseYouTubeId } from "@/lib/utils/youtube";
 import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
 
@@ -28,6 +28,43 @@ export default function IntroVideoPlayer({
   wide?: boolean;
 }) {
   const [playing, setPlaying] = useState(autoPlay);
+  // autoPlay mode only: our own sound + full-screen buttons over the clean
+  // (controls-off) YouTube frame. Sound is toggled through YouTube's iframe
+  // postMessage API (enablejsapi=1 below), full screen on the wrapper div so
+  // the overlay buttons stay available inside it.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [muted, setMuted] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [canFullscreen, setCanFullscreen] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCanFullscreen(typeof document !== "undefined" && document.fullscreenEnabled === true);
+    const onChange = () => setIsFullscreen(document.fullscreenElement === wrapRef.current);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  const toggleMute = () => {
+    const next = !muted;
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func: next ? "mute" : "unMute", args: [] }),
+      "*"
+    );
+    if (!next) {
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+        "*"
+      );
+    }
+    setMuted(next);
+  };
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) void document.exitFullscreen();
+    else void wrapRef.current?.requestFullscreen?.();
+  };
   const youTubeId = parseYouTubeId(url);
   const facebookEmbed = youTubeId ? null : facebookVideoEmbedUrl(url, true);
 
@@ -64,11 +101,15 @@ export default function IntroVideoPlayer({
   }
 
   return (
-    <div className={`relative w-full ${wide ? "max-w-[340px]" : "max-w-[260px]"} aspect-[9/16] rounded-xl overflow-hidden bg-black`}>
+    <div
+      ref={wrapRef}
+      className={`relative w-full ${isFullscreen ? "" : `${wide ? "max-w-[340px]" : "max-w-[260px]"} aspect-[9/16] rounded-xl`} overflow-hidden bg-black`}
+    >
       {playing ? (
         <iframe
+          ref={iframeRef}
           className={`absolute inset-0 w-full h-full border-0 ${autoPlay ? "pointer-events-none" : ""}`}
-          src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1${autoPlay ? `&mute=1&loop=1&playlist=${youTubeId}&controls=0&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0` : ""}`}
+          src={`https://www.youtube-nocookie.com/embed/${youTubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1${autoPlay ? `&enablejsapi=1&mute=1&loop=1&playlist=${youTubeId}&controls=0&fs=0&disablekb=1&iv_load_policy=3&cc_load_policy=0` : ""}`}
           title="Candidate intro video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -93,6 +134,28 @@ export default function IntroVideoPlayer({
             </span>
           </span>
         </button>
+      )}
+      {autoPlay && playing && (
+        <div className="absolute top-2 right-2 z-10 flex gap-1.5">
+          <button
+            type="button"
+            onClick={toggleMute}
+            aria-label={muted ? "Unmute video" : "Mute video"}
+            className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center cursor-pointer transition-colors"
+          >
+            {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+          </button>
+          {canFullscreen && (
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              aria-label={isFullscreen ? "Exit full screen" : "Full screen"}
+              className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center cursor-pointer transition-colors"
+            >
+              {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

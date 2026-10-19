@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/contexts/AuthContext";
+import MissionRegisterCTA, { openMissionPopup } from "./MissionRegisterCTA";
 import LinkPreview from "./LinkPreview";
 import PostCard, { type PostWithComments } from "@/components/features/PostCard";
 import PitchPostPlayer from "@/components/features/PitchPostPlayer";
@@ -661,7 +662,7 @@ export default function PoliticianWallClient({
 
   const toggleSupport = async () => {
     if (!wallOwner || !user) {
-      router.push("/auth");
+      if (!openMissionPopup()) router.push("/auth");
       return;
     }
 
@@ -773,6 +774,7 @@ export default function PoliticianWallClient({
   // so a like/dislike attempt actually goes somewhere instead of doing
   // nothing with no explanation.
   const requireAuth = () => {
+    if (openMissionPopup()) return;
     router.push(`/auth?next=${encodeURIComponent(window.location.pathname)}`);
   };
 
@@ -961,6 +963,7 @@ export default function PoliticianWallClient({
     // now, so this component can be nested inside a wider layout (a grid
     // column alongside a sidebar, on the main wall page) without doubling up.
     <div className="w-full max-w-none pb-20 space-y-6">
+      <MissionRegisterCTA variant="politician" personName={wallOwner?.full_name} />
       {/* Accessible SEO & AI Search Entity Lead Block */}
       {wallOwner && (
         <section aria-label="Politician Profile Overview" className="sr-only">

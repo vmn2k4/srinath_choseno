@@ -2,11 +2,19 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { X, ShieldOff, Ban, MessagesSquare, Sparkles, Flag, Share2, Check } from "lucide-react";
 import { Card, Button, Modal } from "@/components/primitives";
 import { useAuth } from "@/contexts/AuthContext";
-import { trackMissionCtaClicked, trackMissionCtaShown, trackShare } from "@/lib/analytics/events";
-import { EARLY_EXPLORER_BADGE_LINE } from "@/lib/constants/site";
+import { createClient } from "@/lib/supabase/client";
+import { signInWithGoogle } from "@/lib/services/auth";
+import {
+  trackMissionCtaClicked,
+  trackMissionCtaShown,
+  trackShare,
+  trackSignUp,
+  trackSignUpFailed,
+} from "@/lib/analytics/events";
 import IntroVideoPlayer from "./IntroVideoPlayer";
 
 // Anonymous-visitor conversion CTA, shown on the pages where a guest is
@@ -26,7 +34,19 @@ import IntroVideoPlayer from "./IntroVideoPlayer";
 // InteractiveLocationPicker already applies to its own popover for the
 // identical legibility reason.
 
-export type MissionCtaVariant = "home" | "news" | "district" | "elections" | "seat";
+export type MissionCtaVariant = "home" | "news" | "district" | "elections" | "seat" | "candidate" | "politician";
+
+// Gated actions elsewhere on the page (Support / Sign In to Post / Be the
+// First to Review...) call this instead of navigating straight to /auth, so
+// the same popup -- Google + email, same copy -- appears at the exact moment
+// of intent. Returns false when no popup is mounted on the page (or the
+// visitor is signed in), so the caller can fall back to its old /auth redirect.
+export const OPEN_MISSION_POPUP_EVENT = "choseno:open-mission-popup";
+export function openMissionPopup(): boolean {
+  if (typeof window === "undefined") return false;
+  const event = new CustomEvent(OPEN_MISSION_POPUP_EVENT, { cancelable: true });
+  return !window.dispatchEvent(event); // a mounted popup calls preventDefault()
+}
 
 // v1 kept one global "seen = '1'" key forever -- a single dismissal on any
 // page (e.g. a bounce off the news CTA) silently opted a visitor out of
@@ -70,8 +90,18 @@ function markSeen(key: string): void {
   window.localStorage.setItem(key, String(Date.now()));
 }
 
+// Skeleton shared by every popup, top to bottom:
+//   eyebrow (always the category line) -> headline (names a fear or asks a
+//   question) -> pitch (safety + where the opinion goes) -> trust chips ->
+//   founder badge line -> [Continue with Google] [Sign up with email].
+// Only the headline, pitch and button text change per screen (CtaCopy below).
+const MISSION_EYEBROW = "The social network for local politics";
+
+// Small, one-line early-adopter nudge -- deliberately quiet so it never
+// competes with the sign-up buttons.
+const MISSION_BADGE_LINE = "Join early and earn a permanent Founder badge.";
+
 type CtaCopy = {
-  eyebrow: string;
   headline: string;
   pitch: string;
   sidebarHeadline: string;
@@ -81,96 +111,165 @@ type CtaCopy = {
 
 const COPY: Record<MissionCtaVariant, CtaCopy> = {
   home: {
-    eyebrow: "Democracy works when we show up",
-    headline: "Come be part of the democracy.",
-    pitch: "Decisions get made about your community every day. Join Choseno to rate every official, back the candidates you believe in, and make your voice count — anonymously, with no username and no toxic replies.",
-    sidebarHeadline: "Be part of the democracy",
-    sidebarBody: "Rate officials and back candidates — anonymously.",
-    cta: "Join the Democracy",
+    headline: "Your political opinions deserve a voice.",
+    pitch: "Share your views without your name being shown. No social pressure. No need to argue or reply.",
+    sidebarHeadline: "Have a say in local politics.",
+    sidebarBody: "Share your views anonymously. No replies required.",
+    cta: "Share your opinion",
   },
   news: {
-    eyebrow: "Beyond the headline",
-    headline: "What do YOU think?",
-    pitch: "Choseno isn't just news — it's where citizens anonymously rate the politicians in every story. Join the mission.",
-    sidebarHeadline: "Got a take on this story?",
-    sidebarBody: "Rate the politicians in it — anonymously.",
-    cta: "Join the Mission",
+    headline: "What's your take on this story?",
+    pitch: "Share your perspective anonymously. No need to argue or reply.",
+    sidebarHeadline: "What's your take on this story?",
+    sidebarBody: "Share your opinion anonymously.",
+    cta: "Share your opinion",
   },
   district: {
-    eyebrow: "You found them",
-    headline: "Now hold them accountable.",
-    pitch: "Anonymously rate every official in your district — no username, no toxic replies. Join the mission.",
-    sidebarHeadline: "Now rate who represents you",
-    sidebarBody: "Anonymous. No toxic replies.",
-    cta: "Join the Mission",
+    headline: "Make your voice count in your community.",
+    pitch: "Discover your local representatives and share what matters to your neighbourhood.",
+    sidebarHeadline: "What should local leaders know?",
+    sidebarBody: "Make your voice heard in your community.",
+    cta: "Have your say",
   },
   elections: {
-    eyebrow: "Before you vote",
-    headline: "Judge the race yourself.",
-    pitch: "Anonymously rate every candidate running — no username, no toxic replies. Join the mission.",
-    sidebarHeadline: "Rate the candidates on this page",
-    sidebarBody: "Anonymous. No toxic replies.",
-    cta: "Join the Mission",
+    headline: "Which candidates have earned your support?",
+    pitch: "Share your opinion without your name being shown. Every voice deserves a chance to be heard.",
+    sidebarHeadline: "Which candidates have your support?",
+    sidebarBody: "Share your views anonymously.",
+    cta: "Share your opinion",
   },
   // Generic fallback when seatCopyFor below has no role_title to work with
-  // (shouldn't happen in practice -- every seat has one -- but the same
-  // defensive fallback newsCopyFor uses for a missing personName).
+  // (shouldn't happen in practice -- every seat has one).
   seat: {
-    eyebrow: "Before you vote",
-    headline: "Help your neighbors pick right.",
-    pitch: "Rate the candidates in this race anonymously — no username, no toxic replies. Then share this page so more neighbors weigh in before they decide.",
-    sidebarHeadline: "Rate this race, then share it",
-    sidebarBody: "Anonymous ratings help neighbors choose right.",
-    cta: "Rate the Candidates",
+    headline: "Who should represent your area?",
+    pitch: "Share your views on the candidates in this race. It takes about 30 seconds to have your say.",
+    sidebarHeadline: "Who should represent your area?",
+    sidebarBody: "Have your say in this race.",
+    cta: "Share your opinion",
+  },
+  candidate: {
+    headline: "What do you think of this candidate?",
+    pitch: "Share your thoughts on this candidate's ideas, priorities, and promises without your name being shown.",
+    sidebarHeadline: "What do you think of this candidate?",
+    sidebarBody: "Share your opinion anonymously.",
+    cta: "Have your say",
+  },
+  politician: {
+    headline: "Your representatives should hear from you.",
+    pitch: "Share what you think about your representative and the issues that matter to you. Your name won't be displayed.",
+    sidebarHeadline: "Is your representative delivering?",
+    sidebarBody: "Share your views on their work and decisions.",
+    cta: "Speak up",
   },
 };
 
-// Seat-variant copy personalized to the specific office, e.g. "Mayor of
-// Surrey" -- same pattern as newsCopyFor's personName interpolation below.
-// This is the one place on the site that pairs the rating pitch with an
-// explicit ask to share: a seat page is inherently about one race that
-// affects a whole neighborhood, so "rate it, then tell your neighbors" is a
-// coherent single ask here in a way it isn't on, say, the news variant.
-function seatCopyFor(roleTitle?: string | null, areaName?: string | null): CtaCopy {
-  if (!roleTitle) return COPY.seat;
-  const subject = areaName ? `${roleTitle} of ${areaName}` : roleTitle;
+// Candidate / politician pages personalize on the person's name.
+function personCopyFor(variant: "candidate" | "politician", personName?: string | null): CtaCopy {
+  if (!personName) return COPY[variant];
+  if (variant === "candidate") {
+    return {
+      headline: `What do you think of ${personName}?`,
+      pitch: "Share your thoughts on this candidate's ideas, priorities, and promises without your name being shown.",
+      sidebarHeadline: `What do you think of ${personName}?`,
+      sidebarBody: "Share your opinion anonymously.",
+      cta: "Have your say",
+    };
+  }
   return {
-    eyebrow: "Before you vote",
-    headline: `Help your neighbors pick the right ${roleTitle}`,
-    pitch: `Rate the candidates for ${subject} anonymously — no username, no toxic replies. Then share this page so more neighbors weigh in before they decide.`,
-    sidebarHeadline: "Rate this race, then share it",
-    sidebarBody: "Anonymous ratings help neighbors choose right.",
-    cta: "Rate the Candidates",
+    headline: "Your representatives should hear from you.",
+    pitch: `Share what you think about ${personName} and the issues that matter to you. Your name won't be displayed.`,
+    sidebarHeadline: `Is ${personName} delivering?`,
+    sidebarBody: "Share your views on their work and decisions.",
+    cta: "Speak up",
   };
 }
 
-// News-variant copy personalized to the article's key tagged politician,
-// when one is known. The headline itself stays neutral -- "Share your
-// thoughts on X" invites an opinion in either direction, not just a
-// negative one -- since "Frustrated with X?" presupposes a verdict on that
-// specific person before the reader has said anything. The frustration
-// hook still does its emotional-resonance job, just aimed at politics in
-// general (a byline under the neutral headline) rather than at the named
-// person. Falls back to the generic COPY.news table when no politician is
-// tagged (or on the news listing page, which has no single "key person" to
-// name).
+// Seat copy personalized to the specific office, e.g. "Mayor of Surrey".
+// The one screen that pairs the pitch with an ask to share: a seat is one race
+// that affects a whole neighborhood.
+function seatCopyFor(roleTitle?: string | null, areaName?: string | null): CtaCopy {
+  if (!roleTitle) return COPY.seat;
+  return {
+    headline: areaName ? `Who should represent ${areaName}?` : `Who should be your ${roleTitle}?`,
+    pitch: `Share your views on the candidates for ${roleTitle}. It takes about 30 seconds to have your say.`,
+    sidebarHeadline: areaName ? `Who should represent ${areaName}?` : `Who should be your ${roleTitle}?`,
+    sidebarBody: "Have your say in this race.",
+    cta: "Share your opinion",
+  };
+}
+
+// News copy personalized to the article's key tagged politician, when known.
+// Neutral on purpose: invites an opinion in either direction.
 function newsCopyFor(personName?: string | null): CtaCopy {
   if (!personName) return COPY.news;
   return {
-    eyebrow: "Beyond the headline",
-    headline: `Share your thoughts on ${personName}`,
-    pitch: `Frustrated with politics? Join now and rate ${personName} anonymously — we give you a voice.`,
-    sidebarHeadline: `Share your thoughts on ${personName}`,
-    sidebarBody: "Frustrated with politics? We give you a voice.",
-    cta: "Rate Them Now",
+    headline: `What's your opinion of ${personName}?`,
+    pitch: "Share what you think about their actions, ideas, and public record — without your name being shown.",
+    sidebarHeadline: `What's your opinion of ${personName}?`,
+    sidebarBody: "Share your opinion anonymously.",
+    cta: "Share your view",
   };
 }
 
 const TRUST_CHIPS = [
-  { icon: ShieldOff, label: "Anonymous" },
-  { icon: Ban, label: "Capped comments" },
-  { icon: MessagesSquare, label: "No replies" },
+  { icon: ShieldOff, label: "Your name stays private" },
+  { icon: Ban, label: "No social pressure" },
+  { icon: MessagesSquare, label: "No need to reply" },
 ];
+
+// The one place the popup's sign-up buttons are defined, so the video modal and
+// the mission modal always offer the same two ways in: Google first (one tap,
+// opens the account picker), email second (the existing /auth sign-up page).
+function MissionAuthButtons({
+  cta,
+  href,
+  onEmailClick,
+  onGoogleClick,
+  googleBusy,
+}: {
+  cta: string;
+  href: string;
+  onEmailClick: () => void;
+  onGoogleClick: () => void;
+  googleBusy: boolean;
+}) {
+  return (
+    <div className="w-full space-y-2">
+      <Button
+        type="button"
+        variant="primary"
+        disabled={googleBusy}
+        onClick={onGoogleClick}
+        data-signup-trigger={`${cta} (Google)`}
+        className="w-full justify-center gap-2"
+      >
+        <GoogleMark />
+        {googleBusy ? "Opening Google…" : "Continue with Google"}
+      </Button>
+      <Button
+        as={Link}
+        href={href}
+        onClick={onEmailClick}
+        data-signup-trigger={cta}
+        variant="outline"
+        className="w-full justify-center"
+      >
+        Sign up with email
+      </Button>
+    </div>
+  );
+}
+
+function GoogleMark() {
+  return (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+      <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+      <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+      <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+    </svg>
+  );
+}
 
 export default function MissionRegisterCTA({
   variant,
@@ -201,6 +300,8 @@ export default function MissionRegisterCTA({
   shareTrackingId?: string;
 }) {
   const { user, loading } = useAuth();
+  const pathname = usePathname();
+  const resolvedNext = nextPath || pathname || "/";
   const [showModal, setShowModal] = useState(false);
   const [modalIsVideo, setModalIsVideo] = useState(false);
   const [sidebarDismissed, setSidebarDismissed] = useState(true); // starts hidden until localStorage check below, to avoid a flash
@@ -256,6 +357,22 @@ export default function MissionRegisterCTA({
     };
   }, [loading, user, variant]);
 
+  // Gated-action opener (see openMissionPopup above): shows the popup now,
+  // ignoring the once-per-window suppression and the scroll/time trigger,
+  // but the first-ever popup is still the intro video.
+  useEffect(() => {
+    if (loading || user) return;
+    const onOpen = (e: Event) => {
+      e.preventDefault();
+      // Still the first popup ever -> the intro video, same as the timed path.
+      setModalIsVideo(!window.localStorage.getItem(INTRO_VIDEO_SEEN_KEY));
+      setShowModal(true);
+      trackMissionCtaShown({ variant, trigger: "gated_action" });
+    };
+    window.addEventListener(OPEN_MISSION_POPUP_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_MISSION_POPUP_EVENT, onOpen);
+  }, [loading, user, variant]);
+
   const dismissModal = useCallback(() => {
     setShowModal(false);
     if (modalIsVideo) {
@@ -275,6 +392,25 @@ export default function MissionRegisterCTA({
     dismissModal();
   }, [variant, modalIsVideo, dismissModal]);
 
+  // Same call AuthPageClient's Google button makes (signInWithGoogle ->
+  // /auth/callback?next=...), so Google's account picker opens immediately and
+  // the visitor lands back on this page signed in. Attribution
+  // (signup_source) is picked up by AuthContext after the redirect, as for
+  // every other signup.
+  const [googleBusy, setGoogleBusy] = useState(false);
+  const handleGoogleClick = useCallback(async () => {
+    setGoogleBusy(true);
+    trackMissionCtaClicked({ variant, trigger: modalIsVideo ? "intro_video" : "modal" });
+    try {
+      trackSignUp("google");
+      await signInWithGoogle(createClient(), resolvedNext);
+    } catch (err: unknown) {
+      const e = err as { error_description?: string; message?: string };
+      trackSignUpFailed({ method: "google", reason: "google_oauth_error", message: e.error_description || e.message });
+      setGoogleBusy(false);
+    }
+  }, [variant, modalIsVideo, resolvedNext]);
+
   const handleSidebarCtaClick = useCallback(() => {
     trackMissionCtaClicked({ variant, trigger: "sidebar" });
   }, [variant]);
@@ -290,7 +426,9 @@ export default function MissionRegisterCTA({
       ? newsCopyFor(personName)
       : variant === "seat"
         ? seatCopyFor(seatRoleTitle, seatAreaName)
-        : COPY[variant];
+        : variant === "candidate" || variant === "politician"
+          ? personCopyFor(variant, personName)
+          : COPY[variant];
 
   // Native share sheet first (works on mobile browsers and lets the visitor
   // pick WhatsApp/Messages/etc. directly) -- falls back to copying the link
@@ -321,7 +459,7 @@ export default function MissionRegisterCTA({
 
   if (loading || user) return null;
 
-  const href = `/auth?role=citizen&next=${encodeURIComponent(nextPath || "/")}`;
+  const href = `/auth?role=citizen&next=${encodeURIComponent(resolvedNext)}`;
 
   return (
     <>
@@ -337,9 +475,7 @@ export default function MissionRegisterCTA({
               <X size={18} />
             </button>
             <IntroVideoPlayer url={INTRO_VIDEO_URL} autoPlay wide />
-            <Button as={Link} href={href} onClick={handleModalCtaClick} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700">
-              {copy.cta}
-            </Button>
+            <MissionAuthButtons cta={copy.cta} href={href} onEmailClick={handleModalCtaClick} onGoogleClick={handleGoogleClick} googleBusy={googleBusy} />
             <button
               type="button"
               onClick={dismissModal}
@@ -365,7 +501,7 @@ export default function MissionRegisterCTA({
 
             <div className="space-y-1 pr-6">
               <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-primary uppercase tracking-wide">
-                <Sparkles size={12} /> {copy.eyebrow}
+                <Sparkles size={12} /> {MISSION_EYEBROW}
               </span>
               <h2 className="text-lg font-extrabold text-text-main leading-snug text-balance">
                 {copy.headline}
@@ -385,15 +521,13 @@ export default function MissionRegisterCTA({
               ))}
             </div>
 
-            <p className="flex items-start gap-1.5 text-[11px] font-semibold text-primary bg-primary/10 rounded-lg px-2.5 py-2 leading-snug">
-              <Flag size={13} className="shrink-0 mt-0.5" />
-              {EARLY_EXPLORER_BADGE_LINE}
+            <p className="flex items-center gap-1.5 text-[11px] font-semibold text-text-muted leading-snug">
+              <Flag size={12} className="shrink-0 text-primary" />
+              {MISSION_BADGE_LINE}
             </p>
 
             <div className="flex flex-col items-center gap-2 pt-1">
-              <Button as={Link} href={href} onClick={handleModalCtaClick} variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
-                <span className="relative z-10">{copy.cta}</span>
-              </Button>
+              <MissionAuthButtons cta={copy.cta} href={href} onEmailClick={handleModalCtaClick} onGoogleClick={handleGoogleClick} googleBusy={googleBusy} />
               {shareUrl && (
                 <button
                   type="button"
@@ -438,9 +572,9 @@ export default function MissionRegisterCTA({
             <p className="text-xs text-text-muted leading-snug">{copy.sidebarBody}</p>
             <p className="flex items-start gap-1 text-[10.5px] font-semibold text-primary leading-snug">
               <Flag size={11} className="shrink-0 mt-0.5" />
-              {EARLY_EXPLORER_BADGE_LINE}
+              {MISSION_BADGE_LINE}
             </p>
-            <Button as={Link} href={href} onClick={handleSidebarCtaClick} size="sm" variant="primary" className="w-full justify-center !bg-orange-600 hover:!bg-orange-700 !shadow-lg hover:!shadow-xl relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-orange-500/0 before:via-white/10 before:to-orange-500/0 before:animate-pulse">
+            <Button as={Link} href={href} onClick={handleSidebarCtaClick} size="sm" variant="primary" className="w-full justify-center">
               <span className="relative z-10">{copy.cta}</span>
             </Button>
             {shareUrl && (

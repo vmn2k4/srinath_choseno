@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
+import MissionRegisterCTA, { openMissionPopup } from "./MissionRegisterCTA";
 import LinkPreview from "./LinkPreview";
 import AnswerValue from "./AnswerValue";
 import PlayInterviewReel from "./PlayInterviewReel";
@@ -447,6 +448,7 @@ export default function CandidacyWall({
   // a logged-out visitor tries a gated action instead of it just doing
   // nothing.
   const requireAuth = () => {
+    if (openMissionPopup()) return;
     router.push("/auth");
   };
 
@@ -708,6 +710,7 @@ export default function CandidacyWall({
 
   return (
     <div className="w-full space-y-6">
+      {!embedded && <MissionRegisterCTA variant="candidate" personName={displayName} />}
       {/* Top Bar Navigation (if not embedded) */}
       {!embedded && (
         <div className="flex items-center justify-between">
