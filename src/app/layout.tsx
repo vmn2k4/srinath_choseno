@@ -96,6 +96,7 @@ export const metadata: Metadata = {
   verification: {
     other: {
       "msvalidate.01": "AECC25E231AF85530C43CA52A2B4E345",
+      "google-adsense-account": "ca-pub-3100741943376111",
     },
   },
   icons: {
