@@ -352,6 +352,26 @@ function Composer({ session, onSignOut }: { session: Session; onSignOut: () => v
           </div>
         </div>
 
+        <ul className="districts" aria-label="Your electoral boundaries">
+          {shapes.map((s) => {
+            const on = target === "all" || target === String(s.id);
+            return (
+              <li key={s.id}>
+                <button
+                  type="button"
+                  className={`dchip${on ? " on" : ""}`}
+                  aria-pressed={on}
+                  onClick={() => setTarget(target === String(s.id) ? "all" : String(s.id))}
+                  title={`${s.name} · ${s.boundary_type}`}
+                >
+                  <MapPin size={12} aria-hidden="true" />
+                  <span>{s.name}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
         <MentionTextarea
           handleRef={textRef}
           value={text}

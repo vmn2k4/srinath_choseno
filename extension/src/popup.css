@@ -107,3 +107,8 @@ a { color: var(--primary); } button, select, input, textarea { font: inherit; co
 .home-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .home-actions .btn { flex: none; }
 .back-btn { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 2px 0; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; } .back-btn:hover { color: var(--text); }
+
+.districts { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.dchip { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border, #cfe0f2); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; }
+.dchip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dchip.on { background: #d8e6f7; color: #1f4e79; border-color: #9cc0e6; }
