@@ -108,6 +108,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${publicSans.variable} ${bigShouldersDisplay.variable}`}>
+      <head>
+        {/* Google AdSense site verification / ad loader */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3100741943376111"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <LanguageProvider>
           <ThemeProvider>
