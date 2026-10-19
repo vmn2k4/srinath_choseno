@@ -37,6 +37,18 @@ const pages = {
    <h1 style="font-size:60px;line-height:1.08;margin-top:26px;font-weight:800;letter-spacing:-.02em">Social media for politics.</h1>
    <p style="font-size:26px;line-height:1.4;margin-top:18px;color:#3d607f">Comment on any link and post it anonymously to people in your electoral boundaries.</p></div>
   <div class=shot style="left:930px;top:50px;width:290px;border-radius:16px;transform:rotate(3deg)"><img src="src/composer.png"></div>`],
+
+ "screenshot-3-districts.png": [1280, 800, `
+  <div style="position:absolute;left:80px;top:150px;width:560px">
+   <div style="display:flex;align-items:center;gap:14px"><img class=logo src="src/logo.svg"><span class=wm style="font-size:54px">Choseno</span></div>
+   <h1 style="font-size:56px;line-height:1.08;margin-top:34px;font-weight:800;letter-spacing:-.02em">Seen by people in your electoral boundaries.</h1>
+   <p style="font-size:24px;line-height:1.45;margin-top:24px;color:#3d607f">Federal, provincial, municipal and school district. Post to all of them or pick one.</p></div>
+  <div class=shot style="left:760px;top:36px;width:430px"><img src="src/composer.png"></div>`],
+ "screenshot-4-social.png": [1280, 800, `
+  <div style="position:absolute;left:0;right:0;top:190px;text-align:center">
+   <div style="display:flex;align-items:center;justify-content:center;gap:16px"><img class=logo src="src/logo.svg" style="width:72px;height:72px"><span class=wm style="font-size:76px">Choseno Companion</span></div>
+   <h1 style="font-size:72px;line-height:1.08;margin-top:34px;font-weight:800;letter-spacing:-.02em">Social media for politics.</h1>
+   <p style="font-size:30px;line-height:1.4;margin:22px auto 0;width:900px;color:#3d607f">Comment on any link and post it anonymously to people in your electoral boundaries.</p></div>`],
 };
 const b = await chromium.launch();
 for (const [name, [w, h, body]] of Object.entries(pages)) {
