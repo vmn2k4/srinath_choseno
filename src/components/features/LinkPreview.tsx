@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link as LinkIcon } from "lucide-react";
-import { facebookVideoEmbedUrl } from "@/lib/utils/facebookVideo";
+import { facebookVideoEmbedUrl, parseFacebookVideoUrl } from "@/lib/utils/facebookVideo";
 import { createClient } from "@/lib/supabase/client";
 import { fetchLinkPreview } from "@/lib/services/linkPreview";
 
@@ -47,6 +47,19 @@ export default function LinkPreview({
   // Same idea for a Facebook video: Facebook's own player, so it plays here
   // rather than taking the viewer to facebook.com.
   const facebookEmbedUrl = youTubeEmbedUrl ? null : facebookVideoEmbedUrl(url || metadata?.url || "");
+
+  // Facebook's player doesn't report its video's shape, but the preview
+  // thumbnail has the same aspect ratio, so measure that.
+  const [fbThumb, setFbThumb] = useState<{ src: string; ratio: number } | null>(null);
+  const fbImage = facebookEmbedUrl ? data?.image : undefined;
+  useEffect(() => {
+    if (!fbImage) return;
+    const img = new window.Image();
+    img.onload = () => {
+      if (img.naturalWidth && img.naturalHeight) setFbThumb({ src: fbImage, ratio: img.naturalWidth / img.naturalHeight });
+    };
+    img.src = fbImage;
+  }, [fbImage]);
 
   // Ref instead of a dependency-array entry: this is a "call me when the
   // fetch resolves" callback, not a value the effect should re-run for —
@@ -110,9 +123,15 @@ export default function LinkPreview({
   }
 
   if (facebookEmbedUrl) {
+    const isFacebookReel = /\/(reel|share\/r)\//.test(parseFacebookVideoUrl(url || metadata?.url || "") || "");
+    const measured = fbThumb && fbThumb.src === fbImage ? fbThumb.ratio : null;
+    const ratio = Math.min(16 / 9, Math.max(9 / 16, measured ?? (isFacebookReel ? 9 / 16 : 16 / 9)));
     return (
-      <div className="my-3 rounded-lg overflow-hidden border border-border-light bg-black">
-        <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
+      <div
+        className="my-3 mx-auto rounded-lg overflow-hidden border border-border-light bg-black w-full"
+        style={{ maxWidth: ratio >= 1 ? 560 : 320 }}
+      >
+        <div className="relative w-full" style={{ aspectRatio: String(ratio) }}>
           <iframe
             src={facebookEmbedUrl}
             title={data?.title || "Facebook video"}

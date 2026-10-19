@@ -28,6 +28,11 @@ const CACHE_MAX = 500
 const USER_AGENT =
   "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36"
 
+// Facebook rejects browser-looking bot requests (400) but serves og: tags to
+// its own link-scraper UA.
+const FACEBOOK_USER_AGENT = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
+const isFacebookHost = (h: string) => /(^|\.)(facebook\.com|fb\.com|fb\.watch)$/i.test(h)
+
 type Preview = {
   title?: string
   description?: string
@@ -95,7 +100,7 @@ async function fetchHtml(start: URL): Promise<{ html: string; finalUrl: URL }> {
       redirect: "manual",
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
       headers: {
-        "User-Agent": USER_AGENT,
+        "User-Agent": isFacebookHost(current.hostname) ? FACEBOOK_USER_AGENT : USER_AGENT,
         Accept: "text/html,application/xhtml+xml",
         "Accept-Language": "en",
       },
@@ -137,6 +142,7 @@ function unescapeHtml(v: string) {
   return v
     .replace(/&(amp|quot|lt|gt|nbsp|#39|#x27);/g, (m) => ENTITIES[m] ?? m)
     .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
     .trim()
 }
 
