@@ -366,6 +366,7 @@ function Composer({ session, onSignOut }: { session: Session; onSignOut: () => v
                 >
                   <MapPin size={12} aria-hidden="true" />
                   <span>{s.name}</span>
+                  <em>{s.boundary_type}</em>
                 </button>
               </li>
             );
