@@ -1,0 +1,424 @@
+{
+ "key": "bee0c793b7a387dc",
+ "version": "single1",
+ "model": "Qwen3-TTS-12Hz-1.7B-Base-8bit",
+ "voice": "Ethan_Cole",
+ "clone_reference": "/Users/vmn2k4/.claude/skills/local-video-director/scripts/director_plus/voices/Ethan_Cole_expressive_ref.wav",
+ "style": "expressive",
+ "style_params": {
+  "temperature": 0.85,
+  "top_k": 60,
+  "top_p": 0.97,
+  "takes": 5,
+  "tempo": 1.08,
+  "max_pause": 0.28,
+  "about": "most animated delivery: high sampling variation, best of 5 (pair with --ref-clip / --prosody-expand)"
+ },
+ "max_pause": 1.0,
+ "tempo": 1.08,
+ "prosody_expand": 1.4,
+ "polish": false,
+ "whisper_model": "mlx-community/whisper-large-v3-turbo",
+ "tts_text": "You've got something to say about your city. Your vote. Your future. But you've seen what happens. Strangers. Trolls. Your boss. Your aunt. So you say nothing. And nothing changes. Meet Choseno. Say what you actually think. No followers. No pile-on. Post it, and walk away. Your voice. Your city. Zero drama. Choseno.",
+ "caption_text": "You've got something to say about your city. Your vote. Your future. But you've seen what happens. Strangers. Trolls. Your boss. Your aunt. So you say nothing. And nothing changes. Meet Choseno. Say what you actually think. No followers. No pile-on. Post it, and walk away. Your voice. Your city. Zero drama. Choseno.",
+ "takes": [
+  {
+   "file": "/var/folders/_c/r6jlh7ds6j34tqrvpx94bzrc0000gn/T/single_5hui2v15/take_0.wav",
+   "duration_s": 20.25,
+   "f0_median_hz": 137.9,
+   "f0_std_semitones": 3.83,
+   "f0_range_p5_p95_semitones": 13.73,
+   "voiced_fraction": 0.5,
+   "loudness_std_db": 7.9,
+   "peak_dbfs": -3.1,
+   "words_per_s": 2.62,
+   "speaker_similarity": 0.991,
+   "seed": 7,
+   "gen_s": 17.8,
+   "whisper_s": 3.7,
+   "raw_s": 21.84,
+   "transcript": "You've got something to say about your city, your vote, your future. But you've seen what happens, strangers, trolls, your boss, your aunt. So you say nothing, and nothing changes. Meet Chozeno, say what you actually think. No followers, no pile-on. Post it, and walk away. Your voice, your city, zero drama, Chozeno.",
+   "expected_words": 54,
+   "heard_words": 54,
+   "matched": 54,
+   "match_ratio": 1.0,
+   "extra_ratio": 0.0,
+   "valid": true,
+   "score": 4.62
+  }
+ ],
+ "ok": true,
+ "chosen": {
+  "file": "/var/folders/_c/r6jlh7ds6j34tqrvpx94bzrc0000gn/T/single_5hui2v15/take_0.wav",
+  "duration_s": 20.25,
+  "f0_median_hz": 137.9,
+  "f0_std_semitones": 3.83,
+  "f0_range_p5_p95_semitones": 13.73,
+  "voiced_fraction": 0.5,
+  "loudness_std_db": 7.9,
+  "peak_dbfs": -3.1,
+  "words_per_s": 2.62,
+  "speaker_similarity": 0.991,
+  "seed": 7,
+  "gen_s": 17.8,
+  "whisper_s": 3.7,
+  "raw_s": 21.84,
+  "transcript": "You've got something to say about your city, your vote, your future. But you've seen what happens, strangers, trolls, your boss, your aunt. So you say nothing, and nothing changes. Meet Chozeno, say what you actually think. No followers, no pile-on. Post it, and walk away. Your voice, your city, zero drama, Chozeno.",
+  "expected_words": 54,
+  "heard_words": 54,
+  "matched": 54,
+  "match_ratio": 1.0,
+  "extra_ratio": 0.0,
+  "valid": true,
+  "score": 4.62
+ },
+ "final": {
+  "file": "voice/narration_single.wav",
+  "duration_s": 20.25,
+  "f0_median_hz": 142.6,
+  "f0_std_semitones": 4.33,
+  "f0_range_p5_p95_semitones": 14.82,
+  "voiced_fraction": 0.48,
+  "loudness_std_db": 8.97,
+  "peak_dbfs": -2.3,
+  "words_per_s": 2.62,
+  "speaker_similarity": 0.988
+ },
+ "final_match": {
+  "expected_words": 54,
+  "heard_words": 54,
+  "matched": 54,
+  "match_ratio": 1.0,
+  "extra_ratio": 0.0
+ },
+ "final_transcript": "You've got something to say about your city, your vote, your future. But you've seen what happens, strangers, trolls, your boss, your aunt. So you say nothing, and nothing changes. Meet Chozeno, say what you actually think. No followers, no pile on. Post it, and walk away, your voice, your city. Zero drama, Chozeno.",
+ "words": [
+  {
+   "word": "You've",
+   "start": 0.0,
+   "end": 0.24,
+   "p": 0.975
+  },
+  {
+   "word": "got",
+   "start": 0.24,
+   "end": 0.38,
+   "p": 1.0
+  },
+  {
+   "word": "something",
+   "start": 0.38,
+   "end": 0.72,
+   "p": 1.0
+  },
+  {
+   "word": "to",
+   "start": 0.72,
+   "end": 0.88,
+   "p": 1.0
+  },
+  {
+   "word": "say",
+   "start": 0.88,
+   "end": 1.14,
+   "p": 1.0
+  },
+  {
+   "word": "about",
+   "start": 1.14,
+   "end": 1.36,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 1.36,
+   "end": 1.54,
+   "p": 0.999
+  },
+  {
+   "word": "city,",
+   "start": 1.54,
+   "end": 1.82,
+   "p": 0.999
+  },
+  {
+   "word": "your",
+   "start": 2.04,
+   "end": 2.36,
+   "p": 0.999
+  },
+  {
+   "word": "vote,",
+   "start": 2.36,
+   "end": 2.7,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 2.94,
+   "end": 3.18,
+   "p": 1.0
+  },
+  {
+   "word": "future.",
+   "start": 3.18,
+   "end": 3.52,
+   "p": 1.0
+  },
+  {
+   "word": "But",
+   "start": 3.78,
+   "end": 4.12,
+   "p": 0.999
+  },
+  {
+   "word": "you've",
+   "start": 4.12,
+   "end": 4.3,
+   "p": 1.0
+  },
+  {
+   "word": "seen",
+   "start": 4.3,
+   "end": 4.54,
+   "p": 1.0
+  },
+  {
+   "word": "what",
+   "start": 4.54,
+   "end": 4.74,
+   "p": 1.0
+  },
+  {
+   "word": "happens,",
+   "start": 4.74,
+   "end": 5.18,
+   "p": 1.0
+  },
+  {
+   "word": "strangers,",
+   "start": 5.32,
+   "end": 5.84,
+   "p": 1.0
+  },
+  {
+   "word": "trolls,",
+   "start": 6.16,
+   "end": 6.58,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 6.9,
+   "end": 7.16,
+   "p": 1.0
+  },
+  {
+   "word": "boss,",
+   "start": 7.16,
+   "end": 7.54,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 7.86,
+   "end": 8.1,
+   "p": 1.0
+  },
+  {
+   "word": "aunt.",
+   "start": 8.1,
+   "end": 8.44,
+   "p": 0.996
+  },
+  {
+   "word": "So",
+   "start": 8.82,
+   "end": 9.08,
+   "p": 1.0
+  },
+  {
+   "word": "you",
+   "start": 9.08,
+   "end": 9.22,
+   "p": 0.999
+  },
+  {
+   "word": "say",
+   "start": 9.22,
+   "end": 9.44,
+   "p": 1.0
+  },
+  {
+   "word": "nothing,",
+   "start": 9.44,
+   "end": 9.78,
+   "p": 1.0
+  },
+  {
+   "word": "and",
+   "start": 9.96,
+   "end": 10.28,
+   "p": 1.0
+  },
+  {
+   "word": "nothing",
+   "start": 10.28,
+   "end": 10.52,
+   "p": 1.0
+  },
+  {
+   "word": "changes.",
+   "start": 10.52,
+   "end": 11.02,
+   "p": 1.0
+  },
+  {
+   "word": "Meet",
+   "start": 11.5,
+   "end": 11.72,
+   "p": 0.995
+  },
+  {
+   "word": "Chozeno,",
+   "start": 11.72,
+   "end": 12.24,
+   "p": 0.643
+  },
+  {
+   "word": "say",
+   "start": 12.44,
+   "end": 12.74,
+   "p": 0.999
+  },
+  {
+   "word": "what",
+   "start": 12.74,
+   "end": 12.94,
+   "p": 1.0
+  },
+  {
+   "word": "you",
+   "start": 12.94,
+   "end": 13.06,
+   "p": 1.0
+  },
+  {
+   "word": "actually",
+   "start": 13.06,
+   "end": 13.46,
+   "p": 1.0
+  },
+  {
+   "word": "think.",
+   "start": 13.46,
+   "end": 13.84,
+   "p": 1.0
+  },
+  {
+   "word": "No",
+   "start": 14.08,
+   "end": 14.42,
+   "p": 1.0
+  },
+  {
+   "word": "followers,",
+   "start": 14.42,
+   "end": 14.88,
+   "p": 1.0
+  },
+  {
+   "word": "no",
+   "start": 15.02,
+   "end": 15.12,
+   "p": 1.0
+  },
+  {
+   "word": "pile",
+   "start": 15.12,
+   "end": 15.46,
+   "p": 0.677
+  },
+  {
+   "word": "on.",
+   "start": 15.46,
+   "end": 15.66,
+   "p": 0.614
+  },
+  {
+   "word": "Post",
+   "start": 15.88,
+   "end": 16.24,
+   "p": 0.999
+  },
+  {
+   "word": "it,",
+   "start": 16.24,
+   "end": 16.42,
+   "p": 0.999
+  },
+  {
+   "word": "and",
+   "start": 16.52,
+   "end": 16.74,
+   "p": 1.0
+  },
+  {
+   "word": "walk",
+   "start": 16.74,
+   "end": 16.96,
+   "p": 1.0
+  },
+  {
+   "word": "away,",
+   "start": 16.96,
+   "end": 17.24,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 17.38,
+   "end": 17.6,
+   "p": 1.0
+  },
+  {
+   "word": "voice,",
+   "start": 17.6,
+   "end": 17.94,
+   "p": 1.0
+  },
+  {
+   "word": "your",
+   "start": 18.12,
+   "end": 18.22,
+   "p": 1.0
+  },
+  {
+   "word": "city.",
+   "start": 18.22,
+   "end": 18.48,
+   "p": 1.0
+  },
+  {
+   "word": "Zero",
+   "start": 18.86,
+   "end": 19.1,
+   "p": 0.99
+  },
+  {
+   "word": "drama,",
+   "start": 19.1,
+   "end": 19.48,
+   "p": 0.968
+  },
+  {
+   "word": "Chozeno.",
+   "start": 19.68,
+   "end": 20.04,
+   "p": 0.994
+  }
+ ],
+ "final_whisper_s": 1.6,
+ "wall_time_s": 33.4,
+ "model_load_s": 6.8
+}

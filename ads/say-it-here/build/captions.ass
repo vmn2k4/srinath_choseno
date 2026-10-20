@@ -1,0 +1,72 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Cap,Inter V,64,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,2,2,60,60,110,1
+Style: Head,Inter V,170,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,4,0,1,0,0,5,0,0,0,1
+Style: Sub,Inter V,58,&H00F5D0C4,&H00F5D0C4,&H00000000,&H00000000,0,0,0,0,100,100,2,0,1,0,0,5,0,0,0,1
+Style: Cta,Inter V,50,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,3,0,1,0,0,5,0,0,0,1
+
+[Events]
+Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
+Dialogue: 1,0:00:00.40,0:00:00.64,Cap,,0,0,0,,{\c&H00F65C8B&}YOU'VE{\c&HFFFFFF&} GOT SOMETHING
+Dialogue: 1,0:00:00.64,0:00:00.78,Cap,,0,0,0,,YOU'VE {\c&H00F65C8B&}GOT{\c&HFFFFFF&} SOMETHING
+Dialogue: 1,0:00:00.78,0:00:01.12,Cap,,0,0,0,,YOU'VE GOT {\c&H00F65C8B&}SOMETHING{\c&HFFFFFF&}
+Dialogue: 1,0:00:01.12,0:00:01.28,Cap,,0,0,0,,{\c&H00F65C8B&}TO{\c&HFFFFFF&} SAY ABOUT
+Dialogue: 1,0:00:01.28,0:00:01.54,Cap,,0,0,0,,TO {\c&H00F65C8B&}SAY{\c&HFFFFFF&} ABOUT
+Dialogue: 1,0:00:01.54,0:00:01.76,Cap,,0,0,0,,TO SAY {\c&H00F65C8B&}ABOUT{\c&HFFFFFF&}
+Dialogue: 1,0:00:01.76,0:00:01.94,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} CITY
+Dialogue: 1,0:00:01.94,0:00:02.44,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}CITY{\c&HFFFFFF&}
+Dialogue: 1,0:00:02.44,0:00:02.76,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} VOTE
+Dialogue: 1,0:00:02.76,0:00:03.34,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}VOTE{\c&HFFFFFF&}
+Dialogue: 1,0:00:03.34,0:00:03.58,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} FUTURE
+Dialogue: 1,0:00:03.58,0:00:04.18,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}FUTURE{\c&HFFFFFF&}
+Dialogue: 1,0:00:04.18,0:00:04.52,Cap,,0,0,0,,{\c&H00F65C8B&}BUT{\c&HFFFFFF&} YOU'VE SEEN
+Dialogue: 1,0:00:04.52,0:00:04.70,Cap,,0,0,0,,BUT {\c&H00F65C8B&}YOU'VE{\c&HFFFFFF&} SEEN
+Dialogue: 1,0:00:04.70,0:00:04.94,Cap,,0,0,0,,BUT YOU'VE {\c&H00F65C8B&}SEEN{\c&HFFFFFF&}
+Dialogue: 1,0:00:04.94,0:00:05.14,Cap,,0,0,0,,{\c&H00F65C8B&}WHAT{\c&HFFFFFF&} HAPPENS
+Dialogue: 1,0:00:05.14,0:00:05.72,Cap,,0,0,0,,WHAT {\c&H00F65C8B&}HAPPENS{\c&HFFFFFF&}
+Dialogue: 1,0:00:05.72,0:00:06.56,Cap,,0,0,0,,{\c&H00F65C8B&}STRANGERS{\c&HFFFFFF&}
+Dialogue: 1,0:00:06.56,0:00:07.30,Cap,,0,0,0,,{\c&H00F65C8B&}TROLLS{\c&HFFFFFF&}
+Dialogue: 1,0:00:07.30,0:00:07.56,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} BOSS
+Dialogue: 1,0:00:07.56,0:00:08.26,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}BOSS{\c&HFFFFFF&}
+Dialogue: 1,0:00:08.26,0:00:08.50,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} AUNT
+Dialogue: 1,0:00:08.50,0:00:09.22,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}AUNT{\c&HFFFFFF&}
+Dialogue: 1,0:00:09.22,0:00:09.48,Cap,,0,0,0,,{\c&H00F65C8B&}SO{\c&HFFFFFF&} YOU SAY
+Dialogue: 1,0:00:09.48,0:00:09.62,Cap,,0,0,0,,SO {\c&H00F65C8B&}YOU{\c&HFFFFFF&} SAY
+Dialogue: 1,0:00:09.62,0:00:09.84,Cap,,0,0,0,,SO YOU {\c&H00F65C8B&}SAY{\c&HFFFFFF&}
+Dialogue: 1,0:00:09.84,0:00:10.36,Cap,,0,0,0,,{\c&H00F65C8B&}NOTHING{\c&HFFFFFF&}
+Dialogue: 1,0:00:10.36,0:00:10.68,Cap,,0,0,0,,{\c&H00F65C8B&}AND{\c&HFFFFFF&} NOTHING CHANGES
+Dialogue: 1,0:00:10.68,0:00:10.92,Cap,,0,0,0,,AND {\c&H00F65C8B&}NOTHING{\c&HFFFFFF&} CHANGES
+Dialogue: 1,0:00:10.92,0:00:11.90,Cap,,0,0,0,,AND NOTHING {\c&H00F65C8B&}CHANGES{\c&HFFFFFF&}
+Dialogue: 1,0:00:11.90,0:00:12.12,Cap,,0,0,0,,{\c&H00F65C8B&}MEET{\c&HFFFFFF&} CHOSENO
+Dialogue: 1,0:00:12.12,0:00:12.84,Cap,,0,0,0,,MEET {\c&H00F65C8B&}CHOSENO{\c&HFFFFFF&}
+Dialogue: 1,0:00:12.84,0:00:13.14,Cap,,0,0,0,,{\c&H00F65C8B&}SAY{\c&HFFFFFF&} WHAT YOU
+Dialogue: 1,0:00:13.14,0:00:13.34,Cap,,0,0,0,,SAY {\c&H00F65C8B&}WHAT{\c&HFFFFFF&} YOU
+Dialogue: 1,0:00:13.34,0:00:13.46,Cap,,0,0,0,,SAY WHAT {\c&H00F65C8B&}YOU{\c&HFFFFFF&}
+Dialogue: 1,0:00:13.46,0:00:13.86,Cap,,0,0,0,,{\c&H00F65C8B&}ACTUALLY{\c&HFFFFFF&} THINK
+Dialogue: 1,0:00:13.86,0:00:14.48,Cap,,0,0,0,,ACTUALLY {\c&H00F65C8B&}THINK{\c&HFFFFFF&}
+Dialogue: 1,0:00:14.48,0:00:14.82,Cap,,0,0,0,,{\c&H00F65C8B&}NO{\c&HFFFFFF&} FOLLOWERS
+Dialogue: 1,0:00:14.82,0:00:15.42,Cap,,0,0,0,,NO {\c&H00F65C8B&}FOLLOWERS{\c&HFFFFFF&}
+Dialogue: 1,0:00:15.42,0:00:15.52,Cap,,0,0,0,,{\c&H00F65C8B&}NO{\c&HFFFFFF&} PILE ON
+Dialogue: 1,0:00:15.52,0:00:15.86,Cap,,0,0,0,,NO {\c&H00F65C8B&}PILE{\c&HFFFFFF&} ON
+Dialogue: 1,0:00:15.86,0:00:16.28,Cap,,0,0,0,,NO PILE {\c&H00F65C8B&}ON{\c&HFFFFFF&}
+Dialogue: 1,0:00:16.28,0:00:16.64,Cap,,0,0,0,,{\c&H00F65C8B&}POST{\c&HFFFFFF&} IT AND
+Dialogue: 1,0:00:16.64,0:00:16.92,Cap,,0,0,0,,POST {\c&H00F65C8B&}IT{\c&HFFFFFF&} AND
+Dialogue: 1,0:00:16.92,0:00:17.14,Cap,,0,0,0,,POST IT {\c&H00F65C8B&}AND{\c&HFFFFFF&}
+Dialogue: 1,0:00:17.14,0:00:17.36,Cap,,0,0,0,,{\c&H00F65C8B&}WALK{\c&HFFFFFF&} AWAY
+Dialogue: 1,0:00:17.36,0:00:17.78,Cap,,0,0,0,,WALK {\c&H00F65C8B&}AWAY{\c&HFFFFFF&}
+Dialogue: 1,0:00:17.78,0:00:18.00,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} VOICE
+Dialogue: 1,0:00:18.00,0:00:18.52,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}VOICE{\c&HFFFFFF&}
+Dialogue: 1,0:00:18.52,0:00:18.62,Cap,,0,0,0,,{\c&H00F65C8B&}YOUR{\c&HFFFFFF&} CITY
+Dialogue: 1,0:00:18.62,0:00:19.26,Cap,,0,0,0,,YOUR {\c&H00F65C8B&}CITY{\c&HFFFFFF&}
+Dialogue: 1,0:00:19.26,0:00:19.50,Cap,,0,0,0,,{\c&H00F65C8B&}ZERO{\c&HFFFFFF&} DRAMA
+Dialogue: 1,0:00:19.50,0:00:20.08,Cap,,0,0,0,,ZERO {\c&H00F65C8B&}DRAMA{\c&HFFFFFF&}
+Dialogue: 1,0:00:20.08,0:00:20.84,Cap,,0,0,0,,{\c&H00F65C8B&}CHOSENO{\c&HFFFFFF&}
+Dialogue: 2,0:00:20.59,0:00:23.44,Head,,0,0,0,,{\fad(500,0)\pos(960,470)}Choseno
+Dialogue: 2,0:00:21.09,0:00:23.44,Sub,,0,0,0,,{\fad(500,0)\pos(960,610)}Say it here. Zero drama.
+Dialogue: 2,0:00:21.59,0:00:23.44,Cta,,0,0,0,,{\fad(500,0)\pos(960,720)}Choseno.com  ·  Join free
