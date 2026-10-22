@@ -101,12 +101,45 @@ CHAIR_OVERRIDES = {
 }
 
 
+def _title_token(tok):
+    t = tok.title()
+    t = re.sub(r"\b(Mc|Mac(?=[A-Z]))([a-z])", lambda m: m.group(1) + m.group(2).upper(), t)
+    t = re.sub(r"(?<![A-Za-z])(O|D)'([a-z])", lambda m: m.group(1) + "'" + m.group(2).upper(), t)
+    return t
+
+
+def _unshout(tok):
+    """Title-case a token only if it is (partly) shouted: 'HICKSON', "O'REILLY",
+    'DeCOURCY' -> 'Hickson', "O'Reilly", 'DeCourcy'. Normal tokens untouched."""
+    if len(tok) < 2 or not re.search(r"[A-Z]{2,}", tok):
+        return tok
+    m = re.match(r"^(De|Mc|Mac|Le|La|Di|Van)([A-Z]{2,}.*)$", tok)
+    if m:
+        return m.group(1) + _title_token(m.group(2))
+    return _title_token(tok)
+
+
 def clean_name(name):
+    """Normalize to the 'First Last' form stored in office_holders: drop
+    [..]/(..) legal-name annotations, collapse spaces, fix SHOUTED tokens
+    (localelections.ca has ALL-CAPS and 'Mike O'REILLY' styles), flip the
+    'SURNAME [initial] First' style some small towns submit (Grand Forks,
+    e.g. 'BAKER C Everett'), and drop single-letter middle initials
+    ('Simon S Yu' -> 'Simon Yu') so re-elected incumbents keep matching their
+    existing rows and ghost profiles."""
     if not name:
         return ""
     name = re.sub(r"\[.*?\]", "", name)
     name = re.sub(r"\(.*?\)", "", name)
-    return name.strip()
+    name = re.sub(r"\s+", " ", name).strip()
+    toks = name.split(" ")
+    # surname-first: first token shouted, last token not ('BAKER C Everett')
+    if len(toks) >= 2 and toks[0].isupper() and len(toks[0]) > 1 and not re.search(r"[A-Z]{2,}", toks[-1]):
+        toks = [t for t in toks[1:] if not re.fullmatch(r"[A-Za-z]\.?", t)] + [toks[0]]
+    toks = [_unshout(t) for t in toks]
+    if len(toks) > 2:
+        toks = [toks[0]] + [t for t in toks[1:-1] if not re.fullmatch(r"[A-Za-z]\.?", t)] + [toks[-1]]
+    return " ".join(toks)
 
 
 def normalize_municipal_name(s):
@@ -117,6 +150,25 @@ def normalize_municipal_name(s):
     s = re.sub(r"\s+(city|town|township|municipality|ville|district|borough|county|region|village)$", "", s)
     s = re.sub(r"[^a-z0-9]+", " ", s)
     return s.strip()
+
+
+# localelections.ca / CivicInfo name -> map_shapes name, where they differ.
+# Okanagan Falls (new municipality) has no map_shapes row yet -- stays unmatched.
+MUNICIPAL_ALIASES = {
+    "100 Mile House": "One Hundred Mile House",
+    "Daajing Giids": "Queen Charlotte",
+    "Sun Peaks": "Sun Peaks Mountain",
+}
+
+
+def lookup_municipal_shape(shapes_by_name, shape_by_norm, name, level):
+    """shapes_by_name: exact map_shapes.name -> id; shape_by_norm: normalized -> id.
+    Order: 'Name (Level)' (the form map_shapes uses when a City/Township or
+    Village/Reserve pair share a name), alias, then normalized name."""
+    for cand in (f"{name} ({level})", MUNICIPAL_ALIASES.get(name), name):
+        if cand and cand in shapes_by_name:
+            return shapes_by_name[cand]
+    return shape_by_norm.get(normalize_municipal_name(name))
 
 
 def normalize_school_name(s):
@@ -157,16 +209,120 @@ def fetch_election_rows(year):
         if len(tds) >= 14:
             rows.append(tds)
     print(f"Parsed {len(rows)} candidate rows.")
+    # The page silently serves 2018 for any year it has no archive for (seen
+    # with year=2026). Refuse to proceed if the data isn't from that cycle.
+    from collections import Counter
+    years = Counter(r[-1][:4] for r in rows if r[-1][:4].isdigit())
+    print(f"'Last Updated' years in feed: {dict(years)}")
+    if years and str(int(year) + 1) not in years and year not in years:
+        raise SystemExit(f"Feed for year={year} contains no {year}/{int(year)+1} data -- CivicInfo fell back to another cycle. Use --source localelections for the current cycle.")
     return rows
+
+
+LOCALELECTIONS = "https://localelections.ca"
+
+
+def fetch_localelections_rows():
+    """Scrape CivicInfo's live results site (localelections.ca) for the
+    CURRENT general local election and return rows shaped like the
+    candidates-and-results.php table (so the rest of main() is unchanged).
+
+    Why this exists: candidates-and-results.php?year=YYYY silently falls back
+    to 2018 for any year it has no archive for (checked 2026-10-21: year=2026
+    returned 2018 data), and only archives a year after the fact. During and
+    right after an election cycle, results are only on localelections.ca.
+
+    Each jurisdiction page has one table per office; the "Elected" column is
+    a check-square icon. Sanity checks (exactly 1 mayor, elected count ==
+    'Councillors/Trustees to be Elected') are returned as `problems` and
+    printed -- never silently accepted.
+    """
+    import sys
+    index_pages = [("m", "Municipal"), ("sd", "School District")]
+    rows, problems, warnings = [], [], []
+    for idx, kind in index_pages:
+        page = requests.get(f"{LOCALELECTIONS}/results/index_{idx}.html", impersonate="chrome")
+        links = []
+        for a in BeautifulSoup(page.text, "html.parser").find_all("a", href=True):
+            if "_2026_results" in a["href"]:
+                links.append((a["href"].replace("..", ""), a.get_text(strip=True)))
+        print(f"{kind}: {len(links)} jurisdictions listed")
+        for href, label in links:
+            m = re.match(r"^(.*?)\s*\(([^)]*)\)$", label)
+            name, level = (m.group(1), m.group(2)) if m else (label, "")
+            sd_num = None
+            if kind == "School District":
+                level = "School District"
+                sd_num = re.sub(r"\D", "", m.group(2)) if m else None
+            elif level == "Advisory Body":
+                continue
+            html = requests.get(LOCALELECTIONS + href, impersonate="chrome").text
+            soup = BeautifulSoup(html, "html.parser")
+            text = soup.get_text(" ", strip=True)
+            want = re.search(r"(?:Councillors|Trustees) to be Elected:\s*(\d+)", text)
+            want = int(want.group(1)) if want else None
+            elected = {"MAYOR": 0, "COUNCILLOR": 0, "TRUSTEE": 0}
+            # One <table> holds every office; section headers are <tr><th colspan>
+            # rows (MAYOR / COUNCILLOR / TRUSTEE), so track the current role.
+            role = None
+            for tr in soup.find_all("tr"):
+                ths = tr.find_all("th")
+                if len(ths) == 1:  # section header; the column-header row has many <th>
+                    role = ths[0].get_text(strip=True)
+                    continue
+                if ths:
+                    continue
+                if role not in elected:
+                    continue
+                tds = tr.find_all("td", recursive=False)
+                if len(tds) < 6 or not tds[1].get_text(strip=True):
+                    continue
+                is_win = bool(tr.find("i", class_="fa-check-square"))
+                if is_win:
+                    elected[role] += 1
+                full = re.sub(r"\s+", " ", tds[1].get_text(" ", strip=True))
+                party = tds[5].get_text(strip=True)
+                party = "" if party == "None" else party
+                rows.append([name, level, full, "", "", "", "", role,
+                             "YES" if is_win else "", tds[2].get_text(strip=True), "", "", "", party, sd_num])
+            if kind == "Municipal":
+                got = elected["COUNCILLOR"]
+                if elected["MAYOR"] != 1:
+                    problems.append((name, level, f"mayors elected = {elected['MAYOR']} (tie / undeclared?)"))
+                if want is not None and got != want:
+                    problems.append((name, level, f"elected {got} councillors but {want} seats (tie / undeclared?)"))
+            else:
+                # Trustee seat counts legitimately differ from the page's
+                # 'to be elected' figure (ward seats, acclamations, vacancies)
+                # so this is an informational warning only.
+                got = elected["TRUSTEE"]
+                if want is not None and got != want:
+                    warnings.append((label, f"{got} trustees elected vs {want} 'to be elected' (check wards/vacancies)"))
+    skip = {(n, l) for n, l, _ in problems}
+    rows = [r for r in rows if (r[0], r[1]) not in skip]
+    print(f"Parsed {len(rows)} candidate rows, {sum(1 for r in rows if r[8]=='YES')} winners.")
+    if problems:
+        print(f"!! {len(problems)} municipal check(s) failed -- these jurisdictions are SKIPPED (current holders left untouched); resolve manually once officially declared:")
+        for n, l, why in problems:
+            print(f"   MANUAL: {n} ({l}): {why}")
+    for label, why in warnings:
+        print(f"   note: {label}: {why}")
+    return rows, problems
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", default="2022")
+    parser.add_argument("--source", choices=["archive", "localelections"], default="archive",
+                        help="archive = candidates-and-results.php?year= (past cycles only); "
+                             "localelections = live localelections.ca scrape (current cycle)")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
 
-    rows = fetch_election_rows(args.year)
+    if args.source == "localelections":
+        rows, _ = fetch_localelections_rows()
+    else:
+        rows = fetch_election_rows(args.year)
 
     # Scoped to British Columbia specifically -- NOT "WHERE country='Canada'"
     # unscoped. Municipality names collide across provinces constantly
@@ -193,7 +349,13 @@ def main():
     """)
 
     muni_by_norm = {normalize_municipal_name(name): sid for sid, name in muni_shapes}
+    muni_by_name = {name: sid for sid, name in muni_shapes}
     school_by_norm = {normalize_school_name(name): sid for sid, name, code in school_shapes}
+    school_by_sdnum = {}
+    for sid, name, code in school_shapes:
+        mm = re.match(r"^SD(\d+)\s*-", name)
+        if mm:
+            school_by_sdnum[mm.group(1)] = sid
     # id -> code, NOT code -> id: map_shapes has duplicate `code` values for at
     # least 25 BC school districts (e.g. id 132034 is correctly "SD42 - Maple
     # Ridge-Pitt Meadows", but a second row, id 132257, is named "Border Land"
@@ -222,10 +384,13 @@ def main():
 
         role_title = tds[7]
         if level in MUNICIPAL_LEVELS and role_title in ("MAYOR", "COUNCILLOR"):
-            shape_id = muni_by_norm.get(normalize_municipal_name(tds[0]))
+            shape_id = lookup_municipal_shape(muni_by_name, muni_by_norm, tds[0], level)
             role_id = MAYOR_ROLE_ID if role_title == "MAYOR" else COUNCILLOR_ROLE_ID
         elif level == "School District" and role_title == "TRUSTEE":
-            shape_id = school_by_norm.get(normalize_school_name(tds[0]))
+            # Prefer the SD number (map_shapes names it "SD42 - ..."): district
+            # names get renamed (qathet, Sea to Sky (Howe Sound), ...) but numbers don't.
+            sd_num = tds[14] if len(tds) > 14 and tds[14] else None
+            shape_id = school_by_sdnum.get(sd_num) or school_by_norm.get(normalize_school_name(tds[0]))
             role_id = TRUSTEE_ROLE_ID  # possibly promoted to CHAIR_ROLE_ID below
         else:
             continue
@@ -246,7 +411,10 @@ def main():
     # Promote the curated chair for each school district, if that name
     # actually won a trustee seat this cycle (never invent a chair who
     # isn't even a winner).
-    for shape_id, winners in winners_by_shape.items():
+    # CHAIR_OVERRIDES describes the PREVIOUS board. Boards elect their chair at
+    # the first meeting after the election, so for a fresh cycle (localelections
+    # source) nobody is promoted until CHAIR_OVERRIDES is re-verified by hand.
+    for shape_id, winners in ([] if args.source == "localelections" else winners_by_shape.items()):
         code = school_id_to_code.get(shape_id)
         chair_name = CHAIR_OVERRIDES.get(code) if code else None
         if not chair_name:
@@ -255,6 +423,47 @@ def main():
             if w["role_id"] == TRUSTEE_ROLE_ID and normalize_school_name(w["full_name"]) == normalize_school_name(chair_name):
                 w["role_id"] = CHAIR_ROLE_ID
                 break
+
+    # Reconcile each winner against the holder rows already on file so a
+    # re-elected incumbent stays the SAME row (keeping linked_profile_id,
+    # wall claims, contact info) instead of being retired + re-inserted just
+    # because of a casing / middle-name difference ('TONY ZABINSKY' vs
+    # 'Tony Zabinsky', 'Phil DiBattista' vs 'Phillip DiBattista').
+    #   - case/whitespace-only difference -> rename the old row to the clean name
+    #   - same last name + first names share first 3 letters -> keep the old
+    #     row's spelling (it is what the person has been publicly using)
+    renames = []
+    existing = {}
+    shape_ids = list(winners_by_shape)
+    if shape_ids:
+        for sid, rid, nm in run_sql(
+            "SELECT map_shape_id, election_role_type_id, full_name FROM office_holders "
+            f"WHERE is_current AND map_shape_id IN ({','.join(str(i) for i in shape_ids)});"
+        ):
+            existing.setdefault((str(sid), rid), []).append(nm)
+    adopted = 0
+    for sid, winners in winners_by_shape.items():
+        fresh = {(w["role_id"], w["full_name"]) for w in winners}
+        for w in winners:
+            olds = existing.get((sid, w["role_id"]), [])
+            if w["full_name"] in olds:
+                continue
+            ci = [o for o in olds if o.lower() == w["full_name"].lower() and (w["role_id"], o) not in fresh]
+            if ci:
+                renames.append((sid, w["role_id"], ci[0], w["full_name"]))
+                continue
+            wt = w["full_name"].lower().split()
+            for o in olds:
+                ot = o.lower().split()
+                if (ot and wt and ot[-1] == wt[-1] and ot[0][:3] == wt[0][:3]
+                        and (w["role_id"], o) not in fresh
+                        and not any(x["full_name"] == o for x in winners)):
+                    print(f"  name reconcile: keeping on-file '{o}' for fresh '{w['full_name']}'")
+                    w["full_name"] = o
+                    adopted += 1
+                    break
+    if renames or adopted:
+        print(f"Reconciled names: {len(renames)} case-only renames, {adopted} kept on-file spelling.")
 
     total_winners = sum(len(v) for v in winners_by_shape.values())
     print(f"Matched {total_winners} winners across {len(winners_by_shape)} BC shapes (municipal + school).")
@@ -283,7 +492,8 @@ CREATE TEMP TABLE staging_bc_winners (
 ) ON COMMIT DROP;
 """)
 
-    source_url = f"https://www.civicinfo.bc.ca/electionreports/candidates-and-results.php?year={args.year}"
+    source_url = (f"{LOCALELECTIONS}/results/" if args.source == "localelections"
+                  else f"https://www.civicinfo.bc.ca/electionreports/candidates-and-results.php?year={args.year}")
     value_rows = []
     for shape_id, winners in winners_by_shape.items():
         for w in winners:
@@ -298,6 +508,15 @@ CREATE TEMP TABLE staging_bc_winners (
     # on (map_shape_id, full_name) only -- not also election_role_type_id --
     # so a role change for the same person (trustee -> chair) is handled by
     # the upsert below instead of leaving a stale duplicate row behind.
+    for sid, rid, old, newn in renames:
+        o = old.replace("'", "''"); n = newn.replace("'", "''")
+        sql.append(f"UPDATE office_holders SET full_name = '{n}', updated_at = NOW() "
+                   f"WHERE is_current AND map_shape_id = {sid} AND election_role_type_id = '{rid}' AND full_name = '{o}' "
+                   # a retired row from an earlier term may already hold the clean name
+                   # (unique key spans current + past rows); then the upsert below revives it instead
+                   f"AND NOT EXISTS (SELECT 1 FROM office_holders x WHERE x.map_shape_id = {sid} "
+                   f"AND x.election_role_type_id = '{rid}' AND x.full_name = '{n}');")
+
     sql.append("""
 UPDATE office_holders oh
 SET is_current = false, term_ended_at = CURRENT_DATE, updated_at = NOW()
@@ -411,7 +630,7 @@ END $$;
 
     if args.apply:
         print("Applying to database...")
-        subprocess.run(["psql", DB_URI, "-f", out_path], check=True)
+        subprocess.run(["psql", DB_URI, "-v", "ON_ERROR_STOP=1", "-f", out_path], check=True)  # without ON_ERROR_STOP an error rolls back silently and still prints "Done."
         print("Done.")
     else:
         print("Dry run only (no --apply passed) -- review the SQL file, then re-run with --apply.")

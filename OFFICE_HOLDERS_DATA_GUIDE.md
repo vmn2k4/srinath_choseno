@@ -120,7 +120,7 @@ Alberta's [official Municipal Officials Directory](https://www.alberta.ca/find-a
 - **Why**: verified directly against Maple Ridge on 2026-08-17 — OpenNorth's API (and the CivicInfo feed it mirrors) still returned Mike Morden as mayor and the outgoing 2018–2022 council long after the Oct 2022 election. The election-results feed, by contrast, matched Maple Ridge's own "Meet Your Council" page and SD42's own "Board of Education" page exactly, for every mayor, councillor, and school trustee. See [20260816000000_office_holder_term_lifecycle.sql](supabase/migrations/20260816000000_office_holder_term_lifecycle.sql) for the full trace.
 - **Coverage**: BC municipal mayors & councillors (City/District/Town/Village/Township/Regional Municipality/Island Municipality/Resort Municipality), **plus BC school district trustees & board chairs** — a category the OpenNorth pipeline never covered anywhere in Canada.
 - **Chair caveat**: school board chair is not itself an elected position — trustees elect their own chair after being sworn in, so it can't be read off the ballot. `CHAIR_OVERRIDES` in the sync script is a small, manually-curated map that still needs periodic reverification per district (e.g. against that district's own "Board of Education" page); the script only guards against assigning chair to someone who isn't even a winning trustee that cycle.
-- **Refresh cadence**: tied to BC's fixed general local election schedule (every 4 years — next is Oct 2026). Re-run with `--year 2026` once CivicInfo publishes certified results; there's no reason to run it more often than that for this feed.
+- **Refresh cadence**: tied to BC's fixed general local election schedule (every 4 years). **Full repeatable steps: [docs/BC_ELECTION_REFRESH_RUNBOOK.md](docs/BC_ELECTION_REFRESH_RUNBOOK.md).** Last run 2026-10-21 for the Oct 17, 2026 election via `--source localelections` (CivicInfo's live results site). Do **not** use `--year 2026` with the default archive source — `candidates-and-results.php` silently serves 2018 data for years it hasn't archived.
 - **Pipeline**: [`scripts/sync-bc-election-results.py`](scripts/sync-bc-election-results.py) `--year <YEAR> --apply`. Supersedes `fast-populate-bc-qc.py`, `populate-bc-qc-parties.py` (literal duplicates of each other, both from commit 807261d, never deduplicated — used this same CivicInfo feed but only to patch `political_party_id` on rows a different, unreliable pipeline had already created), and `populate-bc-school-trustees.py` (a hardcoded, frozen snapshot with no `source_url` and no freshness tracking at all).
 - **Known gaps**: 41 winners (out of ~1,436 parsed) could not be matched to a `map_shapes` row — mostly renamed/regional entities (e.g. "Daajing Giids", formerly Queen Charlotte) or provice-wide bodies without a single geographic boundary (Conseil Scolaire Francophone) — printed by the script, not silently dropped. Separately, `map_shapes` has duplicate `code` values for at least 25 BC school districts (e.g. id 132034 is correctly "SD42 - Maple Ridge-Pitt Meadows", but a second row, id 132257, is named "Border Land" yet also carries `code = '42'`) — a pre-existing boundary-data bug, unrelated to officeholder freshness; the sync script matches by name specifically to avoid tripping over it, but the duplicate rows themselves are still there.
 
@@ -192,9 +192,9 @@ When municipal, state, or federal elections occur, re-run the python pipeline sc
 python3 scripts/populate-all-office-holders.py
 
 # Update BC Municipal Mayors/Councillors + School Trustees (after a BC
-# general local election, e.g. Oct 2026 -- once CivicInfo publishes
-# certified results, pass that year)
-python3 scripts/sync-bc-election-results.py --year 2026 --apply
+# general local election -- see docs/BC_ELECTION_REFRESH_RUNBOOK.md;
+# current cycle uses --source localelections, past cycles --source archive --year N)
+python3 scripts/sync-bc-election-results.py --source localelections --apply
 
 # Update Canadian Municipal Mayors & Councillors outside BC
 python3 scripts/populate-canadian-municipal.py
