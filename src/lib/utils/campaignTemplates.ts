@@ -1635,6 +1635,241 @@ const PROFESSOR_BODY = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const MEDIA_BODY = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #eef1f5;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            background-color: #ffffff;
+            padding: 16px 20px;
+            box-sizing: border-box;
+        }
+        .header {
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #1a2332;
+        }
+        .intro {
+            font-size: 15px;
+            color: #666;
+            margin: 0 0 24px 0;
+        }
+        .highlight {
+            background-color: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        .highlight-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .highlight p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .cta-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .cta-link:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin: 32px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 16px 0;
+        }
+        .section-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .features li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 14px;
+        }
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .ways-grid {
+            margin: 16px 0;
+            width: 100%;
+            display: block;
+        }
+        .way-box {
+            display: block !important;
+            width: 100% !important;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 0 0 12px 0;
+            background-color: #fafbfc;
+            box-sizing: border-box;
+            clear: both;
+        }
+        .way-box:last-child {
+            margin-bottom: 0;
+        }
+        .way-title {
+            font-weight: 600;
+            color: #1a2332;
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        .way-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .signature {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+        .founder-name {
+            font-weight: 600;
+            color: #1a2332;
+        }
+        .contact-links {
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        .contact-links a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>50,000 people used a civic site with no ads. Now it's a social network where nobody has a name.</h1>
+            <p class="intro">A story for {{city}}, from a former Snapchat, Qualcomm and AMD engineer in Surrey</p>
+        </div>
+
+        <p style="font-size: 15px; margin: 0 0 24px 0;">Hello {{name}},</p>
+
+        <p style="font-size: 15px; line-height: 1.6; margin: 0 0 16px 0; color: #2c3e50;">Two months ago I launched Choseno, a free platform, designed and built locally in Surrey, BC, that tells people who represents them and who is running in their area. More than 50,000 people have used it, and we have never run an ad. I'm Murugappan Valliyappan. I spent over 10 years building core software at Snapchat, Qualcomm and AMD, and I moved to Surrey, BC to build this on my own.</p>
+
+        <div class="highlight" style="background-color: #f0f7ff; border-left: 4px solid #0284c7; padding: 20px 22px; border-radius: 0 12px 12px 0; margin: 24px 0;">
+            <p class="highlight-title" style="font-weight: 700; color: #0369a1; margin: 0 0 8px 0; font-size: 15px;">One tap: your reps, your races, your candidates</p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 14px 0;">Choseno reads your location and works out your electoral boundaries. It then shows your current representatives, the races happening in your area, and who is running in each one. No postal-code lookups. It is the first service we know of that does this.</p>
+            <div style="margin: 12px 0 4px 0;">
+                <a href="https://www.choseno.com/find-my-district" style="display: inline-block; background: #0284c7; color: #ffffff !important; font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 8px; text-decoration: none;">Try Find My District →</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-title">What we're launching now: a social network for local issues</p>
+            <p class="section-content">
+                When people join, they are grouped by their municipality, school district and other local boundaries. A parent can raise a problem at their school district. A resident can flag a pothole or a zoning change. Neighbours discuss it in one place.
+            </p>
+            <p class="section-content">
+                Our goal is to take those issues to the right department and get them resolved. We want to be the bridge in democracy between residents and the people who decide.
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Why it isn't Facebook or X</p>
+            <ul class="features">
+                <li><strong>No real names.</strong> There are no friends, family or profiles attached. People post under anonymous, rotating IDs, so they can say what they actually think without fear of repercussions.</li>
+                <li><strong>No influencers.</strong> Nobody builds a following here. A post is judged on what it says.</li>
+                <li><strong>Verified local.</strong> Posts are tied to real electoral boundaries, so the conversation comes from people who live there.</li>
+                <li><strong>Candidates can answer directly.</strong> Future leaders can connect with their district without a campaign budget.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Story angles</p>
+            <ul class="features">
+                <li>A former Snapchat engineer builds an anonymous social network for local democracy</li>
+                <li>50,000 people found their candidates in two months, with zero ad spend</li>
+                <li>Can anonymity bring honest local issues to the surface? What happens when the school district or council reads them?</li>
+            </ul>
+        </div>
+
+        <!-- Vertical Short Demo (9:16 card) -->
+        <div class="section" style="margin: 28px 0; text-align: center;">
+            <a href="https://www.youtube.com/shorts/qlr9s9QkVww" target="_blank" rel="noopener noreferrer" style="display: block; width: 260px; max-width: 80%; margin: 0 auto; text-decoration: none; color: inherit;" title="Watch the Choseno Short">
+                <div style="width: 100%; padding: 0; border-radius: 18px; overflow: hidden; background: #0f172a; background-image: linear-gradient(160deg, #0369a1 0%, #0f172a 70%); box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);">
+                    <div style="padding: 30px 20px 0 20px; text-align: left;">
+                        <span style="display: inline-block; padding: 3px 10px; background: rgba(255,255,255,0.15); border-radius: 9999px; color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.3px;">CHOSENO · SHORT</span>
+                        <div style="color: #ffffff; font-size: 22px; font-weight: 800; line-height: 1.25; margin-top: 16px;">Find your district with one tap</div>
+                    </div>
+                    <div style="padding: 110px 0 110px 0; text-align: center;">
+                        <div style="display: inline-block; width: 72px; height: 72px; line-height: 72px; background: #ffffff; border-radius: 50%; color: #0284c7; font-size: 28px; text-align: center; box-shadow: 0 0 0 10px rgba(255,255,255,0.18);"><span style="margin-left: 5px;">▶</span></div>
+                    </div>
+                    <div style="padding: 0 20px 26px 20px; text-align: center;">
+                        <span style="display: inline-block; padding: 9px 22px; background: #ffffff; color: #0369a1; border-radius: 8px; font-size: 13px; font-weight: 700;">Watch on YouTube</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section">
+            <p class="section-title">I'd love to do an interview</p>
+            <p class="section-content">
+                I'm happy to give a live demo, walk you through the data from your region, and talk about why I built this. If a story is timely for you, I can make time this week.
+            </p>
+            <p class="section-content" style="text-align: center; font-size: 13px; color: #666;">
+                Or reply to this email, or write to <a href="mailto:vijay@choseno.com" class="cta-link">vijay@choseno.com</a>.
+            </p>
+        </div>
+
+        <div class="signature">
+            <p style="margin: 0 0 16px 0;"><span class="founder-name">Murugappan Valliyappan</span><br>Founder, Choseno<br>Surrey, BC</p>
+            <div class="contact-links">
+                672-355-2636 | <a href="mailto:vijay@choseno.com">vijay@choseno.com</a><br>
+                <a href="https://www.choseno.com">choseno.com</a> | <a href="https://www.linkedin.com/in/muruvalliyappan/">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`;
+
 const MLA_INTERVIEW_BODY = `<!DOCTYPE html>
 <html>
 <head>
@@ -2066,6 +2301,27 @@ export const CAMPAIGN_TEMPLATE_PRESETS: CampaignTemplatePreset[] = [
       email: "pquirk@ubc.ca",
       role: "Professor of Political Science",
       city: "",
+      wallSlug: "",
+    },
+  },
+  {
+    key: "media",
+    label: "Media / Press",
+    badge: "Press Pitch",
+    icon: "📰",
+    subject: "Story idea: former Snapchat engineer launches an anonymous social network from Surrey (50,000 users, no ads)",
+    body: MEDIA_BODY,
+    requiredFields: ["name", "email", "city"],
+    optionalFields: ["role"],
+    csvHeader: "name,email,role,city",
+    sampleData: "name,email,role,city\nNews desk,newstips@example.com,News tips,Example Outlet\nJane Reporter,jane@example.com,Reporter,Example Outlet",
+    defaultCampaignName: "Media Outreach Oct 2026",
+    description: "Pitches journalists and news desks on Choseno's one-tap district finder and social layer for politics. Put the outlet name in the city column.",
+    sampleRecipient: {
+      name: "Jane Reporter",
+      email: "jane@example.com",
+      role: "Reporter",
+      city: "Example Outlet",
       wallSlug: "",
     },
   },

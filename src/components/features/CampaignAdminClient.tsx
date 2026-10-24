@@ -807,6 +807,7 @@ export default function CampaignAdminClient() {
       openedCount: number;
       clickedCount: number;
       videoPlayedCount: number;
+      findDistrictCount: number;
     }[] = [];
 
     const map = new Map<string, CampaignSendRow[]>();
@@ -824,6 +825,7 @@ export default function CampaignAdminClient() {
       let openedCount = 0;
       let clickedCount = 0;
       let videoPlayedCount = 0;
+      let findDistrictCount = 0;
 
       for (const s of sends) {
         if (s.status === "failed") failedCount++;
@@ -836,6 +838,11 @@ export default function CampaignAdminClient() {
           (l) => l.link && (l.link.includes("youtube.com") || l.link.includes("youtu.be"))
         );
         if (hasVideo) videoPlayedCount++;
+
+        const hasFindDistrict = (s.links_clicked || []).some(
+          (l) => l.link && l.link.includes("/find-my-district")
+        );
+        if (hasFindDistrict) findDistrictCount++;
       }
 
       groups.push({
@@ -846,6 +853,7 @@ export default function CampaignAdminClient() {
         openedCount,
         clickedCount,
         videoPlayedCount,
+        findDistrictCount,
       });
     });
 
@@ -1875,20 +1883,15 @@ export default function CampaignAdminClient() {
                     </button>
 
                     <div className="flex items-center gap-2.5 text-xs shrink-0">
-                      <span className="text-text-muted hidden sm:inline">
+                      <span className="text-text-muted">
                         <strong className="text-emerald-600 dark:text-emerald-400">{group.sentCount}</strong> sent
                         {group.failedCount > 0 && (
                           <> · <strong className="text-rose-600 dark:text-rose-400">{group.failedCount}</strong> failed</>
                         )}
-                        {group.openedCount > 0 && (
-                          <> · <strong className="text-indigo-600 dark:text-indigo-400">{group.openedCount}</strong> opened</>
-                        )}
-                        {group.clickedCount > 0 && (
-                          <> · <strong className="text-amber-600 dark:text-amber-400">{group.clickedCount}</strong> clicked</>
-                        )}
-                        {group.videoPlayedCount > 0 && (
-                          <> · <strong className="text-rose-600 dark:text-rose-400">🎬 {group.videoPlayedCount}</strong> played video</>
-                        )}
+                        {" · "}<strong className="text-indigo-600 dark:text-indigo-400">{group.openedCount}</strong> opened
+                        {" · "}<strong className="text-amber-600 dark:text-amber-400">{group.clickedCount}</strong> clicked
+                        {" · "}<strong className="text-sky-600 dark:text-sky-400">📍 {group.findDistrictCount}</strong> opened Find My District
+                        {" · "}<strong className="text-rose-600 dark:text-rose-400">🎬 {group.videoPlayedCount}</strong> played video
                       </span>
                       <Button
                         size="sm"
