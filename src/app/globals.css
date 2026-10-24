@@ -517,6 +517,47 @@
   --color-danger-light: #991b1b;
 }
 
+/* Playful yellow — ported from the Pet Nutrition site: sunny yellow brand, ink
+   (#0e2a30) text, green as the text-safe link color, orange as accent. */
+[data-theme="sunny-yellow-light"] {
+  --color-background: #f7f9f9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #eef3f3;
+  --color-surface-active: #fff1b8;
+  --color-surface-elevated: #fff1b8;
+  --color-border: #dfe7e8;
+  --color-border-light: rgba(14, 42, 48, 0.12);
+  --color-text-main: #0e2a30;
+  --color-text-secondary: #1b3b41;
+  --color-text-tertiary: #36535a;
+  --color-text-muted: #51676c;
+  --color-text-dark: #6b8085;
+  --color-text-darker: #dfe7e8;
+  --color-primary: #ffd21f;
+  --color-primary-hover: #f2bd00;
+  --color-primary-light: #15803d;
+  --color-primary-lighter: #fff1b8;
+  --color-accent: #f59a1f;
+  --color-accent-hover: #e08600;
+  --color-text-on-primary: #0e2a30;
+  --color-warning: #8a4b0a;
+  --color-warning-light: #8a4b0a;
+  --color-danger: #a61b1b;
+  --color-danger-light: #a61b1b;
+}
+
+[data-theme="sunny-yellow-dark"] {
+  --color-background: #0a1a1e;
+  --color-surface-elevated: #3a2c0c;
+  --color-primary: #ffd21f;
+  --color-primary-hover: #f2bd00;
+  --color-primary-light: #ffe066;
+  --color-primary-lighter: #fff1b8;
+  --color-accent: #4ade80;
+  --color-accent-hover: #86efac;
+  --color-text-on-primary: #0e2a30;
+}
+
 /* ============ Muted OSM basemap (Leaflet) ============ */
 /* Stock OpenStreetMap tiles are high-contrast (bold red/orange highways,
    saturated greens). We switched to them from CARTO Voyager after CARTO
