@@ -38,10 +38,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: `${BASE_URL}/og-find-my-district.jpg`,
+        url: `${BASE_URL}/og-find-my-district-v2.jpg`,
         width: 1200,
         height: 630,
-        alt: "Find Your District. Rate Every Politician in Your Area | Choseno",
+        alt: "Meet your representatives. See every race near you. | Choseno",
       },
     ],
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description: pageDescription,
     creator: "@choseno",
-    images: [`${BASE_URL}/og-find-my-district.jpg`],
+    images: [`${BASE_URL}/og-find-my-district-v2.jpg`],
   },
 };
 
@@ -61,7 +61,7 @@ const schemaData = {
   name: "Find Your Electoral District",
   description: pageDescription,
   url: `${BASE_URL}/find-my-district`,
-  image: `${BASE_URL}/og-find-my-district.jpg`,
+  image: `${BASE_URL}/og-find-my-district-v2.jpg`,
   inLanguage: "en-US",
   isPartOf: {
     "@type": "Website",
