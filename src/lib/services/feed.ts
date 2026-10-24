@@ -67,6 +67,24 @@ export async function getInternationalScopedPosts(
   return query;
 }
 
+// Admin-only: every post platform-wide, newest first, same row shape as the
+// feed queries above so PostCard renders it unchanged. Admin RLS on posts also
+// returns removed posts. {excludeGhostId} hides one author (the news bot).
+export async function getAllPostsAdmin(
+  supabase: Client,
+  opts: { limit?: number; offset?: number; excludeGhostId?: string } = {}
+) {
+  const limit = opts.limit ?? FEED_PAGE_SIZE;
+  let query = supabase
+    .from("posts")
+    .select("*, comments(*), news_articles(slug, event_date, published_at)")
+    .order("created_at", { ascending: false })
+    .range(opts.offset ?? 0, (opts.offset ?? 0) + limit - 1);
+  if (opts.excludeGhostId) query = query.neq("ghost_id", opts.excludeGhostId);
+  if (!isDevEnvironment()) query = query.eq("is_test", false).eq("comments.is_test", false);
+  return query;
+}
+
 // ── post creation / voting ───────────────────────────────────────────────
 // Feed posts go through the create_post RPC — DO NOT merge with
 // politicianWall.ts's createWallPost, which goes through a separate

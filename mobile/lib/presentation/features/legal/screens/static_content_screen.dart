@@ -148,6 +148,29 @@ const _about = <_Section>[
           'citizen privacy while maintaining high-trust community signals.',
     ),
   ]),
+  _Section('Independent app — not a government service', [
+    _Para(
+      'Choseno is an independent app. It is not affiliated with, endorsed by, '
+      'or operated by any government, government agency, elected official, or '
+      'political party, and it does not provide official government services.',
+    ),
+    _Para(
+      'Information about districts, elected officials, candidates, and '
+      'elections comes from public sources. For official and authoritative '
+      'information, always check the source directly:',
+    ),
+    _Bullets([
+      'Canada — Elections Canada: https://www.elections.ca',
+      'Canada — House of Commons: https://www.ourcommons.ca',
+      'British Columbia — Elections BC: https://elections.bc.ca',
+      'Alberta — Elections Alberta: https://www.elections.ab.ca',
+      'Ontario — Elections Ontario: https://www.elections.on.ca',
+      'United States — Federal Election Commission: https://www.fec.gov',
+      'United States — U.S. House: https://www.house.gov',
+      'United States — U.S. Senate: https://www.senate.gov',
+      'United States — Vote.gov: https://vote.gov',
+    ]),
+  ]),
   _Section('Questions, concerns, or corrections?', [
     _Para('Reach us at $_contactEmail.'),
   ]),
@@ -625,7 +648,7 @@ class _SectionView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('•  ', style: _body),
-                Expanded(child: Text(item, style: _body)),
+                Expanded(child: _linkified(item)),
               ],
             ),
           ),
@@ -633,27 +656,39 @@ class _SectionView extends StatelessWidget {
     ),
   };
 
-  /// Renders [text] with the contact email tappable.
+  static final _linkPattern = RegExp(
+    '${RegExp.escape(_contactEmail)}|https?://[^\\s,;]+',
+  );
+
+  /// Renders [text] with the contact email and any https:// URLs tappable.
   Widget _linkified(String text) {
-    final i = text.indexOf(_contactEmail);
-    if (i < 0) return Text(text, style: _body);
-    return Text.rich(
-      TextSpan(
-        style: _body,
-        children: [
-          TextSpan(text: text.substring(0, i)),
-          TextSpan(
-            text: _contactEmail,
-            style: _body.copyWith(
-              color: palette.primary,
-              decoration: TextDecoration.underline,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => launchUrl(Uri.parse('mailto:$_contactEmail')),
+    final matches = _linkPattern.allMatches(text).toList();
+    if (matches.isEmpty) return Text(text, style: _body);
+    final spans = <InlineSpan>[];
+    var cursor = 0;
+    for (final m in matches) {
+      if (m.start > cursor) {
+        spans.add(TextSpan(text: text.substring(cursor, m.start)));
+      }
+      final link = m.group(0)!;
+      final uri = link == _contactEmail
+          ? Uri.parse('mailto:$_contactEmail')
+          : Uri.parse(link);
+      spans.add(
+        TextSpan(
+          text: link,
+          style: _body.copyWith(
+            color: palette.primary,
+            decoration: TextDecoration.underline,
           ),
-          TextSpan(text: text.substring(i + _contactEmail.length)),
-        ],
-      ),
-    );
+          recognizer: TapGestureRecognizer()
+            ..onTap = () =>
+                launchUrl(uri, mode: LaunchMode.externalApplication),
+        ),
+      );
+      cursor = m.end;
+    }
+    if (cursor < text.length) spans.add(TextSpan(text: text.substring(cursor)));
+    return Text.rich(TextSpan(style: _body, children: spans));
   }
 }

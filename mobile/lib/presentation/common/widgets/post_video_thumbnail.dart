@@ -3,8 +3,6 @@
 // landscape image to portrait, like the web), the first frame for an
 // uploaded video. Tapping plays it right in the post (YouTube via its embedded
 // player, uploads via Chewie) with a fullscreen button on the controls.
-import 'dart:typed_data';
-
 import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';

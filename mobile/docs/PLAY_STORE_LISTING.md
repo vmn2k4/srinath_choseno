@@ -10,11 +10,11 @@ Limits: title 30, short description 80, full description 4,000 chars. Play has n
 
 **Full description:**
 
+IMPORTANT: Choseno is an independent app. It is NOT affiliated with, endorsed by, or operated by any government, government agency, elected official, or political party, and it does not provide official government services.
+
 Choseno is social media for local politics: discuss your local issues with your neighbours, review your elected representatives, and follow the elections near you.
 
-Find my representatives: enter your address and see every official who represents you, from city council to the legislature, in seconds. See who is running in your area, rate your politicians, and join the conversation with your neighbours.
-
-Choseno is an independent, non-partisan political community and civic platform for people who want to know who makes decisions in their community and have a say in how they're doing.
+Find my representatives: enter your address and see the officials who represent you, from city council to the legislature, in seconds. See who is running in your area, rate your politicians, and join the conversation with your neighbours.
 
 FIND YOUR REPRESENTATIVES
 Use your address or location to see your electoral districts and the elected officials for each one, laid out as a simple tree from local government up to state/provincial and federal legislatures in the US and Canada.
@@ -37,9 +37,19 @@ Choseno lets you take part without displaying your real name publicly. See our p
 FOR CANDIDATES AND OFFICIALS
 Claim your public wall, share your platform and hear directly from the people you represent.
 
-Choseno is not affiliated with any government or political party.
+OFFICIAL SOURCES
+Representative, district and election information comes from public sources and may be incomplete or out of date. For official information, check the source directly:
+Elections Canada: https://www.elections.ca
+House of Commons: https://www.ourcommons.ca
+Elections BC: https://elections.bc.ca
+Elections Alberta: https://www.elections.ab.ca
+Elections Ontario: https://www.elections.on.ca
+US Federal Election Commission: https://www.fec.gov
+US House: https://www.house.gov
+US Senate: https://www.senate.gov
+Vote.gov: https://vote.gov
 
-Find your representatives and make your voice count with Choseno.
+Choseno is not a government app and does not represent any government entity.
 
 Wording note: say "without displaying your real name publicly", never "anonymous" — accounts store email and location.
 

@@ -12,6 +12,7 @@ const TABS = [
   { key: "news", label: "News", href: "/admin/news" },
   { key: "news-distribution", label: "News Distribution", href: "/admin/news-distribution" },
   { key: "news-import", label: "Bulk News Import", href: "/admin/news-import" },
+  { key: "posts", label: "Posts", href: "/admin/posts" },
   { key: "moderation", label: "Moderation", href: "/admin/moderation" },
   { key: "elections", label: "Elections & Seats", href: "/admin/elections" },
   { key: "election-admins", label: "Seat Administrators", href: "/admin/election-admins" },

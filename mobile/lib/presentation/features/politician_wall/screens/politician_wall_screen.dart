@@ -249,7 +249,7 @@ class _WallBody extends ConsumerWidget {
                     if (profile.sourceUrl != null)
                       HeaderIconButton(
                         icon: Icons.open_in_new,
-                        tooltip: 'Official page',
+                        tooltip: 'Source page',
                         onTap: () => _launch(profile.sourceUrl!),
                       ),
                     if (profile.contactEmail != null) ...[

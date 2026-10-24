@@ -113,7 +113,7 @@ class BranchHolderCard extends StatelessWidget {
               if (node.sourceUrl != null)
                 _ContactLink(
                   icon: Icons.open_in_new,
-                  label: 'Official',
+                  label: 'Source',
                   onTap: () => _launch(node.sourceUrl!),
                 ),
             ],

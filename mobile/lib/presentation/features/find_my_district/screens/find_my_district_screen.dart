@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/utils/boundary_level.dart';
 import '../../../../core/router/app_router.dart';
@@ -68,6 +69,8 @@ class _FindMyDistrictScreenState extends ConsumerState<FindMyDistrictScreen> {
                     kBottomNavClearance + ChosenoSpacing.lg,
                   ),
                   children: [
+                    const _SourceNote(),
+                    const SizedBox(height: ChosenoSpacing.md),
                     // Top row: where these representatives are for. The icon
                     // opens / folds the map to change the location.
                     if (state.boundaries.isNotEmpty) ...[
@@ -347,6 +350,62 @@ class _ErrorNote extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Independence disclaimer + official sources, shown above the list of
+/// officials (Google Play's Misleading Claims policy for government info).
+class _SourceNote extends StatelessWidget {
+  const _SourceNote();
+
+  static const _sources = <(String, String)>[
+    ('elections.ca', 'https://www.elections.ca'),
+    ('ourcommons.ca', 'https://www.ourcommons.ca'),
+    ('house.gov', 'https://www.house.gov'),
+    ('senate.gov', 'https://www.senate.gov'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = ChosenoTheme.of(context);
+    final style = ChosenoTypography.body(
+      color: palette.textSecondary,
+      fontSize: 12,
+      height: 1.4,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Choseno is an independent app, not a government service. Listings '
+          'come from public sources and may be out of date. Official sources:',
+          style: style,
+        ),
+        const SizedBox(height: 4),
+        Wrap(
+          spacing: ChosenoSpacing.md,
+          children: [
+            for (final (label, url) in _sources)
+              InkWell(
+                onTap: () => launchUrl(
+                  Uri.parse(url),
+                  mode: LaunchMode.externalApplication,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    label,
+                    style: style.copyWith(
+                      color: palette.primary,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ],
     );
   }
 }
